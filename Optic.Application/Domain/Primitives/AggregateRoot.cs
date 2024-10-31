@@ -5,7 +5,7 @@ public abstract class AggregateRoot : Entity
     private List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
 
     public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.ToList();
-    public AggregateRoot(Guid id) : base(id)
+    public AggregateRoot(int id) : base(id)
     {
 
     }

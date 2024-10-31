@@ -7,10 +7,10 @@ public abstract class Entity
 
     }
 
-    protected Entity(Guid id)
+    protected Entity(int id)
     {
         Id = id;
     }
 
-    public Guid Id { get; private set;}
+    public int Id { get; private set;}
 }
