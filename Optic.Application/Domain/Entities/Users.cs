@@ -2,9 +2,9 @@
 
 namespace Optic.Application.Domain.Entities;
 
-internal class Users : Entity
+internal class Users : AggregateRoot
 {
-    public Users(Guid id,
+    public Users(int id,
         string firtName,
         string lastName,
         string email,
