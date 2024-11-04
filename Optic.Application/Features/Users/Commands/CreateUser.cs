@@ -31,7 +31,6 @@ public class CreateUser : ICarterModule
         public string Email { get; init; } = string.Empty;
         public string Password { get; init; } = string.Empty;
         public string SecurePharse { get; init; } = string.Empty;
-        public bool IsAdmin { get; init; }
     }
 
     public class CreateProductHandler(AppDbContext context, IValidator<CreateUserCommand> validator) : IRequestHandler<CreateUserCommand, IResult>
@@ -44,7 +43,7 @@ public class CreateUser : ICarterModule
                 return Results.ValidationProblem(result.GetValidationProblems());
             }
 
-            var newUser = new User(0, request.FirstName, request.LastName, request.Email, request.Password, request.SecurePharse);
+            var newUser = User.Create(0, request.FirstName, request.LastName, request.Email, request.Password, request.SecurePharse);
 
             context.Add(newUser);    
 

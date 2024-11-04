@@ -8,16 +8,18 @@ internal enum Sex
 
 internal enum UserStatus
 {
-    Active,
-    Inactive,
-    Disabled
+    Active = 1,
+    Inactive = 2,
+    Disabled = 3,
 }
 
-internal enum UserRoles
+public enum RoleUser
 {
-    Admin,
-    Advisor
+    Advisor = 1,
+    Admin = 2,
+    Super = 3
 }
+
 
 
 
