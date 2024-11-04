@@ -13,6 +13,12 @@ internal enum UserStatus
     Disabled
 }
 
+internal enum UserRoles
+{
+    Admin,
+    Advisor
+}
+
 
 
 
