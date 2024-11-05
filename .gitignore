@@ -398,3 +398,24 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# ViteJs
+!**/glob-import/dir/node_modules
+.DS_Store
+.idea
+.pnpm-store
+.vite
+*.cpuprofile
+*.local
+*.log
+/.vscode/
+/docs/.vitepress/cache
+/packages/vite/LICENSE
+dist
+dist-ssr
+explorations
+node_modules
+playground-temp
+temp
+TODOs.md
+.eslintcache
