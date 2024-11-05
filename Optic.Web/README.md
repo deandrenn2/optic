@@ -48,3 +48,50 @@ export default tseslint.config({
   },
 })
 ```
+
+```
+src/
+│
+├── slices/
+│   ├── FeatureOne/
+│   │   ├── components/
+│   │   │   ├── FeatureOneComponent.jsx
+│   │   │   └── FeatureOneList.jsx
+│   │   ├── hooks/
+│   │   │   └── useFeatureOne.js
+│   │   ├── services/
+│   │   │   └── featureOneService.js
+│   │   ├── store/
+│   │   │   ├── featureOneSlice.js   # Redux slice or similar state logic
+│   │   │   └── featureOneSelectors.js
+│   │   ├── FeatureOnePage.jsx
+│   │   └── index.js                 # Re-exports for ease of imports
+│   │
+│   ├── FeatureTwo/
+│   │   ├── components/
+│   │   │   ├── FeatureTwoComponent.jsx
+│   │   │   └── FeatureTwoList.jsx
+│   │   ├── hooks/
+│   │   │   └── useFeatureTwo.js
+│   │   ├── services/
+│   │   │   └── featureTwoService.js
+│   │   ├── store/
+│   │   │   ├── featureTwoSlice.js
+│   │   │   └── featureTwoSelectors.js
+│   │   ├── FeatureTwoPage.jsx
+│   │   └── index.js
+│
+├── shared/
+│   ├── components/                   # Global reusable components
+│   ├── hooks/                        # Global reusable hooks
+│   ├── services/                     # Global services
+│   ├── utils/                        # Utility functions
+│   └── constants/                    # Constants shared across slices
+│
+├── Layot/                          # Layout component
+│   ├── components/                   # Global reusable components
+├── App.jsx                           # Main app component
+├── main.jsx                          # Entry point for Vite.js
+└── routes.jsx                        # Route definitions, importing from each slice
+
+```
