@@ -20,6 +20,7 @@ builder.Services.AddPersistence(builder.Configuration);
 
 // Autorización y autenticación
 builder.AddAutenticationServices();
+builder.Services.ConfigureServices();
 
 // registro de servicios
 builder.AddInfraestructure();
@@ -34,6 +35,7 @@ app.UseReDoc(settings =>
     settings.Path = "/redoc";
     settings.DocumentPath = "/swagger/v1/swagger.json";
 });
+app.UseCors("AllowSpecificOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapCarter();

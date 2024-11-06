@@ -83,7 +83,7 @@ public class LoginUser : ICarterModule
             }
             else
             {
-                return Result.Failure(new Error("Autentication.errorToken", "Error al generar el token"));
+                return resLogin;
             }
 
         }
