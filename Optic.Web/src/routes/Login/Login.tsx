@@ -1,10 +1,38 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelopeOpen, faLock } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import { loginUser } from './LoginServices';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
+
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [hasError, setHasError] = useState<string>('');
+  const navigate = useNavigate();
+
+  function handleLogin(event: React.FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    loginUser({ email, password }).then((response) => {
+      console.log(response);
+      if(!response.isSuccess){
+        if(response.error){
+        setHasError(response.error.message);
+      }}
+
+      if (response.data) {
+        sessionStorage.setItem("token",  JSON.stringify(response?.data));
+      }
+      navigate('/home');
+  }).catch((error) => {
+    console.log(error.response.data.error.message);
+    setHasError(error.response.data.error.message);
+  });
+  }
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-200">
-      <form className="bg-white p-9 rounded-lg shadow-md w-full max-w-md mx-4 grid gap-9">
+      <form onSubmit={handleLogin} className="bg-white p-9 rounded-lg shadow-md w-full max-w-md mx-4 grid gap-6">
         <h2 className="text-6xl font-bold mb-4 text-center">
           <span>OP<span className="text-blue-500">Tic</span></span>
         </h2>
@@ -17,7 +45,7 @@ export const Login = () => {
                 <FontAwesomeIcon icon={faEnvelopeOpen} />
               </div>
             </span>
-            <input type="email"id="email" className="w-full px-10 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            <input type="email"id="email" required onChange={(e) => setEmail(e.target.value)} className="w-full px-10 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Correo electrónico"/>
           </div>
         </div>
@@ -32,14 +60,19 @@ export const Login = () => {
             </span>
             <input
               type="password" id="password"
+              required
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-10 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"placeholder="Contraseña" />
           </div>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="">
           <div className="flex items-center">
             <input type="checkbox" id="remember" className="form-checkbox h-4 w-4 text-blue-500" />
             <label htmlFor="remember" className="ml-2 text-sm">Recordar Sesión</label>
+          </div>
+          <div className="text-sm text-center pt-2 text-red-600 hover:text-blue-500">
+            <span><a href="">{hasError && hasError}</a></span>
           </div>
         </div>
 

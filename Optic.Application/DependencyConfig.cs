@@ -15,6 +15,38 @@ namespace Optic.Application;
 
 public static class DependencyConfig
 {
+
+
+    public static void AddAutenticationServices(this WebApplicationBuilder builder)
+    {
+
+        // Agrega el servicio de autorización
+        builder.Services.AddAuthorization();
+
+        // Optener JwtSettings desde appsettings.json
+        var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+
+        // Congiguración del servicio de autenticación JWT
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtSettings["Issuer"],
+                ValidAudience = jwtSettings["Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
+            };
+        });
+    }
+
     public static void AddInfraestructure(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IManagerToken, ManagerToken>();
@@ -45,33 +77,22 @@ public static class DependencyConfig
         return services;
     }
 
-    public static void AddAutenticationServices(this WebApplicationBuilder builder)
+
+    public static IServiceCollection ConfigureServices(this IServiceCollection services)
     {
-
-        // Agrega el servicio de autorización
-        builder.Services.AddAuthorization();
-
-        // Optener JwtSettings desde appsettings.json
-        var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-
-        // Congiguración del servicio de autenticación JWT
-        builder.Services.AddAuthentication(options =>
+        // Configuración de CORS
+        services.AddCors(options =>
         {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
+            options.AddPolicy("AllowSpecificOrigin", builder =>
             {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtSettings["Issuer"],
-                ValidAudience = jwtSettings["Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
-            };
+                builder.WithOrigins("http://localhost:5173", "https://localhost:5173")  // Permite cualquier origen
+                       .AllowAnyMethod()  // Permite cualquier método HTTP (GET, POST, PUT, DELETE, etc.)
+                       .AllowAnyHeader(); // Permite cualquier cabecera
+            });
         });
-    } 
+
+        return services;
+    }
+
+  
 }
