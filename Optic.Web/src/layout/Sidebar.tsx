@@ -1,45 +1,52 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse } from '@fortawesome/free-solid-svg-icons';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faHouse, faUser, faUsers, faGear, faTruck, faMoneyCheckDollar, faClipboardCheck } from "@fortawesome/free-solid-svg-icons"
 export const Sidebar = () => {
     return (
         <div id="sidebar" className="w-1/6 bg-white h-screen p-4 bg-gray-100 border-r">
             <nav>
-                <ul>
-                    <li>
-                        <a href={`/contacts/1`} className="w-auto block text-center align mx-1.5 my-1.5 bg-slate-500 px-1.5 py-1 rounded-md">
-                        <img src="https://placehold.co/100x100?text=Icono" alt="logo" className="h-full rounded-full" />
-                        <span>Inicio</span>
+                <ul className="space-y-1">
+                    <li className="flex flex-col items-center rounded-lg p-1" >
+                        <a href={`/contacts/1`} className="h-20 w-15 flex flex-col items-center rounded-lg p-4">
+                        <FontAwesomeIcon icon={faHouse} className="h-20 w-14 flex flex-col items-center rounded-lg p-1" />
+                        <span className="mt-1 font-bold">Inicio</span>
                         </a>
                     </li>
-                    <li>
-                        <a href={`/contacts/1`} className="w-auto block text-center align mx-1.5 my-1.5 bg-slate-500 px-1.5 py-1 rounded-md">
-                        <img src="https://placehold.co/100x100?text=Clientes" alt="logo" className="h-full rounded-full" />
-                        <span>Clientes</span>
+                    <li className="flex flex-col items-center rounded-lg p-1">
+                        <a href={`/contacts/1`} className="flex flex-col items-center rounded-lg p-4">
+                        <FontAwesomeIcon icon={faUser}  className="h-20 w-14 flex flex-col items-center rounded-lg p-1" />
+                        <span className="mt-1 font-bold">Clientes</span>
                         </a>
                     </li>
-                    <li>
-                        <a href={`/proveedores`} className="w-auto block text-center align mx-1.5 my-1.5 bg-slate-500 px-1.5 py-1 rounded-md">
-                            <img src="https://placehold.co/100x100?text=Proveedores" alt="logo" className="h-full rounded-full" />
-                            <span>Proveedores</span>
+                    <li className="flex flex-col items-center rounded-lg p-1">
+                        <a href={`/proveedores`} className="flex flex-col items-center rounded-lg p-1">
+                        <FontAwesomeIcon icon={faUsers}  className="h-20 w-14 flex flex-col items-center rounded-lg p-1" />
+                            <span className="mt-1 font-bold">Proveedores</span>
                         </a>
                     </li>
-                    <li>
-                        <a href={`/proveedores`} className="w-auto block text-center align mx-1.5 my-1.5 bg-slate-500 px-1.5 py-1 rounded-md">
-                            <img src="https://placehold.co/100x100?text=Formulas" alt="logo" className="h-full rounded-full" />
-                            <span>Formulas</span>
+                    
+                    <li className="flex flex-col items-center rounded-lg p-1">
+                        <a href={`/proveedores`} className="flex flex-col items-center rounded-lg p-1">
+                        <FontAwesomeIcon icon={faTruck}  className="h-20 w-14 flex flex-col items-center rounded-lg p-1" />
+                            <span className="mt-1 font-bold">Productos</span>
                         </a>
                     </li>
-                    <li>
-                        <a href={`/proveedores`} className="w-auto block text-center align mx-1.5 my-1.5 bg-slate-500 px-1.5 py-1 rounded-md">
-                            <img src="https://placehold.co/100x100?text=Facturación" alt="logo" className="h-full rounded-full" />
-                            <span>Facturación</span>
+
+                    <li className="flex flex-col items-center rounded-lg p-1">
+                        <a href={`/proveedores`} className="flex flex-col items-center rounded-lg p-1">
+                        <FontAwesomeIcon icon={faClipboardCheck}   className="h-20 w-14 flex flex-col items-center rounded-lg p-1" />
+                            <span className="mt-1 font-bold">Formulas</span>
                         </a>
                     </li>
-                    <li>
-                        <a href={`/proveedores`} className="w-auto block text-center align mx-1.5 my-1.5 bg-slate-500 px-1.5 py-1 rounded-md">
-                            <img src="https://placehold.co/100x100?text=Configuraciones" alt="logo" className="h-full rounded-full" />
-                            <span>Configuraciones</span>
+                    <li className="flex flex-col items-center rounded-lg p-1">
+                        <a href={`/proveedores`} className="flex flex-col items-center rounded-lg p-1">
+                        <FontAwesomeIcon icon={faMoneyCheckDollar}  className="h-20 w-14 flex flex-col items-center rounded-lg p-1" />
+                            <span className="mt-1 font-bold">Facturación</span>
+                        </a>
+                    </li>
+                    <li className="flex flex-col items-center rounded-lg p-1">
+                        <a href={`/proveedores`} className="flex flex-col items-center rounded-lg p-1">
+                        <FontAwesomeIcon icon={faGear}  className="h-20 w-14 flex flex-col items-center rounded-lg p-1" />
+                            <span className="mt-1 font-bold">Configuraciónes</span>
                         </a>
                     </li>
 
