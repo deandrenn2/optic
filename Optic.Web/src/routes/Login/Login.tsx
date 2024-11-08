@@ -23,7 +23,7 @@ export const Login = () => {
       if (response.data) {
         sessionStorage.setItem("token",  JSON.stringify(response?.data));
       }
-      navigate('/home');
+      navigate('/');
   }).catch((error) => {
     console.log(error.response.data.error.message);
     setHasError(error.response.data.error.message);
