@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHouse, faUser, faUsers, faGear, faTruck, faMoneyCheckDollar, faClipboardCheck } from "@fortawesome/free-solid-svg-icons"
 export const Sidebar = () => {
     return (
-        <div id="sidebar" className="w-1/6 bg-white h-screen p-4 bg-gray-100 border-r">
+        <div id="sidebar" className=" bg-white  p-4 bg-gray-100 border-r">
             <nav>
                 <ul className="space-y-1">
                     <li className="flex flex-col items-center rounded-lg p-1" >
