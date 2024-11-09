@@ -8,7 +8,7 @@ export default function Root() {
             <Header />
             <div id="main" className="flex ">
                 <Sidebar />
-                <div id="detail">
+                <div id="detail" className=" w-full">
                     <Outlet />
                 </div>
             </div>
