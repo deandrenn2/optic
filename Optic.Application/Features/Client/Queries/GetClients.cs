@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using Optic.Application.Domain.Entities;
-using Optic.Application.Domain.Enums;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
@@ -16,7 +14,7 @@ public class GetClients : ICarterModule
         int Id,
         string FirstName,
         string LastName,
-        Sex Sex,
+        int Sex,
         int IdentificationTypeId,
         string IdentificationNumber,
         string Email,
@@ -32,8 +30,8 @@ public class GetClients : ICarterModule
         {
             return await mediator.Send(new GetClientsQuery(id));
         })
-        .WithName(nameof(GetBusiness))
-        .WithTags(nameof(Business))
+        .WithName(nameof(GetClients))
+        .WithTags(nameof(Domain.Entities.Client))
         .Produces(StatusCodes.Status200OK);
     }
 

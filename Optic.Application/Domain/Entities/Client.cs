@@ -8,7 +8,7 @@ public class Client : AggregateRoot
     public Client(int id,
         string firstName,
         string lastName,
-        Sex sex,
+        int sex,
         int identificationTypeId,
         string identificationNumber,
         string email,
@@ -30,7 +30,7 @@ public class Client : AggregateRoot
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
-    public Sex Sex { get; private set; }
+    public int Sex { get; private set; }
     public int IdentificationTypeId { get; private set; }
     public string IdentificationNumber { get; private set; }
     public string Email { get; private set; }
@@ -42,7 +42,7 @@ public class Client : AggregateRoot
     public static Client Create(int id,
         string firstName,
         string lastName,
-        Sex sex,
+        int sex,
         int idIdentificationType,
         string identicationNumber,
         string email,

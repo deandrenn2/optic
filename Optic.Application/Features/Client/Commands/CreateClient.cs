@@ -28,7 +28,7 @@ public class CreateClient : ICarterModule
     {
         public string FirstName { get; init; } = string.Empty;
         public string LastName { get; init; } = string.Empty;
-        public Sex Sex { get; init; }
+        public int Sex { get; init; }
         public int IdentificationTypeId { get; init; } 
         public string IdentificationNumber { get; init; } = string.Empty;
         public string Email { get; init; } = string.Empty;
