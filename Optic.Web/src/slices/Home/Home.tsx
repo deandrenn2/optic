@@ -4,6 +4,7 @@ export const Home = () => {
   return (
     <>
     {/* <!-- Cards Section --> */}
+    <div className="w-5/6 p-4 ">
                <div className="bg-gray-300 p-4 mb-1 rounded-lg border border-grey-500 p-4 mb-4  ">
                    <div>
                        <div className="container mx-auto p-4">
@@ -277,10 +278,10 @@ export const Home = () => {
                                    </div>
                                </div>
                            </div>
-
                        </div>
                    </div>
                </div>
+            </div>
    </>
   )
 }

@@ -25,7 +25,7 @@ export const Sidebar = () => {
                     </li>
                     
                     <li className="flex flex-col items-center rounded-lg p-1">
-                        <a href={`/`} className="flex flex-col items-center rounded-lg p-1">
+                        <a href={`/Products`} className="flex flex-col items-center rounded-lg p-1">
                         <FontAwesomeIcon icon={faTruck}  className="h-20 w-14 flex flex-col items-center rounded-lg p-1" />
                             <span className="mt-1 font-bold">Productos</span>
                         </a>

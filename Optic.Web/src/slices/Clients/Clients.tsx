@@ -4,10 +4,7 @@ faFileExport
 export const Clientes = () => {
   return (
       <div className="w-5/6 p-4 ">
-        <div className="flex space-x-4 mb-4">
-          <button className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">+Nuevo Clientes</button>
-        </div>
-
+       
         <div className="bg-gray-300 p-4 mb-1 rounded-lg border border-grey-500 p-4 mb-4 w-full ">
           <div className="mb-2">
             <div className="relative">

@@ -1,3 +1,6 @@
+import { faCircleMinus, faMagnifyingGlass, faPlay } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
 export const Suppliers = () => {
     return (
     
@@ -9,7 +12,7 @@ export const Suppliers = () => {
                     <div className="relative">
                         <div className="inline-flex">
                             <input type="text" placeholder="Buscar Proveedor" className="p-2 pl-10 border-blue-400 rounded"/>
-                            <i className="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                            <FontAwesomeIcon icon={faMagnifyingGlass}  className="fas fa-search absolute left-3 top-3 text-gray-400"/> 
                             <button
                                 className="font-bold border p-2 bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded text-white ">Buscar</button>
                         </div>
@@ -36,10 +39,10 @@ export const Suppliers = () => {
                             <td className="border border-gray-300 p-2 text-center">opticolyopmail.com</td>
                             <td className="border border-gray-300 p-2 text-center">
                                 <button className="text-blue-500 mr-10">
-                                    <i className="fas fa-play"></i>
+                                <FontAwesomeIcon icon={faPlay} />
                                 </button>
-                                <button id="eliminarusuario" className="text-red-500">
-                                    <i className="fas fa-minus-circle ml-2"></i>
+                                <button  className="text-red-500">
+                                <FontAwesomeIcon icon={faCircleMinus} className="ml-2" />
                                 </button>
                             </td>
                         </tr>
@@ -52,10 +55,10 @@ export const Suppliers = () => {
                             <td className="border border-gray-300 p-2 text-center">opticolombia@yopmail.com</td>
                             <td className="border border-gray-300 p-2 text-center"> 
                                 <button className="text-blue-500 mr-10">
-                                    <i className="fas fa-play"></i>
+                                    <FontAwesomeIcon icon={faPlay} />
                                 </button>
                                 <button id="eliminarusuario" className="text-red-500">
-                                    <i className="fas fa-minus-circle ml-2"></i>
+                                <FontAwesomeIcon icon={faCircleMinus} className="ml-2" />
                                 </button>
                             </td>
                         </tr>
