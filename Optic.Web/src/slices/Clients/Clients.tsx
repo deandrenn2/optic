@@ -62,7 +62,7 @@ export const Clientes = () => {
                 <FontAwesomeIcon icon={faPlay} />
                 </button>
                   <button className="text-red-500">
-                  <FontAwesomeIcon icon={faCircleMinus} className="ml-2" />
+                  <FontAwesomeIcon icon={faCircleMinus} className="ml-2"/>
                   </button>
                 </td>
               </tr>
