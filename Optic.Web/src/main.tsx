@@ -5,8 +5,9 @@ import './index.css'
 import App from './App.tsx'
 import { Home } from './slices/Home/Home.tsx'
 import { Clientes } from './slices/Clients/Clients.tsx'
+import { Suppliers } from './slices/Suppliers/Suppliers.tsx'
 import { Login } from './routes/Login/Login.tsx'
-import { ClientsForm } from './slices/Clients/ClientsForm.tsx'
+
 
 const router = createBrowserRouter([
   {
@@ -18,13 +19,15 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'clientes',
-        element: <Clientes  />,
+        path: 'Clients',
+        element: <Clientes />,
       },
       {
-        path: 'clientsform',
-        element: <ClientsForm  />,
+        path: 'Suppliers',
+        element: <Suppliers />,
       },
+    
+
     ],
   },
   {
