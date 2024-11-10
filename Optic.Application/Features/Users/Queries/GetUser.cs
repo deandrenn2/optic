@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
+using Optic.Domain.Shared;
 
 namespace Optic.Application.Features.Users.Queries;
 public class GetUser : ICarterModule
 {
     public record GetUserResponse(int Id, string FirstName, string LastName, string Email);
 
-    public record GetUserQuery(int Id) : IRequest<GetUserResponse>;
+    public record GetUserQuery(int Id) : IRequest<Result>;
 
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -25,21 +26,19 @@ public class GetUser : ICarterModule
         .Produces(StatusCodes.Status200OK);
     }
 
-    public class GetUserHandler(AppDbContext context) : IRequestHandler<GetUserQuery, GetUserResponse>
+    public class GetUserHandler(AppDbContext context) : IRequestHandler<GetUserQuery, Result>
     {
-        public async Task<GetUserResponse> Handle(GetUserQuery request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             var user = await context.Users.FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if (user == null)
             {
-                return new GetUserResponse(0, "", "", "");
+                return Result.Failure(new Error("User.ErrorData", "El id de usuario no existe"));
             }
 
-            return new GetUserResponse(user.Id, user.FirstName, user.LastName, user.Email);
+            return Result<GetUserResponse>.Success(new GetUserResponse(user.Id, user.FirstName, user.LastName, user.Email), "Datos del usuario");
         }
-
-
     }
 }
 

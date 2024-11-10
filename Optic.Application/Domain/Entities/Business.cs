@@ -2,7 +2,7 @@
 
 namespace Optic.Application.Domain.Entities
 {
-    internal class Business : AggregateRoot
+    public class Business : AggregateRoot
     {
         public Business(int id,
             string companyName,
@@ -25,4 +25,6 @@ namespace Optic.Application.Domain.Entities
         public string PhoneNumber { get; private set; }
         public string UrlLogo { get; private set; } = "initials-logo.svg";
     }
+
+   
 }

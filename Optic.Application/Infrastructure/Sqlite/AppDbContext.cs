@@ -15,6 +15,9 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<User> Users => Set<User>();
+    public DbSet<Client> Clients => Set<Client>();
+    public DbSet<Business> Businesses => Set<Business>();
+    public DbSet<IdentificationType> IdentificationTypes => Set<IdentificationType>();
 
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

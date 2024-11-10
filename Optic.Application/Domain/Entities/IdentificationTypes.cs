@@ -2,9 +2,9 @@
 
 namespace Optic.Application.Domain.Entities;
 
-internal class IdentificationTypes : AggregateRoot
+public class IdentificationType : AggregateRoot
 {
-    public IdentificationTypes(int id,
+    public IdentificationType(int id,
         int orden,
         string name) : base(id)
     {

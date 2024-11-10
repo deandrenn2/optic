@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Domain\Shared\" />
     <Folder Include="Features\Users\EventHandlers\" />
   </ItemGroup>
 
