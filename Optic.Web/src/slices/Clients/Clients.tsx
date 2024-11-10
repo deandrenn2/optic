@@ -76,7 +76,6 @@ export const Clientes = () => {
               <a href="#" className="px-4 py-2 bg-white hover:bg-blue-500 border border-gray-300">3</a>
             </nav>
           </div>
-
         </div>
       </div>
 
