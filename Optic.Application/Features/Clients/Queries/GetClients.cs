@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
-namespace Optic.Application.Features.Client;
+namespace Optic.Application.Features.Clients;
 public class GetClients : ICarterModule
 {
     public record GetClientsResponse(

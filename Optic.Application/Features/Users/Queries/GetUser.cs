@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
@@ -17,7 +18,7 @@ public class GetUser : ICarterModule
 
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/users", async (int id, IMediator mediator) =>
+        app.MapGet("api/users/{id}", async (int id, IMediator mediator) =>
         {
             return await mediator.Send(new GetUserQuery(id));
         })

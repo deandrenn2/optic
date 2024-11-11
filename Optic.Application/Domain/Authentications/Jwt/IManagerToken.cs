@@ -1,7 +1,7 @@
 ﻿using Optic.Application.Domain.Entities;
-using SNET.Framework.Domain.Autentications.Jwt;
+using SNET.Framework.Domain.Authentications.Jwt;
 
-namespace Optic.Domain.Autentications
+namespace Optic.Domain.Authentications
 {
     public interface IManagerToken
     {

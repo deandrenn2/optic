@@ -8,7 +8,7 @@ using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
-namespace Optic.Application.Features.Business;
+namespace Optic.Application.Features.Businesses;
 public class GetBusiness : ICarterModule
 {
     public record GetBusinessResponse(int Id, string CompanyName, string Nit, string Address, string CellPhoneNumber, string PhoneNumber);

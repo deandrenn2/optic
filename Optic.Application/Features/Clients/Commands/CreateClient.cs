@@ -5,12 +5,12 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using Optic.Application.Domain.Enums;
+using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 
-namespace Optic.Application.Features.Client;
+namespace Optic.Application.Features.Clients;
 
-public class CreateClient : ICarterModule
+public class CreateClients : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -18,8 +18,8 @@ public class CreateClient : ICarterModule
         {
             return await mediator.Send(command);
         })
-        .WithName(nameof(CreateClient))
-        .WithTags(nameof(Domain.Entities.Client))
+        .WithName(nameof(CreateClients))
+        .WithTags(nameof(Client))
         .ProducesValidationProblem()
         .Produces(StatusCodes.Status201Created);
     }
@@ -47,7 +47,7 @@ public class CreateClient : ICarterModule
                 return Results.ValidationProblem(result.GetValidationProblems());
             }
 
-            var newUser = Domain.Entities.Client
+            var newUser = Client
                 .Create(0, 
                 request.FirstName, 
                 request.LastName, 

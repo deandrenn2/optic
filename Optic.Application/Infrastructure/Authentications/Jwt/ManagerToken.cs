@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Optic.Application.Domain.Entities;
-using Optic.Domain.Autentications;
-using SNET.Framework.Domain.Autentications.Jwt;
+using Optic.Domain.Authentications;
+using SNET.Framework.Domain.Authentications.Jwt;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Optic.Infrastructure.Autentications;
+namespace Optic.Infrastructure.Authentications;
 
 public class ManagerToken : IManagerToken
 {
@@ -22,7 +22,7 @@ public class ManagerToken : IManagerToken
         var jwtSettings = _configuration.GetSection("JwtSettings");
 
         var claims = new List<Claim>
-        {
+        {            
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),

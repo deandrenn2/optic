@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Optic.Application.Infrastructure.Sqlite;
-using Optic.Domain.Autentications;
+using Optic.Domain.Authentications;
 using Optic.Domain.Shared;
-using SNET.Framework.Domain.Autentications.Jwt;
+using SNET.Framework.Domain.Authentications.Jwt;
 
 namespace Optic.Application.Features.Users.Commands;
 public class LoginUser : ICarterModule

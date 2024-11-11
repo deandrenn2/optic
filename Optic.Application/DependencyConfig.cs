@@ -7,8 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Optic.Application.Infrastructure.Sqlite;
-using Optic.Domain.Autentications;
-using Optic.Infrastructure.Autentications;
+using Optic.Domain.Authentications;
+using Optic.Infrastructure.Authentications;
 using System.Text;
 
 namespace Optic.Application;
