@@ -3,6 +3,7 @@ import { CreateBusinessModel } from './LoginModel';
 import { useLogin } from './useLogin';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export const BusinessCreate = () => {
    const navigate = useNavigate();
@@ -18,17 +19,32 @@ export const BusinessCreate = () => {
       urlLogo: '',
    });
 
-   const { createUser } = useLogin();
+   console.log(business, "Datos de la organización");
+
+   const { createBusiness } = useLogin();
 
    const handleCreate = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
       event.preventDefault();
+      const res = await createBusiness.mutateAsync(business);
 
-      //    if (!res.isSuccess) {
-      //        toast.error(res.message);
-      //        return;
-      //    } else {
-      //         navigate("/createBusiness");
-      //    }
+
+      if (!res.isSuccess) {
+         toast.error(res.message);
+         setHasError(res.message);
+         return;
+      } else {
+         Swal.fire({
+            title: `La organización ha sido creada correctamente, debes ingresar a la web para acceder a la interfaz de administración`,
+            icon: "info",
+            showCancelButton: false,
+            confirmButtonText: "Ingresar",
+            confirmButtonColor: "#3085d6",
+            preConfirm: async () => {
+               navigate("/Login");
+            },
+         });
+
+      }
    };
 
    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -67,6 +83,25 @@ export const BusinessCreate = () => {
             </div>
             <div>
                <label
+                  htmlFor="comapanyNameTxt"
+                  className="block text-gray-600 text-sm font-bold mb-2"
+               >
+                  Abreviatura
+               </label>
+               <div className="relative">
+                  <input
+                     id="abbreviationTxt"
+                     name="abbreviation"
+                     value={business?.abbreviation}
+                     onChange={(e) => handleChange(e)}
+                     required
+                     className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                     placeholder="Abreviatura"
+                  />
+               </div>
+            </div>
+            <div>
+               <label
                   htmlFor="nitTxt"
                   className="block text-gray-600 text-sm font-bold mb-2"
                >
@@ -94,7 +129,6 @@ export const BusinessCreate = () => {
                </label>
                <div className="relative">
                   <input
-                     type="email"
                      id="cityTxt"
                      name="city"
                      value={business?.city}
@@ -157,7 +191,6 @@ export const BusinessCreate = () => {
                      name="phoneNumber"
                      value={business?.phoneNumber}
                      onChange={(e) => handleChange(e)}
-                     required
                      className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                      placeholder="Telefóno"
                   />

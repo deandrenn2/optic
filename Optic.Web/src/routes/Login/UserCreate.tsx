@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 export const UserCreate = () => {
    const navigate = useNavigate();
-   const [hasError, setHasError] = useState<string>('');
    const [user, setUser] = useState<CreateUserModel>({
       firstName: '',
       lastName: '',
@@ -21,8 +20,8 @@ export const UserCreate = () => {
 
    const handleCreate = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
       event.preventDefault();
+
       if (user.password !== confirmPassword) {
-         setHasError('Las contraseñas no coinciden');
          toast.error('Las contraseñas no coinciden');
          return;
       }
@@ -32,7 +31,7 @@ export const UserCreate = () => {
          toast.error(res.message);
          return;
       } else {
-         navigate('/createBusiness');
+         navigate('/Create/Business');
       }
    };
 
@@ -43,13 +42,13 @@ export const UserCreate = () => {
    };
 
    return (
-      <div className="flex justify-center items-center h-screen bg-gray-200">
+      <div className="flex justify-center items-center">
          <form
             onSubmit={handleCreate}
-            className="bg-white p-9 rounded-lg shadow-md w-full max-w-md mx-4 grid gap-6"
+            className="bg-white p-9 rounded-lg shadow-md w-full max-w-md mx-4 grid gap-6  my-5"
          >
-            <h2 className="text-3xl font-bold mb-4 text-center">
-               <span>Crear usuario</span>
+            <h2 className="text-3xl font-bold mb-1 text-center">
+               <span>Crear usuario Admin</span>
             </h2>
             <div>
                <label
@@ -168,14 +167,6 @@ export const UserCreate = () => {
                      className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                      placeholder="Frase de segura"
                   />
-               </div>
-            </div>
-
-            <div>
-               <div className="text-sm text-center pt-2 text-red-600 hover:text-blue-500">
-                  <span>
-                     <a href="">{hasError && hasError}</a>
-                  </span>
                </div>
             </div>
             <button

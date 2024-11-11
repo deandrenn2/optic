@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react';
 import { loginUser } from './LoginServices';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from './useLogin';
+import useUserContext from '../../shared/context/useUserContext';
 
 export const Login = () => {
    const [email, setEmail] = useState<string>('');
    const [password, setPassword] = useState<string>('');
    const [hasError, setHasError] = useState<string>('');
    const navigate = useNavigate();
+   const { setToken } = useUserContext();
    const { users, queryUsers } = useLogin();
 
    function handleLogin(event: React.FormEvent<HTMLFormElement>): void {
@@ -24,7 +26,7 @@ export const Login = () => {
             }
 
             if (response.data) {
-               sessionStorage.setItem('token', JSON.stringify(response?.data));
+               setToken(response?.data);
             }
             navigate('/');
          })
@@ -37,7 +39,7 @@ export const Login = () => {
    useEffect(() => {
       if (queryUsers?.data) {
          if (users && users.length === 0) {
-            navigate('/createUser');
+            navigate('/Create/User');
          }
       }
    }, [queryUsers?.data, users, navigate]);
@@ -57,7 +59,7 @@ export const Login = () => {
             <div>
                <label
                   htmlFor="email"
-                  className="block text-gray-400 text-sm font-bold mb-2"
+                  className="block text-gray-600 text-sm font-bold mb-2"
                >
                   Usuario
                </label>
@@ -81,7 +83,7 @@ export const Login = () => {
             <div>
                <label
                   htmlFor="password"
-                  className="block text-gray-400 text-sm font-bold mb-2"
+                  className="block text-gray-600 text-sm font-bold mb-2"
                >
                   Contraseña
                </label>
@@ -130,7 +132,7 @@ export const Login = () => {
                Ingresar
             </button>
 
-            <div className="text-sm text-gray-600 hover:text-blue-500">
+            <div className="text-sm text-center text-blue-600 hover:text-blue-800">
                <span>
                   <a href="">Olvidaste la contraseña</a>
                </span>

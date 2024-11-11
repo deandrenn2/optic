@@ -10,6 +10,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { UserCreate } from './routes/Login/UserCreate.tsx';
 import { BusinessCreate } from './routes/Login/BusinessCreate.tsx';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const queryClient = new QueryClient();
 
@@ -23,21 +25,21 @@ const router = createBrowserRouter([
             element: <Home />,
          },
          {
-            path: 'clientes',
+            path: 'Clientes',
             element: <Clientes />,
          },
       ],
    },
    {
-      path: 'login',
+      path: 'Login',
       element: <Login />,
    },
    {
-      path: 'createUser',
+      path: '/Create/User',
       element: <UserCreate />,
    },
    {
-      path: 'createBusiness',
+      path: '/Create/Business',
       element: <BusinessCreate />,
    },
 ]);
@@ -48,5 +50,17 @@ createRoot(document.getElementById('root')!).render(
          <RouterProvider router={router} />
          <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
+      <ToastContainer
+         position="top-right"
+         autoClose={5000}
+         hideProgressBar={false}
+         newestOnTop={false}
+         closeOnClick
+         rtl={false}
+         pauseOnFocusLoss
+         draggable
+         pauseOnHover
+         theme="light"
+      />
    </StrictMode>,
 );
