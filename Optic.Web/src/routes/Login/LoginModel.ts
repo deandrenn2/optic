@@ -14,3 +14,18 @@ export interface TokenModel {
       };
   
 }
+
+export interface UserResponseModel {
+  id: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+}
+
+export interface CreateUserModel {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  securePharse: string;
+}

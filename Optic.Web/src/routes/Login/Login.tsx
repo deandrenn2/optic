@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelopeOpen, faLock } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { loginUser } from './LoginServices';
 import { useNavigate } from 'react-router-dom';
+import { useLogin } from './useLogin';
 
 export const Login = () => {
 
@@ -10,6 +11,7 @@ export const Login = () => {
   const [password, setPassword] = useState<string>('');
   const [hasError, setHasError] = useState<string>('');
   const navigate = useNavigate();
+  const { users, queryUsers } = useLogin();
 
   function handleLogin(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
@@ -29,6 +31,14 @@ export const Login = () => {
     setHasError(error.response.data.error.message);
   });
   }
+
+  useEffect(() => {
+    if (queryUsers?.data) {
+      if (users && users.length === 0) {
+         navigate('/createUser');
+      }
+    }
+  }, [queryUsers?.data, users, navigate]);
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-200">
