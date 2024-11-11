@@ -11,6 +11,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("Users");
             builder.Property(x => x.Email).IsRequired();
+            builder.HasIndex(x => x.Email).IsUnique();
         }
     }
 }
