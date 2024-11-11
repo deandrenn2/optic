@@ -1,45 +1,40 @@
 import React, { useState } from 'react';
-import { CreateUserModel } from './LoginModel';
+import { CreateBusinessModel } from './LoginModel';
 import { useLogin } from './useLogin';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-export const UserCreate = () => {
+export const BusinessCreate = () => {
    const navigate = useNavigate();
    const [hasError, setHasError] = useState<string>('');
-   const [user, setUser] = useState<CreateUserModel>({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      securePharse: '',
+   const [business, setBusiness] = useState<CreateBusinessModel>({
+      companyName: '',
+      abbreviation: '',
+      nit: '',
+      address: '',
+      city: '',
+      cellPhoneNumber: '',
+      phoneNumber: '',
+      urlLogo: '',
    });
 
    const { createUser } = useLogin();
 
-   const [confirmPassword, setConfirmPassword] = useState<string>('');
-
    const handleCreate = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
       event.preventDefault();
-      if (user.password !== confirmPassword) {
-         setHasError('Las contraseñas no coinciden');
-         toast.error('Las contraseñas no coinciden');
-         return;
-      }
-      const res = await createUser.mutateAsync(user);
 
-      if (!res.isSuccess) {
-         toast.error(res.message);
-         return;
-      } else {
-         navigate('/createBusiness');
-      }
+      //    if (!res.isSuccess) {
+      //        toast.error(res.message);
+      //        return;
+      //    } else {
+      //         navigate("/createBusiness");
+      //    }
    };
 
    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       const { name, value } = event.target;
       event.preventDefault();
-      setUser({ ...user, [name]: value });
+      setBusiness({ ...business, [name]: value });
    };
 
    return (
@@ -49,124 +44,122 @@ export const UserCreate = () => {
             className="bg-white p-9 rounded-lg shadow-md w-full max-w-md mx-4 grid gap-6"
          >
             <h2 className="text-3xl font-bold mb-4 text-center">
-               <span>Crear usuario</span>
+               <span>Crear organización</span>
             </h2>
             <div>
                <label
-                  htmlFor="namesTxt"
+                  htmlFor="comapanyNameTxt"
                   className="block text-gray-600 text-sm font-bold mb-2"
                >
-                  Nombres
+                  Nombre
                </label>
                <div className="relative">
                   <input
-                     id="namesTxt"
-                     name="firstName"
-                     value={user?.firstName}
+                     id="comapanyNameTxt"
+                     name="companyName"
+                     value={business?.companyName}
                      onChange={(e) => handleChange(e)}
                      required
                      className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                     placeholder="Nombres"
+                     placeholder="Nombre"
                   />
                </div>
             </div>
             <div>
                <label
-                  htmlFor="lastNameTxt"
+                  htmlFor="nitTxt"
                   className="block text-gray-600 text-sm font-bold mb-2"
                >
-                  Apellidos
+                  NIT
                </label>
                <div className="relative">
                   <input
-                     id="lastNameTxt"
-                     name="lastName"
-                     value={user?.lastName}
+                     id="nitTxt"
+                     name="nit"
+                     value={business?.nit}
                      onChange={(e) => handleChange(e)}
                      required
                      className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                     placeholder="Apellidos"
+                     placeholder="Nit"
                   />
                </div>
             </div>
 
             <div>
                <label
-                  htmlFor="email"
+                  htmlFor="cityTxt"
                   className="block text-gray-600 text-sm font-bold mb-2"
                >
-                  Email
+                  Ciudad
                </label>
                <div className="relative">
                   <input
                      type="email"
-                     id="email"
-                     name="email"
-                     value={user?.email}
+                     id="cityTxt"
+                     name="city"
+                     value={business?.city}
                      onChange={(e) => handleChange(e)}
                      required
                      className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                     placeholder="Correo electrónico"
+                     placeholder="Ciudad"
                   />
                </div>
             </div>
 
             <div>
                <label
-                  htmlFor="password"
+                  htmlFor="addressTxt"
                   className="block text-gray-600 text-sm font-bold mb-2"
                >
-                  Contraseña
+                  Dirección
                </label>
                <div className="relative">
                   <input
-                     type="password"
-                     id="password"
+                     id="addressTxt"
                      required
-                     name="password"
-                     value={user?.password}
+                     name="address"
+                     value={business?.address}
                      onChange={(e) => handleChange(e)}
                      className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                     placeholder="Contraseña"
+                     placeholder="Dirección"
                   />
                </div>
             </div>
             <div>
                <label
-                  htmlFor="confirmPasswordTxt"
+                  htmlFor="cellPhoneNumberTxt"
                   className="block text-gray-600 text-sm font-bold mb-2"
                >
-                  Confirmar Contraseña
+                  Linea celular
                </label>
                <div className="relative">
                   <input
-                     type="password"
-                     id="confirmPasswordTxt"
+                     id="cellPhoneNumberTxt"
+                     name="cellPhoneNumber"
                      required
-                     value={confirmPassword}
-                     onChange={(e) => setConfirmPassword(e.target.value)}
+                     value={business?.cellPhoneNumber}
+                     onChange={(e) => handleChange(e)}
                      className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                     placeholder="Contraseña"
+                     placeholder="Linea celular"
                   />
                </div>
             </div>
             <div>
                <label
-                  htmlFor="securePharseTxt"
+                  htmlFor="phoneNumberTxt"
                   className="block text-gray-600 text-sm font-bold mb-2"
                >
-                  Frase de segura
+                  Telefóno
                </label>
                <div className="relative">
                   <input
-                     id="securePharseTxt"
-                     name="securePharse"
-                     value={user?.securePharse}
+                     id="phoneNumberTxt"
+                     name="phoneNumber"
+                     value={business?.phoneNumber}
                      onChange={(e) => handleChange(e)}
-                     maxLength={150}
                      required
                      className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                     placeholder="Frase de segura"
+                     placeholder="Telefóno"
                   />
                </div>
             </div>
@@ -182,7 +175,7 @@ export const UserCreate = () => {
                type="submit"
                className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-               Crear Usuario
+               Crear organización
             </button>
          </form>
       </div>
