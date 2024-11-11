@@ -6,6 +6,7 @@ namespace Optic.Application.Domain.Entities
     {
         public Business(int id,
             string companyName,
+            string abbreviation,
             string nit,
             string address,
             string city,
@@ -13,6 +14,7 @@ namespace Optic.Application.Domain.Entities
             string phoneNumber) : base(id)
         {
             CompanyName = companyName;
+            Abbreviation = abbreviation;
             Nit = nit;
             Address = address;
             City = city;
@@ -21,6 +23,7 @@ namespace Optic.Application.Domain.Entities
         }
 
         public string CompanyName { get; private set; }
+        public string Abbreviation { get; private set; }
         public string Nit { get; private set; }
         public string City { get; private set; }
         public string Address { get; private set; }
@@ -32,6 +35,7 @@ namespace Optic.Application.Domain.Entities
         public static Business Create(
             int id,
             string companyName,
+            string abbreviation,
             string nit,
             string address,
             string city,
@@ -41,6 +45,7 @@ namespace Optic.Application.Domain.Entities
         {
             return new Business(id,
                 companyName,
+                abbreviation,
                 nit,
                 address,
                 city,

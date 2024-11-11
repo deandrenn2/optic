@@ -17,7 +17,7 @@ public class GetBusiness : ICarterModule
 
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/business", async (int id, IMediator mediator) =>
+        app.MapGet("api/businesses", async (int id, IMediator mediator) =>
         {
             return await mediator.Send(new GetBuniessQuery(id));
         })
