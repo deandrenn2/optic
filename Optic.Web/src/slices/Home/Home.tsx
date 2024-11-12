@@ -1,10 +1,8 @@
-import { faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
-faExpandArrowsAlt;
 export const Home = () => {
    return (
       <>
          {/* <!-- Cards Section --> */}
-         <div className="bg-gray-300 p-4 mb-1 rounded-lg border border-grey-500 p-4 mb-4  ">
+         <div className="p-4 mb-1border border-grey-500 mb-4  ">
             <div>
                <div className="container mx-auto p-4">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

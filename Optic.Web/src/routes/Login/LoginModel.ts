@@ -19,6 +19,7 @@ export interface UserResponseModel {
    firstName?: string;
    lastName?: string;
    email?: string;
+   idAvatar?: number;
 }
 
 export interface CreateUserModel {

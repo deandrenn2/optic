@@ -1,13 +1,19 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createBusinessServices, createUserServices, getUsers, loginUser } from './LoginServices';
+import { createBusinessServices, createUserServices, getUser, getUsers, loginUser } from './LoginServices';
 import { toast } from 'react-toastify';
 
 const KEY = 'LOGIN';
 
-export const useLogin = () => {
+export const useLogin = (id: number | undefined = undefined) => {
    const queryUsers = useQuery({
-      queryKey: [`${KEY}_USER`],
+      queryKey: [`${KEY}_USERS`],
       queryFn: getUsers,
+   });
+
+   const queryUser = useQuery({
+      queryKey: [`${KEY}_USER`],
+      queryFn: () => getUser(id),
+      enabled: id !== null,
    });
 
    const logginn = useMutation({
@@ -53,6 +59,8 @@ export const useLogin = () => {
       users: queryUsers?.data?.data,
       queryUsers,
       logginn,
+      queryUser,
+      user: queryUser?.data?.data,
       createUser,
       createBusiness,
    };

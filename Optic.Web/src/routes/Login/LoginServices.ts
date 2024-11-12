@@ -20,6 +20,7 @@ export const loginUser = async (model: LoginModel): Promise<MsgResponse<TokenMod
    return response.data;
 };
 
+//#region  Usuarios
 export const getUsers = async (): Promise<MsgResponse<UserResponseModel[]>> => {
    const url = 'api/users';
    const response = await ApiClient.get<MsgResponse<UserResponseModel[]>>(url);
@@ -37,6 +38,26 @@ export const getUsers = async (): Promise<MsgResponse<UserResponseModel[]>> => {
 
    return response.data;
 };
+
+export const getUser = async (id: number | undefined): Promise<MsgResponse<UserResponseModel>> => {
+   const url = `api/users/${id}`;
+   const response = await ApiClient.get<MsgResponse<UserResponseModel>>(url);
+   if (response.status !== 200) {
+      return {
+         isSuccess: false,
+         message: 'Error al obtener el usuario',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};
+
+//#endregion
 
 export const createUserServices = async (model: CreateUserModel): Promise<MsgResponse<CreateUserModel>> => {
    const url = 'api/users';
