@@ -59,9 +59,6 @@ public class CreateUser : ICarterModule
                 return Result.Failure(new Error("Login.ErrorCreateUser", "Error al crear el usuario"));
             }
 
-
-            //return Results.Created($"api/users/{newUser.Id}", null);
-
         }
     }
 

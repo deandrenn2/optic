@@ -11,15 +11,15 @@ using Optic.Domain.Shared;
 namespace Optic.Application.Features.Businesses;
 public class GetBusiness : ICarterModule
 {
-    public record GetBusinessResponse(int Id, string CompanyName, string Nit, string Address, string CellPhoneNumber, string PhoneNumber);
+    public record GetBusinessResponse(int Id, string CompanyName, string Abbreviation, string Nit, string Address, string CellPhoneNumber, string PhoneNumber);
 
-    public record GetBuniessQuery(int Id) : IRequest<Result>;
+    public record GetBuniessQuery() : IRequest<Result>;
 
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/business", async (int id, IMediator mediator) =>
+        app.MapGet("api/businesses", async ( IMediator mediator) =>
         {
-            return await mediator.Send(new GetBuniessQuery(id));
+            return await mediator.Send(new GetBuniessQuery());
         })
         .WithName(nameof(GetBusiness))
         .WithTags(nameof(Business))
@@ -41,6 +41,7 @@ public class GetBusiness : ICarterModule
                 new GetBusinessResponse(
                     busines.Id,
                     busines.CompanyName,
+                    busines.Abbreviation,
                     busines.UrlLogo,
                     busines.PhoneNumber,
                     busines.CellPhoneNumber,

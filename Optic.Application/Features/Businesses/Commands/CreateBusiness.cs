@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
+using Optic.Domain.Shared;
 
 namespace Optic.Application.Features.Businesses;
 
@@ -14,7 +15,7 @@ public class CreateBusiness : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("api/business", async (HttpRequest req, IMediator mediator, CreateBusinessCommand command) =>
+        app.MapPost("api/businesses", async (HttpRequest req, IMediator mediator, CreateBusinessCommand command) =>
         {
             return await mediator.Send(command);
         })
@@ -24,9 +25,10 @@ public class CreateBusiness : ICarterModule
         .Produces(StatusCodes.Status201Created);
     }
 
-    public record CreateBusinessCommand : IRequest<IResult>
+    public record CreateBusinessCommand : IRequest<Result>
     {
         public string CompanyName { get; init; } = string.Empty;
+        public string Abbreviation { get; init; } = string.Empty;
         public string Nit { get; init; } = string.Empty;
         public string Address { get; init; } = string.Empty;
         public string City { get; init; } = string.Empty;
@@ -35,19 +37,20 @@ public class CreateBusiness : ICarterModule
         public string UrlLogo { get; init; } = "initials-logo.svg";
     }
 
-    public class CreateProductHandler(AppDbContext context, IValidator<CreateBusinessCommand> validator) : IRequestHandler<CreateBusinessCommand, IResult>
+    public class CreateProductHandler(AppDbContext context, IValidator<CreateBusinessCommand> validator) : IRequestHandler<CreateBusinessCommand, Result>
     {
-        public async Task<IResult> Handle(CreateBusinessCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreateBusinessCommand request, CancellationToken cancellationToken)
         {
             var result = validator.Validate(request);
             if (!result.IsValid)
             {
-                return Results.ValidationProblem(result.GetValidationProblems());
+                return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Login.ErrorValidation", "Se presentaron errores de validación"));
             }
 
-            var newUser = Business
+            var newBusiness = Business
                 .Create(0, 
                 request.CompanyName, 
+                request.Abbreviation,
                 request.Nit, 
                 request.Address,
                 request.City,   
@@ -55,11 +58,21 @@ public class CreateBusiness : ICarterModule
                 request.PhoneNumber
                 );
 
-            context.Add(newUser);    
+            context.Add(newBusiness);
 
-            await context.SaveChangesAsync();
+            var resCount = await context.SaveChangesAsync();
 
-            return Results.Created($"api/clients/{newUser.Id}", null);
+
+            if (resCount > 0)
+            {
+                return Result<Business>.Success(newBusiness, "Usuario creado correctamente");
+            }
+            else
+            {
+                return Result.Failure(new Error("Login.ErrorCreateUser", "Error al crear el usuario"));
+            }
+
+            //return Results.Created($"api/clients/{newBusiness.Id}", null);
 
         }
     }
@@ -68,9 +81,11 @@ public class CreateBusiness : ICarterModule
     {
         public CreateBusinessValidator()
         {
+            RuleFor(x => x.CompanyName).NotEmpty();
+            RuleFor(x => x.Abbreviation).NotEmpty();
             RuleFor(x => x.Address).NotEmpty();
             RuleFor(x => x.City).NotEmpty();
-            RuleFor(x => x.CompanyName).NotEmpty();
+            RuleFor(x => x.CellPhoneNumber).NotEmpty();
             RuleFor(x => x.Nit).NotEmpty();
         }
     }

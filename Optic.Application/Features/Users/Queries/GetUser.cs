@@ -12,7 +12,7 @@ using Optic.Domain.Shared;
 namespace Optic.Application.Features.Users.Queries;
 public class GetUser : ICarterModule
 {
-    public record GetUserResponse(int Id, string FirstName, string LastName, string Email);
+    public record GetUserResponse(int Id, string FirstName, string LastName, string Email, int IdAvatar);
 
     public record GetUserQuery(int Id) : IRequest<Result>;
 
@@ -38,7 +38,7 @@ public class GetUser : ICarterModule
                 return Result.Failure(new Error("User.ErrorData", "El id de usuario no existe"));
             }
 
-            return Result<GetUserResponse>.Success(new GetUserResponse(user.Id, user.FirstName, user.LastName, user.Email), "Datos del usuario");
+            return Result<GetUserResponse>.Success(new GetUserResponse(user.Id, user.FirstName, user.LastName, user.Email, user.IdAvatar), "Datos del usuario");
         }
     }
 }

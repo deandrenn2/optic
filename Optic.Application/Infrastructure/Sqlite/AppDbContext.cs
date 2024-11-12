@@ -61,6 +61,8 @@ public class AppDbContext : DbContext
     {
         //base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new BusinessConfiguration());
+        modelBuilder.ApplyConfiguration(new ClientConfiguration());
     }
 
 }
