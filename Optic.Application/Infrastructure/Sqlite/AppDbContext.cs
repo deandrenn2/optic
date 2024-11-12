@@ -15,6 +15,9 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<User> Users => Set<User>();
+    public DbSet<Client> Clients => Set<Client>();
+    public DbSet<Business> Businesses => Set<Business>();
+    public DbSet<IdentificationType> IdentificationTypes => Set<IdentificationType>();
 
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -58,6 +61,8 @@ public class AppDbContext : DbContext
     {
         //base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new BusinessConfiguration());
+        modelBuilder.ApplyConfiguration(new ClientConfiguration());
     }
 
 }

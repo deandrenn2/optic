@@ -1,4 +1,5 @@
 ﻿using Optic.Application.Domain.Enums;
+using Optic.Application.Domain.Extensions;
 using Optic.Application.Domain.Primitives;
 using Optic.Domain.Extensions;
 using Optic.Domain.Shared;
@@ -31,6 +32,7 @@ public class User : AggregateRoot
     public int IdRol { get; private set; } = 2;
     public string SecurePharse { get; private set; }
     public int StatusId { get; private set; } = 1;
+    public int IdAvatar { get; private set; } = NumberRandom.Random(1, 14);
 
     public static User Create(int id,
     string firstName,
@@ -43,6 +45,7 @@ public class User : AggregateRoot
         return new User(id, firstName, lastName, email, passwordHash,securePharse);
     }
 
+    
     public Result Login(string password)
     {
         var isPasswordMatch = this.Password == password.EncryptPassword();
@@ -64,12 +67,14 @@ public class User : AggregateRoot
         return Result.Success("Autenticado correctamente");
     }
 
-    public void ResetPassword(string securePharse)
+    public bool ValidateSecurePharse(string securePharse)
     {
+        return this.SecurePharse == securePharse;   
     }
 
-    public void ValidatePasswordPassWord()
+    public void SetAvatar(int id)
     {
+        this.IdAvatar = id;
     }
 }
 

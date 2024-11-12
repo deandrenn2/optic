@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
+using Optic.Domain.Shared;
 
 namespace Optic.Application.Features.Users.Commands;
 
@@ -24,7 +25,7 @@ public class CreateUser : ICarterModule
         .Produces(StatusCodes.Status201Created);
     }
 
-    public record CreateUserCommand : IRequest<IResult>
+    public record CreateUserCommand : IRequest<Result>
     {
         public string FirstName { get; init; } = string.Empty;
         public string LastName { get; init; } = string.Empty;
@@ -33,23 +34,30 @@ public class CreateUser : ICarterModule
         public string SecurePharse { get; init; } = string.Empty;
     }
 
-    public class CreateProductHandler(AppDbContext context, IValidator<CreateUserCommand> validator) : IRequestHandler<CreateUserCommand, IResult>
+    public class CreateProductHandler(AppDbContext context, IValidator<CreateUserCommand> validator) : IRequestHandler<CreateUserCommand, Result>
     {
-        public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var result = validator.Validate(request);
             if (!result.IsValid)
             {
-                return Results.ValidationProblem(result.GetValidationProblems());
+                return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Login.ErrorValidation", "Se presentaron errores de validación"));
             }
 
             var newUser = User.Create(0, request.FirstName, request.LastName, request.Email, request.Password, request.SecurePharse);
 
             context.Add(newUser);    
 
-            await context.SaveChangesAsync();
+            var resCount = await context.SaveChangesAsync();
 
-            return Results.Created($"api/users/{newUser.Id}", null);
+            if (resCount > 0)
+            {
+               return Result<User>.Success(newUser, "Usuario creado correctamente");
+            } 
+                else
+            {
+                return Result.Failure(new Error("Login.ErrorCreateUser", "Error al crear el usuario"));
+            }
 
         }
     }

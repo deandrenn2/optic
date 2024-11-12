@@ -1,12 +1,12 @@
 ﻿namespace Optic.Application.Domain.Enums;
 
-internal enum Sex
+public enum Sex
 {
     Male,
     Famale
 }
 
-internal enum UserStatus
+public enum UserStatus
 {
     Active = 1,
     Inactive = 2,
