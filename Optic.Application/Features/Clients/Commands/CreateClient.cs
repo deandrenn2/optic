@@ -47,7 +47,7 @@ public class CreateClients : ICarterModule
                 return Results.ValidationProblem(result.GetValidationProblems());
             }
 
-            var newUser = Client
+            var newClient = Client
                 .Create(0, 
                 request.FirstName, 
                 request.LastName, 
@@ -59,11 +59,11 @@ public class CreateClients : ICarterModule
                 request.CellPhoneNumber,
                 request.PhoneNumber);
 
-            context.Add(newUser);    
+            context.Add(newClient);    
 
             await context.SaveChangesAsync();
 
-            return Results.Created($"api/clients/{newUser.Id}", null);
+            return Results.Created($"api/clients/{newClient.Id}", newClient);
 
         }
     }
