@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Form, RouterProvider } from 'react-router-dom';
 import './index.css';
 import App from './App.tsx';
 import { Home } from './slices/Home/Home.tsx';
@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { Products } from './slices/Products/Products.tsx';
 import { Suppliers } from './slices/Suppliers/Suppliers.tsx';
+import { Formulas } from './slices/Formulas/Formulas.tsx';
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
          {
             path: 'Suppliers',
             element: <Suppliers />,
+         },
+         {
+            path: 'Formulas',
+            element: <Formulas />,
          },
 
       ],

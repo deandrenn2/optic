@@ -57,8 +57,8 @@ export const Suppliers = () => {
                                 <button className="text-blue-500 mr-10">
                                     <FontAwesomeIcon icon={faPlay} />
                                 </button>
-                                <button id="eliminarusuario" className="text-red-500">
-                                <FontAwesomeIcon icon={faCircleMinus} className="ml-2" />
+                                <button id="eliminarusuario" className="text-red-500 ml-2">
+                                <FontAwesomeIcon icon={faCircleMinus}/>
                                 </button>
                             </td>
                         </tr>
