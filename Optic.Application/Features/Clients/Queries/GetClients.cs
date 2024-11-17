@@ -22,13 +22,13 @@ public class GetClients : ICarterModule
         string CellPhoneNumber,
         string PhoneNumber);
 
-    public record GetClientsQuery(int Id) : IRequest<Result>;
+    public record GetClientsQuery() : IRequest<Result>;
 
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/clients", async (int id, IMediator mediator) =>
+        app.MapGet("api/clients", async (IMediator mediator) =>
         {
-            return await mediator.Send(new GetClientsQuery(id));
+            return await mediator.Send(new GetClientsQuery());
         })
         .WithName(nameof(GetClients))
         .WithTags(nameof(Domain.Entities.Client))
