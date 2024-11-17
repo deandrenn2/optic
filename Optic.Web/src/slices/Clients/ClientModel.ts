@@ -1,4 +1,5 @@
 export interface CreateClientModel {
+   id?: number;
    firstName: string;
    lastName: string;
    sex: number;

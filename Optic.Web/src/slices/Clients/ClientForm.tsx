@@ -1,11 +1,13 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CreateClientModel } from "./ClientModel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEraser } from "@fortawesome/free-solid-svg-icons";
 import useClient from "./useClient";
 
-export const ClientForm = () => {
+export const ClientForm = ({ id }: { id?: number }) => {
+
    const [client, setClient] = useState<CreateClientModel>({
+      id: id,
       firstName: '',
       lastName: '',
       sex: 0,
@@ -18,7 +20,16 @@ export const ClientForm = () => {
    });
    const form = useRef<HTMLFormElement>(null);
 
-   const { createClient } = useClient();
+   const { createClient, updateClient, clients } = useClient();
+
+   useEffect(() => {
+      if (id) {
+         const client = clients?.find((client) => client.id === id);
+         if (client) {
+            setClient(client);
+         }
+      }
+   }, [id, clients]);
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setClient({ ...client, [e.target.name]: e.target.value });
@@ -26,9 +37,13 @@ export const ClientForm = () => {
 
    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      const res = await createClient.mutateAsync(client);
-      if (res.isSuccess) {
-         form.current?.reset();
+      if (id) {
+         await updateClient.mutateAsync(client);
+      } else {
+         const res = await createClient.mutateAsync(client);
+         if (res.isSuccess) {
+            form.current?.reset();
+         }
       }
    };
 
@@ -42,6 +57,7 @@ export const ClientForm = () => {
                <input
                   required
                   type="text"
+                  value={client?.firstName}
                   onChange={(e) => handleChange(e)}
                   name="firstName"
                   placeholder="Nombre"
@@ -55,6 +71,7 @@ export const ClientForm = () => {
                <input
                   type="text"
                   required
+                  value={client?.lastName}
                   onChange={(e) => handleChange(e)}
                   name="lastName"
                   placeholder="Apellido"
@@ -68,6 +85,7 @@ export const ClientForm = () => {
                </label>
                <select
                   name="sex"
+                  value={client?.sex}
                   required
                   onChange={(e) => handleChange(e)}
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -84,6 +102,7 @@ export const ClientForm = () => {
                </label>
                <select
                   name="identificationTypeId"
+                  value={client?.identificationTypeId}
                   onChange={(e) => handleChange(e)}
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                >
@@ -100,6 +119,7 @@ export const ClientForm = () => {
                <input
                   type="text"
                   required
+                  value={client?.identificationNumber}
                   onChange={(e) => handleChange(e)}
                   name="identificationNumber"
                   placeholder="Identificación"
@@ -113,6 +133,7 @@ export const ClientForm = () => {
                <input
                   type="text"
                   required
+                  value={client?.cellPhoneNumber}
                   onChange={(e) => handleChange(e)}
                   name="cellPhoneNumber"
                   placeholder="Celular"
@@ -125,6 +146,7 @@ export const ClientForm = () => {
                </label>
                <input
                   type="text"
+                  value={client?.email}
                   onChange={(e) => handleChange(e)}
                   name="email"
                   placeholder="Email"
@@ -138,6 +160,7 @@ export const ClientForm = () => {
                </label>
                <input
                   type="text"
+                  value={client?.address}
                   onChange={(e) => handleChange(e)}
                   name="address"
                   placeholder="Dirección"
@@ -148,12 +171,23 @@ export const ClientForm = () => {
 
          </div>
          <div className="mt-4">
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
-               Crear cliente
-            </button>
-            <button type="reset" className="bg-gray-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
-               <FontAwesomeIcon icon={faEraser} />
-            </button>
+            {id &&
+               (
+                  <button type="submit" disabled={createClient.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
+                     {createClient.isPending ? "Actualizando..." : "Actualizar cliente"}
+                  </button>
+               )}
+
+            {!id &&
+               (
+                  <>
+                     <button type="submit" disabled={createClient.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
+                        {createClient.isPending ? "Creando..." : "Crear cliente"}
+                     </button>
+                     <button type="reset" className="bg-gray-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
+                        <FontAwesomeIcon icon={faEraser} />
+                     </button>
+                  </>)}
          </div>
       </form>
    )
