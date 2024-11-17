@@ -1,10 +1,25 @@
 import { faCircleMinus, faMagnifyingGlass, faMars, faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import OffCanvas from '../../shared/components/OffCanvas/Index';
+import { useState } from 'react';
+import { Direction } from '../../shared/components/OffCanvas/Models';
+import { ClientForm } from './ClientForm';
 export const Clientes = () => {
+   const [visible, setVisible] = useState(false);
+
+   const handleClose = () => {
+      setVisible(false);
+   };
+
+   const handleClick = () => {
+      setVisible(true);
+   };
+
    return (
       <div className="w-full">
          <div className="flex space-x-4 mb-4">
-            <button className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
+            <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
+               onClick={handleClick}>
                <FontAwesomeIcon
                   icon={faPlus}
                   className="fa-search top-3 pr-2 font-bold"
@@ -120,6 +135,9 @@ export const Clientes = () => {
                </nav>
             </div>
          </div>
+         <OffCanvas titlePrincipal='Registro de Cliente' visible={visible} xClose={handleClose} position={Direction.Right}  >
+            <ClientForm />
+         </OffCanvas>
       </div>
    );
 };

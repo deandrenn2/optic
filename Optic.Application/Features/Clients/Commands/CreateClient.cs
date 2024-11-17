@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Optic.Application.Domain.Entities;
+using Optic.Application.Features.Businesses;
 using Optic.Application.Infrastructure.Sqlite;
+using Optic.Domain.Shared;
 
 namespace Optic.Application.Features.Clients;
 
@@ -24,7 +26,7 @@ public class CreateClients : ICarterModule
         .Produces(StatusCodes.Status201Created);
     }
 
-    public record CreateClientCommand : IRequest<IResult>
+    public record CreateClientCommand : IRequest<Result>
     {
         public string FirstName { get; init; } = string.Empty;
         public string LastName { get; init; } = string.Empty;
@@ -37,14 +39,14 @@ public class CreateClients : ICarterModule
         public string PhoneNumber { get; init; } = string.Empty;
     }
 
-    public class CreateProductHandler(AppDbContext context, IValidator<CreateClientCommand> validator) : IRequestHandler<CreateClientCommand, IResult>
+    public class CreateProductHandler(AppDbContext context, IValidator<CreateClientCommand> validator) : IRequestHandler<CreateClientCommand, Result>
     {
-        public async Task<IResult> Handle(CreateClientCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreateClientCommand request, CancellationToken cancellationToken)
         {
             var result = validator.Validate(request);
             if (!result.IsValid)
             {
-                return Results.ValidationProblem(result.GetValidationProblems());
+                return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Login.ErrorValidation", "Se presentaron errores de validación"));
             }
 
             var newClient = Client
@@ -61,9 +63,18 @@ public class CreateClients : ICarterModule
 
             context.Add(newClient);    
 
-            await context.SaveChangesAsync();
+            var resCount = await context.SaveChangesAsync();
 
-            return Results.Created($"api/clients/{newClient.Id}", newClient);
+
+            if (resCount > 0)
+            {
+                return Result<Client>.Success(newClient, "Usuario creado correctamente");
+            }
+            else
+            {
+                return Result.Failure(new Error("Login.ErrorCreateUser", "Error al crear el usuario"));
+            }
+
 
         }
     }
