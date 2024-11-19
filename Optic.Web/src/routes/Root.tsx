@@ -13,7 +13,7 @@ export default function Root() {
             <Sidebar />
             <div
                id="detail"
-               className=" w-full"
+               className="w-full p-4"
             >
                <Outlet />
             </div>

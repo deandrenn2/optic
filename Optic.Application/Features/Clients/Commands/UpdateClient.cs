@@ -5,28 +5,30 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
 namespace Optic.Application.Features.Clients;
 
-public class CreateClients : ICarterModule
+public class UpdateClients : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("api/clients", async (HttpRequest req, IMediator mediator, CreateClientCommand command) =>
+        app.MapPut("api/clients", async (HttpRequest req, IMediator mediator, UpdateClientCommand command) =>
         {
             return await mediator.Send(command);
         })
-        .WithName(nameof(CreateClients))
+        .WithName(nameof(UpdateClients))
         .WithTags(nameof(Client))
         .ProducesValidationProblem()
         .Produces(StatusCodes.Status201Created);
     }
 
-    public record CreateClientCommand : IRequest<Result>
+    public record UpdateClientCommand : IRequest<Result>
     {
+        public int Id { get; set; }
         public string FirstName { get; init; } = string.Empty;
         public string LastName { get; init; } = string.Empty;
         public int Sex { get; init; }
@@ -38,9 +40,9 @@ public class CreateClients : ICarterModule
         public string PhoneNumber { get; init; } = string.Empty;
     }
 
-    public class CreateClientHandler(AppDbContext context, IValidator<CreateClientCommand> validator) : IRequestHandler<CreateClientCommand, Result>
+    public class CreateClientHandler(AppDbContext context, IValidator<UpdateClientCommand> validator) : IRequestHandler<UpdateClientCommand, Result>
     {
-        public async Task<Result> Handle(CreateClientCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateClientCommand request, CancellationToken cancellationToken)
         {
             var result = validator.Validate(request);
             if (!result.IsValid)
@@ -48,35 +50,30 @@ public class CreateClients : ICarterModule
                 return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Client.ErrorValidation", "Se presentaron errores de validación"));
             }
 
-            var newClient = Client
-                .Create(0, 
-                request.FirstName, 
-                request.LastName, 
-                request.Sex,
-                request.IdentificationTypeId, 
-                request.IdentificationNumber,
-                request.Email,
-                request.Address,
-                request.CellPhoneNumber,
-                request.PhoneNumber);
+            var updateClient = await context.Clients.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            context.Add(newClient);    
+            if (updateClient == null)
+            {
+                return Result.Failure(new Error("Client.ErrorClientNoFound", "El cliente que intenta actualizar no existe"));
+            }
+
+            var clienEdit = updateClient.Update(request.Id, request.FirstName, request.LastName, request.Sex, request.IdentificationTypeId, request.IdentificationNumber, request.Email, request.Address, request.CellPhoneNumber, request.PhoneNumber);
 
             var resCount = await context.SaveChangesAsync();
 
 
             if (resCount > 0)
             {
-                return Result<Client>.Success(newClient, "Cliente creado correctamente");
+                return Result<Client>.Success(clienEdit, "Cliente actualizado correctamente");
             }
             else
             {
-                return Result.Failure(new Error("Client.ErrorCreateClient", "Error al crear el cliente"));
+                return Result.Failure(new Error("Client.ErrorUpdateClient", "Error al actualizar el cliente"));
             }
         }
     }
 
-    public class CreateClientValidator : AbstractValidator<CreateClientCommand>
+    public class CreateClientValidator : AbstractValidator<UpdateClientCommand>
     {
         public CreateClientValidator()
         {

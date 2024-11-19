@@ -1,0 +1,70 @@
+/***
+OffCanvas
+***/
+
+.offcanvas {
+   position: fixed;
+   z-index: 2002;
+   background-color: white;
+   height: 100vh;
+   margin: 0x;
+   padding: 5px;
+   display: flex;
+   flex-direction: column;
+   min-width: 400px;
+}
+
+.offcanvas--right {
+   right: 0px;
+   bottom: 0px;
+   top: 0px;
+   max-width: 400px;
+   animation: fadeInRight 250ms ease-in;
+}
+
+.offcanvas-backdrop {
+   background-color: rgba(0, 0, 0, 0.4);
+   height: 100vh;
+   left: 0;
+   position: fixed;
+   top: 0;
+   width: 100vw;
+   z-index: 2001;
+   animation: inAnimation 250ms ease-in;
+}
+
+.offcanvas-header,
+.offcanvas-footer {
+   align-items: center;
+   display: flex;
+   justify-content: space-between;
+   padding: 10px 10px;
+}
+
+.offcanvas-header {
+   border-bottom: 1px solid #ccc;
+}
+
+.offcanvas-footer {
+   border-top: 1px solid #ccc;
+}
+
+.offcanvas-title {
+   line-height: inherit;
+   margin-bottom: 0;
+   font-size: 1.8rem;
+}
+
+.offcanvas-body {
+   flex-grow: 1;
+   overflow-y: auto;
+   padding: 10px 10px;
+}
+
+.h5,
+h5 {
+   font-size: 1.25rem;
+}
+/***
+End OffCanvas
+***/

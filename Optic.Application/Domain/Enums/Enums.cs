@@ -2,8 +2,8 @@
 
 public enum Sex
 {
-    Male,
-    Famale
+    Male = 0,
+    Famale = 1
 }
 
 public enum UserStatus

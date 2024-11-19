@@ -1,10 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, Form, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 import App from './App.tsx';
 import { Home } from './slices/Home/Home.tsx';
-import { Clientes } from './slices/Clients/Clients.tsx';
+import { Clients } from './slices/Clients/Clients.tsx';
 import { Login } from './routes/Login/Login.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -12,6 +12,7 @@ import { UserCreate } from './routes/Login/UserCreate.tsx';
 import { BusinessCreate } from './routes/Login/BusinessCreate.tsx';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { ClientDetail } from './slices/Clients/ClientDetail.tsx';
 import { Products } from './slices/Products/Products.tsx';
 import { Suppliers } from './slices/Suppliers/Suppliers.tsx';
 import { Formulas } from './slices/Formulas/Formulas.tsx';
@@ -29,21 +30,12 @@ const router = createBrowserRouter([
          },
          {
             path: 'Clientes',
-            element: <Clientes />,
+            element: <Clients />,
          },
          {
-            path: 'Products',
-            element: <Products />,
+            path: 'Clientes/:id',
+            element: <ClientDetail />,
          },
-         {
-            path: 'Suppliers',
-            element: <Suppliers />,
-         },
-         {
-            path: 'Formulas',
-            element: <Formulas />,
-         },
-
       ],
    },
    {
