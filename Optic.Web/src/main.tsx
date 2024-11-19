@@ -36,6 +36,18 @@ const router = createBrowserRouter([
             path: 'Clientes/:id',
             element: <ClientDetail />,
          },
+         {
+            path: 'Productos',
+            element: <Products />,
+         },
+         {
+            path: 'Suppliers',
+            element: <Suppliers />,
+         },
+         {
+            path: 'Formulas',
+            element: <Formulas />,
+         },
       ],
    },
    {
