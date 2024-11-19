@@ -57,14 +57,13 @@ public class UpdateClients : ICarterModule
                 return Result.Failure(new Error("Client.ErrorClientNoFound", "El cliente que intenta actualizar no existe"));
             }
 
-            var clienEdit = updateClient.Update(request.Id, request.FirstName, request.LastName, request.Sex, request.IdentificationTypeId, request.IdentificationNumber, request.Email, request.Address, request.CellPhoneNumber, request.PhoneNumber);
 
             var resCount = await context.SaveChangesAsync();
 
 
             if (resCount > 0)
             {
-                return Result<Client>.Success(clienEdit, "Cliente actualizado correctamente");
+                return Result<Client>.Success(updateClient, "Cliente actualizado correctamente");
             }
             else
             {
