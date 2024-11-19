@@ -13,6 +13,9 @@ import { BusinessCreate } from './routes/Login/BusinessCreate.tsx';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { ClientDetail } from './slices/Clients/ClientDetail.tsx';
+import { Products } from './slices/Products/Products.tsx';
+import { Suppliers } from './slices/Suppliers/Suppliers.tsx';
+import { Formulas } from './slices/Formulas/Formulas.tsx';
 
 const queryClient = new QueryClient();
 
@@ -32,6 +35,18 @@ const router = createBrowserRouter([
          {
             path: 'Clientes/:id',
             element: <ClientDetail />,
+         },
+         {
+            path: 'Products',
+            element: <Products />,
+         },
+         {
+            path: 'Suppliers',
+            element: <Suppliers />,
+         },
+         {
+            path: 'Formulas',
+            element: <Formulas />,
          },
       ],
    },

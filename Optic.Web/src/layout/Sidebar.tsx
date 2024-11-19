@@ -10,8 +10,8 @@ export const Sidebar = () => {
             <ul className="space-y-1">
                <MenuItem icon={faHouse} path='/' text='Inicio' />
                <MenuItem icon={faUser} path='/clientes' text='Clientes' />
-               <MenuItem icon={faUsers} path='/proveedores' text='Proveedores' />
-               <MenuItem icon={faTruck} path='/productos' text='Productos' />
+               <MenuItem icon={faUsers} path='/Suppliers' text='Proveedores' />
+               <MenuItem icon={faTruck} path='/Products' text='Productos' />
                <MenuItem icon={faClipboardCheck} path='/formulas' text='Formulas' />
                <MenuItem icon={faMoneyCheckDollar} path='/facturacion' text='Facturación' />
                <MenuItem icon={faGear} path='/configuraciones' text='Configuraciónes' />
