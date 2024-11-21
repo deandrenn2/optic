@@ -1,6 +1,6 @@
 import { useState } from "react";
 export const SuppliersForm = () => {
-    const [isOpen] = useState(true);
+    const [isOpen] = useState(false);
     return (
       
 
@@ -51,5 +51,4 @@ export const SuppliersForm = () => {
             </div>
         </div>
     </div>
-
-    )}
+)}
