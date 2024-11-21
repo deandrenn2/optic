@@ -1,10 +1,15 @@
 import { faCircleMinus, faMagnifyingGlass, faPlay } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { SuppliersForm } from "./SuppliersForm"
 
 export const Suppliers = () => {
     return (
         <div className="w-full p-4"> {/* <!-- TABLA DE PROVEEDORES --> */}
             <div className="flex space-x-4 mb-4">
+                <div className="mb-2">
+                <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">Nuevo Proveedor</button>
+                </div>
+           
             <div className="mb-2">
                     <div className="relative">
                         <div className="inline-flex">
@@ -70,6 +75,7 @@ export const Suppliers = () => {
                         <a href="#" className="px-4 py-2 bg-white hover:bg-blue-500 border border-gray-300">3</a>
                     </nav>
                 </div>
+                <SuppliersForm />
             </div>
   
         
