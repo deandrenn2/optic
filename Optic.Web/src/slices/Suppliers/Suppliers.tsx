@@ -1,6 +1,6 @@
 import { faCircleMinus, faMagnifyingGlass, faPlay } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { SuppliersForm } from "./SuppliersForm"
+
 export const Suppliers = () => {
     return (
         <div className="w-full p-4"> {/* <!-- TABLA DE PROVEEDORES --> */}
