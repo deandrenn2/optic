@@ -2,13 +2,10 @@ import { useState } from "react";
 export const SuppliersForm = () => {
     const [isOpen] = useState(true);
     return (
-
-
         <div className={`fixed inset-y-0 right-0 transform ${isOpen ? "translate-x-0" : "translate-x-full"} transition-transform duration-300 bg-gray-500 text-black-500`}>
             <div className="flex justify-center h-screen bg-gray-50 border-2 border-grey-200 ">
                 <div className="bg-white p-6 rounded-lg shadow-lg w-96">
                     <form className="flex flex-col">
-
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2">
                                 Nombre
@@ -84,7 +81,6 @@ export const SuppliersForm = () => {
                 </div>
             </div>
         </div>
-
 
     )
 }
