@@ -419,3 +419,4 @@ playground-temp
 temp
 TODOs.md
 .eslintcache
+/Optic.Api/appsettings.Development.json

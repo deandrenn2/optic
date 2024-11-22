@@ -17,6 +17,7 @@ public class AppDbContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<Client> Clients => Set<Client>();
     public DbSet<Business> Businesses => Set<Business>();
+    public DbSet<Supplier> Suppliers => Set<Supplier>();
     public DbSet<IdentificationType> IdentificationTypes => Set<IdentificationType>();
 
 
@@ -63,6 +64,7 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new BusinessConfiguration());
         modelBuilder.ApplyConfiguration(new ClientConfiguration());
+        modelBuilder.ApplyConfiguration(new SupplierConfiguration());
     }
 
 }
