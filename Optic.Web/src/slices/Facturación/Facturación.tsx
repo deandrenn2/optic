@@ -1,6 +1,5 @@
 export const Facturación = () => {
     return (
-
         <div className="w-full p-4">
                 <div className="mb-2">
                     <div className="max-w-8xl mx-auto bg-white p-6 rounded shadow mb-4 ">
