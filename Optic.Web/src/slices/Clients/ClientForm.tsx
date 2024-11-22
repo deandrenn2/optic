@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CreateClientModel } from "./ClientModel";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEraser } from "@fortawesome/free-solid-svg-icons";
 import useClient from "./useClient";
+import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
 
 export const ClientForm = ({ id }: { id?: number }) => {
 
@@ -184,9 +183,7 @@ export const ClientForm = ({ id }: { id?: number }) => {
                      <button type="submit" disabled={createClient.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
                         {createClient.isPending ? "Creando..." : "Crear cliente"}
                      </button>
-                     <button type="reset" className="bg-gray-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
-                        <FontAwesomeIcon icon={faEraser} />
-                     </button>
+                     <ButtonReset />
                   </>)}
          </div>
       </form>

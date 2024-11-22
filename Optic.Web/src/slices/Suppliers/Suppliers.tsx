@@ -1,82 +1,88 @@
-import { faCircleMinus, faMagnifyingGlass, faPlay } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass, faPlay } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { SuppliersForm } from "./SuppliersForm"
+import { useState } from "react";
+import OffCanvas from "../../shared/components/OffCanvas/Index";
+import { Direction } from "../../shared/components/OffCanvas/Models";
+import { useSupplier } from "./useSupplier";
+import { Link } from "react-router-dom";
 
 export const Suppliers = () => {
+    const [visible, setVisible] = useState(false);
+    const { Suppliers, querySuppliers } = useSupplier();
+
+    function handleClose(): void {
+        setVisible(false);
+    }
+
+    if (querySuppliers.isLoading) {
+        return <div>Cargando...</div>;
+    }
+
     return (
         <div className="w-full p-4"> {/* <!-- TABLA DE PROVEEDORES --> */}
             <div className="flex space-x-4 mb-4">
                 <div className="mb-2">
-                <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">Nuevo Proveedor</button>
+                    <button type='button' onClick={() => setVisible(true)} className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">Nuevo Proveedor</button>
                 </div>
-           
-            <div className="mb-2">
+                <div className="mb-2">
                     <div className="relative">
                         <div className="inline-flex">
-                            <input type="text" placeholder="Buscar Proveedor" className="p-2 pl-10 border-blue-400 rounded"/>
-                            <FontAwesomeIcon icon={faMagnifyingGlass}  className="fas fa-search absolute left-3 top-3 text-gray-400"/> 
+                            <input type="text" placeholder="Buscar Proveedor" className="p-2 pl-10 border-blue-400 rounded" />
+                            <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
                             <button
                                 className="font-bold border p-2 bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded text-white ">Buscar</button>
                         </div>
                     </div>
                 </div>
             </div>
-                                 {/* <!-- TABLA DE PROVEEDORES --> */}
-                <table id="tablaProveedores" className="min-w-full bg-white border border-gray-300">
-                    <thead>
-                        <tr>
-                            <th className="border border-gray-300 p-2">Proveedores </th>
-                            <th className="border border-gray-300 p-2">Nit</th>
-                            <th className="border border-gray-300 p-2">Celular</th>
-                            <th className="border border-gray-300 p-2">Dirección</th>
-                            <th className="border border-gray-300 p-2">Email</th>
-                            <th className="border border-gray-300 p-2">Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">OPTICOL</td>
-                            <td className="border border-gray-300 p-2 text-center">2480293473</td>
-                            <td className="border border-gray-300 p-2 text-center">3227133105 <br /> </td>
-                            <td className="border border-gray-300 p-2 text-center">KR 11# 79 - 35 PI 9</td>
-                            <td className="border border-gray-300 p-2 text-center">opticolyopmail.com</td>
+            {/* <!-- TABLA DE PROVEEDORES --> */}
+            <table id="tablaProveedores" className="min-w-full bg-white border border-gray-300">
+                <thead>
+                    <tr>
+                        <th className="border border-gray-300 p-2">Proveedor</th>
+                        <th className="border border-gray-300 p-2">Nit</th>
+                        <th className="border border-gray-300 p-2">Celular</th>
+                        <th className="border border-gray-300 p-2">Dirección</th>
+                        <th className="border border-gray-300 p-2">Email</th>
+                        <th className="border border-gray-300 p-2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Suppliers?.map((supplier) => (
+                        <tr key={supplier.id}>
+                            <td className="border border-gray-300 p-2 text-center">{supplier.name}</td>
+                            <td className="border border-gray-300 p-2 text-center">{supplier.nit}</td>
+                            <td className="border border-gray-300 p-2 text-center">{supplier.cellPhoneNumber}</td>
+                            <td className="border border-gray-300 p-2 text-center">{supplier.address}</td>
+                            <td className="border border-gray-300 p-2 text-center">{supplier.email}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-10">
-                                <FontAwesomeIcon icon={faPlay} />
-                                </button>
-                                <button  className="text-red-500">
-                                <FontAwesomeIcon icon={faCircleMinus} className="ml-2" />
-                                </button>
-                            </td>
-                        </tr>
-                    
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">OPTICAS COLOMBIA</td>
-                            <td className="border border-gray-300 p-2 text-center">480293473</td>
-                            <td className="border border-gray-300 p-2 text-center">2480293473</td>
-                            <td className="border border-gray-300 p-2 text-center">Medellin</td>
-                            <td className="border border-gray-300 p-2 text-center">opticolombia@yopmail.com</td>
-                            <td className="border border-gray-300 p-2 text-center"> 
-                                <button className="text-blue-500 mr-10">
+                                <Link to={`/Suppliers/${supplier.id}`} title='Ver detalle' className='text-blue-500  mr-10'>
                                     <FontAwesomeIcon icon={faPlay} />
-                                </button>
-                                <button id="eliminarusuario" className="text-red-500 ml-2">
-                                <FontAwesomeIcon icon={faCircleMinus}/>
-                                </button>
+                                </Link>
+                                {/* <button className="text-red-500" onClick={(e) => handleDelete(e, supplier.id)}>
+                                    <FontAwesomeIcon
+                                        icon={faCircleMinus}
+                                        className="ml-2"                                    />
+                                </button> */}
                             </td>
                         </tr>
-                    </tbody>
-                    <tbody id="listaProveedores"></tbody>
-                </table>
-                <div className="mt-4 flex justify-center">
-                    <nav className="inline-flex rounded-md shadow">
-                        <a href="#" className="px-4 py-2 bg-white hover:bg-blue-500  border border-gray-300">1</a>
-                        <a href="#" className="px-4 py-2 bg-white hover:bg-blue-500  border border-gray-300">2</a>
-                        <a href="#" className="px-4 py-2 bg-white hover:bg-blue-500 border border-gray-300">3</a>
-                    </nav>
-                </div>
-                <SuppliersForm />
+                    ))}
+                </tbody>
+                <tbody id="listaProveedores"></tbody>
+            </table>
+            <div className="mt-4 flex justify-center">
+                <nav className="inline-flex rounded-md shadow">
+                    <a href="#" className="px-4 py-2 bg-white hover:bg-blue-500  border border-gray-300">1</a>
+                    <a href="#" className="px-4 py-2 bg-white hover:bg-blue-500  border border-gray-300">2</a>
+                    <a href="#" className="px-4 py-2 bg-white hover:bg-blue-500 border border-gray-300">3</a>
+                </nav>
             </div>
-  
-        
-)}
+            <OffCanvas titlePrincipal='Registro de Proveedor' visible={visible} xClose={handleClose} position={Direction.Right} >
+                <SuppliersForm />
+            </OffCanvas>
+        </div>
+
+
+    )
+}
