@@ -1,8 +1,7 @@
 export const Facturación = () => {
     return (
 
-        <div className="w-5/6 p-4">
-            <div className="bg-gray-300 p-4 mb-1 rounded-lg border border-grey-500 p-4   ">
+        <div className="w-full p-4">
                 <div className="mb-2">
                     <div className="max-w-8xl mx-auto bg-white p-6 rounded shadow mb-4 ">
                         <div className="grid grid-cols-4 gap-4 mb-4">
@@ -190,6 +189,5 @@ export const Facturación = () => {
                     </table >
                 </div>
             </div>
-        </div>
     )
 }
