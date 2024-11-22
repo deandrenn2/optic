@@ -1,4 +1,3 @@
-import React from 'react'
 import useUserContext from '../shared/context/useUserContext'
 
 export const Avatar = () => {
