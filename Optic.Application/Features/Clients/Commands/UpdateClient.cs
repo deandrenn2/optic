@@ -32,7 +32,7 @@ public class UpdateClients : ICarterModule
         public string FirstName { get; init; } = string.Empty;
         public string LastName { get; init; } = string.Empty;
         public int Sex { get; init; }
-        public int IdentificationTypeId { get; init; } 
+        public int IdentificationTypeId { get; init; }
         public string IdentificationNumber { get; init; } = string.Empty;
         public string Email { get; init; } = string.Empty;
         public string Address { get; init; } = string.Empty;
@@ -56,6 +56,18 @@ public class UpdateClients : ICarterModule
             {
                 return Result.Failure(new Error("Client.ErrorClientNoFound", "El cliente que intenta actualizar no existe"));
             }
+
+            updateClient.Update(
+                request.FirstName,
+                request.LastName,
+                request.Sex,
+                request.IdentificationTypeId,
+                request.IdentificationNumber,
+                request.Email,
+                request.Address,
+                request.CellPhoneNumber,
+                request.PhoneNumber
+                );
 
 
             var resCount = await context.SaveChangesAsync();

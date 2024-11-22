@@ -54,21 +54,27 @@ public class Client : AggregateRoot
         return new Client(id, firstName, lastName, sex, idIdentificationType, identicationNumber, email, address, cellPhoneNumber, phoneNumber);
     }
 
-    public  void Update(
+    public void Update(
     string firstName,
     string lastName,
     int sex,
-    int idIdentificationType,
-    string identicationNumber,
+    int identificationTypeId,
+    string identificationNumber,
     string email,
     string address,
     string cellPhoneNumber,
     string phoneNumber
 )
     {
-       FirstName = firstName;
-        LastName = lastName;        
+        FirstName = firstName;
+        LastName = lastName;
+        Sex = sex;
+        IdentificationTypeId = identificationTypeId;
+        IdentificationNumber = identificationNumber;
+        Email = email;
+        Address = address;
+        CellPhoneNumber = cellPhoneNumber;
+        PhoneNumber = phoneNumber;
     }
-
 
 }
