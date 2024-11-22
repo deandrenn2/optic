@@ -2,8 +2,7 @@ import { faMagnifyingGlass, faPenToSquare, faPlay, faTrash } from "@fortawesome/
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 export const Products = () => {
     return (
-        <div className="w-5/6 p-4">
-            <div className="bg-gray-300 p-4 mb-1 rounded-lg border border-grey-500 p-4 mb-4  ">
+        <div className="w-full">
                 <div className="mb-2">
                     <div className="relative">
                         <div className=" inline-flex">
@@ -112,6 +111,5 @@ export const Products = () => {
                     </nav>
                 </div>
             </div>
-        </div>
     )
 }
