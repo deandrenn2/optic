@@ -43,7 +43,7 @@ public class CreateSupplier : ICarterModule
                 return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Supplier.ErrorValidation", "Se presentaron errores de validación"));
             }
 
-            var supplier = new Supplier(0, request.Nit, request.Name, request.Address, request.CellPhoneNumber, request.PhoneNumber, request.Email);
+            var supplier = new Supplier(0, request.Name, request.Nit, request.Address, request.CellPhoneNumber, request.PhoneNumber, request.Email);
 
             context.Add(supplier);
 
