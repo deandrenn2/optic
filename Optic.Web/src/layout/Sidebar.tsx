@@ -13,7 +13,7 @@ export const Sidebar = () => {
                <MenuItem icon={faUsers} path='/Suppliers' text='Proveedores' />
                <MenuItem icon={faTruck} path='/Products' text='Productos' />
                <MenuItem icon={faClipboardCheck} path='/formulas' text='Formulas' />
-               <MenuItem icon={faMoneyCheckDollar} path='/facturacion' text='Facturación' />
+               <MenuItem icon={faMoneyCheckDollar} path='/Facturación' text='Facturación' />
                <MenuItem icon={faGear} path='/configuraciones' text='Configuraciónes' />
             </ul>
          </nav>

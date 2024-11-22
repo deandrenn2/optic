@@ -3,8 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 export const Formulas = () => {
     return (
-        <div> <div className="w-5/6 p-4">
-            <div className="bg-gray-300 p-4 mb-1 rounded-lg border border-grey-500 mb-4">
+        <div> <div className="w-full p-4">
                 <table className="min-w-full bg-white border border-gray-300">
                     <thead>
                         <tr>
@@ -66,7 +65,6 @@ export const Formulas = () => {
                     </nav>
                 </div>
             </div>
-        </div>
         </div>
     )
 }
