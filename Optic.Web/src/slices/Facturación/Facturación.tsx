@@ -1,4 +1,4 @@
-import { faCircleMinus, faFileInvoiceDollar, faMagnifyingGlass, faPlay, faPlus, faPrint, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCircleMinus, faFileInvoiceDollar, faPlay, faPrint } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export const Facturación = () => {
     return (
