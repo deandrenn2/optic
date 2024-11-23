@@ -1,3 +1,5 @@
+import { faCircleMinus, faFileInvoiceDollar, faPlay, faPrint } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export const Facturación = () => {
     return (
         <div className="w-full p-4">
@@ -60,10 +62,10 @@ export const Facturación = () => {
                                 <td className="border border-gray-300 p-2 text-center">Efectivo</td>
                                 <td className="border border-gray-300 p-2 text-center">1.200.000</td>
                                 <td className="border border-gray-300 p-2 text-center">
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-play"></i></button>
-                                    <button className="text-green-500 mr-3"><i className="fas fa-file-invoice-dollar"></i></button>
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-print"></i></button>
-                                    <button className="text-red-500"><i id="abrirFactura" className="fas fa-minus-circle"></i></button>
+                                    <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay}/></button>
+                                    <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar}/></button>
+                                    <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint}/></button>
+                                    <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus}/></button>
                                 </td>
                             </tr>
                             <tr>
@@ -76,10 +78,10 @@ export const Facturación = () => {
                                 <td className="border border-gray-300 p-2 text-center">Creditos</td>
                                 <td className="border border-gray-300 p-2 text-center">8.534.000</td>
                                 <td className="border border-gray-300 p-2 text-center">
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-play"></i></button>
-                                    <button className="text-green-500 mr-3"><i className="fas fa-file-invoice-dollar"></i></button>
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-print"></i></button>
-                                    <button className="text-red-500"><i className="fas fa-minus-circle"></i></button>
+                                    <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay}/></button>
+                                    <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar}/></button>
+                                    <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint}/></button>
+                                    <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus}/></button>
                                 </td>
                             </tr>
                             <tr>
@@ -92,10 +94,10 @@ export const Facturación = () => {
                                 <td className="border border-gray-300 p-2 text-center">Efectivo</td>
                                 <td className="border border-gray-300 p-2 text-center">1.200.000</td>
                                 <td className="border border-gray-300 p-2 text-center">
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-play"></i></button>
-                                    <button className="text-green-500 mr-3"><i className="fas fa-file-invoice-dollar"></i></button>
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-print"></i></button>
-                                    <button className="text-red-500"><i className="fas fa-minus-circle"></i></button>
+                                    <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay}/></button>
+                                    <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar}/></button>
+                                    <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint}/></button>
+                                    <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus}/></button>
                                 </td>
                             </tr>
                             <tr>
@@ -103,16 +105,15 @@ export const Facturación = () => {
                                 <td className="border border-gray-300 p-2 text-center">Venta</td>
                                 <td className="border border-gray-300 p-2 text-center">
                                     <span className="bg-green-500 text-white px-2 py-1 rounded">pago</span></td>
-
                                 <td className="border border-gray-300 p-2 text-center">Jose Bravo</td>
                                 <td className="border border-gray-300 p-2 text-center">13/08/2024</td>
                                 <td className="border border-gray-300 p-2 text-center">Efectivo</td>
                                 <td className="border border-gray-300 p-2 text-center">1.200.000</td>
                                 <td className="border border-gray-300 p-2 text-center">
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-play"></i></button>
-                                    <button className="text-green-500 mr-3"><i className="fas fa-file-invoice-dollar"></i></button>
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-print"></i></button>
-                                    <button className="text-red-500"><i className="fas fa-minus-circle"></i></button>
+                                    <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay}/></button>
+                                    <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar}/></button>
+                                    <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint}/></button>
+                                    <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus}/></button>
                                 </td>
                             </tr>
                             <tr>
@@ -120,16 +121,15 @@ export const Facturación = () => {
                                 <td className="border border-gray-300 p-2 text-center">Compra</td>
                                 <td className="border border-gray-300 p-2 text-center">
                                     <span className="bg-red-500 text-white px-2 py-1 rounded">Sin pagar</span></td>
-
                                 <td className="border border-gray-300 p-2 text-center">Camila Medrano</td>
                                 <td className="border border-gray-300 p-2 text-center">14/08/2024</td>
                                 <td className="border border-gray-300 p-2 text-center">Efectivo</td>
                                 <td className="border border-gray-300 p-2 text-center">1.200.000</td>
                                 <td className="border border-gray-300 p-2 text-center">
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-play"></i></button>
-                                    <button className="text-green-500 mr-3"><i className="fas fa-file-invoice-dollar"></i></button>
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-print"></i></button>
-                                    <button className="text-red-500"><i className="fas fa-minus-circle"></i></button>
+                                    <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay}/></button>
+                                    <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar}/></button>
+                                    <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint}/></button>
+                                    <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus}/></button>
                                 </td>
                             </tr>
 
@@ -138,16 +138,15 @@ export const Facturación = () => {
                                 <td className="border border-gray-300 p-2 text-center">Venta</td>
                                 <td className="border border-gray-300 p-2 text-center">
                                     <span className="bg-red-500 text-white px-2 py-1 rounded">Sin pagar</span></td>
-
                                 <td className="border border-gray-300 p-2 text-center">Andrea Martinez</td>
                                 <td className="border border-gray-300 p-2 text-center">15/08/2024</td>
                                 <td className="border border-gray-300 p-2 text-center">Efectivo</td>
                                 <td className="border border-gray-300 p-2 text-center">1.200.000</td>
                                 <td className="border border-gray-300 p-2 text-center">
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-play"></i></button>
-                                    <button className="text-green-500 mr-3"><i className="fas fa-file-invoice-dollar"></i></button>
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-print"></i></button>
-                                    <button className="text-red-500"><i className="fas fa-minus-circle"></i></button>
+                                    <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay}/></button>
+                                    <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar}/></button>
+                                    <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint}/></button>
+                                    <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus}/></button>
                                 </td>
                             </tr>
                             <tr>
@@ -155,16 +154,15 @@ export const Facturación = () => {
                                 <td className="border border-gray-300 p-2 text-center">Compra</td>
                                 <td className="border border-gray-300 p-2 text-center">
                                     <span className="bg-green-500 text-white px-2 py-1 rounded">pago</span></td>
-
                                 <td className="border border-gray-300 p-2 text-center">Maria Peña</td>
                                 <td className="border border-gray-300 p-2 text-center">/17/2024</td>
                                 <td className="border border-gray-300 p-2 text-center">Efectivo</td>
                                 <td className="border border-gray-300 p-2 text-center">1.200.000</td>
                                 <td className="border border-gray-300 p-2 text-center">
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-play"></i></button>
-                                    <button className="text-green-500 mr-3"><i className="fas fa-file-invoice-dollar"></i></button>
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-print"></i></button>
-                                    <button className="text-red-500"><i className="fas fa-minus-circle"></i></button>
+                                    <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay}/></button>
+                                    <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar}/></button>
+                                    <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint}/></button>
+                                    <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus}/></button>
                                 </td>
                             </tr>
 
@@ -178,10 +176,10 @@ export const Facturación = () => {
                                 <td className="border border-gray-300 p-2 text-center">Efectivo</td>
                                 <td className="border border-gray-300 p-2 text-center">1.200.000</td>
                                 <td className="border border-gray-300 p-2 text-center">
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-play"></i></button>
-                                    <button className="text-green-500 mr-3"><i className="fas fa-file-invoice-dollar"></i></button>
-                                    <button className="text-blue-500 mr-3"><i className="fas fa-print"></i></button>
-                                    <button className="text-red-500"><i className="fas fa-minus-circle"></i></button>
+                                    <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay}/></button>
+                                    <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar}/></button>
+                                    <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint}/></button>
+                                    <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus}/></button>
                                 </td>
                             </tr>
                         </tbody >

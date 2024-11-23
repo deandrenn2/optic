@@ -17,6 +17,8 @@ import { Products } from './slices/Products/Products.tsx';
 import { Suppliers } from './slices/Suppliers/Suppliers.tsx';
 import { Formulas } from './slices/Formulas/Formulas.tsx';
 import { Facturación } from './slices/Facturación/Facturación.tsx';
+import { Settings } from './slices/Settings/Settings.tsx';
+
 
 
 const queryClient = new QueryClient();
@@ -53,6 +55,10 @@ const router = createBrowserRouter([
          {
             path: 'Facturación',
             element: <Facturación />,
+         },
+         {
+            path: 'configuraciones',
+            element: <Settings />
          },
 
       ],
