@@ -70,10 +70,8 @@ export const Clients = () => {
                </div>
             </div>
          </div>
-
+                        {/* <!-- TABLA DE CLIENTES --> */}
          <div className="rounded-lg border border-grey-500 mb-4 w-full ">
-
-            {/* <!-- TABLA DE CLIENTES --> */}
             <table className=" bg-white rounded shadow w-full">
                <thead>
                   <tr>
