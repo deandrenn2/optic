@@ -8,6 +8,8 @@ export interface CreateSupplierModel {
 }
 
 export interface SuppliersResponseModel {
+   firstName: ReactNode;
+   lastName: ReactNode;
    id: number;
    name: string;
    nit: string;

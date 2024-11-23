@@ -1,22 +1,44 @@
-import { faMagnifyingGlass, faPlay } from "@fortawesome/free-solid-svg-icons"
+import { faCircleMinus, faMagnifyingGlass, faPlay } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { SuppliersForm } from "./SuppliersForm"
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { Direction } from "../../shared/components/OffCanvas/Models";
 import { useSupplier } from "./useSupplier";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+
 
 export const Suppliers = () => {
     const [visible, setVisible] = useState(false);
-    const { Suppliers, querySuppliers } = useSupplier();
+    
+    const { Suppliers, querySuppliers, deleteSupplier } = useSupplier();
+    
 
     function handleClose(): void {
         setVisible(false);
     }
 
+  
+
     if (querySuppliers.isLoading) {
         return <div>Cargando...</div>;
+    }
+
+    function handleDelete(e:MouseEvent<HTMLButtonElement>, id: number): void {
+        e.preventDefault();
+        Swal.fire({
+            title: '¿Estás seguro de eliminar este proveedor?',
+            text: 'Esta acción no se puede deshacer',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar',
+            preConfirm: async () => {
+                await deleteSupplier.mutateAsync(id);
+            }
+        })
     }
 
     return (
@@ -51,6 +73,7 @@ export const Suppliers = () => {
                 <tbody>
                     {Suppliers?.map((supplier) => (
                         <tr key={supplier.id}>
+                            
                             <td className="border border-gray-300 p-2 text-center">{supplier.name}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.nit}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.cellPhoneNumber}</td>
@@ -60,11 +83,11 @@ export const Suppliers = () => {
                                 <Link to={`/Suppliers/${supplier.id}`} title='Ver detalle' className='text-blue-500  mr-10'>
                                     <FontAwesomeIcon icon={faPlay} />
                                 </Link>
-                                {/* <button className="text-red-500" onClick={(e) => handleDelete(e, supplier.id)}>
+                                <button className="text-red-500" onClick={(e) => handleDelete(e, supplier.id)}>
                                     <FontAwesomeIcon
                                         icon={faCircleMinus}
                                         className="ml-2"                                    />
-                                </button> */}
+                                </button> 
                             </td>
                         </tr>
                     ))}
