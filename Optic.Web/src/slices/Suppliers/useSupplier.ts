@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createSupplierService, getSuppliers } from './SupplierServices';
+import { createSupplierService, deleteSupplierService, getSuppliers, updateSupplierService } from './SupplierServices';
 import { toast } from 'react-toastify';
 
 const KEY = 'Supplier';
@@ -24,10 +24,39 @@ export const useSupplier = () => {
       },
    });
 
-   
+   const deleteSupplier = useMutation({
+      mutationFn: deleteSupplierService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               querySuppliers.refetch();
+            }
+         }
+      },
+   });
+
+   const updateSupplier = useMutation({
+      mutationFn: updateSupplierService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               querySuppliers.refetch();
+            }
+         }
+      },
+   });
+
    return {
       querySuppliers,
-      Suppliers: querySuppliers?.data?.data,
+      suppliers: querySuppliers?.data?.data,
       createSupplier,
+      deleteSupplier,
+      updateSupplier,
    };
 };

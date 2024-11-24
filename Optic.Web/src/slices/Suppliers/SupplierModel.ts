@@ -1,4 +1,4 @@
-export interface CreateSupplierModel {
+export interface SupplierModel {
    name: string;
    nit: string;
    address: string;
@@ -8,8 +8,6 @@ export interface CreateSupplierModel {
 }
 
 export interface SuppliersResponseModel {
-   firstName: ReactNode;
-   lastName: ReactNode;
    id: number;
    name: string;
    nit: string;

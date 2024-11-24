@@ -172,8 +172,8 @@ export const ClientForm = ({ id }: { id?: number }) => {
          <div className="mt-4">
             {id &&
                (
-                  <button type="submit" disabled={createClient.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
-                     {createClient.isPending ? "Actualizando..." : "Actualizar cliente"}
+                  <button type="submit" disabled={updateClient.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
+                     {updateClient.isPending ? "Actualizando..." : "Actualizar cliente"}
                   </button>
                )}
 
