@@ -24,7 +24,7 @@ public class DeleteClients : ICarterModule
         .WithName(nameof(DeleteClients))
         .WithTags(nameof(Client))
         .ProducesValidationProblem()
-        .Produces(StatusCodes.Status201Created);
+        .Produces(StatusCodes.Status200OK);
     }
 
     public record DeleteClientCommand : IRequest<Result>
@@ -61,7 +61,7 @@ public class DeleteClients : ICarterModule
             }
             else
             {
-                return Result.Failure(new Error("Client.ErrorCreateClient", "Error al eliminar el cliente"));
+                return Result.Failure(new Error("Client.ErrorDeleteClient", "Error al eliminar el cliente"));
             }
         }
     }
