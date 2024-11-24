@@ -18,6 +18,7 @@ export const ProductsDetail = () => {
             <div className="w-1/4 bg-white p-4 rounded-lg">
                 <ProductsForm />
             </div>
+            
         </div>
-    )
-}
+    );
+};

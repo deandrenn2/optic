@@ -1,6 +1,20 @@
 import { faMagnifyingGlass, faPlay, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useState } from "react";
+import OffCanvas from "../../shared/components/OffCanvas/Index";
+import { ProductsForm } from "./ProductsForm";
+import { Direction } from "../../shared/components/OffCanvas/Models";
 export const Products = () => {
+const [visible, setVisible] = useState(false);
+
+    const handleClose = () => {
+        setVisible(false);
+    }
+
+    function handleClick() {
+        setVisible(true);
+    }
+    
     return (
         <div className="w-full">
             <div className="flex space-x-4 mb-4">
@@ -14,7 +28,8 @@ export const Products = () => {
             <div className="mb-2">
                     <div className="relative">
                         <div className=" inline-flex">
-                            <input type="text" placeholder="Buscar Proveedor" className="p-2 pl-10 border-blue-400 rounded" />
+                            <input type="text" placeholder="Buscar Proveedor" className="p-2 pl-10 border-blue-400 rounded" 
+                                onClick={handleClick} />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
                             <button
                                 className="font-bold border p-2 bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-700 ">Buscar</button>
@@ -105,6 +120,9 @@ export const Products = () => {
                             className="hover:bg-blue-500 px-3 py-1 border border-gray-300 bg-white text-gray-700">3</a>
                     </nav>
                 </div>
+                <OffCanvas titlePrincipal='Registro de Producto' visible={visible} xClose={handleClose} position={Direction.Right} >
+                    <ProductsForm />
+                </OffCanvas>
             </div>
-    )
-}
+    );
+};

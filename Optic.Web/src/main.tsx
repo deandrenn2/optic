@@ -44,7 +44,7 @@ const router = createBrowserRouter([
          },
          
          {
-            path: 'Suppliers',
+            path: 'suppliers',
             element: <Suppliers />,
          },
          {
@@ -53,7 +53,7 @@ const router = createBrowserRouter([
          },
 
          {
-            path: 'Products',
+            path: 'products',
             element: <Products />,
          },
          {
