@@ -33,9 +33,9 @@ public class UpdateSupplier: ICarterModule
         public string Name { get; init; } = string.Empty;
         public string Nit { get; init; } = string.Empty;
         public string Address { get; init; } = string.Empty;
-        public string Email { get; private set; } = string.Empty;
+        public string Email { get; init; } = string.Empty;
         public string CellPhoneNumber { get; init; } = string.Empty;
-        public string PhoneNumber { get; private set; } = string.Empty;
+        public string PhoneNumber { get; init; } = string.Empty;
     }
 
     public class UpdateSupplierHandler(AppDbContext context, IValidator<UpdateSupplierCommand> validator) : IRequestHandler<UpdateSupplierCommand, Result>
