@@ -39,9 +39,9 @@ namespace Optic.Application.Domain.Entities
         public string Name { get; private set; }
         public string Nit { get; private set; }
         public string Address { get; private set; }
-        public string Email { get; private set; } = string.Empty;
+        public string? Email { get; private set; } 
         public string CellPhoneNumber { get; private set; }
-        public string PhoneNumber { get; private set; } = string.Empty;
+        public string? PhoneNumber { get; private set; } 
 
         public static Supplier Create(
             int id,
