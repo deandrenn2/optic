@@ -52,6 +52,7 @@ export const Clients = () => {
                      className="fa-search top-3 pr-2 font-bold"
                   />Nuevo Cliente</button>
             </div>
+            
             <div className="mb-2">
                <div className="relative">
                   <div className="inline-flex">

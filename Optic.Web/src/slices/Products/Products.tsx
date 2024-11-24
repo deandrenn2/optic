@@ -1,9 +1,17 @@
-import { faMagnifyingGlass, faPenToSquare, faPlay, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass, faPlay, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 export const Products = () => {
     return (
         <div className="w-full">
-                <div className="mb-2">
+            <div className="flex space-x-4 mb-4">
+            <div className="mb-2">
+                <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
+                    <FontAwesomeIcon
+                        icon={faPlus}
+                        className="fa-search top-3 pr-2 font-bold" />Nuevo Producto</button>
+            </div>
+
+            <div className="mb-2">
                     <div className="relative">
                         <div className=" inline-flex">
                             <input type="text" placeholder="Buscar Proveedor" className="p-2 pl-10 border-blue-400 rounded" />
@@ -20,6 +28,8 @@ export const Products = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+              
                 {/* <!-- TABLA DE PRODUCTOS --> */}
                 <table className="min-w-full bg-white border border-gray-300">
                     <thead>
@@ -49,7 +59,6 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">3</td>
                             <td className="border border-gray-300 p-1 text-center">
                                 <FontAwesomeIcon icon={faPlay} className=" text-blue-500 cursor-pointer ml-0" />
-                                <FontAwesomeIcon icon={faPenToSquare} className=" text-blue-500 cursor-pointer ml-1" />
                                 <FontAwesomeIcon icon={faTrash} className=" text-red-500 cursor-pointer ml-2" />
                             </td>
                         </tr>
@@ -65,7 +74,6 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">20</td>
                             <td className="border border-gray-300 p-2 text-center">
                                 <FontAwesomeIcon icon={faPlay} className=" text-blue-500 cursor-pointer ml-0" />
-                                <FontAwesomeIcon icon={faPenToSquare} className=" text-blue-500 cursor-pointer ml-1" />
                                 <FontAwesomeIcon icon={faTrash} className=" text-red-500 cursor-pointer ml-2" />
                             </td>
                         </tr>
@@ -81,21 +89,8 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">6</td>
                             <td className="border border-gray-300 p-2 text-center">
                                 <FontAwesomeIcon icon={faPlay} className=" text-blue-500 cursor-pointer ml-0" />
-                                <FontAwesomeIcon icon={faPenToSquare} className=" text-blue-500 cursor-pointer ml-1" />
                                 <FontAwesomeIcon icon={faTrash} className=" text-red-500 cursor-pointer ml-2" />
                             </td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center"></td>
-                            <td className="border border-gray-300 p-2 text-center"></td>
-                            <td className="border border-gray-300 p-2 text-center"></td>
-                            <td className="border border-gray-300 p-2 text-center"></td>
-                            <td className="border border-gray-300 p-2 text-center"></td>
-                            <td className="border border-gray-300 p-2 text-center"></td>
-                            <td className="border border-gray-300 p-2 text-center"></td>
-                            <td className="border border-gray-300 p-2 text-center"></td>
-                            <td className="border border-gray-300 p-2 text-center"></td>
-                            <td className="border border-gray-300 p-2 text-center"></td>
                         </tr>
                     </tbody>
                 </table>

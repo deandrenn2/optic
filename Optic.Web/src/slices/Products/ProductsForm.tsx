@@ -17,7 +17,7 @@ export const ProductsForm = () => {
                             <label className="block text-gray-700">Codigo de Barra
                                 <span className="ml-2 text-gray-600">Generar Automático</span>
                                 <label className="ml-2 flex items-center ">
-                                    <input type="checkbox" className="hidden" />
+                                    <input type="checkbox" className="hidden"/>
                                     <span className="relative">
                                         <span className="block w-10 h-6 bg-gray-300 rounded-full shadow-inner"></span>
                                         <span
