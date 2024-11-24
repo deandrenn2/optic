@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
-import { CreateSupplierModel } from "./SupplierModel";
+import { useEffect, useRef, useState } from "react";
+import { SupplierModel, SuppliersResponseModel } from "./SupplierModel";
 import { useSupplier } from "./useSupplier";
 import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
 
-export const SuppliersForm = () => {
-    const [form, setForm] = useState<CreateSupplierModel>({
+export const SuppliersForm = ({ id }: { id?: number }) => {
+    const [form, setForm] = useState<SupplierModel | SuppliersResponseModel>({
+        id: id,
         name: '',
         nit: '',
         address: '',
@@ -13,9 +14,18 @@ export const SuppliersForm = () => {
         phoneNumber: ''
     });
 
-    const { createSupplier } = useSupplier();
+    const { createSupplier, suppliers, updateSupplier } = useSupplier();
 
     const formRef = useRef<HTMLFormElement>(null);
+
+    useEffect(() => {
+        if (id) {
+            const supplier = suppliers?.find((supplier) => supplier.id === id);
+            if (supplier) {
+                setForm(supplier);
+            }
+        }
+    }, [id, suppliers]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -27,11 +37,22 @@ export const SuppliersForm = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const res = await createSupplier.mutateAsync(form);
-        if (res.isSuccess) {
-            formRef.current?.reset();
+        if (id) {
+            await updateSupplier.mutateAsync(form);
+        } else {
+            const res = await createSupplier.mutateAsync(form);
+            if (res.isSuccess) {
+                setForm({
+                    name: '',
+                    nit: '',
+                    address: '',
+                    email: '',
+                    cellPhoneNumber: '',
+                    phoneNumber: ''
+                });
+                formRef.current?.reset();
+            }
         }
-
     }
 
     return (
@@ -118,10 +139,21 @@ export const SuppliersForm = () => {
                 />
             </div>
             <div>
-                <button className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
-                    {createSupplier.isPending ? "Creando..." : "Crear Proveedor"}
-                </button>
-                <ButtonReset />
+                {id &&
+                    <button disabled={updateSupplier.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
+                        {updateSupplier.isPending ? "Actualizando..." : "Actualizar Proveedor"}
+                    </button>
+                }
+                {
+                    !id &&
+                    <>
+                        <button disabled={updateSupplier.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
+                            {createSupplier.isPending ? "Creando..." : "Crear Proveedor"}
+                        </button>
+                        <ButtonReset />
+                    </>
+                }
+
             </div>
         </form>
     )

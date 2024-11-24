@@ -11,21 +11,18 @@ import Swal from "sweetalert2";
 
 export const Suppliers = () => {
     const [visible, setVisible] = useState(false);
-    
-    const { Suppliers, querySuppliers, deleteSupplier } = useSupplier();
-    
+
+    const { suppliers, querySuppliers, deleteSupplier } = useSupplier();
 
     function handleClose(): void {
         setVisible(false);
     }
 
-  
-
     if (querySuppliers.isLoading) {
         return <div>Cargando...</div>;
     }
 
-    function handleDelete(e:MouseEvent<HTMLButtonElement>, id: number): void {
+    function handleDelete(e: MouseEvent<HTMLButtonElement>, id: number): void {
         e.preventDefault();
         Swal.fire({
             title: '¿Estás seguro de eliminar este proveedor?',
@@ -71,9 +68,9 @@ export const Suppliers = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {Suppliers?.map((supplier) => (
+                    {suppliers?.map((supplier) => (
                         <tr key={supplier.id}>
-                            
+
                             <td className="border border-gray-300 p-2 text-center">{supplier.name}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.nit}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.cellPhoneNumber}</td>
@@ -86,8 +83,8 @@ export const Suppliers = () => {
                                 <button className="text-red-500" onClick={(e) => handleDelete(e, supplier.id)}>
                                     <FontAwesomeIcon
                                         icon={faCircleMinus}
-                                        className="ml-2"                                    />
-                                </button> 
+                                        className="ml-2" />
+                                </button>
                             </td>
                         </tr>
                     ))}

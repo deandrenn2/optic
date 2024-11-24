@@ -18,6 +18,7 @@ import { Suppliers } from './slices/Suppliers/Suppliers.tsx';
 import { Formulas } from './slices/Formulas/Formulas.tsx';
 import { Facturación } from './slices/Facturación/Facturación.tsx';
 import { Settings } from './slices/Settings/Settings.tsx';
+import { SupplierDetail } from './slices/Suppliers/SupplierDetail.tsx';
 
 
 
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
          {
             path: 'Suppliers',
             element: <Suppliers />,
+         },
+         {
+            path: 'Suppliers/:id',
+            element: <SupplierDetail />,
          },
          {
             path: 'Formulas',
