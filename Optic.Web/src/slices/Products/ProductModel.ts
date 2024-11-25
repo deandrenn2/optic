@@ -10,7 +10,7 @@ export interface ProductModel {
    stock: number;
    image: string;
 }
-export interface ProductResponseModel {
+export interface ProductsResponseModel {
    id: number;
    name: string;
    idBrand: number;
