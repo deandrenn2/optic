@@ -60,3 +60,4 @@ export const useProducts = () => {
       updateProduct,
    };
 };
+export default useProducts;

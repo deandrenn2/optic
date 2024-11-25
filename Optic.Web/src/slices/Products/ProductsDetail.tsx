@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ProductsForm } from "./ProductsForm";
 import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams } from "react-router-dom";
+import { ProductForm } from "./ProductsForm";
 
 
 export const ProductsDetail = () => {
@@ -16,7 +16,7 @@ export const ProductsDetail = () => {
                     />Volver al listado de productos</Link>
             </div>
             <div className="w-1/4 bg-white p-4 rounded-lg">
-                <ProductsForm />
+                <ProductForm />
             </div>
             
         </div>

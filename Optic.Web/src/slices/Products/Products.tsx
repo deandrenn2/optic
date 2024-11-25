@@ -2,7 +2,7 @@ import { faMagnifyingGlass, faPlay, faPlus, faTrash } from "@fortawesome/free-so
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
-import { ProductsForm } from "./ProductsForm";
+import { ProductForm } from "./ProductsForm";
 import { Direction } from "../../shared/components/OffCanvas/Models";
 export const Products = () => {
 const [visible, setVisible] = useState(false);
@@ -121,7 +121,7 @@ const [visible, setVisible] = useState(false);
                     </nav>
                 </div>
                 <OffCanvas titlePrincipal='Registro de Producto' visible={visible} xClose={handleClose} position={Direction.Right} >
-                    <ProductsForm />
+                    <ProductForm />
                 </OffCanvas>
             </div>
     );

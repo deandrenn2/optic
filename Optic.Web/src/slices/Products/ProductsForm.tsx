@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { ProductModel, ProductResponseModel } from "./ProductModel";
+import { ProductModel, ProductsResponseModel } from "./ProductModel";
 import useProduct from "./useProducts";
 import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
-
 export const ProductForm = ({ id }: { id?: number }) => {
 
-   const [product, setProduct] = useState<ProductModel | ProductResponseModel>({
+   const [product, setProduct] = useState<ProductModel | ProductsResponseModel>({
       id: id,
       name: "",
       idBrand: 0,

@@ -41,7 +41,7 @@ export const deleteProductService = async (id: number): Promise<MsgResponse<Crea
    return response.data;
 };
 
-export const updateProductService = async (model: ProductModel): Promise<MsgResponse<ProductsModel>> => {
+export const updateProductService = async (model: ProductModel): Promise<MsgResponse<ProductModel>> => {
    const url = 'api/Products';
    const response = await ApiClient.put<MsgResponse<ProductModel>>(url, model);
 
