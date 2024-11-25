@@ -1,4 +1,4 @@
-export interface ProductosModel {
+export interface ProductsModel {
    id: number;
    name: string;
    idBrand: number;
@@ -10,7 +10,7 @@ export interface ProductosModel {
    stock: number;
    image: string;
 }
-export interface CreateProductModel {
+export interface ProductsResponseModel {
    id: number;
    name: string;
    idBrand: number;

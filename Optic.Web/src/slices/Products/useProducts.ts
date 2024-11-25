@@ -1,63 +1,62 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createClientServices, deleteClientServices, getClients, updateClientServices } from './ClientServices';
+import { createProductService, deleteProductService, getProducts, updateProductService } from './ProductsServices';
 import { toast } from 'react-toastify';
 
-const KEY = 'CLIENTS';
-const useClient = () => {
-   const queryClients = useQuery({
-      queryKey: [`${KEY}`],
-      queryFn: getClients,
+const KEY = 'Products';
+
+export const useProduct = () => {
+   const queryProducts = useQuery({
+      queryKey: [KEY],
+      queryFn: getProducts,
    });
 
-   const createClient = useMutation({
-      mutationFn: createClientServices,
+   const createProduct = useMutation({
+      mutationFn: createProductService,
       onSuccess: (data) => {
          if (!data.isSuccess) {
             toast.info(data.message);
          } else {
             if (data.isSuccess) {
                toast.success(data.message);
-               queryClients.refetch();
+               queryProducts.refetch();
             }
          }
       },
    });
 
-   const updateClient = useMutation({
-      mutationFn: updateClientServices,
+   const deleteProduct = useMutation({
+      mutationFn: deleteProductService,
       onSuccess: (data) => {
          if (!data.isSuccess) {
             toast.info(data.message);
          } else {
             if (data.isSuccess) {
                toast.success(data.message);
-               queryClients.refetch();
+               queryProducts.refetch();
             }
          }
       },
    });
 
-   const deleteClient = useMutation({
-      mutationFn: deleteClientServices,
+   const updateProduct = useMutation({
+      mutationFn: updateProductService,
       onSuccess: (data) => {
          if (!data.isSuccess) {
             toast.info(data.message);
          } else {
             if (data.isSuccess) {
                toast.success(data.message);
-               queryClients.refetch();
+               queryProducts.refetch();
             }
          }
       },
    });
 
    return {
-      clients: queryClients?.data?.data,
-      queryClients,
-      createClient,
-      deleteClient,
-      updateClient,
+      queryProducts,
+      products: queryProducts?.data?.data,
+      createProduct,
+      deleteProduct,
+      updateProduct,
    };
 };
-
-export default useClient;

@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { CreateProductModel } from "./ProductsModel";
+import { ProductsModel, ProductsResponseModel } from "./ProductsModel";
 import useProduct from "./useProducts";
 import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
 
 export const ProductsForm = ({ id }: { id?: number }) => {
 
-   const [product, setProduct] = useState<CreateProductModel>({
+   const [product, setProduct] = useState<ProductsModel | ProductsResponseModel>({
       id: id,
       name: "",
       idBrand: 0,
@@ -23,7 +23,7 @@ export const ProductsForm = ({ id }: { id?: number }) => {
 
    useEffect(() => {
       if (id) {
-         const product = products?.find((product) => product.id === id);
+         const product = products?.find((product: { id: number; }) => product.id === id);
          if (product) {
             setProduct(product);
          }
