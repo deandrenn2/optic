@@ -75,7 +75,6 @@ const { products,  deleteProduct } = useProducts();
                             <th className="border border-gray-300 p-2">N° Producto</th>
                             <th className="border border-gray-300 p-2">Código de barra</th>
                             <th className="border border-gray-300 p-2">Nombre</th>
-                            <th className="border border-gray-300 p-2">Referencia Montura</th>
                             <th className="border border-gray-300 p-2">Marca / Modelo</th>
                             <th className="border border-gray-300 p-2">Categoría</th>
                             <th className="border border-gray-300 p-2">Precio de Costo</th>
@@ -87,15 +86,15 @@ const { products,  deleteProduct } = useProducts();
                     <tbody>
                         {products?.map((product) => (
                           <tr key={product.id}>
-                            <td className="border border-gray-300 p-2 text-center"> s{product.id}</td>
-                            <td className="border border-gray-300 p-2 text-center">s{product.codeNumber}</td>
-                            <td className="border border-gray-300 p-2 text-center">s{product.name}</td>
-                            <td className="border border-gray-300 p-2 text-center">s{product.barCode}</td>
-                            <td className="border border-gray-300 p-2 text-center">s{product.idBrand}</td>
-                            <td className="border border-gray-300 p-2 text-center">s{product.quantity}</td>
-                            <td className="border border-gray-300 p-2 text-center">s{product.unitPrice}</td>
-                            <td className="border border-gray-300 p-2 text-center">s{product.salePrice}</td>
-                            <td className="border border-gray-300 p-2 text-center">s{product.stock}</td>
+                            <td className="border border-gray-300 p-2 text-center">{product.id}</td>
+                            <td className="border border-gray-300 p-2 text-center">{product.codeNumber}</td>
+                            <td className="border border-gray-300 p-2 text-center">{product.name}</td>
+                            <td className="border border-gray-300 p-2 text-center">{product.barCode}</td>
+                            <td className="border border-gray-300 p-2 text-center">{product.idBrand}</td>
+                            <td className="border border-gray-300 p-2 text-center">{product.quantity}</td>
+                            <td className="border border-gray-300 p-2 text-center">{product.unitPrice}</td>
+                            <td className="border border-gray-300 p-2 text-center">{product.salePrice}</td>
+                            <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                               <Link to={`/Products/${product.id}`} title='Ver detalle' className='text-blue-500  mr-10'>
                                 <FontAwesomeIcon icon={faPlay} />
                               </Link>

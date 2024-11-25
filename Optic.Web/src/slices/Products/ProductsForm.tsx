@@ -47,111 +47,112 @@ export const ProductForm = ({ id }: { id?: number }) => {
    };
 
     return (
-        <form ref={form} className="flex flex-col" onSubmit={handleSubmit}>
-        <div className="mt-4">
+      <form ref={form} className="flex flex-col" onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Nombre:
-            </label>
-          <input
-            
-            value={product?.name}
-            onChange={(e) => handleChange(e)}
-             name="firstName"
-            placeholder="Nombre"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            ID Marca:
+           N° Producto
           </label>
           <input
             required
-            type="number"
-            name="idBrand"
-            value={product.idBrand}
+            name="codeNumber"
+            value={product?.codeNumber}
             onChange={(e) => handleChange(e)}
-          />
+            placeholder="#"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Código de Barras:
+          </label>
+          <input
+            required
+            name="barCode"
+            value={product?.barCode || ""}
+            onChange={(e) => handleChange(e)}
+            placeholder="Código de Barras"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Nombre
+          </label>
+          <input
+            required
+            name="name"
+            value={product?. name}
+            onChange={(e) => handleChange(e)}
+            placeholder="Nombre del producto"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+        </div>
+        
+            <div className="mb-4">
+               <label className="block text-gray-700 text-sm font-bold mb-2">
+                Marca/Modelo
+               </label>
+               <select
+                  name="number"
+                  value={product?.barCode}
+                  onChange={(e) => handleChange(e)}
+                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                  <option value="">Seleccione</option>
+                  <option value="1">Crizal</option>
+                  <option value="2">Ovation</option>
+               </select>
+            </div>
+            
+
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Precio de Costo
+          </label>
+          <input
+            type="number"
+            step="0.01"
+            name="unitPrice"
+            value={product?.unitPrice}
+            onChange={(e) => handleChange(e)}
+            placeholder="0"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Número de Código:</label>
-          <input
-            required
-            type="text"
-            name="codeNumber"
-            value={product.codeNumber}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div  className="mb-4">
-          <label  className="block text-gray-700 text-sm font-bold mb-2">
-            Código de Barras:
-          </label>
-          <input
-            type="text"
-            name="barCode"
-            value={product?.barCode || ""}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div  className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Cantidad:
+            Precio de Venta
           </label>
           <input
             type="number"
-            name="quantity"
-            value={product?.quantity}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div  className="mb-4">
-          <label  className="block text-gray-700 text-sm font-bold mb-2">
-            Precio Unitario:
-          </label>
-          <input
-            type="number"
-            name="unitPrice"
             step="0.01"
-            value={product.unitPrice}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div  className="mb-4">
-          <label  className="block text-gray-700 text-sm font-bold mb-2">
-            Precio de Venta:
-          </label>
-          <input
-            type="number"
             name="salePrice"
-            step="0.01"
-            value={product.salePrice}
+            value={product?.salePrice}
             onChange={(e) => handleChange(e)}
-          />
+            placeholder="0"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </div>
+
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Inventario:
+           Existencias
           </label>
           <input
             type="number"
+            step="0.01"
             name="stock"
-            value={product.stock}
-            onChange={handleChange}
-          />
+            value={product?.stock}
+            onChange={(e) => handleChange(e)}
+            placeholder="stock"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Imagen (URL):
+            Imagen (URL)
           </label>
           <input
-            type="text"
-            name="image"
-            value={product.image || ""}
+            value={product?.image}
             onChange={(e) => handleChange(e)}
-          />
+            placeholder="URL de la imagen del productoge"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </div>
         <div className="mt-4">
             {id &&
@@ -170,7 +171,6 @@ export const ProductForm = ({ id }: { id?: number }) => {
                      <ButtonReset />
                   </>)}
          </div>
-        </div>
       </form>
     );
 };
