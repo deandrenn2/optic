@@ -1,11 +1,18 @@
-import { faMagnifyingGlass, faPlay, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { faCircleMinus, faEdit, faMagnifyingGlass, faPlay, faPlus,  } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react";
+import { MouseEvent } from "react";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { ProductForm } from "./ProductsForm";
 import { Direction } from "../../shared/components/OffCanvas/Models";
+import useProducts from "./useProducts";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 export const Products = () => {
 const [visible, setVisible] = useState(false);
+
+const { products,  deleteProduct } = useProducts();
+
 
     const handleClose = () => {
         setVisible(false);
@@ -14,12 +21,29 @@ const [visible, setVisible] = useState(false);
     function handleClick() {
         setVisible(true);
     }
+ 
     
+    const handleDelete = async (e: MouseEvent<HTMLButtonElement>, id: number) => {
+        e.preventDefault();
+        Swal.fire({
+            title: '¿Estás seguro de eliminar este producto?',
+            text: 'Esta acción no se puede deshacer',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar',
+            preConfirm: async () => {
+                await deleteProduct.mutateAsync(id);
+            }
+        })
+    }
     return (
         <div className="w-full">
             <div className="flex space-x-4 mb-4">
             <div className="mb-2">
-                <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
+                <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
+                    onClick={handleClick}>
                     <FontAwesomeIcon
                         icon={faPlus}
                         className="fa-search top-3 pr-2 font-bold" />Nuevo Producto</button>
@@ -28,9 +52,8 @@ const [visible, setVisible] = useState(false);
             <div className="mb-2">
                     <div className="relative">
                         <div className=" inline-flex">
-                            <input type="text" placeholder="Buscar Proveedor" className="p-2 pl-10 border-blue-400 rounded" 
-                                onClick={handleClick} />
-                            <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
+                            <input type="text" placeholder="Buscar Proveedor" className="p-2 pl-10 border-blue-400 rounded"/>
+                            <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400"/>
                             <button
                                 className="font-bold border p-2 bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-700 ">Buscar</button>
                             <div className=" ml-2">
@@ -62,54 +85,33 @@ const [visible, setVisible] = useState(false);
                         </tr>
                     </thead >
                     <tbody>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">1</td>
-                            <td className="border border-gray-300 p-2 text-center">2480293473</td>
-                            <td className="border border-gray-300 p-2 text-center">Gafa formulada L+ unisex</td>
-                            <td className="border border-gray-300 p-2 text-center">JB325</td>
-                            <td className="border border-gray-300 p-2 text-center">Jack Becker</td>
-                            <td className="border border-gray-300 p-2 text-center">Gafas</td>
-                            <td className="border border-gray-300 p-2 text-center">230.000</td>
-                            <td className="border border-gray-300 p-2 text-center">320.000</td>
-                            <td className="border border-gray-300 p-2 text-center">3</td>
-                            <td className="border border-gray-300 p-1 text-center">
-                                <FontAwesomeIcon icon={faPlay} className=" text-blue-500 cursor-pointer ml-0" />
-                                <FontAwesomeIcon icon={faTrash} className=" text-red-500 cursor-pointer ml-2" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">2</td>
-                            <td className="border border-gray-300 p-2 text-center">2480293484</td>
-                            <td className="border border-gray-300 p-2 text-center">Gafa unisex RB</td>
-                            <td className="border border-gray-300 p-2 text-center">RB2185</td>
-                            <td className="border border-gray-300 p-2 text-center">Real black</td>
-                            <td className="border border-gray-300 p-2 text-center">Gafas</td>
-                            <td className="border border-gray-300 p-2 text-center">150.000</td>
-                            <td className="border border-gray-300 p-2 text-center">210.000</td>
-                            <td className="border border-gray-300 p-2 text-center">20</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <FontAwesomeIcon icon={faPlay} className=" text-blue-500 cursor-pointer ml-0" />
-                                <FontAwesomeIcon icon={faTrash} className=" text-red-500 cursor-pointer ml-2" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">3</td>
-                            <td className="border border-gray-300 p-2 text-center">2480293495</td>
-                            <td className="border border-gray-300 p-2 text-center">Gafa formulada traslúcida unisex</td>
-                            <td className="border border-gray-300 p-2 text-center">ORX2155</td>
-                            <td className="border border-gray-300 p-2 text-center">Orion</td>
-                            <td className="border border-gray-300 p-2 text-center">Gafas</td>
-                            <td className="border border-gray-300 p-2 text-center">465.000</td>
-                            <td className="border border-gray-300 p-2 text-center">699.000</td>
-                            <td className="border border-gray-300 p-2 text-center">6</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <FontAwesomeIcon icon={faPlay} className=" text-blue-500 cursor-pointer ml-0" />
-                                <FontAwesomeIcon icon={faTrash} className=" text-red-500 cursor-pointer ml-2" />
-                            </td>
-                        </tr>
+                        {products?.map((product) => (
+                          <tr key={product.id}>
+                            <td className="border border-gray-300 p-2 text-center"> s{product.id}</td>
+                            <td className="border border-gray-300 p-2 text-center">s{product.codeNumber}</td>
+                            <td className="border border-gray-300 p-2 text-center">s{product.name}</td>
+                            <td className="border border-gray-300 p-2 text-center">s{product.barCode}</td>
+                            <td className="border border-gray-300 p-2 text-center">s{product.idBrand}</td>
+                            <td className="border border-gray-300 p-2 text-center">s{product.quantity}</td>
+                            <td className="border border-gray-300 p-2 text-center">s{product.unitPrice}</td>
+                            <td className="border border-gray-300 p-2 text-center">s{product.salePrice}</td>
+                            <td className="border border-gray-300 p-2 text-center">s{product.stock}</td>
+                              <Link to={`/Products/${product.id}`} title='Ver detalle' className='text-blue-500  mr-10'>
+                                <FontAwesomeIcon icon={faPlay} />
+                              </Link>
+                              <Link to={`/Products/${product.id}/Edit`} title='Editar' className='text-blue-500  mr-10'>
+                                <FontAwesomeIcon icon={faEdit} />
+                              </Link>
+                              <button className="text-red-500" onClick={(e) => handleDelete(e, product.id)}>
+                                <FontAwesomeIcon
+                                  icon={faCircleMinus}
+                                  className="ml-2"
+                                />
+                              </button>
+                          </tr>    
+                        ))};
                     </tbody>
                 </table>
-
                 <div className="flex justify-center mt-4">
                     <nav className="inline-flex">
                         <a href="#"

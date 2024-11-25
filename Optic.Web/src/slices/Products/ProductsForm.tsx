@@ -47,74 +47,94 @@ export const ProductForm = ({ id }: { id?: number }) => {
    };
 
     return (
-        <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nombre:</label>
+        <form ref={form} className="flex flex-col" onSubmit={handleSubmit}>
+        <div className="mt-4">
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Nombre:
+            </label>
           <input
-            type="text"
-            name="name"
+            
             value={product?.name}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
+             name="firstName"
+            placeholder="Nombre"
           />
         </div>
-        <div>
-          <label>ID Marca:</label>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            ID Marca:
+          </label>
           <input
+            required
             type="number"
             name="idBrand"
             value={product.idBrand}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div>
-          <label>Número de Código:</label>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Número de Código:</label>
           <input
+            required
             type="text"
             name="codeNumber"
             value={product.codeNumber}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div>
-          <label>Código de Barras:</label>
+        <div  className="mb-4">
+          <label  className="block text-gray-700 text-sm font-bold mb-2">
+            Código de Barras:
+          </label>
           <input
             type="text"
             name="barCode"
             value={product?.barCode || ""}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div>
-          <label>Cantidad:</label>
+        <div  className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Cantidad:
+          </label>
           <input
             type="number"
             name="quantity"
             value={product?.quantity}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div>
-          <label>Precio Unitario:</label>
+        <div  className="mb-4">
+          <label  className="block text-gray-700 text-sm font-bold mb-2">
+            Precio Unitario:
+          </label>
           <input
             type="number"
             name="unitPrice"
             step="0.01"
             value={product.unitPrice}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div>
-          <label>Precio de Venta:</label>
+        <div  className="mb-4">
+          <label  className="block text-gray-700 text-sm font-bold mb-2">
+            Precio de Venta:
+          </label>
           <input
             type="number"
             name="salePrice"
             step="0.01"
             value={product.salePrice}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div>
-          <label>Inventario:</label>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Inventario:
+          </label>
           <input
             type="number"
             name="stock"
@@ -122,20 +142,22 @@ export const ProductForm = ({ id }: { id?: number }) => {
             onChange={handleChange}
           />
         </div>
-        <div>
-          <label>Imagen (URL):</label>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Imagen (URL):
+          </label>
           <input
             type="text"
             name="image"
             value={product.image || ""}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className="mt-4">
             {id &&
                (
                   <button type="submit" disabled={updateProduct.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
-                     {updateProduct.isPending ? "Actualizando..." : "Actualizar cliente"}
+                     {updateProduct.isPending ? "Actualizando..." : "Actualizar Producto"}
                   </button>
                )}
 
@@ -143,11 +165,12 @@ export const ProductForm = ({ id }: { id?: number }) => {
                (
                   <>
                      <button type="submit" disabled={createProduct.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
-                        {createProduct.isPending ? "Creando..." : "Crear cliente"}
+                        {createProduct.isPending ? "Creando..." : "Crear Producto"}
                      </button>
                      <ButtonReset />
                   </>)}
          </div>
+        </div>
       </form>
     );
 };
