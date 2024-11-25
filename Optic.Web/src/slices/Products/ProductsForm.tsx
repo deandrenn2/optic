@@ -1,69 +1,153 @@
-export const ProductsForm = () => {
+import { useEffect, useRef, useState } from "react";
+import { CreateProductModel } from "./ProductsModel";
+import useProduct from "./useProducts";
+import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
+
+export const ProductsForm = ({ id }: { id?: number }) => {
+
+   const [product, setProduct] = useState<CreateProductModel>({
+      id: id,
+      name: "",
+      idBrand: 0,
+      codeNumber: "",
+      barCode: "",
+      quantity: 0,
+      unitPrice: 0,
+      salePrice: 0,
+      stock: 0,
+      image: "",
+   });
+   const form = useRef<HTMLFormElement>(null);
+
+   const { createProduct, updateProduct, products } = useProduct();
+
+   useEffect(() => {
+      if (id) {
+         const product = products?.find((product) => product.id === id);
+         if (product) {
+            setProduct(product);
+         }
+      }
+   }, [id, products]);
+
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      setProduct({ ...product, [e.target.name]: e.target.value });
+   };
+
+   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (id) {
+         await updateProduct.mutateAsync(product);
+      } else {
+         const res = await createProduct.mutateAsync(product);
+         if (res.isSuccess) {
+            form.current?.reset();
+         }
+      }
+   };
+
     return (
-        <form className="flex flex-col">
-            <div className="mb-4">
-                <label className="block text-gray-700">N° Producto</label>
-                <input type="text" className="w-full px-3 py-2 border rounded" value="00001" readOnly />
-            </div>
-            <div className="mb-4">
-                <label className="block text-gray-700">Codigo de Barra
-                    <span className="ml-2 text-gray-600">Generar Automático</span>
-                    <label className="ml-2 flex items-center ">
-                        <input type="checkbox" className="hidden" />
-                        <span className="relative">
-                            <span className="block w-10 h-6 bg-gray-300 rounded-full shadow-inner"></span>
-                            <span
-                                className="absolute block w-4 h-4 mt-1 ml-1 bg-white rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out"></span>
-                        </span>
-                    </label>
-                </label>
-                <div className="flex items-center">
-                    <input type="text" className="w-full px-3 py-2 border rounded"
-                        placeholder="Escribe o Genera el código" />
-                </div>
-            </div>
-            <div className="mb-4">
-                <label className="block text-gray-700">Producto</label>
-                <input type="text" className="w-full px-3 py-2 border rounded"
-                    placeholder="Descripción del Producto" />
-            </div>
-            <div className="mb-4">
-                <label className="block text-gray-700">Marca</label>
-                <div className="relative">
-                    <select className="w-full px-3 py-2 border rounded">
-                        <option>Seleccione</option>
-                    </select>
-                    <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                        <i className="fas fa-chevron-down text-gray-500"></i>
-                    </div>
-                </div>
-            </div>
-            <div className="mb-4">
-                <label className="block text-gray-700">Categoria</label>
-                <div className="relative">
-                    <select className="w-full px-3 py-2 border rounded">
-                        <option>Seleccione</option>
-                    </select>
-                    <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                        <i className="fas fa-chevron-down text-gray-500"></i>
-                    </div>
-                </div>
-            </div>
-            <div className="mb-4">
-                <label className="block text-gray-700">Precio de costo</label>
-                <input type="text" className="w-full px-3 py-2 border rounded" value="$ 0" />
-            </div>
-            <div className="mb-4">
-                <label className="block text-gray-700">Precio de Venta</label>
-                <input type="text" className="w-full px-3 py-2 border rounded" value="$ 0" />
-            </div>
-            <div className="mb-4">
-                <label className="block text-gray-700">Existencias</label>
-                <input type="text" className="w-full px-3 py-2 border rounded" placeholder="Cantidades unitarias" />
-            </div>
-            <div className="">
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Crear</button>
-            </div>
-        </form>
+        <form onSubmit={handleSubmit}>
+        <div>
+          <label>Nombre:</label>
+          <input
+            type="text"
+            name="name"
+            value={product.name}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>ID Marca:</label>
+          <input
+            type="number"
+            name="idBrand"
+            value={product.idBrand}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Número de Código:</label>
+          <input
+            type="text"
+            name="codeNumber"
+            value={product.codeNumber}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Código de Barras:</label>
+          <input
+            type="text"
+            name="barCode"
+            value={product.barCode || ""}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Cantidad:</label>
+          <input
+            type="number"
+            name="quantity"
+            value={product.quantity}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Precio Unitario:</label>
+          <input
+            type="number"
+            name="unitPrice"
+            step="0.01"
+            value={product.unitPrice}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Precio de Venta:</label>
+          <input
+            type="number"
+            name="salePrice"
+            step="0.01"
+            value={product.salePrice}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Inventario:</label>
+          <input
+            type="number"
+            name="stock"
+            value={product.stock}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Imagen (URL):</label>
+          <input
+            type="text"
+            name="image"
+            value={product.image || ""}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mt-4">
+            {id &&
+               (
+                  <button type="submit" disabled={updateProduct.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
+                     {updateProduct.isPending ? "Actualizando..." : "Actualizar cliente"}
+                  </button>
+               )}
+
+            {!id &&
+               (
+                  <>
+                     <button type="submit" disabled={createProduct.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
+                        {createProduct.isPending ? "Creando..." : "Crear cliente"}
+                     </button>
+                     <ButtonReset />
+                  </>)}
+         </div>
+      </form>
     );
 };
