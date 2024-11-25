@@ -35,7 +35,7 @@ public class GetClients : ICarterModule
         .Produces(StatusCodes.Status200OK);
     }
 
-    public class GetBusinessHandler(AppDbContext context) : IRequestHandler<GetClientsQuery, Result>
+    public class GetClientsHandler(AppDbContext context) : IRequestHandler<GetClientsQuery, Result>
     {
         public async Task<Result> Handle(GetClientsQuery request, CancellationToken cancellationToken)
         {

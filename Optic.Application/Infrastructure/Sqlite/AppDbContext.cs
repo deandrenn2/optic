@@ -18,6 +18,7 @@ public class AppDbContext : DbContext
     public DbSet<Client> Clients => Set<Client>();
     public DbSet<Business> Businesses => Set<Business>();
     public DbSet<Supplier> Suppliers => Set<Supplier>();
+    public DbSet<Product> Products => Set<Product>();
     public DbSet<IdentificationType> IdentificationTypes => Set<IdentificationType>();
 
 
