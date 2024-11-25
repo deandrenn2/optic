@@ -1,5 +1,5 @@
-export interface ProductsModel {
-   id: number;
+export interface ProductModel {
+   id?: number;
    name: string;
    idBrand: number;
    codeNumber: string;
@@ -10,7 +10,7 @@ export interface ProductsModel {
    stock: number;
    image: string;
 }
-export interface ProductsResponseModel {
+export interface ProductResponseModel {
    id: number;
    name: string;
    idBrand: number;

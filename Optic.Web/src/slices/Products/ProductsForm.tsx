@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { ProductsModel, ProductsResponseModel } from "./ProductsModel";
+import { ProductModel, ProductResponseModel } from "./ProductModel";
 import useProduct from "./useProducts";
 import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
 
-export const ProductsForm = ({ id }: { id?: number }) => {
+export const ProductForm = ({ id }: { id?: number }) => {
 
-   const [product, setProduct] = useState<ProductsModel | ProductsResponseModel>({
+   const [product, setProduct] = useState<ProductModel | ProductResponseModel>({
       id: id,
       name: "",
       idBrand: 0,
@@ -20,7 +20,8 @@ export const ProductsForm = ({ id }: { id?: number }) => {
    const form = useRef<HTMLFormElement>(null);
 
    const { createProduct, updateProduct, products } = useProduct();
-
+  
+   
    useEffect(() => {
       if (id) {
          const product = products?.find((product: { id: number; }) => product.id === id);
@@ -28,7 +29,7 @@ export const ProductsForm = ({ id }: { id?: number }) => {
             setProduct(product);
          }
       }
-   }, [id, products]);
+   }, [id, product]);
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setProduct({ ...product, [e.target.name]: e.target.value });
@@ -53,7 +54,7 @@ export const ProductsForm = ({ id }: { id?: number }) => {
           <input
             type="text"
             name="name"
-            value={product.name}
+            value={product?.name}
             onChange={handleChange}
           />
         </div>
@@ -80,7 +81,7 @@ export const ProductsForm = ({ id }: { id?: number }) => {
           <input
             type="text"
             name="barCode"
-            value={product.barCode || ""}
+            value={product?.barCode || ""}
             onChange={handleChange}
           />
         </div>
@@ -89,7 +90,7 @@ export const ProductsForm = ({ id }: { id?: number }) => {
           <input
             type="number"
             name="quantity"
-            value={product.quantity}
+            value={product?.quantity}
             onChange={handleChange}
           />
         </div>
