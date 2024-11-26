@@ -4,7 +4,7 @@ import useProduct from "./useProducts";
 import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
 export const ProductForm = ({ id }: { id?: number }) => {
 
-   const [product, setProduct] = useState<ProductModel | ProductsResponseModel>({
+   const [form,  setForm] = useState<ProductModel | ProductsResponseModel>({
       id: id,
       name: "",
       idBrand: 0,
@@ -16,38 +16,52 @@ export const ProductForm = ({ id }: { id?: number }) => {
       stock: 0,
       image: "",
    });
-   const form = useRef<HTMLFormElement>(null);
+   const formRef = useRef<HTMLFormElement>(null);
 
    const { createProduct, updateProduct, products } = useProduct();
   
    
    useEffect(() => {
       if (id) {
-         const product = products?.find((product: { id: number; }) => product.id === id);
+         const product = products?.find((product) => product.id === id);
          if (product) {
-            setProduct(product);
+            setForm(product);
          }
       }
-   }, [id, product]);
+   }, [id, products]);
 
-   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      setProduct({ ...product, [e.target.name]: e.target.value });
-   };
-
-   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+   
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setForm({
+          ...form,
+          [name]: value
+      });
+  };
+   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
       if (id) {
-         await updateProduct.mutateAsync(product);
+         await updateProduct.mutateAsync(form);
       } else {
-         const res = await createProduct.mutateAsync(product);
+         const res = await createProduct.mutateAsync(form);
          if (res.isSuccess) {
-            form.current?.reset();
+            setForm({
+               name: "",
+               idBrand: 0,
+               codeNumber: "",
+               barCode: "",
+               quantity: 0,
+               unitPrice: 0,
+               salePrice: 0,
+               stock: 0,
+               image: "",
+            });
+            formRef.current?.reset();
          }
       }
    };
-
     return (
-      <form ref={form} className="flex flex-col" onSubmit={handleSubmit}>
+      <form  className="flex flex-col" onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
            N° Producto
@@ -55,7 +69,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
           <input
             required
             name="codeNumber"
-            value={product?.codeNumber}
+            value={form?.codeNumber}
             onChange={(e) => handleChange(e)}
             placeholder="#"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -68,7 +82,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
           <input
             required
             name="barCode"
-            value={product?.barCode || ""}
+            value={form?.barCode || ""}
             onChange={(e) => handleChange(e)}
             placeholder="Código de Barras"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
@@ -80,7 +94,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
           <input
             required
             name="name"
-            value={product?. name}
+            value={form?. name}
             onChange={(e) => handleChange(e)}
             placeholder="Nombre del producto"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
@@ -91,8 +105,9 @@ export const ProductForm = ({ id }: { id?: number }) => {
                 Marca/Modelo
                </label>
                <select
-                  name="number"
-                  value={product?.barCode}
+                  name="barCodeId"
+                  value={form?.barCode}
+                  required
                   onChange={(e) => handleChange(e)}
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                   <option value="">Seleccione</option>
@@ -102,7 +117,6 @@ export const ProductForm = ({ id }: { id?: number }) => {
             </div>
             
 
-
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Precio de Costo
@@ -111,7 +125,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
             type="number"
             step="0.01"
             name="unitPrice"
-            value={product?.unitPrice}
+            value={form?.unitPrice}
             onChange={(e) => handleChange(e)}
             placeholder="0"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
@@ -125,7 +139,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
             type="number"
             step="0.01"
             name="salePrice"
-            value={product?.salePrice}
+            value={form?.salePrice}
             onChange={(e) => handleChange(e)}
             placeholder="0"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
@@ -139,7 +153,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
             type="number"
             step="0.01"
             name="stock"
-            value={product?.stock}
+            value={form?.stock}
             onChange={(e) => handleChange(e)}
             placeholder="stock"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
@@ -149,7 +163,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
             Imagen (URL)
           </label>
           <input
-            value={product?.image}
+            value={form?.image}
             onChange={(e) => handleChange(e)}
             placeholder="URL de la imagen del productoge"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
@@ -174,3 +188,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
       </form>
     );
 };
+
+
+
+

@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 export const Products = () => {
 const [visible, setVisible] = useState(false);
 
-const { products,  deleteProduct } = useProducts();
+const { products,  deleteProduct,  } = useProducts();
 
 
     const handleClose = () => {
@@ -21,7 +21,8 @@ const { products,  deleteProduct } = useProducts();
     function handleClick() {
         setVisible(true);
     }
- 
+
+  
     
     const handleDelete = async (e: MouseEvent<HTMLButtonElement>, id: number) => {
         e.preventDefault();
@@ -108,7 +109,7 @@ const { products,  deleteProduct } = useProducts();
                                 />
                               </button>
                           </tr>    
-                        ))};
+                        ))}
                     </tbody>
                 </table>
                 <div className="flex justify-center mt-4">
