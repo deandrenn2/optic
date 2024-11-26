@@ -111,8 +111,8 @@ export const ProductForm = ({ id }: { id?: number }) => {
                   onChange={(e) => handleChange(e)}
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                   <option value="">Seleccione</option>
-                  <option value="1">Crizal</option>
-                  <option value="2">Ovation</option>
+                  <option value="Crizal">Crizal</option>
+                  <option value="Ovation">Ovation</option>
                </select>
             </div>
 
