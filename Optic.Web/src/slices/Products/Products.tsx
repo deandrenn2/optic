@@ -8,23 +8,22 @@ import { Direction } from "../../shared/components/OffCanvas/Models";
 import useProducts from "./useProducts";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+
+
 export const Products = () => {
-const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(false);
 
 const { products, queryProducts, deleteProduct} = useProducts();
 
-    const handleClose = () => {
+    function handleClose(): void {
         setVisible(false);
     }
 
-    function handleClick(): void {
-        setVisible(true);
-    }
     if (queryProducts.isLoading) {
         return <div>Cargando...</div>;
      }
 
-    const handleDelete = async (e: MouseEvent<HTMLButtonElement>, id: number) => {
+    function handleDelete(e: MouseEvent<HTMLButtonElement>, id: number): void {
         e.preventDefault();
         Swal.fire({
             title: '¿Estás seguro de eliminar este producto?',
@@ -44,7 +43,7 @@ const { products, queryProducts, deleteProduct} = useProducts();
             <div className="flex space-x-4 mb-4">
             <div className="mb-2">
                 <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
-                    onClick={handleClick}>
+                    onClick={() => setVisible(true)}>
                     <FontAwesomeIcon
                         icon={faPlus}
                         className="fa-search top-3 pr-2 font-bold" />Nuevo Producto</button>
@@ -96,7 +95,7 @@ const { products, queryProducts, deleteProduct} = useProducts();
                             <td className="border border-gray-300 p-2 text-center">{product.salePrice}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                            <Link to={`/Products/${product.id}`} title='Ver detalle' className='text-blue-500  mr-10'>
+                            <Link to={`/Products/${product.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700'>
                                 <FontAwesomeIcon icon={faPlay} />
                               </Link>
                               <button className="text-red-500" onClick={(e) => handleDelete(e, product.id)}>
@@ -123,5 +122,5 @@ const { products, queryProducts, deleteProduct} = useProducts();
                     <ProductForm />
                 </OffCanvas>
             </div>
-    );
-};
+    )
+}

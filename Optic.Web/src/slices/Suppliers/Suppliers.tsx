@@ -77,7 +77,7 @@ export const Suppliers = () => {
                             <td className="border border-gray-300 p-2 text-center">{supplier.address}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.email}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <Link to={`/Suppliers/${supplier.id}`} title='Ver detalle' className='text-blue-500  mr-10'>
+                                <Link to={`/Suppliers/${supplier.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700'>
                                     <FontAwesomeIcon icon={faPlay} />
                                 </Link>
                                 <button className="text-red-500" onClick={(e) => handleDelete(e, supplier.id)}>

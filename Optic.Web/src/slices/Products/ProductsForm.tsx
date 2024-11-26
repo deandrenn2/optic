@@ -16,10 +16,9 @@ export const ProductForm = ({ id }: { id?: number }) => {
       stock: 0,
       image: "",
    });
-   const formRef = useRef<HTMLFormElement>(null);
-
    const { createProduct, updateProduct, products  } = useProducts();
-  
+   
+   const formRef = useRef<HTMLFormElement>(null);
    
    useEffect(() => {
       if (id) {
