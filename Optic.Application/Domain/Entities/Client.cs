@@ -1,5 +1,4 @@
-﻿using Optic.Application.Domain.Enums;
-using Optic.Application.Domain.Primitives;
+﻿using Optic.Application.Domain.Primitives;
 
 namespace Optic.Application.Domain.Entities;
 

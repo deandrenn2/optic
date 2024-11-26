@@ -19,6 +19,7 @@ public class AppDbContext : DbContext
     public DbSet<Business> Businesses => Set<Business>();
     public DbSet<Supplier> Suppliers => Set<Supplier>();
     public DbSet<Product> Products => Set<Product>();
+    public DbSet<Category> Categories => Set<Category>();
     public DbSet<IdentificationType> IdentificationTypes => Set<IdentificationType>();
 
 
@@ -37,7 +38,6 @@ public class AppDbContext : DbContext
         foreach (var @event in events)
         {
             @event.IsPublished = true;
-
             //_logger.LogInformation("New domain event {Event}", @event.GetType().Name);
 
             // Note: If an unhandled exception occurs, all the saved changes will be rolled back
@@ -51,12 +51,8 @@ public class AppDbContext : DbContext
         }
         catch (Exception ex)
         {
-
             throw;
         }
-       
-
-    
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
