@@ -31,7 +31,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
    }, [id, products]);
 
    
-   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
       setForm({
           ...form,
@@ -75,9 +75,10 @@ export const ProductForm = ({ id }: { id?: number }) => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
         </div>
+
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Código de Barras:
+            Código de Barras
           </label>
           <input
             required
@@ -94,7 +95,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
           <input
             required
             name="name"
-            value={form?. name}
+            value={form?.name}
             onChange={(e) => handleChange(e)}
             placeholder="Nombre del producto"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
@@ -105,9 +106,8 @@ export const ProductForm = ({ id }: { id?: number }) => {
                 Marca/Modelo
                </label>
                <select
-                  name="barCodeId"
-                  value={form?.barCode}
-                  required
+                  name="idBrand"
+                  value={form?.idBrand}
                   onChange={(e) => handleChange(e)}
                   className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                   <option value="">Seleccione</option>
@@ -115,8 +115,20 @@ export const ProductForm = ({ id }: { id?: number }) => {
                   <option value="2">Ovation</option>
                </select>
             </div>
-            
 
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Cantidad
+                </label>
+                <input
+                    type="number"
+                    name="quantity"
+                    value={form?.quantity}
+                    onChange={(e) => handleChange(e)}
+                    placeholder="Cantidad"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            </div>
+            
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Precio de Costo

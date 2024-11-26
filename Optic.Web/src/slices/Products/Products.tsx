@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 export const Products = () => {
 const [visible, setVisible] = useState(false);
 
-const { products,  deleteProduct,  } = useProducts();
+const { products,  deleteProduct, queryProducts } = useProducts();
 
 
     const handleClose = () => {
@@ -21,9 +21,10 @@ const { products,  deleteProduct,  } = useProducts();
     function handleClick() {
         setVisible(true);
     }
+    if (queryProducts.isLoading) {
+        return <div>Cargando...</div>;
+     }
 
-  
-    
     const handleDelete = async (e: MouseEvent<HTMLButtonElement>, id: number) => {
         e.preventDefault();
         Swal.fire({
@@ -77,7 +78,7 @@ const { products,  deleteProduct,  } = useProducts();
                             <th className="border border-gray-300 p-2">Código de barra</th>
                             <th className="border border-gray-300 p-2">Nombre</th>
                             <th className="border border-gray-300 p-2">Marca / Modelo</th>
-                            <th className="border border-gray-300 p-2">Categoría</th>
+                            <th className="border border-gray-300 p-2">Cantidad</th>
                             <th className="border border-gray-300 p-2">Precio de Costo</th>
                             <th className="border border-gray-300 p-2">precio de venta</th>
                             <th className="border border-gray-300 p-2">Existencias</th>
@@ -87,20 +88,17 @@ const { products,  deleteProduct,  } = useProducts();
                     <tbody>
                         {products?.map((product) => (
                           <tr key={product.id}>
-                            <td className="border border-gray-300 p-2 text-center">{product.id}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.codeNumber}</td>
-                            <td className="border border-gray-300 p-2 text-center">{product.name}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.barCode}</td>
+                            <td className="border border-gray-300 p-2 text-center">{product.name}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.idBrand}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.quantity}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.unitPrice}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.salePrice}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
-                              <Link to={`/Products/${product.id}`} title='Ver detalle' className='text-blue-500  mr-10'>
+                            <td className="border border-gray-300 p-2 text-center">
+                            <Link to={`/Products/${product.id}`} title='Ver detalle' className='text-blue-500  mr-10'>
                                 <FontAwesomeIcon icon={faPlay} />
-                              </Link>
-                              <Link to={`/Products/${product.id}/Edit`} title='Editar' className='text-blue-500  mr-10'>
-                                <FontAwesomeIcon icon={faEdit} />
                               </Link>
                               <button className="text-red-500" onClick={(e) => handleDelete(e, product.id)}>
                                 <FontAwesomeIcon
@@ -108,6 +106,9 @@ const { products,  deleteProduct,  } = useProducts();
                                   className="ml-2"
                                 />
                               </button>
+                            </td>
+
+                              
                           </tr>    
                         ))}
                     </tbody>
