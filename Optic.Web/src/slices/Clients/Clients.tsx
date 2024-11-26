@@ -112,7 +112,6 @@ export const Clients = () => {
                         </td>
                      </tr>
                   ))}
-
                </tbody>
             </table>
             <div className="mt-4 flex justify-center">

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ProductModel, ProductsResponseModel } from "./ProductModel";
-import useProduct from "./useProducts";
+import useProducts from "./useProducts";
 import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
 export const ProductForm = ({ id }: { id?: number }) => {
 
@@ -18,7 +18,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
    });
    const formRef = useRef<HTMLFormElement>(null);
 
-   const { createProduct, updateProduct, products } = useProduct();
+   const { createProduct, updateProduct, products  } = useProducts();
   
    
    useEffect(() => {

@@ -13,12 +13,11 @@ const [visible, setVisible] = useState(false);
 
 const { products, queryProducts, deleteProduct} = useProducts();
 
-
     const handleClose = () => {
         setVisible(false);
     }
 
-    function handleClick() {
+    function handleClick(): void {
         setVisible(true);
     }
     if (queryProducts.isLoading) {
