@@ -1,4 +1,4 @@
-import { faCircleMinus, faEdit, faMagnifyingGlass, faPlay, faPlus,  } from "@fortawesome/free-solid-svg-icons"
+import { faCircleMinus, faMagnifyingGlass, faPlay, faPlus,  } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react";
 import { MouseEvent } from "react";
