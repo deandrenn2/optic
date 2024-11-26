@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 const KEY = 'Products';
 
-export const useProducts = () => {
+export const useProduct = () => {
    const queryProducts = useQuery({
       queryKey: [KEY],
       queryFn: getProducts,
@@ -53,11 +53,11 @@ export const useProducts = () => {
    });
 
    return {
-      products: queryProducts?.data?.data,
       queryProducts,
+      products: queryProducts?.data?.data,
       createProduct,
       deleteProduct,
       updateProduct,
    };
 };
-export default useProducts;
+export default useProduct;

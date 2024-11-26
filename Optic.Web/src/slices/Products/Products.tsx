@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 export const Products = () => {
 const [visible, setVisible] = useState(false);
 
-const { products,  deleteProduct, queryProducts } = useProducts();
+const { products, queryProducts, deleteProduct} = useProducts();
 
 
     const handleClose = () => {
@@ -88,7 +88,6 @@ const { products,  deleteProduct, queryProducts } = useProducts();
                     <tbody>
                         {products?.map((product) => (
                           <tr key={product.id}>
-                            <td className="border border-gray-300 p-2 text-center"> {product.id}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.codeNumber}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.barCode}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.name}</td>
@@ -102,10 +101,7 @@ const { products,  deleteProduct, queryProducts } = useProducts();
                                 <FontAwesomeIcon icon={faPlay} />
                               </Link>
                               <button className="text-red-500" onClick={(e) => handleDelete(e, product.id)}>
-                                <FontAwesomeIcon
-                                  icon={faCircleMinus}
-                                  className="ml-2"
-                                />
+                                <FontAwesomeIcon icon={faCircleMinus} className="ml-2" />
                               </button>
                             </td>
 
