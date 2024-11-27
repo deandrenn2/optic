@@ -1,81 +1,204 @@
-export const ProductsForm = () => {
-    return (
-        <div
-            className="fixed inset-y-3 right-0 translate-x-full transition-transform duration-300 bg-gray-00 text-black-500 ">
-            <div className="flex justify-center items-center h-screen bg-gray-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                    <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-2xl text-black-600">Nuevo Producto</h2>
-                        <i id="cerrarModal" className="fas fa-times cursor-pointer text-red-500"></i>
-                    </div>
-                    <form>
-                        <div className="mb-4">
-                            <label className="block text-gray-700">N° Producto</label>
-                            <input type="text" className="w-full px-3 py-2 border rounded" value="00001" readOnly />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700">Codigo de Barra
-                                <span className="ml-2 text-gray-600">Generar Automático</span>
-                                <label className="ml-2 flex items-center ">
-                                    <input type="checkbox" className="hidden" />
-                                    <span className="relative">
-                                        <span className="block w-10 h-6 bg-gray-300 rounded-full shadow-inner"></span>
-                                        <span
-                                            className="absolute block w-4 h-4 mt-1 ml-1 bg-white rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out"></span>
-                                    </span>
-                                </label>
-                            </label>
-                            <div className="flex items-center">
-                                <input type="text" className="w-full px-3 py-2 border rounded"
-                                    placeholder="Escribe o Genera el código" />
-                            </div>
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700">Producto</label>
-                            <input type="text" className="w-full px-3 py-2 border rounded"
-                                placeholder="Descripción del Producto" />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700">Marca</label>
-                            <div className="relative">
-                                <select className="w-full px-3 py-2 border rounded">
-                                    <option>Seleccione</option>
-                                </select>
-                                <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                    <i className="fas fa-chevron-down text-gray-500"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700">Categoria</label>
-                            <div className="relative">
-                                <select className="w-full px-3 py-2 border rounded">
-                                    <option>Seleccione</option>
-                                </select>
-                                <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                    <i className="fas fa-chevron-down text-gray-500"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700">Precio de costo</label>
-                            <input type="text" className="w-full px-3 py-2 border rounded" value="$ 0" />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700">Precio de Venta</label>
-                            <input type="text" className="w-full px-3 py-2 border rounded" value="$ 0" />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700">Existencias</label>
-                            <input type="text" className="w-full px-3 py-2 border rounded" placeholder="Cantidades unitarias" />
-                        </div>
-                        <div className="">
-                            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Crear</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+import { useEffect, useRef, useState } from "react";
+import { ProductModel, ProductsResponseModel } from "./ProductModel";
+import useProducts from "./useProducts";
+import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
+export const ProductForm = ({ id }: { id?: number }) => {
 
-    )
-}
+   const [form, setForm] = useState<ProductModel | ProductsResponseModel>({
+      id: id,
+      name: "",
+      idBrand: 0,
+      codeNumber: "",
+      barCode: "",
+      quantity: 0,
+      unitPrice: 0,
+      salePrice: 0,
+      stock: 0,
+      image: "",
+   });
+   const { createProduct, updateProduct, products } = useProducts();
+
+   const formRef = useRef<HTMLFormElement>(null);
+
+   useEffect(() => {
+      if (id) {
+         const product = products?.find((product) => product.id === id);
+         if (product) {
+            setForm(product);
+         }
+      }
+   }, [id, products]);
+
+
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value } = e.target;
+      setForm({
+         ...form,
+         [name]: value
+      });
+   };
+   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      if (id) {
+         await updateProduct.mutateAsync(form);
+      } else {
+         const res = await createProduct.mutateAsync(form);
+         if (res.isSuccess) {
+            setForm({
+               name: "",
+               idBrand: 0,
+               codeNumber: "",
+               barCode: "",
+               quantity: 0,
+               unitPrice: 0,
+               salePrice: 0,
+               stock: 0,
+               image: "",
+            });
+            formRef.current?.reset();
+         }
+      }
+   };
+   return (
+      <form className="flex flex-col" onSubmit={handleSubmit}>
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               N° Producto
+            </label>
+            <input
+               required
+               name="codeNumber"
+               value={form?.codeNumber}
+               onChange={(e) => handleChange(e)}
+               placeholder="#"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+         </div>
+
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Código de Barras
+            </label>
+            <input
+               name="barCode"
+               value={form?.barCode}
+               onChange={(e) => handleChange(e)}
+               placeholder="Código de Barras"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Nombre
+            </label>
+            <input
+               required
+               name="name"
+               value={form?.name}
+               onChange={(e) => handleChange(e)}
+               placeholder="Nombre del producto"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
+
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Marca/Modelo
+            </label>
+            <select
+               name="idBrand"
+               value={form?.idBrand}
+               onChange={(e) => handleChange(e)}
+               className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+               <option value="">Seleccione</option>
+               <option value="1">Crizal</option>
+               <option value="2">Ovation</option>
+            </select>
+         </div>
+
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Cantidad
+            </label>
+            <input
+               type="number"
+               name="quantity"
+               value={form?.quantity}
+               onChange={(e) => handleChange(e)}
+               placeholder="Cantidad"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
+
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Precio de Costo
+            </label>
+            <input
+               type="number"
+               step="0.01"
+               name="unitPrice"
+               value={form?.unitPrice}
+               onChange={(e) => handleChange(e)}
+               placeholder="0"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
+
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Precio de Venta
+            </label>
+            <input
+               type="number"
+               step="0.01"
+               name="salePrice"
+               value={form?.salePrice}
+               onChange={(e) => handleChange(e)}
+               placeholder="0"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
+
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Existencias
+            </label>
+            <input
+               type="number"
+               step="0.01"
+               name="stock"
+               value={form?.stock}
+               onChange={(e) => handleChange(e)}
+               placeholder="stock"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Imagen (URL)
+            </label>
+            <input
+               value={form?.image}
+               onChange={(e) => handleChange(e)}
+               placeholder="URL de la imagen del productoge"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
+         <div className="mt-4">
+            {id &&
+               (
+                  <button type="submit" disabled={updateProduct.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
+                     {updateProduct.isPending ? "Actualizando..." : "Actualizar Producto"}
+                  </button>
+               )}
+
+            {!id &&
+               (
+                  <>
+                     <button type="submit" disabled={createProduct.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
+                        {createProduct.isPending ? "Creando..." : "Crear Producto"}
+                     </button>
+                     <ButtonReset />
+                  </>)}
+         </div>
+      </form>
+   );
+};
+
+
+
+
