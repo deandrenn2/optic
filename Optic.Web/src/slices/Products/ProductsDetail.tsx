@@ -5,7 +5,7 @@ import { ProductForm } from "./ProductsForm";
 
 
 export const ProductsDetail = () => {
-   const { id } = useParams();
+    const { id } = useParams();
     return (
         <div className="w-full">
             <div className="flex space-x-4 mb-4">
@@ -18,7 +18,7 @@ export const ProductsDetail = () => {
             <div className="w-1/4 bg-white p-4 rounded-lg">
                 <ProductForm id={Number(id)} />
             </div>
-            
+
         </div>
     );
 };

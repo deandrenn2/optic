@@ -4,7 +4,7 @@ import useProducts from "./useProducts";
 import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
 export const ProductForm = ({ id }: { id?: number }) => {
 
-   const [form,  setForm] = useState<ProductModel | ProductsResponseModel>({
+   const [form, setForm] = useState<ProductModel | ProductsResponseModel>({
       id: id,
       name: "",
       idBrand: 0,
@@ -16,10 +16,10 @@ export const ProductForm = ({ id }: { id?: number }) => {
       stock: 0,
       image: "",
    });
-   const { createProduct, updateProduct, products  } = useProducts();
-   
+   const { createProduct, updateProduct, products } = useProducts();
+
    const formRef = useRef<HTMLFormElement>(null);
-   
+
    useEffect(() => {
       if (id) {
          const product = products?.find((product) => product.id === id);
@@ -29,14 +29,14 @@ export const ProductForm = ({ id }: { id?: number }) => {
       }
    }, [id, products]);
 
-   
+
    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
       setForm({
-          ...form,
-          [name]: value
+         ...form,
+         [name]: value
       });
-  };
+   };
    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       if (id) {
@@ -59,126 +59,126 @@ export const ProductForm = ({ id }: { id?: number }) => {
          }
       }
    };
-    return (
-      <form  className="flex flex-col" onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-           N° Producto
-          </label>
-          <input
-            required
-            name="codeNumber"
-            value={form?.codeNumber}
-            onChange={(e) => handleChange(e)}
-            placeholder="#"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+   return (
+      <form className="flex flex-col" onSubmit={handleSubmit}>
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               N° Producto
+            </label>
+            <input
+               required
+               name="codeNumber"
+               value={form?.codeNumber}
+               onChange={(e) => handleChange(e)}
+               placeholder="#"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
-        </div>
+         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Código de Barras
-          </label>
-          <input
-            name="barCode"
-            value={form?.barCode}
-            onChange={(e) => handleChange(e)}
-            placeholder="Código de Barras"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Nombre
-          </label>
-          <input
-            required
-            name="name"
-            value={form?.name}
-            onChange={(e) => handleChange(e)}
-            placeholder="Nombre del producto"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-        </div>
-        
-            <div className="mb-4">
-               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Marca/Modelo
-               </label>
-               <select
-                  name="idBrand"
-                  value={form?.idBrand}
-                  onChange={(e) => handleChange(e)}
-                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                  <option value="">Seleccione</option>
-                  <option value="1">Crizal</option>
-                  <option value="2">Ovation</option>
-               </select>
-            </div>
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Código de Barras
+            </label>
+            <input
+               name="barCode"
+               value={form?.barCode}
+               onChange={(e) => handleChange(e)}
+               placeholder="Código de Barras"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Nombre
+            </label>
+            <input
+               required
+               name="name"
+               value={form?.name}
+               onChange={(e) => handleChange(e)}
+               placeholder="Nombre del producto"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Cantidad
-                </label>
-                <input
-                    type="number"
-                    name="quantity"
-                    value={form?.quantity}
-                    onChange={(e) => handleChange(e)}
-                    placeholder="Cantidad"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-            </div>
-            
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Precio de Costo
-          </label>
-          <input
-            type="number"
-            step="0.01"
-            name="unitPrice"
-            value={form?.unitPrice}
-            onChange={(e) => handleChange(e)}
-            placeholder="0"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-        </div>
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Marca/Modelo
+            </label>
+            <select
+               name="idBrand"
+               value={form?.idBrand}
+               onChange={(e) => handleChange(e)}
+               className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+               <option value="">Seleccione</option>
+               <option value="1">Crizal</option>
+               <option value="2">Ovation</option>
+            </select>
+         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Precio de Venta
-          </label>
-          <input
-            type="number"
-            step="0.01"
-            name="salePrice"
-            value={form?.salePrice}
-            onChange={(e) => handleChange(e)}
-            placeholder="0"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-        </div>
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Cantidad
+            </label>
+            <input
+               type="number"
+               name="quantity"
+               value={form?.quantity}
+               onChange={(e) => handleChange(e)}
+               placeholder="Cantidad"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-           Existencias
-          </label>
-          <input
-            type="number"
-            step="0.01"
-            name="stock"
-            value={form?.stock}
-            onChange={(e) => handleChange(e)}
-            placeholder="stock"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Imagen (URL)
-          </label>
-          <input
-            value={form?.image}
-            onChange={(e) => handleChange(e)}
-            placeholder="URL de la imagen del productoge"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-        </div>
-        <div className="mt-4">
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Precio de Costo
+            </label>
+            <input
+               type="number"
+               step="0.01"
+               name="unitPrice"
+               value={form?.unitPrice}
+               onChange={(e) => handleChange(e)}
+               placeholder="0"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
+
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Precio de Venta
+            </label>
+            <input
+               type="number"
+               step="0.01"
+               name="salePrice"
+               value={form?.salePrice}
+               onChange={(e) => handleChange(e)}
+               placeholder="0"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
+
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Existencias
+            </label>
+            <input
+               type="number"
+               step="0.01"
+               name="stock"
+               value={form?.stock}
+               onChange={(e) => handleChange(e)}
+               placeholder="stock"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Imagen (URL)
+            </label>
+            <input
+               value={form?.image}
+               onChange={(e) => handleChange(e)}
+               placeholder="URL de la imagen del productoge"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+         </div>
+         <div className="mt-4">
             {id &&
                (
                   <button type="submit" disabled={updateProduct.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
@@ -196,7 +196,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
                   </>)}
          </div>
       </form>
-    );
+   );
 };
 
 
