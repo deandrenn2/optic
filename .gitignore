@@ -420,3 +420,6 @@ temp
 TODOs.md
 .eslintcache
 /Optic.Api/appsettings.Development.json
+/Optic.Api/App_Data/opticDb.sqlite-shm
+/Optic.Api/App_Data/opticDb.sqlite-shm
+/Optic.Api/App_Data/opticDb.sqlite-wal

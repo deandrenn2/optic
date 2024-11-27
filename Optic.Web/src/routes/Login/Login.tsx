@@ -17,8 +17,7 @@ export const Login = () => {
       != undefined && !!token ?
       token?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
       : "";
-   console.log(iduser, "usuario");
-   const { queryUser, user } = useLogin(parseInt(iduser));
+   const { user } = useLogin(iduser);
    const { business, queryBusiness } = useBusiness();
    const [isFetching, setIsFetching] = useState(false);
 
@@ -43,6 +42,14 @@ export const Login = () => {
 
             if (response.data) {
                setToken(response?.data);
+               if (user) {
+                  setUser(user);
+               }
+               if (business) {
+                  setBusiness(business);
+               }
+               setIsAuthenticated(true);
+
                setIsFetching(false);
             }
 
@@ -54,21 +61,6 @@ export const Login = () => {
             setIsFetching(false);
          });
    }
-
-   useEffect(() => {
-      if (token && user && business) {
-         setUser(user);
-         setBusiness(business);
-         setIsAuthenticated(true);
-         navigate('/');
-      }
-   },
-      [
-         token,
-         queryBusiness?.data,
-         queryUser?.data,
-         navigate
-      ]);
 
    useEffect(() => {
       if (queryBusiness?.data) {
@@ -159,7 +151,7 @@ export const Login = () => {
                className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative"
             >
                {
-                  (isFetching && queryBusiness.isLoading && queryUser.isLoading) &&
+                  (isFetching) &&
                   <div role="status" className='absolute top-0 left-1 p-2 flex items-center justify-center text-gray-300'>
                      <svg aria-hidden="true" className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
