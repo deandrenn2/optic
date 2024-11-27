@@ -1,13 +1,13 @@
-import { faMagnifyingGlass, faPlay, faPlus,  } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faPlay, faPlus, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLogin } from "../../routes/Login/useLogin";
 import { Link } from "react-router-dom";
 
 
 export const Settings = () => {
-    const {users} = useLogin();
+    const { users } = useLogin();
 
-    
+
     return (
         <div className="w-full p-4">
             <div className="flex space-x-4 mb-4">
@@ -33,7 +33,7 @@ export const Settings = () => {
                 </div>
             </div>
 
-                  {/* <!-- TABLA DE CREAR USUARIO --> */}
+            {/* <!-- TABLA DE CREAR USUARIO --> */}
             <div className="rounded-lg border border-grey-500 mb-4 w-full ">
                 <table className=" bg-white rounded shadow w-full">
                     <thead>
@@ -45,15 +45,15 @@ export const Settings = () => {
                     </thead>
                     <tbody>
                         {users?.map((user) => (
-                        <tr key={user.id}>
+                            <tr key={user.id}>
                                 <td className="border border-gray-300 p-2 text-center">{user.firstName}</td>
                                 <td className="border border-gray-300 p-2 text-center">{user.email}</td>
                                 <td className="border border-gray-300 p-2 text-center">
-                                <Link to={`/user/${user.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700'>
-                                    <FontAwesomeIcon icon={faPlay} />
-                                </Link>
-                            </td>
-                        </tr>
+                                    <Link to={`/user/${user.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700'>
+                                        <FontAwesomeIcon icon={faPlay} />
+                                    </Link>
+                                </td>
+                            </tr>
                         ))}
                     </tbody>
                 </table>
