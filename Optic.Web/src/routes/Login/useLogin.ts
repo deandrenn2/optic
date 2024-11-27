@@ -4,16 +4,17 @@ import { toast } from 'react-toastify';
 
 const KEY = 'LOGIN';
 
-export const useLogin = (id: number | undefined = undefined) => {
+export const useLogin = (id: string | undefined = undefined) => {
    const queryUsers = useQuery({
       queryKey: [`${KEY}_USERS`],
       queryFn: getUsers,
+      refetchOnWindowFocus: false,
    });
 
    const queryUser = useQuery({
       queryKey: [`${KEY}_USER`],
-      queryFn: () => getUser(id),
-      enabled: id !== null,
+      queryFn: () => getUser(Number(id)),
+      enabled: !!id,
    });
 
    const logginn = useMutation({

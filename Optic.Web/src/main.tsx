@@ -42,7 +42,7 @@ const router = createBrowserRouter([
             path: 'Clientes/:id',
             element: <ClientDetail />,
          },
-         
+
          {
             path: 'suppliers',
             element: <Suppliers />,
@@ -98,7 +98,7 @@ createRoot(document.getElementById('root')!).render(
          <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
       <ToastContainer
-         position="top-right"
+         position="top-center"
          autoClose={5000}
          hideProgressBar={false}
          newestOnTop={false}

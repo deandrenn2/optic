@@ -9,9 +9,9 @@ interface UserContext {
    business: BusinessResponseModel | null;
    isAuthenticated: boolean;
    setIsAuthenticated: (isAuthenticated: boolean) => void;
-   setUser: (user: UserResponseModel) => void;
-   setToken: (token: TokenModel) => void;
-   setBusiness: (business: BusinessResponseModel) => void;
+   setUser: (user: UserResponseModel | null) => void;
+   setToken: (token: TokenModel | null) => void;
+   setBusiness: (business: BusinessResponseModel | null) => void;
 }
 
 const useUserContext = create(
@@ -22,9 +22,9 @@ const useUserContext = create(
          business: null,
          isAuthenticated: false,
          setIsAuthenticated: (isAuthenticated: boolean) => set((state) => ({ ...state, isAuthenticated })),
-         setToken: (token: TokenModel) => set((state) => ({ ...state, token })),
-         setBusiness: (business: BusinessResponseModel) => set((state) => ({ ...state, business })),
-         setUser: (user: UserResponseModel) => set((state) => ({ ...state, user })),
+         setToken: (token: TokenModel | null) => set((state) => ({ ...state, token })),
+         setBusiness: (business: BusinessResponseModel | null) => set((state) => ({ ...state, business })),
+         setUser: (user: UserResponseModel | null) => set((state) => ({ ...state, user })),
       }),
       {
          name: 'Auth',
