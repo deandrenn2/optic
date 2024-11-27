@@ -1,6 +1,13 @@
-import { faMagnifyingGlass, faPlay, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faPlay, faPlus,  } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useLogin } from "../../routes/Login/useLogin";
+import { Link } from "react-router-dom";
+
+
 export const Settings = () => {
+    const {users} = useLogin();
+
+    
     return (
         <div className="w-full p-4">
             <div className="flex space-x-4 mb-4">
@@ -37,25 +44,21 @@ export const Settings = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">DEIMER ANDRES NUÑEZ NOVOA</td>
-                            <td className="border border-gray-300 p-2 text-center">adenes@gmail.com</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faTrash} /></button>
+                        {users?.map((user) => (
+                        <tr key={user.id}>
+                                <td className="border border-gray-300 p-2 text-center">{user.firstName}</td>
+                                <td className="border border-gray-300 p-2 text-center">{user.email}</td>
+                                <td className="border border-gray-300 p-2 text-center">
+                                <Link to={`/user/${user.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700'>
+                                    <FontAwesomeIcon icon={faPlay} />
+                                </Link>
                             </td>
                         </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">ARLEY RODRIGUEZ</td>
-                            <td className="border border-gray-300 p-2 text-center">arley@gmail.com</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faTrash} /></button>
-                            </td>
-                        </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
         </div>
     )
 };
+
