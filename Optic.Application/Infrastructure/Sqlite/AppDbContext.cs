@@ -21,6 +21,8 @@ public class AppDbContext : DbContext
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<IdentificationType> IdentificationTypes => Set<IdentificationType>();
+    public DbSet<Setting> Settings => Set<Setting>();
+    public DbSet<SettingUser> SettingUsers => Set<SettingUser>();
 
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -61,7 +63,9 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new BusinessConfiguration());
         modelBuilder.ApplyConfiguration(new ClientConfiguration());
+        modelBuilder.ApplyConfiguration(new IdentificationTypeConfiguration());
         modelBuilder.ApplyConfiguration(new SupplierConfiguration());
+        modelBuilder.ApplyConfiguration(new SettingUserConfiguration());
     }
 
 }
