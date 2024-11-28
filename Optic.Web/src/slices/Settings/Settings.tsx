@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { useState } from "react";
 import { Direction } from "../../shared/components/OffCanvas/Models";
-import { UsersForm } from "../../routes/Users/UsersForm";
+import { UsersForm } from "../Users/UsersForm";
+
 
 
 export const Settings = () => {

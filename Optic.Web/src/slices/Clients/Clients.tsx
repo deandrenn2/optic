@@ -7,7 +7,7 @@ import { ClientForm } from './ClientForm';
 import useClient from './useClient';
 import Swal from 'sweetalert2';
 import DeleteButton from '../../shared/components/Buttons/ButtonDelete';
-import ButtonDetail from '../../shared/components/Buttons/ButtonDetail';
+import DetailButton from '../../shared/components/Buttons/ButtonDetail';
 
 export const Clients = () => {
    const [visible, setVisible] = useState(false);
@@ -102,7 +102,7 @@ export const Clients = () => {
                         <td className="border border-gray-300 p-2 text-center">{client.address}</td>
                         <td className="border border-gray-300 p-2 text-center">{client.email}</td>
                         <td className="border border-gray-300 p-2 text-center">
-                           <ButtonDetail onDetail={client.id}/>
+                           <DetailButton onDetail={client.id}/>
                            <DeleteButton id={client.id} onDelete={handleDelete}/>
                         </td>
                      </tr>

@@ -8,8 +8,7 @@ import { Direction } from "../../shared/components/OffCanvas/Models";
 import useProducts from "./useProducts";
 import Swal from "sweetalert2";
 import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
-import ButtonDetail from "../../shared/components/Buttons/ButtonDetail";
-
+import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 
 export const Products = () => {
     const [visible, setVisible] = useState(false);
@@ -97,7 +96,7 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">{product.salePrice}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <ButtonDetail onDetail={product.id}/>
+                                <DetailButton onDetail={product.id}/>
                                 <DeleteButton id={product.id} onDelete={handleDelete}/>
                             </td>
                         </tr>

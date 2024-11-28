@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
-const ButtonDetail= ({ onDetail }: { onDetail: any }) => {
+const DetailButton = ({ onDetail }: { onDetail: number }) => {
     return (
         <Link
             to={`/Clientes/${onDetail}`}
@@ -14,4 +14,4 @@ const ButtonDetail= ({ onDetail }: { onDetail: any }) => {
     );
 };
 
-export default ButtonDetail;
+export default DetailButton;
