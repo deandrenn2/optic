@@ -1,47 +1,54 @@
 import { useState } from "react";
-import { UsersModel } from "./UsersModel";
+import { UsersModel, UsersResponseModel } from "./UsersModel";
+import { useUsers } from "./Users";
+import { toast } from "react-toastify";
 
-export const UsersForm = ({id}: {id?: number}) => {
-    const [user, setUser] = useState<UsersModel>({  
-        id: id,
-        firstName: '',  
-        lastName: '',   
-        email: '',  
-        password: '',
-        securePharse: ''
+export const UsersForm = () => {
+    const [form, setForm] = useState<UsersModel | UsersResponseModel>({
+       firstName: '',
+       lastName: '',
+       email: '',
+       password: '',
+       securePharse: '',
     });
-    
+
+const { createUser } = useUsers();
+const [confirmPassword, setConfirmPassword] = useState<string>('');
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (form.password !== confirmPassword) {
+            toast.error('Las contraseñas no coinciden');
+            return;
+        }
+        const res = await createUser.mutateAsync(form);
+        if (!res.isSuccess) {
+            toast.error(res.message);
+            return;
+        } 
+    };
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setUser({
-            ...user,
+        setForm({
+            ...form,
             [name]: value
         });
     };  
 
-
     return (
-
-        <div className="flex justify-center items-center">
-            <form
-                onSubmit={handleCreate}
-                className="bg-white p-9 rounded-lg shadow-md w-full max-w-md mx-4 grid gap-6  my-5"
-            >
-                <h2 className="text-3xl font-bold mb-1 text-center">
-                    <span>Crear usuario</span>
-                </h2>
+            <form onSubmit={handleSubmit}className="bg-white p-9 w-full max-w-md grid gap-6  my-5">
                 <div>
                     <label
                         htmlFor="namesTxt"
-                        className="block text-gray-600 text-sm font-bold mb-2"
-                    >
+                        className="block text-gray-600 text-sm font-bold mb-2">
                         Nombres
                     </label>
                     <div className="relative">
                         <input
                             id="namesTxt"
                             name="firstName"
-                            value={user?.firstName}
+                            value={form?.firstName}
                             onChange={(e) => handleChange(e)}
                             required
                             className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -60,7 +67,7 @@ export const UsersForm = ({id}: {id?: number}) => {
                         <input
                             id="lastNameTxt"
                             name="lastName"
-                            value={user?.lastName}
+                            value={form?.lastName}
                             onChange={(e) => handleChange(e)}
                             required
                             className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -81,7 +88,7 @@ export const UsersForm = ({id}: {id?: number}) => {
                             type="email"
                             id="email"
                             name="email"
-                            value={user?.email}
+                            value={form?.email}
                             onChange={(e) => handleChange(e)}
                             required
                             className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -103,7 +110,7 @@ export const UsersForm = ({id}: {id?: number}) => {
                             id="password"
                             required
                             name="password"
-                            value={user?.password}
+                            value={form?.password}
                             onChange={(e) => handleChange(e)}
                             className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Contraseña"
@@ -140,7 +147,7 @@ export const UsersForm = ({id}: {id?: number}) => {
                         <input
                             id="securePharseTxt"
                             name="securePharse"
-                            value={user?.securePharse}
+                            value={form?.securePharse}
                             onChange={(e) => handleChange(e)}
                             maxLength={150}
                             required
@@ -156,6 +163,6 @@ export const UsersForm = ({id}: {id?: number}) => {
                     Crear Usuario
                 </button>
             </form>
-        </div>
+  
     );
 }

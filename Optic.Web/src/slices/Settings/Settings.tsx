@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLogin } from "../../routes/Login/useLogin";
 import { Link } from "react-router-dom";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
-
 import { useState } from "react";
 import { Direction } from "../../shared/components/OffCanvas/Models";
 import { UsersForm } from "../Users/UsersForm";
@@ -54,7 +53,7 @@ export const Settings = () => {
                     <tbody>
                         {users?.map((user) => (
                             <tr key={user.id}>
-                                <td className="border border-gray-300 p-2 text-center">{user.firstName}</td>
+                                <td className="border border-gray-300 p-2 text-center">{user.firstName + ' ' + user.lastName}</td>
                                 <td className="border border-gray-300 p-2 text-center">{user.email}</td>
                                 <td className="border border-gray-300 p-2 text-center">
                                     <Link to={`/user/${user.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700'>
@@ -66,8 +65,8 @@ export const Settings = () => {
                     </tbody>
                 </table>
             </div>
-            <OffCanvas titlePrincipal='Registro de Proveedor' visible={visible} xClose={handleClose} position={Direction.Right} >
-                <UsersForm />
+            <OffCanvas titlePrincipal='Registro de Usuario' visible={visible} xClose={handleClose} position={Direction.Right} >
+                <UsersForm/>
             </OffCanvas>
         </div>
     )
