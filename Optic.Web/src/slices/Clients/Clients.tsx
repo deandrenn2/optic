@@ -1,4 +1,4 @@
-import { faCircleMinus, faMagnifyingGlass, faMars, faPlay, faPlus, faVenus } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faMars, faPlay, faPlus, faVenus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import OffCanvas from '../../shared/components/OffCanvas/Index';
 import { MouseEvent, useState } from 'react';
@@ -7,6 +7,7 @@ import { ClientForm } from './ClientForm';
 import useClient from './useClient';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import DeleteButton from '../../shared/components/Buttons/ButtonDelete';
 export const Clients = () => {
    const [visible, setVisible] = useState(false);
 
@@ -100,15 +101,10 @@ export const Clients = () => {
                         <td className="border border-gray-300 p-2 text-center">{client.address}</td>
                         <td className="border border-gray-300 p-2 text-center">{client.email}</td>
                         <td className="border border-gray-300 p-2 text-center">
-                           <Link to={`/Clientes/${client.id}`} title='Ver detalle' className='text-blue-500  mr-10'>
+                           <Link to={`/Clientes/${client.id}`} title='Ver detalle' className='text-blue-500  mr-10 text-2xl hover:text-blue-700'>
                               <FontAwesomeIcon icon={faPlay} />
                            </Link>
-                           <button className="text-red-500" onClick={(e) => handleDelete(e, client.id)}>
-                              <FontAwesomeIcon
-                                 icon={faCircleMinus}
-                                 className="ml-2"
-                              />
-                           </button>
+                           <DeleteButton id={client.id} onDelete={handleDelete}/>
                         </td>
                      </tr>
                   ))}

@@ -1,4 +1,4 @@
-import { faCircleMinus, faMagnifyingGlass, faPlay, faPlus, } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass, faPlay, faPlus, } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react";
 import { MouseEvent } from "react";
@@ -8,6 +8,7 @@ import { Direction } from "../../shared/components/OffCanvas/Models";
 import useProducts from "./useProducts";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
 
 
 export const Products = () => {
@@ -95,12 +96,10 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">{product.salePrice}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <Link to={`/Products/${product.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700'>
+                                <Link to={`/Products/${product.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700 text-2xl'>
                                     <FontAwesomeIcon icon={faPlay} />
                                 </Link>
-                                <button className="text-red-500" onClick={(e) => handleDelete(e, product.id)}>
-                                    <FontAwesomeIcon icon={faCircleMinus} className="ml-2" />
-                                </button>
+                                <DeleteButton id={product.id} onDelete={handleDelete} />
                             </td>
 
 

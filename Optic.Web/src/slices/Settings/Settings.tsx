@@ -56,7 +56,7 @@ export const Settings = () => {
                                 <td className="border border-gray-300 p-2 text-center">{user.firstName + ' ' + user.lastName}</td>
                                 <td className="border border-gray-300 p-2 text-center">{user.email}</td>
                                 <td className="border border-gray-300 p-2 text-center">
-                                    <Link to={`/user/${user.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700'>
+                                    <Link to={`/user/${user.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700 text-2xl'>
                                         <FontAwesomeIcon icon={faPlay} />
                                     </Link>
                                 </td>
