@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLogin } from "../../routes/Login/useLogin";
 import { Link } from "react-router-dom";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
-import { UserCreate } from "../../routes/Login/UserCreate";
+
 import { useState } from "react";
 import { Direction } from "../../shared/components/OffCanvas/Models";
+import { UsersForm } from "../Users/UsersForm";
 
 
 export const Settings = () => {
@@ -66,7 +67,7 @@ export const Settings = () => {
                 </table>
             </div>
             <OffCanvas titlePrincipal='Registro de Proveedor' visible={visible} xClose={handleClose} position={Direction.Right} >
-                <UserCreate />
+                <UsersForm />
             </OffCanvas>
         </div>
     )
