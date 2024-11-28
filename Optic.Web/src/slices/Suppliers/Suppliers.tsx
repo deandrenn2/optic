@@ -1,11 +1,10 @@
-import { faMagnifyingGlass, faPlay } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass, } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { SuppliersForm } from "./SuppliersForm"
 import { MouseEvent, useState } from "react";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { Direction } from "../../shared/components/OffCanvas/Models";
 import { useSupplier } from "./useSupplier";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
 
@@ -18,6 +17,9 @@ export const Suppliers = () => {
     function handleClose(): void {
         setVisible(false);
     }
+    const handleClick = () => {
+        setVisible(true);
+     };
 
     if (querySuppliers.isLoading) {
         return <div>Cargando...</div>;
@@ -78,9 +80,7 @@ export const Suppliers = () => {
                             <td className="border border-gray-300 p-2 text-center">{supplier.address}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.email}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <Link to={`/Suppliers/${supplier.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700 text-2xl'>
-                                    <FontAwesomeIcon icon={faPlay} />
-                                </Link>
+                                <DeleteButton id={supplier.id} onDelete={handleClick} />
                                 <DeleteButton id={supplier.id} onDelete={handleDelete} />
                             </td>
                         </tr>

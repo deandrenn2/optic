@@ -1,4 +1,4 @@
-import { faMagnifyingGlass, faPlay, faPlus, } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass,  faPlus, } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react";
 import { MouseEvent } from "react";
@@ -6,9 +6,9 @@ import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { ProductForm } from "./ProductsForm";
 import { Direction } from "../../shared/components/OffCanvas/Models";
 import useProducts from "./useProducts";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
+import ButtonDetail from "../../shared/components/Buttons/ButtonDetail";
 
 
 export const Products = () => {
@@ -20,6 +20,7 @@ export const Products = () => {
         setVisible(false);
     }
 
+  
     if (queryProducts.isLoading) {
         return <div>Cargando...</div>;
     }
@@ -96,13 +97,9 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">{product.salePrice}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <Link to={`/Products/${product.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700 text-2xl'>
-                                    <FontAwesomeIcon icon={faPlay} />
-                                </Link>
-                                <DeleteButton id={product.id} onDelete={handleDelete} />
+                                <ButtonDetail onDetail={product.id}/>
+                                <DeleteButton id={product.id} onDelete={handleDelete}/>
                             </td>
-
-
                         </tr>
                     ))}
                 </tbody>
