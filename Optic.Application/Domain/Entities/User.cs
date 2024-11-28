@@ -34,6 +34,8 @@ public class User : AggregateRoot
     public int StatusId { get; private set; } = 1;
     public int IdAvatar { get; private set; } = NumberRandom.Random(1, 14);
 
+    List<SettingUser> SettingsUser = new();
+
     public static User Create(int id,
     string firstName,
     string lastName,
