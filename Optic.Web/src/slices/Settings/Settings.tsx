@@ -1,22 +1,29 @@
-import { faMagnifyingGlass, faPlay, faPlus, } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faPlay, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLogin } from "../../routes/Login/useLogin";
 import { Link } from "react-router-dom";
+import OffCanvas from "../../shared/components/OffCanvas/Index";
+import { UserCreate } from "../../routes/Login/UserCreate";
+import { useState } from "react";
+import { Direction } from "../../shared/components/OffCanvas/Models";
 
 
 export const Settings = () => {
+    const [visible, setVisible] = useState(false); 
+
     const { users } = useLogin();
 
+    function handleClose(): void {
+        setVisible(false);
+    }
 
     return (
         <div className="w-full p-4">
             <div className="flex space-x-4 mb-4">
                 <div className="mb-2">
-                    <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
-                        <FontAwesomeIcon
-                            icon={faPlus}
-                            className="fa-search top-3 pr-2 font-bold" />Nuevo</button>
+                    <button type='button' onClick={() => setVisible(true)} className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">Nuevo Usuario</button>
                 </div>
+                
                 <div className="mb-2">
                     <div className="relative">
                         <div className="inline-flex">
@@ -33,7 +40,7 @@ export const Settings = () => {
                 </div>
             </div>
 
-            {/* <!-- TABLA DE CREAR USUARIO --> */}
+            {/* <!-- TABLA DE USUARIO --> */}
             <div className="rounded-lg border border-grey-500 mb-4 w-full ">
                 <table className=" bg-white rounded shadow w-full">
                     <thead>
@@ -58,6 +65,9 @@ export const Settings = () => {
                     </tbody>
                 </table>
             </div>
+            <OffCanvas titlePrincipal='Registro de Proveedor' visible={visible} xClose={handleClose} position={Direction.Right} >
+                <UserCreate />
+            </OffCanvas>
         </div>
     )
 };
