@@ -11,14 +11,12 @@ import { useBusiness } from '../Businesses/useBusiness';
 export const Login = () => {
    const [email, setEmail] = useState<string>('');
    const [password, setPassword] = useState<string>('');
+
    const navigate = useNavigate();
-   const { setToken, token, setUser, setBusiness, isAuthenticated, setIsAuthenticated } = useUserContext();
-   const iduser = token?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
-      != undefined && !!token ?
-      token?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
-      : "";
-   const { user } = useLogin(iduser);
+   const { setToken, setBusiness, setUser, isAuthenticated, setIsAuthenticated } = useUserContext();
    const { business, queryBusiness } = useBusiness();
+   const { queryUser, setIdUser, idUser } = useLogin();
+
    const [isFetching, setIsFetching] = useState(false);
 
    useEffect(() => {
@@ -27,7 +25,7 @@ export const Login = () => {
       }
    }, [isAuthenticated, navigate]);
 
-   function handleLogin(event: React.FormEvent<HTMLFormElement>): void {
+   const handleLogin = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
       setIsFetching(true);
       event.preventDefault();
       loginUser({ email, password })
@@ -42,15 +40,15 @@ export const Login = () => {
 
             if (response.data) {
                setToken(response?.data);
-               if (user) {
-                  setUser(user);
-               }
-               if (business) {
-                  setBusiness(business);
-               }
-               setIsAuthenticated(true);
 
-               setIsFetching(false);
+               const iduserCode = response?.data?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+                  != undefined && !!response?.data ?
+                  response?.data?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+                  : "";
+
+               setIdUser(Number(iduserCode));
+
+
             }
 
          })
@@ -63,12 +61,29 @@ export const Login = () => {
    }
 
    useEffect(() => {
+      if (idUser != 0) {
+         queryUser.refetch().then((response) => {
+            if (response.data) {
+               const user = response.data?.data;
+               if (user) {
+                  setUser(user);
+                  setIsFetching(false);
+                  setIsAuthenticated(true);
+               }
+            }
+         });
+      }
+   }, [idUser]);
+
+   useEffect(() => {
       if (queryBusiness?.data) {
          if (!business) {
             navigate('/Create/User');
+         } else {
+            setBusiness(business);
          }
       }
-   }, [queryBusiness?.data, business, navigate]);
+   }, [queryBusiness?.data, business, navigate, setBusiness]);
 
    return (
       <div className="flex justify-center items-center h-screen bg-gray-200">
