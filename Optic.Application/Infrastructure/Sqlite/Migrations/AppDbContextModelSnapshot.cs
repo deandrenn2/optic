@@ -80,7 +80,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Optic.Application.Domain.Entities.Client", b =>
@@ -185,7 +185,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Optic.Application.Domain.Entities.Setting", b =>
@@ -208,7 +208,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settings");
+                    b.ToTable("Settings", (string)null);
                 });
 
             modelBuilder.Entity("Optic.Application.Domain.Entities.SettingUser", b =>
