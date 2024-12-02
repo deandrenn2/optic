@@ -1,30 +1,28 @@
-import { faMagnifyingGlass, faPlay, } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLogin } from "../../routes/Login/useLogin";
-import { Link } from "react-router-dom";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { useState } from "react";
 import { Direction } from "../../shared/components/OffCanvas/Models";
 import { UsersForm } from "../Users/UsersForm";
-
-
+import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 
 export const Settings = () => {
-    const [visible, setVisible] = useState(false); 
+    const [visible, setVisible] = useState(false);
 
     const { users } = useLogin();
 
     function handleClose(): void {
         setVisible(false);
     }
-
+   
     return (
         <div className="w-full p-4">
             <div className="flex space-x-4 mb-4">
                 <div className="mb-2">
                     <button type='button' onClick={() => setVisible(true)} className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">Nuevo Usuario</button>
                 </div>
-                
+
                 <div className="mb-2">
                     <div className="relative">
                         <div className="inline-flex">
@@ -57,9 +55,7 @@ export const Settings = () => {
                                 <td className="border border-gray-300 p-2 text-center">{user.firstName + ' ' + user.lastName}</td>
                                 <td className="border border-gray-300 p-2 text-center">{user.email}</td>
                                 <td className="border border-gray-300 p-2 text-center">
-                                    <Link to={`/user/${user.id}`} title='Ver detalle' className='text-blue-500  mr-10 hover:text-blue-700 text-2xl'>
-                                        <FontAwesomeIcon icon={faPlay} />
-                                    </Link>
+                                    <DetailButton url={`/users/${user.id}`} />
                                 </td>
                             </tr>
                         ))}
@@ -67,7 +63,7 @@ export const Settings = () => {
                 </table>
             </div>
             <OffCanvas titlePrincipal='Registro de Usuario' visible={visible} xClose={handleClose} position={Direction.Right} >
-                <UsersForm/>
+                <UsersForm />
             </OffCanvas>
         </div>
     )
