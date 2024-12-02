@@ -96,7 +96,7 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">{product.salePrice}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <DetailButton onDetail={product.id}/>
+                                <DetailButton url={`/Products/${product.id}`}/>
                                 <DeleteButton id={product.id} onDelete={handleDelete}/>
                             </td>
                         </tr>

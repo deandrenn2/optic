@@ -76,7 +76,7 @@ export const Suppliers = () => {
                             <td className="border border-gray-300 p-2 text-center">{supplier.address}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.email}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <DetailButton onDetail={supplier.id}/>
+                                <DetailButton url={`/suppliers/${supplier.id}`}/>
                                 <DeleteButton id={supplier.id} onDelete={handleDelete} />
                             </td>
                         </tr>

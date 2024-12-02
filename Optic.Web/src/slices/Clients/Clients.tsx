@@ -102,7 +102,7 @@ export const Clients = () => {
                         <td className="border border-gray-300 p-2 text-center">{client.address}</td>
                         <td className="border border-gray-300 p-2 text-center">{client.email}</td>
                         <td className="border border-gray-300 p-2 text-center">
-                           <DetailButton onDetail={client.id}/>
+                           <DetailButton url={`/Clientes/${client.id}`}/>
                            <DeleteButton id={client.id} onDelete={handleDelete}/>
                         </td>
                      </tr>
