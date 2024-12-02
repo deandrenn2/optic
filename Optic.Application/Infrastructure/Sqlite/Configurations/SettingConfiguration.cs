@@ -10,6 +10,10 @@ public class SettingConfiguration : IEntityTypeConfiguration<Setting>
         builder.ToTable("Settings");
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedNever();
+        builder.HasData(
+            new Setting(1, "LIST_SEXES", "Lista de sexos", "{Id:1,Name:Masculino},{Id:2,Name:Femenino}"),
+            new Setting(2, "THEME", "Tema: Dark/Light", "Dark")
+            );
     }
 }
 
