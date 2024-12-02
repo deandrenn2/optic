@@ -11,7 +11,7 @@ export const Profile = () => {
         window.location.reload();
     }
     return (
-        <div className="absolute top-20 right-0 text-black-500 bg-opacity-50">
+        <div className="absolute top-20 right-2 text-black-500 bg-opacity-50">
             <div className="max-w-sm mx-auto bg-gray-800 rounded-b-lg overflow-hidden shadow-lg">
                 <div className="p-4">
                     <div className="flex justify-between items-center">
