@@ -3,13 +3,14 @@ import { UsersModel, UsersResponseModel } from "./UsersModel";
 import { useUsers } from "./Users";
 import { toast } from "react-toastify";
 
-export const UsersForm = () => {
+export const UsersForm = ({ id }: { id?: number }) => {
     const [form, setForm] = useState<UsersModel | UsersResponseModel>({
-       firstName: '',
-       lastName: '',
-       email: '',
-       password: '',
-       securePharse: '',
+    id: id,   
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    securePharse: '',
     });
 
 const { createUser } = useUsers();

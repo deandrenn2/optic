@@ -18,8 +18,10 @@ import { Suppliers } from './slices/Suppliers/Suppliers.tsx';
 import { Formulas } from './slices/Formulas/Formulas.tsx';
 import { Facturación } from './slices/Facturación/Facturación.tsx';
 import { Settings } from './slices/Settings/Settings.tsx';
+import { SettingsDetail } from './slices/Settings/SettingsDetail.tsx';
 import { SupplierDetail } from './slices/Suppliers/SupplierDetail.tsx';
 import { ProductsDetail } from './slices/Products/ProductsDetail.tsx';
+
 
 
 
@@ -72,7 +74,11 @@ const router = createBrowserRouter([
          },
          {
             path: 'configuraciones',
-            element: <Settings />
+            element: <Settings/>
+         },
+         {
+            path: 'configuraciones/:id',
+            element: <SettingsDetail/>
          },
 
       ],

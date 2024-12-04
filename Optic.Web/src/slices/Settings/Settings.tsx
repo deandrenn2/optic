@@ -55,7 +55,7 @@ export const Settings = () => {
                                 <td className="border border-gray-300 p-2 text-center">{user.firstName + ' ' + user.lastName}</td>
                                 <td className="border border-gray-300 p-2 text-center">{user.email}</td>
                                 <td className="border border-gray-300 p-2 text-center">
-                                    <DetailButton url={`/users/${user.id}`} />
+                                    <DetailButton url={`/users/${user.id}`}/>
                                 </td>
                             </tr>
                         ))}
