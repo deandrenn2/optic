@@ -73,11 +73,11 @@ const router = createBrowserRouter([
             element: <Facturación />,
          },
          {
-            path: 'configuraciones',
+            path: 'Settings',
             element: <Settings/>
          },
          {
-            path: 'configuraciones/:id',
+            path: 'Settings/:id',
             element: <SettingsDetail/>
          },
 
