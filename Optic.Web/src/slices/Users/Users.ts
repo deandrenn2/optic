@@ -22,11 +22,25 @@ export const useUsers = () => {
          }
       },
    });
-
+ const updateUsers = useMutation({
+      mutationFn: createUserService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               queryUsers.refetch();
+            }
+         }
+      },
+   });
 
    return {
       queryUsers,
       users: queryUsers?.data?.data,
       createUser,
+      updateUsers,
    };
 };              
+export default useUsers;

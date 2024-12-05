@@ -1,7 +1,7 @@
 import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useParams } from "react-router-dom";
-
+import { UsersForm } from "../Users/UsersForm";
 
 export const SettingsDetail = () => {
     const { id } = useParams();
@@ -13,6 +13,9 @@ export const SettingsDetail = () => {
                         icon={faArrowCircleLeft}
                         className="fa-search top-3 pr-2 font-bold"
                     />Volver al listado de usuarios</Link>
+            </div>
+            <div className="w-1/4 bg-white p-4 rounded-lg">
+                <UsersForm id={Number(id)} />
             </div>
         </div>
     )
