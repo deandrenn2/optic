@@ -4,7 +4,7 @@ import { useLogin } from "../../routes/Login/useLogin";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { useState } from "react";
 import { Direction } from "../../shared/components/OffCanvas/Models";
-import { UsersForm } from "../Users/UsersForm";
+import { SettingsForm } from "./SettingsForm";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 
 export const Settings = () => {
@@ -15,7 +15,7 @@ export const Settings = () => {
     function handleClose(): void {
         setVisible(false);
     }
-   
+
     return (
         <div className="w-full p-4">
             <div className="flex space-x-4 mb-4">
@@ -63,7 +63,7 @@ export const Settings = () => {
                 </table>
             </div>
             <OffCanvas titlePrincipal='Registro de Usuario' visible={visible} xClose={handleClose} position={Direction.Right} >
-                <UsersForm />
+                <SettingsForm />
             </OffCanvas>
         </div>
     )

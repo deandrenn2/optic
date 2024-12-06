@@ -21,10 +21,7 @@ import { Settings } from './slices/Settings/Settings.tsx';
 import { SettingsDetail } from './slices/Settings/SettingsDetail.tsx';
 import { SupplierDetail } from './slices/Suppliers/SupplierDetail.tsx';
 import { ProductsDetail } from './slices/Products/ProductsDetail.tsx';
-
-
-
-
+import { EditProfile } from './slices/Users/editprofile';
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -87,6 +84,10 @@ const router = createBrowserRouter([
       path: 'Login',
       element: <Login />,
    },
+      {
+         path: '/Users/EditProfile',
+         element: <EditProfile />,
+      },
    {
       path: '/Create/User',
       element: <UserCreate />,
