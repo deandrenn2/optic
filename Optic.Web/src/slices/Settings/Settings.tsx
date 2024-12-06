@@ -1,15 +1,28 @@
-import { faMagnifyingGlass, faPlay, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useLogin } from "../../routes/Login/useLogin";
+import OffCanvas from "../../shared/components/OffCanvas/Index";
+import { useState } from "react";
+import { Direction } from "../../shared/components/OffCanvas/Models";
+import { UsersForm } from "../Users/UsersForm";
+import DetailButton from "../../shared/components/Buttons/ButtonDetail";
+
 export const Settings = () => {
+    const [visible, setVisible] = useState(false);
+
+    const { users } = useLogin();
+
+    function handleClose(): void {
+        setVisible(false);
+    }
+   
     return (
         <div className="w-full p-4">
             <div className="flex space-x-4 mb-4">
                 <div className="mb-2">
-                    <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
-                        <FontAwesomeIcon
-                            icon={faPlus}
-                            className="fa-search top-3 pr-2 font-bold" />Nuevo</button>
+                    <button type='button' onClick={() => setVisible(true)} className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">Nuevo Usuario</button>
                 </div>
+
                 <div className="mb-2">
                     <div className="relative">
                         <div className="inline-flex">
@@ -26,7 +39,7 @@ export const Settings = () => {
                 </div>
             </div>
 
-                  {/* <!-- TABLA DE CREAR USUARIO --> */}
+            {/* <!-- TABLA DE USUARIO --> */}
             <div className="rounded-lg border border-grey-500 mb-4 w-full ">
                 <table className=" bg-white rounded shadow w-full">
                     <thead>
@@ -37,25 +50,22 @@ export const Settings = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">DEIMER ANDRES NUÑEZ NOVOA</td>
-                            <td className="border border-gray-300 p-2 text-center">adenes@gmail.com</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faTrash} /></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">ARLEY RODRIGUEZ</td>
-                            <td className="border border-gray-300 p-2 text-center">arley@gmail.com</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faTrash} /></button>
-                            </td>
-                        </tr>
+                        {users?.map((user) => (
+                            <tr key={user.id}>
+                                <td className="border border-gray-300 p-2 text-center">{user.firstName + ' ' + user.lastName}</td>
+                                <td className="border border-gray-300 p-2 text-center">{user.email}</td>
+                                <td className="border border-gray-300 p-2 text-center">
+                                    <DetailButton url={`/Settings/${user.id}`} />
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
+            <OffCanvas titlePrincipal='Registro de Usuario' visible={visible} xClose={handleClose} position={Direction.Right} >
+                <UsersForm />
+            </OffCanvas>
         </div>
     )
 };
+
