@@ -8,6 +8,7 @@ import useClient from './useClient';
 import Swal from 'sweetalert2';
 import DeleteButton from '../../shared/components/Buttons/ButtonDelete';
 import DetailButton from '../../shared/components/Buttons/ButtonDetail';
+import { Bar } from '../../shared/components/Progress/Bar';
 
 export const Clients = () => {
    const [visible, setVisible] = useState(false);
@@ -21,11 +22,6 @@ export const Clients = () => {
    const handleClick = () => {
       setVisible(true);
    };
-
-
-   if (queryClients.isLoading) {
-      return <div>Cargando...</div>;
-   }
 
    const handleDelete = async (e: MouseEvent<HTMLButtonElement>, id: number) => {
       e.preventDefault();
@@ -43,6 +39,9 @@ export const Clients = () => {
       })
    }
 
+   if (queryClients.isLoading)
+      return <Bar Title="Cargando..." />;
+
    return (
       <div className="w-full">
          <div className="flex space-x-4 mb-4">
@@ -54,7 +53,7 @@ export const Clients = () => {
                      className="fa-search top-3 pr-2 font-bold"
                   />Nuevo Cliente</button>
             </div>
-            
+
             <div className="mb-2">
                <div className="relative">
                   <div className="inline-flex">
@@ -73,7 +72,7 @@ export const Clients = () => {
                </div>
             </div>
          </div>
-                        {/* <!-- TABLA DE CLIENTES --> */}
+         {/* <!-- TABLA DE CLIENTES --> */}
          <div className="rounded-lg border border-grey-500 mb-4 w-full ">
             <table className=" bg-white rounded shadow w-full">
                <thead>
@@ -102,8 +101,8 @@ export const Clients = () => {
                         <td className="border border-gray-300 p-2 text-center">{client.address}</td>
                         <td className="border border-gray-300 p-2 text-center">{client.email}</td>
                         <td className="border border-gray-300 p-2 text-center">
-                           <DetailButton url={`/Clientes/${client.id}`}/>
-                           <DeleteButton id={client.id} onDelete={handleDelete}/>
+                           <DetailButton url={`/Clientes/${client.id}`} />
+                           <DeleteButton id={client.id} onDelete={handleDelete} />
                         </td>
                      </tr>
                   ))}
