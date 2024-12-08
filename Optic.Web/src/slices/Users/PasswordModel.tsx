@@ -5,9 +5,9 @@ export const PasswordModel = ({ }) => {
 
     return (
         <div className=" fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-            <div className="bg-white p-9 rounded-lg shadow-md w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6">Cambiar mi contraseña</h2>
-                <form className="bg-white p-9 w-full max-w-md grid gap-6  my-5">
+            <div className="bg-white  rounded-lg shadow-md w-full max-w-md">
+                <h2 className="text-2xl font-bold ">Cambiar Contraseña</h2>
+                <form className="bg-white p-9 w-full max-w-md grid gap-6 my-5">
                     <div className="mb-4">
                         <label
                             className="block text-gray-600 text-sm font-bold mb-2"

@@ -13,18 +13,18 @@ export const EditProfile = () => {
                     <h2 className="text-4xl font-bold mb-4">Editar Usuario</h2>
                     <form className=" grid grid-cols-1 md:grid-cols-3 gap-4 mx-5 p-8">
                         <div>
-                            <label htmlFor="Nombre" className="block text-gray-600 text-sm font-bold mb-2">UserName</label>
+                            <label htmlFor="Nombre" className="block text-gray-600 text-sm font-bold mb-2">Nombres</label>
                             <input type="text" className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                        </div>
+
+                        <div>
+                            <label htmlFor="Email" className="block text-gray-600 text-sm font-bold mb-2">Apelido</label>
+                            <input type="email" className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                         </div>
 
                         <div>
                             <label htmlFor="Email" className="block text-gray-600 text-sm font-bold mb-2">Email</label>
                             <input type="email" className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-                        </div>
-
-                        <div>
-                            <label  className="block text-gray-600 text-sm font-bold mb-2">Account Type</label>
-                            <input type="text" className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                         </div>
 
                         <div className="col-span-1 md:col-span-3 flex justify-start mt-6">
