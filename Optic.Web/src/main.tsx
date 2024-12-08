@@ -26,6 +26,7 @@ const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
    {
+      
       path: '/',
       element: <App />,
       children: [
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
             path: 'Settings/:id',
             element: <SettingsDetail />
          },
+         {
+            path: 'Users/Edit',
+            element: <EditProfile />,
+         },
 
       ],
    },
@@ -85,10 +90,7 @@ const router = createBrowserRouter([
       path: 'Login',
       element: <Login />,
    },
-      {
-         path: '/Users/EditProfile',
-         element: <EditProfile />,
-      },
+     
       
    {
       path: '/Create/User',

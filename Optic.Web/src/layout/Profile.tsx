@@ -45,7 +45,7 @@ export const Profile = () => {
 
                     <div className="flex items-center space-x-2 mt-2  hover:bg-gray-700 p-2 rounded-lg cursor-pointer">
                          <Link 
-                              to="/Users/editprofile"
+                              to="/Users/Edit"
                                 className="flex items-center space-x-2 mt-2 hover:bg-gray-700 p-2 rounded-lg cursor-pointer">
                              <i className="fas fa-sign-out-alt text-gray-400"></i>
                              <FontAwesomeIcon icon={faEdit} className="text-white" />
