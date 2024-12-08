@@ -1,4 +1,5 @@
-﻿using Optic.Application.Domain.Primitives;
+﻿using FluentValidation;
+using Optic.Application.Domain.Primitives;
 
 namespace Optic.Application.Domain.Entities;
 public class Setting : AggregateRoot
@@ -19,6 +20,16 @@ public class Setting : AggregateRoot
     {
         Name = name;
         Description = description;
+        Value = value;
+    }
+
+    public void Update(string description, string value)
+    {
+        Value = value;
+        Description = description;
+    }
+    public void Update(string value)
+    {
         Value = value;
     }
 

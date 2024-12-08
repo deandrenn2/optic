@@ -9,7 +9,6 @@ using Optic.Application.Domain.Models;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 using System.Text.Json;
-using System.Collections.Generic;
 
 namespace Optic.Application.Features.Settings;
 
