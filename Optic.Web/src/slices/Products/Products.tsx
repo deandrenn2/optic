@@ -1,4 +1,4 @@
-import { faMagnifyingGlass,  faPlus, } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass, faPlus, } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react";
 import { MouseEvent } from "react";
@@ -9,6 +9,7 @@ import useProducts from "./useProducts";
 import Swal from "sweetalert2";
 import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
+import { Bar } from "../../shared/components/Progress/Bar";
 
 export const Products = () => {
     const [visible, setVisible] = useState(false);
@@ -17,11 +18,6 @@ export const Products = () => {
 
     function handleClose(): void {
         setVisible(false);
-    }
-
-  
-    if (queryProducts.isLoading) {
-        return <div>Cargando...</div>;
     }
 
     function handleDelete(e: MouseEvent<HTMLButtonElement>, id: number): void {
@@ -39,6 +35,10 @@ export const Products = () => {
             }
         })
     }
+
+    if (queryProducts.isLoading)
+        return <Bar Title="Cargando..." />;
+
     return (
         <div className="w-full">
             <div className="flex space-x-4 mb-4">
@@ -96,8 +96,8 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">{product.salePrice}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <DetailButton url={`/products/${product.id}`}/>
-                                <DeleteButton id={product.id} onDelete={handleDelete}/>
+                                <DetailButton url={`/products/${product.id}`} />
+                                <DeleteButton id={product.id} onDelete={handleDelete} />
                             </td>
                         </tr>
                     ))}

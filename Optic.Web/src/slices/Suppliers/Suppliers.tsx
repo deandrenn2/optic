@@ -8,6 +8,7 @@ import { useSupplier } from "./useSupplier";
 import Swal from "sweetalert2";
 import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
+import { Bar } from "../../shared/components/Progress/Bar";
 
 export const Suppliers = () => {
     const [visible, setVisible] = useState(false);
@@ -17,9 +18,7 @@ export const Suppliers = () => {
     function handleClose(): void {
         setVisible(false);
     }
-    if (querySuppliers.isLoading) {
-        return <div>Cargando...</div>;
-    }
+
 
     function handleDelete(e: MouseEvent<HTMLButtonElement>, id: number): void {
         e.preventDefault();
@@ -36,6 +35,9 @@ export const Suppliers = () => {
             }
         })
     }
+
+    if (querySuppliers.isLoading)
+        return <Bar Title="Cargando..." />;
 
     return (
         <div className="w-full p-4"> {/* <!-- TABLA DE PROVEEDORES --> */}
@@ -76,7 +78,7 @@ export const Suppliers = () => {
                             <td className="border border-gray-300 p-2 text-center">{supplier.address}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.email}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <DetailButton url={`/suppliers/${supplier.id}`}/>
+                                <DetailButton url={`/suppliers/${supplier.id}`} />
                                 <DeleteButton id={supplier.id} onDelete={handleDelete} />
                             </td>
                         </tr>

@@ -40,6 +40,7 @@ const router = createBrowserRouter([
          {
             path: 'Clientes/:id',
             element: <ClientDetail />,
+
          },
 
          {
@@ -71,11 +72,11 @@ const router = createBrowserRouter([
          },
          {
             path: 'Settings',
-            element: <Settings/>
+            element: <Settings />
          },
          {
             path: 'Settings/:id',
-            element: <SettingsDetail/>
+            element: <SettingsDetail />
          },
 
       ],
