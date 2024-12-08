@@ -32,7 +32,7 @@ export const PasswordModel = ({ }) => {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         />
                     </div>
-                    <div className=" justify-betweenr ">
+                    <div className="flex items-cente justify-betweenr ">
                         <button
                             className="bg-blue-500 text-white px-4 p-2 py-2 rounded-md shadow-md flex items-center mr-4 hover:bg-blue-400">
                             <FontAwesomeIcon icon={faKey} className="mr-2" />Cambiar contraseña
