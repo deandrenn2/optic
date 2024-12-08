@@ -17,18 +17,19 @@ import { Products } from './slices/Products/Products.tsx';
 import { Suppliers } from './slices/Suppliers/Suppliers.tsx';
 import { Formulas } from './slices/Formulas/Formulas.tsx';
 import { Facturación } from './slices/Facturación/Facturación.tsx';
-import { Settings } from './slices/Settings/Settings.tsx';
-import { SettingsDetail } from './slices/Settings/SettingsDetail.tsx';
+import { Users } from './slices/Users/Users.tsx';
+import { SettingsDetail } from './slices/Users/UsersDetail.tsx';
 import { SupplierDetail } from './slices/Suppliers/SupplierDetail.tsx';
 import { ProductsDetail } from './slices/Products/ProductsDetail.tsx';
-
-
-
-
+import { EditProfile } from './slices/Users/Edit.tsx';
+import { SettingsMenu } from './slices/Settings/SettingsMenu.tsx';
+import { IdentificationTypes } from './slices/Settings/IdentificationTypes.tsx';
+import { Settings } from './slices/Settings/Settings.tsx';
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
    {
+
       path: '/',
       element: <App />,
       children: [
@@ -63,8 +64,6 @@ const router = createBrowserRouter([
             path: 'Products/:id',
             element: <ProductsDetail />,
          },
-
-
          {
             path: 'Formulas',
             element: <Formulas />,
@@ -75,11 +74,34 @@ const router = createBrowserRouter([
          },
          {
             path: 'Settings',
-            element: <Settings />
+            element: <SettingsMenu />,
+            children: [
+               {
+                  index: true,
+                  element: <Users />,
+               },
+               {
+                  path: 'Users',
+                  element: <Users />,
+               },
+               {
+                  path: 'Users/:id',
+                  element: <SettingsDetail />
+               },
+               {
+                  path: 'IdentificationTypes',
+                  element: <IdentificationTypes />
+               },
+               {
+                  path: 'Config',
+                  element: <Settings />,
+               },
+            ]
          },
+
          {
-            path: 'Settings/:id',
-            element: <SettingsDetail />
+            path: 'Users/Edit',
+            element: <EditProfile />,
          },
 
       ],
@@ -88,6 +110,8 @@ const router = createBrowserRouter([
       path: 'Login',
       element: <Login />,
    },
+
+
    {
       path: '/Create/User',
       element: <UserCreate />,

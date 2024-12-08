@@ -1,3 +1,5 @@
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+
 export interface ButtonModel {
    name: string;
    className?: string;
@@ -11,7 +13,7 @@ export interface NavVerticalItemModel {
    name: string;
    titleSection?: string;
    description: string;
-   fontIcon?: string;
+   fontIcon?: IconDefinition;
    url: string;
    active?: boolean;
    children?: JSX.Element;

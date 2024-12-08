@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import { createUserService, getUsers } from "./UsersServices";
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import { createUserService, getUsers } from './UsersServices';
 const KEY = 'Users';
 
 export const useUsers = () => {
@@ -22,7 +22,7 @@ export const useUsers = () => {
          }
       },
    });
- const updateUsers = useMutation({
+   const updateUsers = useMutation({
       mutationFn: createUserService,
       onSuccess: (data) => {
          if (!data.isSuccess) {
@@ -42,5 +42,5 @@ export const useUsers = () => {
       createUser,
       updateUsers,
    };
-};              
+};
 export default useUsers;

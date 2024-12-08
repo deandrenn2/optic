@@ -19,12 +19,12 @@ const NavVertical = ({
 	};
 
 	return (
-		<div className="box box-primary">
-			<div className="box-header with-border">
+		<div className="bg-slate-100 border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white w-52">
+			<div className="text-center p-2">
 				<h3 className="box-title">{title}</h3>
 			</div>
 			<div className="box-body p-none">
-				<div className="list-group mb-0 vertical-nav">
+				<div className="w-52 text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
 					{items?.map((x) => {
 						return (
 							<NavVerticalItem
