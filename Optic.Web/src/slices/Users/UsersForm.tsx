@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { UsersModel, UsersResponseModel } from "./UsersModel";
-import { useUsers } from "./Users";
+import { useUsers } from "./useUsers";
 
 export const UsersForm = ({ id }: { id?: number }) => {
     const [form, setForm] = useState<UsersModel | UsersResponseModel>({
