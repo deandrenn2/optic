@@ -19,8 +19,6 @@ export const BusinessCreate = () => {
       urlLogo: '',
    });
 
-   console.log(business, "Datos de la organización");
-
    const { createBusiness } = useLogin();
 
    const handleCreate = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {

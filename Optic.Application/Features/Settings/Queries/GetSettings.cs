@@ -18,7 +18,7 @@ public class GetSettings : ICarterModule
     {
         app.MapGet("/api/settings", async (IMediator mediator) =>
         {
-            await mediator.Send(new GetSettingsQuery());
+           return await mediator.Send(new GetSettingsQuery());
         })
         .WithName(nameof(GetSettings))
         .WithTags("Settings")

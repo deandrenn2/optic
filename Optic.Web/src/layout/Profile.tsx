@@ -13,7 +13,7 @@ export const Profile = () => {
     }
     return (
         <div className="absolute top-20 right-2 text-black-500 bg-opacity-50">
-            <div className="max-w-sm mx-auto bg-gray-800 rounded-b-lg overflow-hidden shadow-lg">
+            <div className="max-w-sm w-72 bg-gray-800 rounded-b-lg overflow-hidden shadow-lg">
                 <div className="p-4">
                     <div className="flex justify-between items-center">
 
@@ -35,22 +35,20 @@ export const Profile = () => {
                     </h3>
                     <p className="text-white text-xs">{user?.email}</p>
                 </div>
-                <div className="flex align-middle justify-center p-4 space-x-1">
+                <div className="flex align-middle justify-center p-4 gap-2 space-x-1">
 
-                    <div onClick={handleLogout} className="flex items-center space-x-2 mt-2 hover:bg-gray-700 p-2 rounded-lg cursor-pointer">
-                        <i className="fas fa-sign-out-alt text-gray-400"></i>
+                    <div onClick={handleLogout} className="flex items-center space-x-2  hover:bg-gray-700 px-4 py-2 rounded-lg cursor-pointer">
                         <FontAwesomeIcon icon={faSignOutAlt} className="text-white" />
                         <button className="text-gray-400 "> Salir</button>
                     </div>
 
-                    <div className="flex items-center space-x-2 mt-2  hover:bg-gray-700 p-2 rounded-lg cursor-pointer">
-                         <Link 
-                              to="/Users/Edit"
-                                className="flex items-center space-x-2 mt-2 hover:bg-gray-700 p-2 rounded-lg cursor-pointer">
-                             <i className="fas fa-sign-out-alt text-gray-400"></i>
-                             <FontAwesomeIcon icon={faEdit} className="text-white" />
-                             <span className="text-gray-400">Editar</span>
-                         </Link>
+                    <div className="flex items-center space-x-2  hover:bg-gray-700 p-2 rounded-lg cursor-pointer">
+                        <Link
+                            to="/Users/Edit"
+                            className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-lg cursor-pointer">
+                            <FontAwesomeIcon icon={faEdit} className="text-white" />
+                            <span className="text-gray-400">Editar</span>
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -77,7 +77,7 @@ export const Clients = () => {
             <table className=" bg-white rounded shadow w-full">
                <thead>
                   <tr>
-                     <th className="border p-2">Nombre</th>
+                     <th className="border p-2">Nombres</th>
                      <th className="border p-2">Identificación</th>
                      <th className="border p-2">Celular</th>
                      <th className="border p-2">Dirección</th>
@@ -108,28 +108,6 @@ export const Clients = () => {
                   ))}
                </tbody>
             </table>
-            <div className="mt-4 flex justify-center">
-               <nav className="inline-flex rounded-md shadow">
-                  <a
-                     href="#"
-                     className="px-4 py-2 bg-white hover:bg-blue-500  border border-gray-300"
-                  >
-                     1
-                  </a>
-                  <a
-                     href="#"
-                     className="px-4 py-2 bg-white hover:bg-blue-500  border border-gray-300"
-                  >
-                     2
-                  </a>
-                  <a
-                     href="#"
-                     className="px-4 py-2 bg-white hover:bg-blue-500 border border-gray-300"
-                  >
-                     3
-                  </a>
-               </nav>
-            </div>
          </div>
          <OffCanvas titlePrincipal='Registro de Cliente' visible={visible} xClose={handleClose} position={Direction.Right}  >
             <ClientForm />

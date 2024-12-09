@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { CreateClientModel } from "./ClientModel";
 import useClient from "./useClient";
 import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
+import { ComponenteSexes } from "../../shared/components/List/ComponenteSexes";
 
 export const ClientForm = ({ id }: { id?: number }) => {
 
@@ -83,17 +84,7 @@ export const ClientForm = ({ id }: { id?: number }) => {
                <label className="block text-gray-700 text-sm font-bold mb-2">
                   Sexo
                </label>
-               <select
-                  name="sex"
-                  value={client?.sex}
-                  required
-                  onChange={(e) => handleChange(e)}
-                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-               >
-                  <option value="">Seleccione</option>
-                  <option value="1">Masculino</option>
-                  <option value="2">Femenino</option>
-               </select>
+               <ComponenteSexes name="sex" selectedValue={client?.sex?.toString()} xChange={handleChange} required />
             </div>
 
             <div className="mb-4">
