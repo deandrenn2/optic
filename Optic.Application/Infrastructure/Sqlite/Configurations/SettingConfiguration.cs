@@ -11,7 +11,7 @@ public class SettingConfiguration : IEntityTypeConfiguration<Setting>
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedNever();
         builder.HasData(
-            new Setting(1, "LIST_SEXES", "Lista de sexos", "{Id:1,Name:Masculino},{Id:2,Name:Femenino}"),
+            new Setting(1, "LIST_SEXES", "Lista de sexos", "[{\"Id\":1,\"Name\":\"Masculino\"},{\"Id\":2,\"Name\":\"Femenino\"}]"),
             new Setting(2, "THEME", "Tema: Dark/Light", "Dark")
             );
     }
@@ -23,7 +23,7 @@ public class SettingUserConfiguration : IEntityTypeConfiguration<SettingUser>
     {
         builder.ToTable("SettingsUsers");
         builder.HasKey(x => x.Id);
-        builder.Property(x=>x.Id).ValueGeneratedNever();
+        builder.Property(x => x.Id).ValueGeneratedNever();
     }
 }
 

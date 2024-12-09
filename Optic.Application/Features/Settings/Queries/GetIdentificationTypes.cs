@@ -15,7 +15,7 @@ public class GetIdentificationTypes : ICarterModule
     {
         app.MapGet("/api/settings/identificationTypes", async (IMediator mediator) =>
         {
-            await mediator.Send(new GetIdentificationTypesQuery());
+           return await mediator.Send(new GetIdentificationTypesQuery());
         })
         .WithName(nameof(GetIdentificationTypes))
         .WithTags("Settings")
