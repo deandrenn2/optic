@@ -1,4 +1,4 @@
-import { faCog, faPerson, faUser, } from "@fortawesome/free-solid-svg-icons";
+import { faCog, faList, faUser, } from "@fortawesome/free-solid-svg-icons";
 
 import { NavVerticalItemModel } from "../../shared/components/Navigation/Model";
 import NavVertical from "../../shared/components/Navigation/NavVertical";
@@ -22,7 +22,7 @@ export const SettingsMenu = () => {
             description: 'Configuración de tipos de identificación.',
             url: '/Settings/IdentificationTypes',
             titleSection: 'Tipos de Identificación',
-            fontIcon: faPerson,
+            fontIcon: faList,
         },
         {
             id: 3,
@@ -38,10 +38,10 @@ export const SettingsMenu = () => {
 
         <div className="w-full p-4">
             <div className="grid grid-cols-12 gap-4 w-full">
-                <div className="col-start-1 col-end-2">
+                <div className="col-start-1 col-span-2">
                     <NavVertical title="Menú de Configuración" items={navBarImportar} />
                 </div>
-                <div className="col-start-3 col-end-12">
+                <div className="col-start-3 col-span-10">
                     <Outlet />
                 </div>
             </div>
