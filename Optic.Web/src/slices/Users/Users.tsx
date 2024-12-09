@@ -16,8 +16,6 @@ export const Users = () => {
         setVisible(false);
     }
 
-
-
     return (
         <div>
             <div className="flex space-x-4 mb-4">
