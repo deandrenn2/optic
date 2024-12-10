@@ -152,7 +152,7 @@ export const Business = () => {
                     type="submit"
                     className="w-full py-2 px-4 bg-teal-500 hover:bg-teal-400 text-white font-bold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                    Guardar 
+                    Guardar
                 </button>
             </form>
         </div>
