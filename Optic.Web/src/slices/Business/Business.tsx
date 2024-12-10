@@ -1,5 +1,7 @@
 import { useState } from "react";
 import useUserContext from "../../shared/context/useUserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 
 export const Business = () => {
     const [hasError] = useState<string>('');
@@ -8,9 +10,18 @@ export const Business = () => {
     return (
         <div className="w-full flex justify-center items-center">
             <form
-                className="bg-white p-3 rounded-lg shadow-md w-full max-w-md mx-4 grid gap-6"
-            >
-                <h2 className="text-3xl font-bold mb-4 text-center">
+                className=" bg-white p-8 rounded-lg shadow-md w-full max-w-md mx-5 grid gap-3pro">
+                <div className="relative flex items-center justify-center">
+                    <div className="shrink-0 ">
+                        <img
+                            src={`${import.meta.env.BASE_URL}initials-logo.svg`}
+                            alt="logo"
+                            className="h-full w-16 rounded-lg"
+                        />
+                    </div>
+                </div>
+
+                <h2 className="text-3xl font-bold mb-2 text-center">
                     <span>{business?.companyName}</span>
                 </h2>
                 <div>
@@ -148,12 +159,11 @@ export const Business = () => {
                         </span>
                     </div>
                 </div>
-                <button
-                    type="submit"
-                    className="w-full py-2 px-4 bg-teal-500 hover:bg-teal-400 text-white font-bold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                    Guardar
-                </button>
+                <div className=" flex justify-start">
+                    <button type="submit" className=" bg-teal-500 text-white px-4 py-3 rounded-md shadow-md flex items-center hover:bg-teal-400">
+                        <FontAwesomeIcon icon={faFloppyDisk} className="mr-2" />Guardar
+                    </button>
+                </div>
             </form>
         </div>
     );
