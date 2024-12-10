@@ -19,7 +19,7 @@ export const Avatar = () => {
                     />
                 </div>
             </div>
-            {isOpen && <Profile />}
+            {isOpen && <Profile setIsOpen={setIsOpen} />}
         </>
     )
 }

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import useUserContext from "../shared/context/useUserContext";
 import { Link } from "react-router-dom";
 
-export const Profile = () => {
+export const Profile = ({ setIsOpen }: { setIsOpen: (value: boolean) => void }) => {
     const { user, setToken, setIsAuthenticated } = useUserContext();
 
     const handleLogout = () => {
@@ -16,7 +16,6 @@ export const Profile = () => {
             <div className="max-w-sm w-72 bg-gray-800 rounded-b-lg overflow-hidden shadow-lg">
                 <div className="p-4">
                     <div className="flex justify-between items-center">
-
                         <button className="absolute right-9">
                             <i className="fas fa-pen text-white"></i>
                         </button>
@@ -45,6 +44,7 @@ export const Profile = () => {
                     <div className="flex items-center space-x-2  hover:bg-gray-700 p-2 rounded-lg cursor-pointer">
                         <Link
                             to="/Users/Edit"
+                            onClick={() => setIsOpen(false)}
                             className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-lg cursor-pointer">
                             <FontAwesomeIcon icon={faEdit} className="text-white" />
                             <span className="text-gray-400">Editar</span>

@@ -21,7 +21,7 @@ import { Users } from './slices/Users/Users.tsx';
 import { SettingsDetail } from './slices/Users/UsersDetail.tsx';
 import { SupplierDetail } from './slices/Suppliers/SupplierDetail.tsx';
 import { ProductsDetail } from './slices/Products/ProductsDetail.tsx';
-import { EditProfile } from './slices/Users/Edit.tsx';
+import { EditProfile } from './slices/Users/EditProfile.tsx';
 import { SettingsMenu } from './slices/Settings/SettingsMenu.tsx';
 import { IdentificationTypes } from './slices/Settings/IdentificationTypes.tsx';
 import { Settings } from './slices/Settings/Settings.tsx';
@@ -107,7 +107,7 @@ const router = createBrowserRouter([
 
          {
             path: 'Business/Business',
-            element: <Business/>,
+            element: <Business />,
          },
       ],
    },

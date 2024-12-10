@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { UsersModel, UsersResponseModel } from "./UsersModel";
-import useUsers from "./useUsers";
+import { useUsers } from "./useUsers";
 import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
 
 export const SettingsForm = ({ id }: { id?: number }) => {
