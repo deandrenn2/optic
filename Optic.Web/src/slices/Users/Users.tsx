@@ -6,15 +6,19 @@ import { useState } from "react";
 import { Direction } from "../../shared/components/OffCanvas/Models";
 import { SettingsForm } from "./UsersCreate";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
+import { Bar } from "../../shared/components/Progress/Bar";
 
 export const Users = () => {
-    const [visible, setVisible] = useState(false);
+    const [visible, setVisible, ] = useState(false);
 
-    const { users } = useLogin();
+    const { users, queryUsers } = useLogin();
 
     function handleClose(): void {
         setVisible(false);
     }
+
+    if (queryUsers.isLoading)
+        return <Bar Title="Cargando..." />;
 
     return (
         <div>

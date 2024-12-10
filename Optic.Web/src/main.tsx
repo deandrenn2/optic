@@ -25,6 +25,7 @@ import { EditProfile } from './slices/Users/Edit.tsx';
 import { SettingsMenu } from './slices/Settings/SettingsMenu.tsx';
 import { IdentificationTypes } from './slices/Settings/IdentificationTypes.tsx';
 import { Settings } from './slices/Settings/Settings.tsx';
+import { Business } from './slices/Business/Business.tsx';
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -104,6 +105,10 @@ const router = createBrowserRouter([
             element: <EditProfile />,
          },
 
+         {
+            path: 'Business/Business',
+            element: <Business/>,
+         },
       ],
    },
    {
