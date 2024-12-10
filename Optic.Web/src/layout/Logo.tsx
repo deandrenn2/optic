@@ -7,7 +7,7 @@ const { business } = useUserContext();
      navigator('/Business/Business');
     }
 
-    
+
     return (
         <div onClick={handleClick} className=" flex items-center gap-4 bg-blue-50 pr-4 rounded-lg border-r-2 border-blue-200">
             <div className="shrink-0">

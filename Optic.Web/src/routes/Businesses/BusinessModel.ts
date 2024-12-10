@@ -3,6 +3,7 @@ export interface BusinessResponseModel {
    companyName: string;
    abbreviation: string;
    nit: string;
+   city: string;
    address: string;
    cellPhoneNumber: string;
    phoneNumber: string;

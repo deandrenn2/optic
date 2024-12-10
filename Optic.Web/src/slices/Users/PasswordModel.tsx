@@ -1,12 +1,12 @@
 import { faKey } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const PasswordModel = ({ }) => {
+export const PasswordModel = ({onClose}: { onClose: () => void }) => {
 
     return (
         <div className=" fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-            <div className="bg-white p-9 rounded-lg shadow-md w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6">Cambiar ontraseña</h2>
+            <div className="bg-white p-4 rounded-lg shadow-md w-full max-w-md">
+                <h2 className="text-2xl font-bold mb-6">Cambiar Contraseña</h2>
                 <form className="bg-white p-9 w-full max-w-md grid gap-6  my-5">
                     <div className="mb-4">
                         <label
@@ -36,6 +36,12 @@ export const PasswordModel = ({ }) => {
                         <button
                             className="bg-blue-500 text-white px-4 p-2 py-2 rounded-md shadow-md flex items-center mr-4 hover:bg-blue-400">
                             <FontAwesomeIcon icon={faKey} className="mr-2" />Cambiar contraseña
+                        </button>
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-gray-400">
+                            Cancelar
                         </button>
                     </div>
                 </form>

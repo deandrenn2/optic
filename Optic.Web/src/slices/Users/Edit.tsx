@@ -65,7 +65,7 @@ export const EditProfile = () => {
                     </div>
                 </form>
             </div>
-            {isOpen && <PasswordModel />}
+            {isOpen && <PasswordModel onClose={() => setIsOpen(false)} />}
         </div>
     )
 };

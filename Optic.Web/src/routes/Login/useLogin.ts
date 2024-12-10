@@ -14,7 +14,7 @@ export const useLogin = () => {
    });
 
    const queryUser = useQuery({
-      queryKey: [`${KEY}_USER`],
+      queryKey: [`${KEY}`],
       queryFn: () => getUser(idUser),
       enabled: false,
    });
