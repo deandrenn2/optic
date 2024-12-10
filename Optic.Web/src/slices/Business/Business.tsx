@@ -10,7 +10,7 @@ export const Business = () => {
     return (
         <div className="w-full flex justify-center items-center">
             <form
-                className=" bg-white p-8 rounded-lg shadow-md w-full max-w-md mx-5 grid gap-3pro">
+                className=" bg-white p-8 rounded-lg shadow-md w-full max-w-md mx-5 grid gap-2">
                 <div className="relative flex items-center justify-center">
                     <div className="shrink-0 ">
                         <img
