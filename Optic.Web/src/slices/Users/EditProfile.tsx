@@ -1,4 +1,4 @@
-import { faFloppyDisk, faKey, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faKey, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { PasswordModel } from "./PasswordModel";

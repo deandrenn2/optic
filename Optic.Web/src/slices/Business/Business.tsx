@@ -1,7 +1,5 @@
 import { useState } from "react";
 import useUserContext from "../../shared/context/useUserContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import ButtonSave from "../../shared/components/Buttons/ButtonSave";
 
 export const Business = () => {
