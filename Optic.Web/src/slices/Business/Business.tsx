@@ -2,6 +2,7 @@ import { useState } from "react";
 import useUserContext from "../../shared/context/useUserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
+import ButtonSave from "../../shared/components/Buttons/ButtonSave";
 
 export const Business = () => {
     const [hasError] = useState<string>('');
@@ -160,9 +161,7 @@ export const Business = () => {
                     </div>
                 </div>
                 <div className=" flex justify-start">
-                    <button type="submit" className=" bg-teal-500 text-white px-4 py-3 rounded-md shadow-md flex items-center hover:bg-teal-400">
-                        <FontAwesomeIcon icon={faFloppyDisk} className="mr-2" />Guardar
-                    </button>
+                    <ButtonSave/>
                 </div>
             </form>
         </div>

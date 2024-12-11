@@ -4,6 +4,7 @@ import { useState } from "react";
 import { PasswordModel } from "./PasswordModel";
 import useUserContext from "../../shared/context/useUserContext";
 import { ProfileImageModal } from "./ProfileImageModal";
+import ButtonSave from "../../shared/components/Buttons/ButtonSave";
 
 export const EditProfile = () => {
     const { user } = useUserContext();
@@ -59,9 +60,7 @@ export const EditProfile = () => {
                         </div>
                     </div>
                     <div className="col-span-1 md:col-span-3 flex justify-start mt-7">
-                        <button type="submit" className=" bg-teal-500 text-white px-4 py-3 rounded-md shadow-md flex items-center mr-4 hover:bg-teal-400">
-                            <FontAwesomeIcon icon={faFloppyDisk} className="mr-2" />Guardar
-                        </button>
+                            <ButtonSave/>
                         <button
                             type="button"
                             onClick={() => setIsOpen(true)}
