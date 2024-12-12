@@ -10,5 +10,11 @@ internal class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.ToTable("Products");
         builder.HasMany(x => x.Categories)
         .WithMany(x => x.Products).UsingEntity("PoductCategories");
+
+        //Supplier
+        builder.HasOne(x => x.Supplier)
+            .WithMany(x => x.Products)
+            .HasForeignKey(x => x.IdSupplier)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

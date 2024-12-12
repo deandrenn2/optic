@@ -1,59 +1,63 @@
 ﻿using Optic.Application.Domain.Primitives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Optic.Application.Domain.Entities;
 
-class Formulas : AggregateRoot
+public class Formula : AggregateRoot
 {
-    public Formulas(int id,
+    public Formula(int id,
         string description,
         DateTime date,
         string state,
-        string typeLens,
-        string typePay,
-        decimal priceLens,
-        decimal queryValue 
+        decimal priceLens
         ) : base(id)
     {
-        Descriptions = description;
+        Description = description;
         Date = date;
         State = state;
-        TypeLens = typeLens;
-        TypePay = typePay; 
         PriceLens = priceLens;
-        QueryValue = queryValue;
-
     }
-    public string Descriptions  { get; private set; }  
+
+    public string Description { get; private set; }
     public DateTime Date { get; private set; } = DateTime.Now;
     public string State { get; private set; }
-    public string TypeLens { get; private set; }
-    public string TypePay { get; private set; }
-    public decimal PriceLens { get;private set; }
-    public decimal QueryValue { get; private set; }
+    public decimal PriceLens { get; private set; }
+    public decimal PriceConsultation { get; private set; }
     public Client Client { get; private set; }
     public int ClientId { get; private set; }
+    public Business Business { get; private set; }
+    public int BusinessId { get; private set; }
+    public List<Tags> Tags { get; set; } = new();
+    public List<Diagnosis> Diagnosis { get; set; } = new();
+    public int IdInvoice { get; set; }
+    public Invoice Invoice { get; set; }
 
-    public static Formulas Create(int id, string description, DateTime date, string state, string typeLens, string typePay, decimal priceLens, decimal queryValue)
+
+    public static Formula Create(int id, string description, DateTime date, string state, decimal priceLens)
     {
-        return new Formulas(id, description, date, state, typeLens, typePay, priceLens, queryValue);
+        return new Formula(id, description, date, state, priceLens);
     }
 
-    public void Update (string description, DateTime date, string state, string typeLens, string typePay, decimal priceLens, decimal queryvalue)
+    public void AddTags(Tags tags)
     {
-        Descriptions = description;
+        Tags.Add(tags);
+    }
+
+    public void AddDiagnosis(Diagnosis diagnosis)
+    {
+        Diagnosis.Add(diagnosis);
+    }
+
+    public void AddInvoice(Invoice invoice)
+    {
+        Invoice = invoice;
+    }
+
+    public void Update(string description, DateTime date, string state, decimal priceLens)
+    {
+        Description = description;
         Date = date;
         State = state;
-        TypeLens = typeLens;
-        TypePay = typePay;
         PriceLens = priceLens;
-        QueryValue = queryvalue;
     }
-    
-            
 }
 

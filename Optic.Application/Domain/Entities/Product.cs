@@ -34,6 +34,8 @@ public class Product : AggregateRoot
     public decimal UnitPrice { get; private set; }
     public decimal SalePrice { get; private set; }
     public int Stock { get; private set; }
+    public int IdSupplier { get; private set; }
+    public Supplier Supplier { get; private set; }
     public string? Image { get; private set; }
     public List<Category> Categories { get; private set; } = new();
 

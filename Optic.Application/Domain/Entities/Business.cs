@@ -30,6 +30,8 @@ namespace Optic.Application.Domain.Entities
         public string CellPhoneNumber { get; private set; }
         public string PhoneNumber { get; private set; }
         public string UrlLogo { get; private set; } = "initials-logo.svg";
+        public List<Formula> Formulas { get; set; } = new();
+        public List<Invoice> Invoices { get; set; } = new();
 
 
         public static Business Create(
