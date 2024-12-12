@@ -1,13 +1,14 @@
-import { faCircleMinus, faMagnifyingGlass, faPlay } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass, } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { SuppliersForm } from "./SuppliersForm"
 import { MouseEvent, useState } from "react";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { Direction } from "../../shared/components/OffCanvas/Models";
 import { useSupplier } from "./useSupplier";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
+import DetailButton from "../../shared/components/Buttons/ButtonDetail";
+import { Bar } from "../../shared/components/Progress/Bar";
 
 export const Suppliers = () => {
     const [visible, setVisible] = useState(false);
@@ -18,9 +19,6 @@ export const Suppliers = () => {
         setVisible(false);
     }
 
-    if (querySuppliers.isLoading) {
-        return <div>Cargando...</div>;
-    }
 
     function handleDelete(e: MouseEvent<HTMLButtonElement>, id: number): void {
         e.preventDefault();
@@ -37,6 +35,9 @@ export const Suppliers = () => {
             }
         })
     }
+
+    if (querySuppliers.isLoading)
+        return <Bar Title="Cargando..." />;
 
     return (
         <div className="w-full p-4"> {/* <!-- TABLA DE PROVEEDORES --> */}
@@ -77,14 +78,8 @@ export const Suppliers = () => {
                             <td className="border border-gray-300 p-2 text-center">{supplier.address}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.email}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <Link to={`/Suppliers/${supplier.id}`} title='Ver detalle' className='text-blue-500  mr-10'>
-                                    <FontAwesomeIcon icon={faPlay} />
-                                </Link>
-                                <button className="text-red-500" onClick={(e) => handleDelete(e, supplier.id)}>
-                                    <FontAwesomeIcon
-                                        icon={faCircleMinus}
-                                        className="ml-2" />
-                                </button>
+                                <DetailButton url={`/suppliers/${supplier.id}`} />
+                                <DeleteButton id={supplier.id} onDelete={handleDelete} />
                             </td>
                         </tr>
                     ))}

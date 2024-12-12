@@ -20,8 +20,9 @@ public enum RoleUser
     Super = 3
 }
 
-
-
-
-
+public enum LevelSetting
+{
+    System = 1,
+    User = 2
+}
 

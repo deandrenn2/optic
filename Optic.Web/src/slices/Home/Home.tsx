@@ -258,7 +258,7 @@ export const Home = () => {
                         <div className="mt-20">
                            <button className="px-2 py-1 border rounded" />
                            <button className="px-2 py-1 border rounded">
-                              {'<<<'} <button className="px-2 py-1 border rounded" />1
+                              {'<<<'}
                            </button>
                            <button className="px-2 py-1 border rounded">2</button>
                            <button className="px-2 py-1 border rounded">3</button>

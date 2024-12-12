@@ -128,14 +128,19 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.HasIndex("IdentificationNumber")
                         .IsUnique();
 
+                    b.HasIndex("IdentificationTypeId");
+
                     b.ToTable("Clients", (string)null);
                 });
 
             modelBuilder.Entity("Optic.Application.Domain.Entities.IdentificationType", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Abbreviation")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -146,7 +151,58 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentificationTypes");
+                    b.ToTable("IdentificationTypes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Abbreviation = "CC",
+                            Name = "Cédula de ciudadanía",
+                            Orden = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Abbreviation = "TI",
+                            Name = "Tarjeta de Identidad",
+                            Orden = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Abbreviation = "CE",
+                            Name = "Cédula de extranjería",
+                            Orden = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Abbreviation = "PA",
+                            Name = "Pasaporte",
+                            Orden = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Abbreviation = "RC",
+                            Name = "Registro Civil de Nacimiento",
+                            Orden = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Abbreviation = "PEP",
+                            Name = "Permiso Especial de Permanencia",
+                            Orden = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Abbreviation = "OO",
+                            Name = "Otro",
+                            Orden = 7
+                        });
                 });
 
             modelBuilder.Entity("Optic.Application.Domain.Entities.Product", b =>
@@ -187,6 +243,74 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Optic.Application.Domain.Entities.Setting", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Settings", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Lista de sexos",
+                            Name = "LIST_SEXES",
+                            Value = "{Id:1,Name:Masculino},{Id:2,Name:Femenino}"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Tema: Dark/Light",
+                            Name = "THEME",
+                            Value = "Dark"
+                        });
+                });
+
+            modelBuilder.Entity("Optic.Application.Domain.Entities.SettingUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdSetting")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdUser")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SettingId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SettingId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SettingsUsers", (string)null);
                 });
 
             modelBuilder.Entity("Optic.Application.Domain.Entities.Supplier", b =>
@@ -265,6 +389,44 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                         .IsUnique();
 
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("Optic.Application.Domain.Entities.Client", b =>
+                {
+                    b.HasOne("Optic.Application.Domain.Entities.IdentificationType", "IdentificationType")
+                        .WithMany("Clients")
+                        .HasForeignKey("IdentificationTypeId");
+
+                    b.Navigation("IdentificationType");
+                });
+
+            modelBuilder.Entity("Optic.Application.Domain.Entities.SettingUser", b =>
+                {
+                    b.HasOne("Optic.Application.Domain.Entities.Setting", "Setting")
+                        .WithMany("SettingUsers")
+                        .HasForeignKey("SettingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Optic.Application.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Setting");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Optic.Application.Domain.Entities.IdentificationType", b =>
+                {
+                    b.Navigation("Clients");
+                });
+
+            modelBuilder.Entity("Optic.Application.Domain.Entities.Setting", b =>
+                {
+                    b.Navigation("SettingUsers");
                 });
 #pragma warning restore 612, 618
         }

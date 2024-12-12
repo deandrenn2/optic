@@ -1,3 +1,4 @@
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelopeOpen, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
@@ -11,15 +12,12 @@ import { useBusiness } from '../Businesses/useBusiness';
 export const Login = () => {
    const [email, setEmail] = useState<string>('');
    const [password, setPassword] = useState<string>('');
+
    const navigate = useNavigate();
-   const { setToken, token, setUser, setBusiness, isAuthenticated, setIsAuthenticated } = useUserContext();
-   const iduser = token?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
-      != undefined && !!token ?
-      token?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
-      : "";
-   console.log(iduser, "usuario");
-   const { queryUser, user } = useLogin(parseInt(iduser));
+   const { setToken, setBusiness, setUser, isAuthenticated, setIsAuthenticated } = useUserContext();
    const { business, queryBusiness } = useBusiness();
+   const { queryUser, setIdUser, idUser } = useLogin();
+
    const [isFetching, setIsFetching] = useState(false);
 
    useEffect(() => {
@@ -28,7 +26,7 @@ export const Login = () => {
       }
    }, [isAuthenticated, navigate]);
 
-   function handleLogin(event: React.FormEvent<HTMLFormElement>): void {
+   const handleLogin = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
       setIsFetching(true);
       event.preventDefault();
       loginUser({ email, password })
@@ -43,7 +41,15 @@ export const Login = () => {
 
             if (response.data) {
                setToken(response?.data);
-               setIsFetching(false);
+
+               const iduserCode = response?.data?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+                  != undefined && !!response?.data ?
+                  response?.data?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+                  : "";
+
+               setIdUser(Number(iduserCode));
+
+
             }
 
          })
@@ -56,27 +62,29 @@ export const Login = () => {
    }
 
    useEffect(() => {
-      if (token && user && business) {
-         setUser(user);
-         setBusiness(business);
-         setIsAuthenticated(true);
-         navigate('/');
+      if (idUser != 0) {
+         queryUser.refetch().then((response) => {
+            if (response.data) {
+               const user = response.data?.data;
+               if (user) {
+                  setUser(user);
+                  setIsFetching(false);
+                  setIsAuthenticated(true);
+               }
+            }
+         });
       }
-   },
-      [
-         token,
-         queryBusiness?.data,
-         queryUser?.data,
-         navigate
-      ]);
+   }, [idUser]);
 
    useEffect(() => {
       if (queryBusiness?.data) {
          if (!business) {
             navigate('/Create/User');
+         } else {
+            setBusiness(business);
          }
       }
-   }, [queryBusiness?.data, business, navigate]);
+   }, [queryBusiness?.data, business, navigate, setBusiness]);
 
    return (
       <div className="flex justify-center items-center h-screen bg-gray-200">
@@ -159,7 +167,7 @@ export const Login = () => {
                className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative"
             >
                {
-                  (isFetching && queryBusiness.isLoading && queryUser.isLoading) &&
+                  (isFetching) &&
                   <div role="status" className='absolute top-0 left-1 p-2 flex items-center justify-center text-gray-300'>
                      <svg aria-hidden="true" className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />

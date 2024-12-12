@@ -15,7 +15,7 @@ export interface TokenModel {
 }
 
 export interface UserResponseModel {
-   id: number;
+   id?: number | undefined;
    firstName?: string;
    lastName?: string;
    email?: string;

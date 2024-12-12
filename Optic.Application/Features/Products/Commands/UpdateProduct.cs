@@ -40,7 +40,7 @@ public class UpdateProduct: ICarterModule
         public string? Image { get; init; }
     }
 
-    public class UpdateProductHandler(AppDbContext contex, IValidator<UpdateProductCommand> validator) : IRequestHandler<UpdateProductCommand, Result>
+    public class UpdateProductHandler(AppDbContext context, IValidator<UpdateProductCommand> validator) : IRequestHandler<UpdateProductCommand, Result>
     {
         public async Task<Result> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
@@ -50,7 +50,7 @@ public class UpdateProduct: ICarterModule
                 return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Product.ErrorValidation", "Se presentaron errores de validación"));
             }
 
-           var updateProduct = await contex.Products.FirstOrDefaultAsync(x => x.Id == request.Id);
+           var updateProduct = await context.Products.FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if (updateProduct == null)
             {
@@ -59,7 +59,7 @@ public class UpdateProduct: ICarterModule
 
             updateProduct.Update(request.IdBrand, request.Name, request.CodeNumber, request.Quantity, request.UnitPrice, request.SalePrice, request.Stock, request.BarCode, request.Image);
 
-            var resCount = await contex.SaveChangesAsync();
+            var resCount = await context.SaveChangesAsync();
 
             if (resCount > 0)
             {

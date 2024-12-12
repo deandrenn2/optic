@@ -17,15 +17,20 @@ import { Products } from './slices/Products/Products.tsx';
 import { Suppliers } from './slices/Suppliers/Suppliers.tsx';
 import { Formulas } from './slices/Formulas/Formulas.tsx';
 import { Facturación } from './slices/Facturación/Facturación.tsx';
-import { Settings } from './slices/Settings/Settings.tsx';
+import { Users } from './slices/Users/Users.tsx';
+import { SettingsDetail } from './slices/Users/UsersDetail.tsx';
 import { SupplierDetail } from './slices/Suppliers/SupplierDetail.tsx';
-
-
-
+import { ProductsDetail } from './slices/Products/ProductsDetail.tsx';
+import { EditProfile } from './slices/Users/EditProfile.tsx';
+import { SettingsMenu } from './slices/Settings/SettingsMenu.tsx';
+import { IdentificationTypes } from './slices/Settings/IdentificationTypes.tsx';
+import { Settings } from './slices/Settings/Settings.tsx';
+import { Business } from './slices/Business/Business.tsx';
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
    {
+
       path: '/',
       element: <App />,
       children: [
@@ -40,18 +45,25 @@ const router = createBrowserRouter([
          {
             path: 'Clientes/:id',
             element: <ClientDetail />,
+
          },
+
          {
-            path: 'Products',
-            element: <Products />,
-         },
-         {
-            path: 'Suppliers',
+            path: 'suppliers',
             element: <Suppliers />,
          },
          {
             path: 'Suppliers/:id',
             element: <SupplierDetail />,
+         },
+
+         {
+            path: 'products',
+            element: <Products />,
+         },
+         {
+            path: 'Products/:id',
+            element: <ProductsDetail />,
          },
          {
             path: 'Formulas',
@@ -62,16 +74,49 @@ const router = createBrowserRouter([
             element: <Facturación />,
          },
          {
-            path: 'configuraciones',
-            element: <Settings />
+            path: 'Settings',
+            element: <SettingsMenu />,
+            children: [
+               {
+                  index: true,
+                  element: <Users />,
+               },
+               {
+                  path: 'Users',
+                  element: <Users />,
+               },
+               {
+                  path: 'Users/:id',
+                  element: <SettingsDetail />
+               },
+               {
+                  path: 'IdentificationTypes',
+                  element: <IdentificationTypes />
+               },
+               {
+                  path: 'Config',
+                  element: <Settings />,
+               },
+            ]
          },
 
+         {
+            path: 'Users/Edit',
+            element: <EditProfile />,
+         },
+
+         {
+            path: 'Business/Business',
+            element: <Business />,
+         },
       ],
    },
    {
       path: 'Login',
       element: <Login />,
    },
+
+
    {
       path: '/Create/User',
       element: <UserCreate />,
@@ -89,7 +134,7 @@ createRoot(document.getElementById('root')!).render(
          <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
       <ToastContainer
-         position="top-right"
+         position="top-center"
          autoClose={5000}
          hideProgressBar={false}
          newestOnTop={false}

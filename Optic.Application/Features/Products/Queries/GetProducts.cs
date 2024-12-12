@@ -48,6 +48,7 @@ public class GetProducts : ICarterModule
 
             var productsList = products.Select(x => new GetProductsResponse
             {
+                Id = x.Id,
                 Name = x.Name,
                 IdBrand = x.IdBrand,
                 CodeNumber = x.CodeNumber,

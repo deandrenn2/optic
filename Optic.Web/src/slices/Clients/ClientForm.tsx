@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { CreateClientModel } from "./ClientModel";
 import useClient from "./useClient";
 import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
+import { ComponentSexes } from "../../shared/components/List/ComponentSexes";
+import { ComponentIdentificationTypes } from "../../shared/components/List/ComponentIdentificationTypes";
 
 export const ClientForm = ({ id }: { id?: number }) => {
 
@@ -31,7 +33,17 @@ export const ClientForm = ({ id }: { id?: number }) => {
    }, [id, clients]);
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      setClient({ ...client, [e.target.name]: e.target.value });
+      let { value } = e.target;
+      const { name } = e.target;
+      if (name === 'firstName' || name == 'lastName') {
+         value = value.toUpperCase();
+      }
+
+      if (name === 'email') {
+         value = value.toLowerCase();
+      }
+
+      setClient({ ...client, [e.target.name]: value });
    };
 
    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -60,9 +72,10 @@ export const ClientForm = ({ id }: { id?: number }) => {
                   onChange={(e) => handleChange(e)}
                   name="firstName"
                   placeholder="Nombre"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                />
             </div>
+
             <div className="mb-4">
                <label className="block text-gray-700 text-sm font-bold mb-2">
                   Apellido
@@ -74,7 +87,7 @@ export const ClientForm = ({ id }: { id?: number }) => {
                   onChange={(e) => handleChange(e)}
                   name="lastName"
                   placeholder="Apellido"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                />
             </div>
 
@@ -82,33 +95,14 @@ export const ClientForm = ({ id }: { id?: number }) => {
                <label className="block text-gray-700 text-sm font-bold mb-2">
                   Sexo
                </label>
-               <select
-                  name="sex"
-                  value={client?.sex}
-                  required
-                  onChange={(e) => handleChange(e)}
-                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-               >
-                  <option value="">Seleccione</option>
-                  <option value="1">Masculino</option>
-                  <option value="2">Femenino</option>
-               </select>
+               <ComponentSexes name="sex" selectedValue={client?.sex?.toString()} xChange={handleChange} required />
             </div>
 
             <div className="mb-4">
                <label className="block text-gray-700 text-sm font-bold mb-2">
                   Tipo de Identificación
                </label>
-               <select
-                  name="identificationTypeId"
-                  value={client?.identificationTypeId}
-                  onChange={(e) => handleChange(e)}
-                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-               >
-                  <option value="">Seleccione</option>
-                  <option value="1">DNI</option>
-                  <option value="2">Pasaporte</option>
-               </select>
+               <ComponentIdentificationTypes name="identificationTypeId" selectedValue={client?.identificationTypeId?.toString()} xChange={handleChange} required />
             </div>
 
             <div className="mb-4">
@@ -122,7 +116,7 @@ export const ClientForm = ({ id }: { id?: number }) => {
                   onChange={(e) => handleChange(e)}
                   name="identificationNumber"
                   placeholder="Identificación"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                />
             </div>
             <div className="mb-4">
@@ -136,7 +130,7 @@ export const ClientForm = ({ id }: { id?: number }) => {
                   onChange={(e) => handleChange(e)}
                   name="cellPhoneNumber"
                   placeholder="Celular"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                />
             </div>
             <div className="mb-4">
@@ -149,7 +143,7 @@ export const ClientForm = ({ id }: { id?: number }) => {
                   onChange={(e) => handleChange(e)}
                   name="email"
                   placeholder="Email"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                />
             </div>
 
@@ -163,7 +157,7 @@ export const ClientForm = ({ id }: { id?: number }) => {
                   onChange={(e) => handleChange(e)}
                   name="address"
                   placeholder="Dirección"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                />
             </div>
 

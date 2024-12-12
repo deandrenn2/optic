@@ -6,6 +6,7 @@ export const useBusiness = () => {
    const queryBusiness = useQuery({
       queryKey: [`${KEY}`],
       queryFn: getBusiness,
+      refetchOnWindowFocus: false,
    });
 
    return {
