@@ -31,6 +31,8 @@ public class UpdateSetting : ICarterModule
         public string? Theme { get; set; } = "Light";
         public List<GetSettingsModel> Settings { get; set; } = new List<GetSettingsModel>();
         public List<SexModel> Sexes { get; set; } = new List<SexModel>();
+
+        public List<BrandModel> Brands { get; set; } = new List<BrandModel>();
     };
 
     public record GetSettingsResponse()
@@ -38,6 +40,8 @@ public class UpdateSetting : ICarterModule
         public string? Theme { get; set; } = "Light";
         public List<GetSettingsModel> Settings { get; set; } = new List<GetSettingsModel>();
         public List<SexModel> Sexes { get; set; } = new List<SexModel>();
+
+        public List<BrandModel> Brands { get; set; } = new List<BrandModel>();
     };
 
     public record GetSettingsModel(int Id, string Name, string Description, string Value);
@@ -55,6 +59,13 @@ public class UpdateSetting : ICarterModule
             var settings = await context.Settings.ToListAsync();
             var sexSettings = await context.Settings.Where(x => x.Name == "LIST_SEXES").FirstOrDefaultAsync();
             var ThemeSettings = await context.Settings.Where(x => x.Name == "THEME").FirstOrDefaultAsync();
+            var brandsSettings = await context.Settings.Where(x => x.Name == "LIST_BRAND").FirstOrDefaultAsync();
+
+            if (brandsSettings != null)
+            {
+                var brandsList = JsonSerializer.Serialize(request.Brands);
+                brandsSettings.Update(brandsList);
+            }
 
             if (sexSettings != null)
             {
@@ -81,6 +92,7 @@ public class UpdateSetting : ICarterModule
             response.Settings = request.Settings;
             response.Theme = request.Theme;
             response.Sexes = request.Sexes;
+            response.Brands = request.Brands;
 
 
             var resCount = await context.SaveChangesAsync();

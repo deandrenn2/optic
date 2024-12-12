@@ -23,6 +23,9 @@ public class AppDbContext : DbContext
     public DbSet<IdentificationType> IdentificationTypes => Set<IdentificationType>();
     public DbSet<Setting> Settings => Set<Setting>();
     public DbSet<SettingUser> SettingUsers => Set<SettingUser>();
+    public DbSet<Invoice> Invoices => Set<Invoice>();
+    public DbSet<Formula> Formulas => Set<Formula>();
+    public DbSet<FormulaDiagnostico> FormulaDiagnosticos => Set<FormulaDiagnostico>();
 
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -67,6 +70,10 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new SupplierConfiguration());
         modelBuilder.ApplyConfiguration(new SettingConfiguration());
         modelBuilder.ApplyConfiguration(new SettingUserConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductConfiguration());
+        modelBuilder.ApplyConfiguration(new InvoiceConfiguration());
+        modelBuilder.ApplyConfiguration(new FormulasConfiguration());
+        modelBuilder.ApplyConfiguration(new DiagnosisConfiguration());
     }
 
 }

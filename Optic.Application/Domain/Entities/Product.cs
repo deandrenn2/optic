@@ -34,14 +34,22 @@ public class Product : AggregateRoot
     public decimal UnitPrice { get; private set; }
     public decimal SalePrice { get; private set; }
     public int Stock { get; private set; }
+    public int IdSupplier { get; private set; }
+    public Supplier Supplier { get; private set; }
     public string? Image { get; private set; }
+    public List<Category> Categories { get; private set; } = new();
 
     public static Product Create(int id, int idBrand, string name, string codeNumber, int quantity, decimal unitPrice, decimal salePrice, int stock)
     {
         return new Product(id, idBrand, name, codeNumber, quantity, unitPrice, salePrice, stock);
     }
 
-    public void Update(int idBrand, string name, string codeNumber, int quantity, decimal unitPrice, decimal salePrice, int stock, string? barCode, string? image) 
+    public void AddCategory(Category category)
+    {
+        Categories.Add(category);
+    }
+
+    public void Update(int idBrand, string name, string codeNumber, int quantity, decimal unitPrice, decimal salePrice, int stock, string? barCode, string? image)
     {
         IdBrand = idBrand;
         Name = name;

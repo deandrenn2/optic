@@ -37,6 +37,9 @@ public class Client : AggregateRoot
     public string CellPhoneNumber { get; private set; }
     public string PhoneNumber { get; private set; }
     public IdentificationType IdentificationType { get; private set; }
+    public List<Formula> Formulas { get; set; } = new();
+    public List<Invoice> Invoices { get; set; } = new();
+
 
     public static Client Create(int id,
         string firstName,

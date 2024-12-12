@@ -18,7 +18,7 @@ public class GetSettings : ICarterModule
     {
         app.MapGet("/api/settings", async (IMediator mediator) =>
         {
-           return await mediator.Send(new GetSettingsQuery());
+            return await mediator.Send(new GetSettingsQuery());
         })
         .WithName(nameof(GetSettings))
         .WithTags("Settings")
@@ -30,6 +30,7 @@ public class GetSettings : ICarterModule
         public string? Theme { get; set; } = "Light";
         public List<GetSettingsModel> Settings { get; set; } = new List<GetSettingsModel>();
         public List<SexModel> Sex { get; set; } = new List<SexModel>();
+        public List<BrandModel> Brands { get; set; } = new List<BrandModel>();
     };
 
     public record GetSettingsModel(int Id, string Name, string Description, string Value);
@@ -42,7 +43,10 @@ public class GetSettings : ICarterModule
             var settings = await context.Settings.ToListAsync();
             var sexSettings = await context.Settings.Where(x => x.Name == "LIST_SEXES").FirstOrDefaultAsync();
             var ThemeSettings = await context.Settings.Where(x => x.Name == "THEME").FirstOrDefaultAsync();
+            var brandsSettings = await context.Settings.Where(x => x.Name == "LIST_BRAND").FirstOrDefaultAsync();
+
             var sexList = JsonSerializer.Deserialize<List<SexModel>>(sexSettings?.Value);
+            var brandsList = JsonSerializer.Deserialize<List<BrandModel>>(brandsSettings?.Value);
             var settingList = settings.Select(x => new GetSettingsModel(
                 x.Id,
                 x.Name,
@@ -50,10 +54,15 @@ public class GetSettings : ICarterModule
                 x.Value
                 )).ToList();
 
+
             modelConfig.Settings.AddRange(settingList);
+            modelConfig.Theme = ThemeSettings?.Value;
+
             if (sexList != null)
                 modelConfig.Sex.AddRange(sexList);
-            modelConfig.Theme = ThemeSettings?.Value;
+            if (brandsList != null)
+                modelConfig.Brands.AddRange(brandsList);
+
 
             return Result<GetSettingsResponse>.Success(modelConfig, "Listado de configuraciones");
         }
