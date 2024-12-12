@@ -34,8 +34,6 @@ public class User : AggregateRoot
     public int StatusId { get; private set; } = 1;
     public int IdAvatar { get; private set; } = NumberRandom.Random(1, 14);
 
-    List<SettingUser> SettingsUser = new();
-
     public static User Create(int id,
     string firstName,
     string lastName,
@@ -44,10 +42,10 @@ public class User : AggregateRoot
     string securePharse)
     {
         var passwordHash = password.EncryptPassword();
-        return new User(id, firstName, lastName, email, passwordHash,securePharse);
+        return new User(id, firstName, lastName, email, passwordHash, securePharse);
     }
 
-    
+
     public Result Login(string password)
     {
         var isPasswordMatch = this.Password == password.EncryptPassword();
@@ -71,7 +69,7 @@ public class User : AggregateRoot
 
     public bool ValidateSecurePharse(string securePharse)
     {
-        return this.SecurePharse == securePharse;   
+        return this.SecurePharse == securePharse;
     }
 
     public void SetAvatar(int id)
