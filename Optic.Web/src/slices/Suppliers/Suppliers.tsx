@@ -40,18 +40,20 @@ export const Suppliers = () => {
         return <Bar Title="Cargando..." />;
 
     return (
-        <div className="w-full p-4"> {/* <!-- TABLA DE PROVEEDORES --> */}
+        <div className="w-full "> {/* <!-- TABLA DE PROVEEDORES --> */}
             <div className="flex space-x-4 mb-4">
                 <div className="mb-2">
-                    <button type='button' onClick={() => setVisible(true)} className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">Nuevo Proveedor</button>
+                    <button type='button' onClick={() => setVisible(true)} className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">+ Nuevo</button>
                 </div>
                 <div className="mb-2">
                     <div className="relative">
                         <div className="inline-flex">
-                            <input type="text" placeholder="Buscar Proveedor" className="p-2 pl-10 border-blue-400 rounded" />
+                            <input type="text" 
+                            placeholder="Buscar Proveedor" 
+                            className="p-2 pl-10 border-blue-400 rounded-tl-lg rounded-bl-lg" />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
                             <button
-                                className="font-bold border p-2 bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded text-white ">Buscar</button>
+                                className="text-white font-bold border hover:bg-blue-700 bg-blue-500 px-4 py-2 rounded-tr-lg rounded-br-lg ">Buscar</button>
                         </div>
                     </div>
                 </div>
@@ -65,7 +67,7 @@ export const Suppliers = () => {
                         <th className="border border-gray-300 p-2">Celular</th>
                         <th className="border border-gray-300 p-2">Dirección</th>
                         <th className="border border-gray-300 p-2">Email</th>
-                        <th className="border border-gray-300 p-2">Opciones</th>
+                        <th className="border border-gray-300 p-2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,7 +80,7 @@ export const Suppliers = () => {
                             <td className="border border-gray-300 p-2 text-center">{supplier.address}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.email}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <DetailButton url={`/suppliers/${supplier.id}`} />
+                                <DetailButton url={`/suppliers/${supplier.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />
                                 <DeleteButton id={supplier.id} onDelete={handleDelete} />
                             </td>
                         </tr>
