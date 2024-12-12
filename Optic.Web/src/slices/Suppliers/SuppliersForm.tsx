@@ -69,7 +69,7 @@ export const SuppliersForm = ({ id }: { id?: number }) => {
                     placeholder="Nombre"
                     value={form.name}
                     onChange={handleChange}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -82,7 +82,7 @@ export const SuppliersForm = ({ id }: { id?: number }) => {
                     value={form.nit}
                     onChange={handleChange}
                     placeholder="Nit"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -95,7 +95,7 @@ export const SuppliersForm = ({ id }: { id?: number }) => {
                     value={form.cellPhoneNumber}
                     onChange={handleChange}
                     placeholder="Celular"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
             <div className="mb-4">
@@ -109,7 +109,7 @@ export const SuppliersForm = ({ id }: { id?: number }) => {
                     value={form.address}
                     onChange={handleChange}
                     placeholder="Dirección"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
 
@@ -123,7 +123,7 @@ export const SuppliersForm = ({ id }: { id?: number }) => {
                     value={form.phoneNumber}
                     onChange={handleChange}
                     placeholder="Télefono"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -135,7 +135,7 @@ export const SuppliersForm = ({ id }: { id?: number }) => {
                     value={form.email}
                     onChange={handleChange}
                     placeholder="Email"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
             <div>

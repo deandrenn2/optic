@@ -7,6 +7,6 @@ export const ButtonReset = () => {
             <FontAwesomeIcon icon={faEraser} />
         </button>
     )
-}
+};
 
 

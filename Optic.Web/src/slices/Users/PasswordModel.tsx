@@ -17,7 +17,7 @@ export const PasswordModel = ({onClose}: { onClose: () => void }) => {
                         <input
                             type="password"
                             id="password"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                     <div className="mb-6">
@@ -29,7 +29,7 @@ export const PasswordModel = ({onClose}: { onClose: () => void }) => {
                         <input
                             id="confirm-password"
                             type="password"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                     <div className="flex items-cente justify-betweenr ">

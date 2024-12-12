@@ -41,22 +41,24 @@ export const Products = () => {
 
     return (
         <div className="w-full">
-            <div className="flex space-x-4 mb-4">
+            <div className="flex space-x-4 mb-2">
                 <div className="mb-2">
                     <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
                         onClick={() => setVisible(true)}>
                         <FontAwesomeIcon
                             icon={faPlus}
-                            className="fa-search top-3 pr-2 font-bold" />Nuevo Producto</button>
+                            className="fa-search top-3 pr-2 font-bold" />+Nuevo</button>
                 </div>
-
                 <div className="mb-2">
                     <div className="relative">
                         <div className=" inline-flex">
-                            <input type="text" placeholder="Buscar Proveedor" className="p-2 pl-10 border-blue-400 rounded" />
+                            <input type="text" 
+                            placeholder="Buscar Proveedor" 
+                            className="p-2 pl-10 border-blue-400 rounded-tl-lg rounded-bl-lg" />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
+                           
                             <button
-                                className="font-bold border p-2 bg-blue-500 px-4 py-2 rounded text-white hover:bg-blue-700 ">Buscar</button>
+                                className="text-white font-bold border hover:bg-blue-700 bg-blue-500 px-4 py-2 rounded-tr-lg rounded-br-lg ">Buscar</button>
                             <div className=" ml-2">
                                 <div className="flex items-center bg-gray-600 text-white rounded-md">
                                     <div className="px-3 py-2 border-r border-gray-500">1</div>
@@ -81,7 +83,7 @@ export const Products = () => {
                         <th className="border border-gray-300 p-2">Precio de Costo</th>
                         <th className="border border-gray-300 p-2">precio de venta</th>
                         <th className="border border-gray-300 p-2">Existencias</th>
-                        <th className="border border-gray-300 p-2">Opciones</th>
+                        <th className="border border-gray-300 p-2"></th>
                     </tr>
                 </thead >
                 <tbody>
@@ -96,7 +98,7 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">{product.salePrice}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <DetailButton url={`/products/${product.id}`} />
+                                <DetailButton url={`/products/${product.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2"  />
                                 <DeleteButton id={product.id} onDelete={handleDelete} />
                             </td>
                         </tr>
