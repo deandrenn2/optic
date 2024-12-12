@@ -67,6 +67,7 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new SupplierConfiguration());
         modelBuilder.ApplyConfiguration(new SettingConfiguration());
         modelBuilder.ApplyConfiguration(new SettingUserConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductConfiguration());
     }
 
 }

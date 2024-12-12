@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
@@ -25,6 +26,11 @@ public class CreateProduct : ICarterModule
              .Produces(StatusCodes.Status201Created);
     }
 
+    public record CategoryModel
+    {
+        public string Name { get; set; } = string.Empty;
+    }
+
     public record CreateProductCommand : IRequest<Result>
     {
         public string Name { get; init; } = string.Empty;
@@ -36,9 +42,11 @@ public class CreateProduct : ICarterModule
         public decimal SalePrice { get; init; }
         public int Stock { get; init; }
         public string? Image { get; init; }
+
+        public List<CategoryModel> Categories { get; init; } = new();
     }
 
-    public class CreateProductHandler(AppDbContext contex, IValidator<CreateProductCommand> validator) : IRequestHandler<CreateProductCommand, Result>
+    public class CreateProductHandler(AppDbContext context, IValidator<CreateProductCommand> validator) : IRequestHandler<CreateProductCommand, Result>
     {
         public async Task<Result> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
@@ -50,9 +58,29 @@ public class CreateProduct : ICarterModule
 
             var product = Product.Create(0, request.IdBrand, request.Name, request.CodeNumber, request.Quantity, request.UnitPrice, request.SalePrice, request.Stock);
 
-            contex.Add(product);
+            //Validación de la categoria
 
-            var resCount = await contex.SaveChangesAsync();
+            foreach (var category in request.Categories)
+            {
+                var categoryFind = await context.Categories.FirstOrDefaultAsync(x => x.Name.ToUpper() == category.Name.ToUpper());
+
+                if (categoryFind != null)
+                {
+                    product.AddCategory(categoryFind);
+                }
+                else
+                {
+                    var maxNumber = await context.Categories.MaxAsync(x => x.Number);
+
+                    var newCategory = new Category(0, maxNumber + 1, request.Name);
+
+                    product.AddCategory(newCategory);
+                }
+            }
+
+            context.Add(product);
+
+            var resCount = await context.SaveChangesAsync();
 
             if (resCount > 0)
             {
