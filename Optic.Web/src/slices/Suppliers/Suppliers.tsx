@@ -1,4 +1,4 @@
-import { faMagnifyingGlass, } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass, faPlus, } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { SuppliersForm } from "./SuppliersForm"
 import { MouseEvent, useState } from "react";
@@ -43,7 +43,8 @@ export const Suppliers = () => {
         <div className="w-full "> {/* <!-- TABLA DE PROVEEDORES --> */}
             <div className="flex space-x-4 mb-4">
                 <div className="mb-2">
-                    <button type='button' onClick={() => setVisible(true)} className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">+ Nuevo</button>
+                    <button type='button' onClick={() => setVisible(true)}  className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
+                     <FontAwesomeIcon icon={faPlus} className="fa-search top-3 pr-2 font-bold" />Nuevo</button>
                 </div>
                 <div className="mb-2">
                     <div className="relative">
