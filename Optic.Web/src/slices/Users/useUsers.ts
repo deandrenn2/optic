@@ -66,3 +66,4 @@ export const useUserAvatar = () => {
       setAvatar,
    };
 };
+export default useUsers;

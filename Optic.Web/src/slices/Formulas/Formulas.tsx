@@ -6,8 +6,8 @@ export const Formulas = () => {
         <div> <div className="w-full p-4">
             <div className="flex space-x-4 mb-2">
                 <div className="mb-2">
-                    <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
-                        onClick={() => setVisible(true)}>
+                    <button type='button' 
+                     className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
                         <FontAwesomeIcon
                             icon={faPlus}
                             className="fa-search top-3 pr-2 font-bold" />Nuevo</button>
@@ -88,6 +88,6 @@ export const Formulas = () => {
                 </nav>
             </div>
         </div>
-        </div>
+     </div>
     )
 }

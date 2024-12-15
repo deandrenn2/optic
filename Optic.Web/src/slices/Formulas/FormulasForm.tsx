@@ -24,7 +24,9 @@ export const FormulasForm = () => {
                 </select>
             </div>
             <div className="">
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Crear</button>
+                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-400">
+                    Guardar
+                </button>
             </div>
         </form>
     );

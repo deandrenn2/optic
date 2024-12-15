@@ -1,8 +1,11 @@
+
+import { CardClient,  } from "../Dashborad/ClientCard";
+
 export const Home = () => {
    return (
       <>
          {/* <!-- Cards Section --> */}
-         <div className="p-4 mb-1border border-grey-500 mb-4  ">
+         <div className="p-4 mb-1 border border-grey-500 mb-4  ">
             <div>
                <div className="container mx-auto p-4">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -178,47 +181,13 @@ export const Home = () => {
                      </div>
                   </div>
                   {/* <!-- Clientes Section --> */}
-                  <div className="bg-white rounded-lg shadow p-4 ">
-                     <div className="flex items-center mb-4">
-                        <div className="w-4 h-4 bg-gray-400 rounded-full mr-2"></div>
-                        <h2 className="text-gray-500 font-bold">Clientes</h2>
-                     </div>
-                     <div className="space-y-1">
-                        <div className="border rounded-lg p-4 flex justify-between items-center">
-                           <div>
-                              <p className="text-sm font-semibold text-gray-600">ARLEY TORDECILLA</p>
-                              <p className="text-sm text-gray-600">CC. 11111111110</p>
-                           </div>
-                           <i className="fas fa-mars text-gray-400"></i>
-                           <i className="fas fa-play text-gray-500"></i>
-                        </div>
-                        <div className="border rounded-lg p-4 flex justify-between items-center">
-                           <div>
-                              <p className="text-sm font-semibold text-gray-600">DEIMER ANDRÉS NÚÑEZ NOVOA</p>
-                              <p className="text-sm text-gray-600">CC. 1030904780</p>
-                           </div>
-                           <i className="fas fa-mars text-gray-400"></i>
-                           <i className="fas fa-play text-gray-500"></i>
-                        </div>
-                        <div className="border rounded-lg p-4 flex justify-between items-center">
-                           <div>
-                              <p className="text-sm font-semibold text-gray-600">MARIA VERTEL VERTEL</p>
-                              <p className="text-sm text-gray-600">T.I. 5687898985</p>
-                           </div>
-                           <i className="fas fa-venus text-gray-400"></i>
-                           <i className="fas fa-play text-gray-500"></i>
-                        </div>
-                     </div>
-                     <div className="flex justify-center mt-20">
-                        <div className="mt-20">
-                           <button className="px-2 py-1 border rounded">{'<<<'} </button>
-                           <button className="px-2 py-1 border rounded">1</button>
-                           <button className="px-2 py-1 border rounded">2</button>
-                           <button className="px-2 py-1 border rounded">3</button>
-                           <button className="px-2 py-1 border rounded"> {'>>>'} </button>
-                        </div>
-                     </div>
-                  </div>
+                  <CardClient/>
+
+
+
+
+                     
+                  
                   {/* <!-- Productos Section --> */}
                   <div className="bg-white rounded-lg shadow p-4 ">
                      <div className="flex items-center mb-4">
