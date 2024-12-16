@@ -1,16 +1,19 @@
 import { faCircleMinus, faFileInvoiceDollar, faMagnifyingGlass, faPlay, faPlus, faPrint } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useState } from "react";
+import { FormulasDetail } from "./FormulasDetail";
 
 export const Formulas = () => {
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <div> <div className="w-full p-4">
             <div className="flex space-x-4 mb-2">
                 <div className="mb-2">
-                    <button type='button' 
-                     className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
+                    <button type='button'
+                        className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
                         <FontAwesomeIcon
                             icon={faPlus}
-                            className="fa-search top-3 pr-2 font-bold" />Nuevo</button>
+                            className="fa-search top-3 pr-2 font-bold" onClick={() => setIsOpen(true)} />Nuevo</button>
                 </div>
                 <div className="mb-2">
                     <div className="relative">
@@ -21,12 +24,10 @@ export const Formulas = () => {
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
                             <button
                                 className="text-white font-bold border hover:bg-blue-700 bg-blue-500 px-4 py-2 rounded-tr-lg rounded-br-lg ">Buscar</button>
-
                         </div>
                     </div>
                 </div>
             </div>
-
             <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                     <tr>
@@ -88,6 +89,7 @@ export const Formulas = () => {
                 </nav>
             </div>
         </div>
-     </div>
+            {isOpen && <FormulasDetail onClose={() => setIsOpen(false)} />}
+        </div>
     )
 }

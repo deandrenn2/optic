@@ -1,5 +1,6 @@
 
-import { CardClient,  } from "../Dashborad/ClientCard";
+import ButtonNavigation from "../../shared/components/Buttons/ButtonNavigation";
+import { CardClient, } from "../Dashborad/ClientCard";
 
 export const Home = () => {
    return (
@@ -42,15 +43,10 @@ export const Home = () => {
                            </div>
                         </div>
                         <div className="flex justify-center mt-20">
-                           <div className="mt-20">
-                              <button className="px-2 py-1 border rounded">{'<<<'} </button>
-                              <button className="px-2 py-1 border rounded">1</button>
-                              <button className="px-2 py-1 border rounded">2</button>
-                              <button className="px-2 py-1 border rounded">3</button>
-                              <button className="px-2 py-1 border rounded"> {'>>>'} </button>
-                           </div>
+                        <ButtonNavigation />
                         </div>
                      </div>
+                     
                      {/* <!-- Cuentas Por Pagar --> */}
                      <div className="bg-white rounded-lg shadow p-4 ">
                         <div className="flex items-center mb-4">
@@ -82,13 +78,7 @@ export const Home = () => {
                            </div>
                         </div>
                         <div className="flex justify-center mt-20">
-                           <div className="mt-20">
-                              <button className="px-2 py-1 border rounded">{'<<<'} </button>
-                              <button className="px-2 py-1 border rounded">1</button>
-                              <button className="px-2 py-1 border rounded">2</button>
-                              <button className="px-2 py-1 border rounded">3</button>
-                              <button className="px-2 py-1 border rounded"> {'>>>'} </button>
-                           </div>
+                           <ButtonNavigation />
                         </div>
                      </div>
                      {/* <!-- Productos en Stock --> */}
@@ -123,18 +113,13 @@ export const Home = () => {
                            </div>
                         </div>
                         <div className="flex justify-center mt-20">
-                           <div className="mt-20">
-                              <button className="px-2 py-1 border rounded">{'<<<'} </button>
-                              <button className="px-2 py-1 border rounded">1</button>
-                              <button className="px-2 py-1 border rounded">2</button>
-                              <button className="px-2 py-1 border rounded">3</button>
-                              <button className="px-2 py-1 border rounded"> {'>>>'} </button>
-                           </div>
+                           <ButtonNavigation />
                         </div>
                      </div>
                   </div>
                </div>
             </div>
+
             {/* <!-- Formulas Section --> */}
             <div className="container mx-auto p-4">
                <h1 className="text-center text-2xl font-semibold text-gray-600">Acceso rápido</h1>
@@ -169,25 +154,13 @@ export const Home = () => {
                            <p className=" text-gray-500">Fecha:24/03/2024</p>
                         </div>
                      </div>
-
                      <div className="flex justify-center mt-20">
-                        <div className="mt-20">
-                           <button className="px-2 py-1 border rounded">{'<<<'} </button>
-                           <button className="px-2 py-1 border rounded">1</button>
-                           <button className="px-2 py-1 border rounded">2</button>
-                           <button className="px-2 py-1 border rounded">3</button>
-                           <button className="px-2 py-1 border rounded"> {'>>>'} </button>
-                        </div>
+                        <ButtonNavigation />
                      </div>
+
                   </div>
-                  {/* <!-- Clientes Section --> */}
-                  <CardClient/>
+                  <CardClient />
 
-
-
-
-                     
-                  
                   {/* <!-- Productos Section --> */}
                   <div className="bg-white rounded-lg shadow p-4 ">
                      <div className="flex items-center mb-4">
@@ -222,17 +195,8 @@ export const Home = () => {
                            <p className=" text-gray-500">Fecha:24/03/2024</p>
                         </div>
                      </div>
-
                      <div className="flex justify-center mt-20">
-                        <div className="mt-20">
-                           <button className="px-2 py-1 border rounded" />
-                           <button className="px-2 py-1 border rounded">
-                              {'<<<'}
-                           </button>
-                           <button className="px-2 py-1 border rounded">2</button>
-                           <button className="px-2 py-1 border rounded">3</button>
-                           <button className="px-2 py-1 border rounded"> {'>>>'} </button>
-                        </div>
+                        <ButtonNavigation />
                      </div>
                   </div>
                </div>

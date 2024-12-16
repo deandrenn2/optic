@@ -1,4 +1,5 @@
-export const FormulasDetail = () => {
+export const FormulasDetail = ({ onClose }: { onClose: () => void }) => {
+
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
             <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow">
@@ -74,6 +75,12 @@ export const FormulasDetail = () => {
                     <p className="font-bold">Total: $555.000</p>
                 </div>
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Confirma Fomula</button>
+                <button
+                    type="button"
+                    onClick={onClose}
+                    className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-gray-400">
+                    Cancelar
+                </button>
             </div>
         </div>
     );
