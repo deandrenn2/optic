@@ -5,15 +5,16 @@ import { MouseEvent } from "react";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { ProductForm } from "./ProductsForm";
 import { Direction } from "../../shared/components/OffCanvas/Models";
-import useProducts from "./useProducts";
+import { useProducts } from "./useProducts";
 import Swal from "sweetalert2";
 import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 import { Bar } from "../../shared/components/Progress/Bar";
+import { useListSettings } from "../../shared/components/List/useListSettings";
 
 export const Products = () => {
     const [visible, setVisible] = useState(false);
-
+    const { settings } = useListSettings();
     const { products, queryProducts, deleteProduct } = useProducts();
 
     function handleClose(): void {
@@ -52,11 +53,11 @@ export const Products = () => {
                 <div className="mb-2">
                     <div className="relative">
                         <div className=" inline-flex">
-                            <input type="text" 
-                            placeholder="Buscar Proveedor" 
-                            className="p-2 pl-10 border-blue-400 rounded-tl-lg rounded-bl-lg" />
+                            <input type="text"
+                                placeholder="Buscar Proveedor"
+                                className="p-2 pl-10 border-blue-400 rounded-tl-lg rounded-bl-lg" />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
-                           
+
                             <button
                                 className="text-white font-bold border hover:bg-blue-700 bg-blue-500 px-4 py-2 rounded-tr-lg rounded-br-lg ">Buscar</button>
                             <div className=" ml-2">
@@ -76,7 +77,7 @@ export const Products = () => {
                 <thead>
                     <tr>
                         <th className="border border-gray-300 p-2">N° Producto</th>
-                        <th className="border border-gray-300 p-2">Código de barra</th>
+                        {settings?.isEnabledBarcode && <th className="border border-gray-300 p-2">Código de barra</th>}
                         <th className="border border-gray-300 p-2">Nombre</th>
                         <th className="border border-gray-300 p-2">Marca / Modelo</th>
                         <th className="border border-gray-300 p-2">Cantidad</th>
@@ -90,7 +91,7 @@ export const Products = () => {
                     {products?.map((product) => (
                         <tr key={product.id}>
                             <td className="border border-gray-300 p-2 text-center">{product.codeNumber}</td>
-                            <td className="border border-gray-300 p-2 text-center">{product.barCode}</td>
+                            {settings?.isEnabledBarcode && <td className="border border-gray-300 p-2 text-center">{product.barCode}</td>}
                             <td className="border border-gray-300 p-2 text-center">{product.name}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.idBrand}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.quantity}</td>
@@ -98,7 +99,7 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">{product.salePrice}</td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <DetailButton url={`/products/${product.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2"  />
+                                <DetailButton url={`/products/${product.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />
                                 <DeleteButton id={product.id} onDelete={handleDelete} />
                             </td>
                         </tr>
