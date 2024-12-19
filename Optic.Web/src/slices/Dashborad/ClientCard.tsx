@@ -4,6 +4,7 @@ import useClient from '../Clients/useClient';
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
 import ButtonNavigation from '../../shared/components/Buttons/ButtonNavigation';
 import { useListSettings } from '../../shared/components/List/useListSettings';
+import DetailButton from '../../shared/components/Buttons/ButtonDetail';
 export const CardClient = () => {
     const { clients } = useClient();
     const { identificationTypes } = useListSettings();
@@ -15,7 +16,7 @@ export const CardClient = () => {
             </div>
             {clients?.map((client) => (
                 <div className="space-y-1">
-                    <div className="  flex justify-betweenp-4 items-center mr-2 " >
+                    <div className="  flex justify-betweenp-4 items-center mr-2">
                         <div className='w-full rounded-lg border border-gray-400 p-4 mb-2'>
                             <p>
                                 {' '}
@@ -29,8 +30,7 @@ export const CardClient = () => {
                             <span title={identificationTypes?.find(x => x.id === client.identificationTypeId)?.name} className='text-blue-700 font-bold'>{identificationTypes?.find(x => x.id === client.identificationTypeId)?.abbreviation}</span> -
                            {client.identificationNumber}
                         </div>
-                        <i className="fas fa-mars text-gray-400"></i>
-                        <i className="fas fa-play text-gray-500"></i>
+                        <DetailButton url={`/Clientes/${client.id}`} className='text-blue-500 text-2xl hover:text-blue-700 mr-2' />
                     </div>
 
                 </div>

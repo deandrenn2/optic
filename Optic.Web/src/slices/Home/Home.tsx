@@ -1,14 +1,22 @@
 
+import { useState } from "react";
 import ButtonNavigation from "../../shared/components/Buttons/ButtonNavigation";
 import { CardClient, } from "../Dashborad/ClientCard";
+import { FormulasDetail } from "../Formulas/FormulasNueva";
 
 export const Home = () => {
+   const [isOpen, setIsOpen] = useState(false);
    return (
       <>
          {/* <!-- Cards Section --> */}
          <div className="p-4 mb-1 border border-grey-500 mb-4  ">
             <div>
                <div className="container mx-auto p-4">
+                  <div className="m-2">
+                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setIsOpen(true)}>
+                        Nueva Formula
+                     </button>
+                  </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                      {/* <!-- Formulas Section --> */}
                      <div className="bg-white rounded-lg shadow p-4 ">
@@ -43,10 +51,10 @@ export const Home = () => {
                            </div>
                         </div>
                         <div className="flex justify-center mt-20">
-                        <ButtonNavigation />
+                           <ButtonNavigation />
                         </div>
                      </div>
-                     
+
                      {/* <!-- Cuentas Por Pagar --> */}
                      <div className="bg-white rounded-lg shadow p-4 ">
                         <div className="flex items-center mb-4">
@@ -201,6 +209,7 @@ export const Home = () => {
                   </div>
                </div>
             </div>
+            {isOpen && <FormulasDetail onClose={() => setIsOpen(false)} />}
          </div>
       </>
    );
