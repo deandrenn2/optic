@@ -10,10 +10,17 @@ export interface SettingModel {
    value: string;
 }
 
+export interface BrandModel {
+   id: number;
+   name: string;
+}
+
 export interface SettingsSystemModel {
    theme?: string;
+   isEnabledBarcode: boolean;
    settings: SettingModel[];
    sex: SexModel[];
+   brands: BrandModel[];
 }
 
 export interface IdentificationTypeModel {

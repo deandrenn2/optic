@@ -8,17 +8,18 @@ using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
-class GetCategories : ICarterModule
+namespace Optic.Application.Features.Categories;
+
+public class GetCategories : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/categories", async (HttpRequest req, IMediator mediator, GetCategoriesQuery query) =>
+        app.MapGet("api/categories", async (IMediator mediator) =>
         {
-            return await mediator.Send(query);
+            return await mediator.Send(new GetCategoriesQuery());
         })
              .WithName(nameof(GetCategories))
              .WithTags(nameof(Category))
-             .ProducesValidationProblem()
              .Produces(StatusCodes.Status201Created);
     }
 

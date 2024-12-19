@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using Carter;
 using Carter.ModelBinding;
 using FluentValidation;
@@ -11,6 +10,7 @@ using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
+namespace Optic.Application.Features.Categories;
 public class CreateCategory : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)

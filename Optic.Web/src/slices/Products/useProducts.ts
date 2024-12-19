@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createProductService, deleteProductService, getProducts, updateProductService } from './ProductsServices';
+import { createProductService, deleteProductService, getCategories, getProducts, updateProductService } from './ProductsServices';
 import { toast } from 'react-toastify';
 
 const KEY = 'Products';
@@ -60,4 +60,15 @@ export const useProducts = () => {
       updateProduct,
    };
 };
-export default useProducts;
+
+export const useCategories = () => {
+   const queryCategories = useQuery({
+      queryKey: [`CATEGORIES`],
+      queryFn: getCategories,
+   });
+
+   return {
+      queryCategories,
+      categories: queryCategories?.data?.data,
+   };
+};

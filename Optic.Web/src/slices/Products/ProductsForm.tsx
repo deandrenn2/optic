@@ -1,9 +1,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ProductModel, ProductsResponseModel } from "./ProductModel";
-import useProducts from "./useProducts";
+import { useProducts } from "./useProducts";
 import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
+import { useListSettings } from "../../shared/components/List/useListSettings";
+import { SupplierSelect } from "../Suppliers/SupplierSelect";
+import { ComponentBrands } from "../../shared/components/List/ComponentBrands";
+import { CategoriesSelect } from "./CategoriesSelect";
+import { ActionMeta, SingleValue } from "react-select";
 export const ProductForm = ({ id }: { id?: number }) => {
+   const { settings } = useListSettings();
 
    const [form, setForm] = useState<ProductModel | ProductsResponseModel>({
       id: id,
@@ -15,6 +21,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
       unitPrice: 0,
       salePrice: 0,
       stock: 0,
+      idSupplier: 0,
       image: "",
    });
    const { createProduct, updateProduct, products } = useProducts();
@@ -38,6 +45,15 @@ export const ProductForm = ({ id }: { id?: number }) => {
          [name]: value
       });
    };
+
+   const handleChangeCategories = (newValue: SingleValue<string>, actionMeta: ActionMeta<string>) => {
+      console.log(actionMeta, newValue);
+      // setForm({
+      //    ...form,
+      //    [name]: newValue
+      // });
+   };
+
    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       if (id) {
@@ -54,6 +70,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
                unitPrice: 0,
                salePrice: 0,
                stock: 0,
+               idSupplier: 0,
                image: "",
             });
             formRef.current?.reset();
@@ -76,17 +93,18 @@ export const ProductForm = ({ id }: { id?: number }) => {
             />
          </div>
 
-         <div className="mb-2">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-               Código de Barras
-            </label>
-            <input
-               name="barCode"
-               value={form?.barCode}
-               onChange={(e) => handleChange(e)}
-               placeholder="Código de Barras"
-               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
-         </div>
+         {settings?.isEnabledBarcode &&
+            <div className="mb-2">
+               <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Código de Barras
+               </label>
+               <input
+                  name="barCode"
+                  value={form?.barCode}
+                  onChange={(e) => handleChange(e)}
+                  placeholder="Código de Barras"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>}
          <div className="mb-2">
             <label className="block text-gray-700 text-sm font-bold mb-2">
                Nombre
@@ -99,20 +117,30 @@ export const ProductForm = ({ id }: { id?: number }) => {
                placeholder="Nombre del producto"
                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
          </div>
+         <div className="mb-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Proveedor
+            </label>
+            <SupplierSelect
+               selectedValue={form?.idSupplier?.toString()}
+               xChange={(e) => handleChange(e)}
+               required
+               name="idSupplier"
+               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
+         </div>
 
          <div className="mb-2">
             <label className="block text-gray-700 text-sm font-bold mb-2">
                Marca/Modelo
             </label>
-            <select
-               name="idBrand"
-               value={form?.idBrand}
-               onChange={(e) => handleChange(e)}
-               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
-               <option value="">Seleccione</option>
-               <option value="1">Crizal</option>
-               <option value="2">Ovation</option>
-            </select>
+            <ComponentBrands selectedValue={form?.idBrand?.toString()} xChange={(e) => handleChange(e)} />
+         </div>
+
+         <div className="mb-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+               Categoría
+            </label>
+            <CategoriesSelect xChange={handleChangeCategories} />
          </div>
 
          <div className="mb-2">

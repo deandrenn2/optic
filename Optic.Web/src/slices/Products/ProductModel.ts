@@ -7,6 +7,7 @@ export interface ProductModel {
    unitPrice: number;
    salePrice: number;
    stock: number;
+   idSupplier: number;
    image: string;
 }
 export interface ProductsResponseModel {
@@ -18,6 +19,12 @@ export interface ProductsResponseModel {
    quantity: number;
    unitPrice: number;
    salePrice: number;
+   idSupplier: number;
    stock: number;
    image: string;
+}
+
+export interface CategoriesResponseModel {
+   id: number;
+   name: string;
 }
