@@ -25,7 +25,15 @@ public class AppDbContext : DbContext
     public DbSet<SettingUser> SettingUsers => Set<SettingUser>();
     public DbSet<Invoice> Invoices => Set<Invoice>();
     public DbSet<Formula> Formulas => Set<Formula>();
-    public DbSet<FormulaDiagnostico> FormulaDiagnosticos => Set<FormulaDiagnostico>();
+    public DbSet<FormulaDiagnosis> FormulaDiagnosis => Set<FormulaDiagnosis>();
+    public DbSet<InvoiceDetail> InvoiceDetails => Set<InvoiceDetail>();
+    public DbSet<InvoicePayments> InvoicePayments => Set<InvoicePayments>();
+    public DbSet<InvoiceServices> InvoiceServices => Set<InvoiceServices>();
+    public DbSet<Diagnosis> Diagnosis => Set<Diagnosis>();
+    public DbSet<Tags> Tags => Set<Tags>();
+
+
+
 
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

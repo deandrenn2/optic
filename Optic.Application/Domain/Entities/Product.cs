@@ -34,7 +34,7 @@ public class Product : AggregateRoot
     public decimal UnitPrice { get; private set; }
     public decimal SalePrice { get; private set; }
     public int Stock { get; private set; }
-    public int IdSupplier { get; private set; }
+    public int? IdSupplier { get; private set; }
     public Supplier Supplier { get; private set; }
     public string? Image { get; private set; }
     public List<Category> Categories { get; private set; } = new();
@@ -49,7 +49,22 @@ public class Product : AggregateRoot
         Categories.Add(category);
     }
 
-    public void Update(int idBrand, string name, string codeNumber, int quantity, decimal unitPrice, decimal salePrice, int stock, string? barCode, string? image)
+    public void UpdateImage(string image)
+    {
+        Image = image;
+    }
+
+    public void AddSupplier(Supplier supplier)
+    {
+        Supplier = supplier;
+    }
+
+    public void AddSupplier(int idSupplier)
+    {
+        IdSupplier = idSupplier;
+    }
+
+    public void Update(int idBrand, string name, string codeNumber, int quantity, decimal unitPrice, decimal salePrice, int stock, string? barCode)
     {
         IdBrand = idBrand;
         Name = name;
@@ -59,7 +74,6 @@ public class Product : AggregateRoot
         SalePrice = salePrice;
         Stock = stock;
         BarCode = barCode;
-        Image = image;
     }
 }
 

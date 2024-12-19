@@ -1,12 +1,12 @@
 using Optic.Application.Domain.Primitives;
 
-public class FormulaDiagnostico : AggregateRoot
+public class FormulaDiagnosis : AggregateRoot
 {
-    public FormulaDiagnostico(int id) : base(id)
+    public FormulaDiagnosis(int id) : base(id)
     {
 
     }
-    public FormulaDiagnostico(int id, string value) : base(id)
+    public FormulaDiagnosis(int id, string value) : base(id)
     {
         Value = value;
     }

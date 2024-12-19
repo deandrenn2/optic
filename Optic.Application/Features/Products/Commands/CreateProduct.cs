@@ -41,6 +41,8 @@ public class CreateProduct : ICarterModule
         public decimal UnitPrice { get; init; }
         public decimal SalePrice { get; init; }
         public int Stock { get; init; }
+
+        public int IdSupplier { get; init; }
         public string? Image { get; init; }
 
         public List<CategoryModel> Categories { get; init; } = new();
@@ -57,6 +59,7 @@ public class CreateProduct : ICarterModule
             }
 
             var product = Product.Create(0, request.IdBrand, request.Name, request.CodeNumber, request.Quantity, request.UnitPrice, request.SalePrice, request.Stock);
+            product.AddSupplier(request.IdSupplier);
 
             //Validación de la categoria
 

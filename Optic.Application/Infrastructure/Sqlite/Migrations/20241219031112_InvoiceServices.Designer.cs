@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Optic.Application.Infrastructure.Sqlite;
 
@@ -10,9 +11,11 @@ using Optic.Application.Infrastructure.Sqlite;
 namespace Optic.Application.Infrastructure.Sqlite.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241219031112_InvoiceServices")]
+    partial class InvoiceServices
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -31,7 +34,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.ToTable("Diagnosis", (string)null);
                 });
 
-            modelBuilder.Entity("FormulasDiagnosis", b =>
+            modelBuilder.Entity("FormulasDiagnosticos", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,7 +62,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
 
                     b.HasIndex("FormulasId");
 
-                    b.ToTable("FormulasDiagnosis");
+                    b.ToTable("FormulasDiagnosticos");
                 });
 
             modelBuilder.Entity("FormulasTags", b =>
@@ -149,7 +152,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("InvoiceDetails");
+                    b.ToTable("InvoiceDetail");
                 });
 
             modelBuilder.Entity("InvoicePayments", b =>
@@ -446,7 +449,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.Property<int>("IdBrand")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("IdSupplier")
+                    b.Property<int>("IdSupplier")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Image")
@@ -665,7 +668,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.ToTable("PoductCategories");
                 });
 
-            modelBuilder.Entity("FormulasDiagnosis", b =>
+            modelBuilder.Entity("FormulasDiagnosticos", b =>
                 {
                     b.HasOne("Diagnosis", null)
                         .WithMany()
@@ -795,7 +798,8 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.HasOne("Optic.Application.Domain.Entities.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("IdSupplier")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Supplier");
                 });

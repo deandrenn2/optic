@@ -24,6 +24,10 @@ public class Invoice : AggregateRoot
     public Business Business { get; set; }
     public Formula Formula { get; set; }
 
+    public List<InvoiceDetail> InvoiceDetails { get; set; } = new();
+    public List<InvoicePayments> InvoicePayments { get; set; } = new();
+    public List<InvoiceServices> InvoiceServices { get; set; } = new();
+
     public static Invoice Create(int id, string number, DateTime date, decimal total, string state, int? clientId, int businessId)
     {
         return new Invoice(id, number, date, total, state, clientId, businessId);
