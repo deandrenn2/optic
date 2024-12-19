@@ -1,12 +1,10 @@
 import { faCircleMinus, faFileInvoiceDollar, faMagnifyingGlass, faPlay, faPlus, faPrint } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react";
-import OffCanvas from "../../shared/components/OffCanvas/Index";
-import { Direction } from "../../shared/components/OffCanvas/Models";
+import { FormulasDetail } from "./FormulasDetail";
 
 export const Formulas = () => {
-    const { visible, setVisible } = useState(false);
-
+   const  [isOpen, setIsOpen] = useState(false);
     return (
         <div> <div className="w-full p-4">
             <div className="flex space-x-4 mb-2">
@@ -15,7 +13,9 @@ export const Formulas = () => {
                         className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
                         <FontAwesomeIcon
                             icon={faPlus}
-                            className="fa-search top-3 pr-2 font-bold" onClick={() => setVisible(true)} />Nuevo</button>
+                            className="fa-search top-3 pr-2 font-bold" onClick={() => setIsOpen(true)}/>
+                            Nuevo
+                    </button>
                 </div>
                 <div className="mb-2">
                     <div className="relative">
@@ -90,10 +90,9 @@ export const Formulas = () => {
                     <a href="#" className="px-4 py-2 bg-white hover:bg-blue-500 border border-gray-300">3</a>
                 </nav>
             </div>
+
         </div>
-            <OffCanvas titlePrincipal='Registro de Formula' visible={visible} xClose={handleClose} position={Direction.Right} >
-                <FormulaForm />
-            </OffCanvas>
-        </div>
+        {isOpen && <FormulasDetail onClose={() => setIsOpen(false)} />}
+    </div>
     )
 }
