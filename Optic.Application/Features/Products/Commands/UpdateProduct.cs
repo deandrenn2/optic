@@ -12,7 +12,7 @@ using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
 namespace Optic.Application.Features.Products.Command;
-public class UpdateProduct: ICarterModule
+public class UpdateProduct : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -37,6 +37,7 @@ public class UpdateProduct: ICarterModule
         public decimal UnitPrice { get; init; }
         public decimal SalePrice { get; init; }
         public int Stock { get; init; }
+        public int IdSupplier { get; init; }
         public string? Image { get; init; }
     }
 
@@ -50,14 +51,14 @@ public class UpdateProduct: ICarterModule
                 return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Product.ErrorValidation", "Se presentaron errores de validación"));
             }
 
-           var updateProduct = await context.Products.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var updateProduct = await context.Products.FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if (updateProduct == null)
             {
                 return Result.Failure(new Error("Product.ErrorProductNoFound", "El producto que intenta actualizar no existe"));
             }
 
-            updateProduct.Update(request.IdBrand, request.Name, request.CodeNumber, request.Quantity, request.UnitPrice, request.SalePrice, request.Stock, request.BarCode, request.Image);
+            updateProduct.Update(request.IdBrand, request.Name, request.CodeNumber, request.Quantity, request.UnitPrice, request.SalePrice, request.Stock, request.BarCode);
 
             var resCount = await context.SaveChangesAsync();
 

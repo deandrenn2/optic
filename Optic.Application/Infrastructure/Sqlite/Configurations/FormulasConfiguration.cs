@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Optic.Application.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Optic.Application.Infrastructure.Sqlite.Configurations
 {
@@ -37,7 +32,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Configurations
             //Diagnosis
             builder.HasMany(x => x.Diagnosis)
                 .WithMany(x => x.Formulas)
-                .UsingEntity<FormulaDiagnostico>("FormulasDiagnosticos");
+                .UsingEntity<FormulaDiagnosis>("FormulasDiagnosis");
         }
     }
 }
