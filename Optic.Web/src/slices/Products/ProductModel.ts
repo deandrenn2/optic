@@ -24,7 +24,7 @@ export interface ProductsResponseModel {
    image: string;
 }
 
-export interface CategoriesResponseModel {
-   id: number;
+export interface CategoriesModel {
+   id?: number;
    name: string;
 }
