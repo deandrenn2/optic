@@ -1,7 +1,7 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
 import { CreateClientModel } from '../Clients/ClientModel';
-import { CategoriesResponseModel, ProductModel, ProductsResponseModel } from './ProductModel';
+import { CategoriesModel, ProductModel, ProductsResponseModel } from './ProductModel';
 
 export const createProductService = async (model: ProductModel): Promise<MsgResponse<ProductModel>> => {
    const url = 'api/Products';
@@ -79,14 +79,33 @@ export const getProducts = async (): Promise<MsgResponse<ProductsResponseModel[]
    return response.data;
 };
 
-export const getCategories = async (): Promise<MsgResponse<CategoriesResponseModel[]>> => {
+export const getCategories = async (): Promise<MsgResponse<CategoriesModel[]>> => {
    const url = 'api/categories';
-   const response = await ApiClient.get<MsgResponse<CategoriesResponseModel[]>>(url);
+   const response = await ApiClient.get<MsgResponse<CategoriesModel[]>>(url);
 
    if (response.status !== 200 && response.status !== 201) {
       return {
          isSuccess: false,
          message: 'Error al obtener categorias',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};
+
+export const createCategoryService = async (model: string): Promise<MsgResponse<CategoriesModel>> => {
+   const url = 'api/Categories';
+   const response = await ApiClient.post<MsgResponse<CategoriesModel>>(url, model);
+
+   if (response.status !== 201 && response.status !== 200) {
+      return {
+         isSuccess: false,
+         message: 'Error al crear categoria',
          isFailure: true,
          error: {
             code: response.status.toString(),

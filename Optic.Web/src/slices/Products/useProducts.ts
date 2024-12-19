@@ -1,5 +1,12 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createProductService, deleteProductService, getCategories, getProducts, updateProductService } from './ProductsServices';
+import {
+   createCategoryService,
+   createProductService,
+   deleteProductService,
+   getCategories,
+   getProducts,
+   updateProductService,
+} from './ProductsServices';
 import { toast } from 'react-toastify';
 
 const KEY = 'Products';
@@ -67,8 +74,23 @@ export const useCategories = () => {
       queryFn: getCategories,
    });
 
+   const createCategory = useMutation({
+      mutationFn: createCategoryService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               queryCategories.refetch();
+            }
+         }
+      },
+   });
+
    return {
       queryCategories,
       categories: queryCategories?.data?.data,
+      createCategory,
    };
 };

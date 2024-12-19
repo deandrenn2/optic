@@ -11,9 +11,11 @@ import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 import { Bar } from "../../shared/components/Progress/Bar";
 import { useListSettings } from "../../shared/components/List/useListSettings";
+import { CategoriesForm } from "./CategoriesForm";
 
 export const Products = () => {
     const [visible, setVisible] = useState(false);
+    const [visibleCategories, setVisibleCategories] = useState(false);
     const { settings } = useListSettings();
     const { products, queryProducts, deleteProduct } = useProducts();
 
@@ -37,6 +39,10 @@ export const Products = () => {
         })
     }
 
+    const handleCloseCategories = (): void => {
+        setVisibleCategories(false);
+    }
+
     if (queryProducts.isLoading)
         return <Bar Title="Cargando..." />;
 
@@ -50,6 +56,15 @@ export const Products = () => {
                             icon={faPlus}
                             className="fa-search top-3 pr-2 font-bold" />Nuevo</button>
                 </div>
+
+                <div className="mb-2">
+                    <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
+                        onClick={() => setVisibleCategories(true)}>
+                        <FontAwesomeIcon
+                            icon={faPlus}
+                            className="fa-search top-3 pr-2 font-bold" />Categorias</button>
+                </div>
+
                 <div className="mb-2">
                     <div className="relative">
                         <div className=" inline-flex">
@@ -70,6 +85,7 @@ export const Products = () => {
                         </div>
                     </div>
                 </div>
+
             </div>
 
             {/* <!-- TABLA DE PRODUCTOS --> */}
@@ -118,6 +134,9 @@ export const Products = () => {
             </div>
             <OffCanvas titlePrincipal='Registro de Producto' visible={visible} xClose={handleClose} position={Direction.Right} >
                 <ProductForm />
+            </OffCanvas>
+            <OffCanvas titlePrincipal='Registro de Categoria' visible={visibleCategories} xClose={handleCloseCategories} position={Direction.Right} >
+                <CategoriesForm />
             </OffCanvas>
         </div>
     )
