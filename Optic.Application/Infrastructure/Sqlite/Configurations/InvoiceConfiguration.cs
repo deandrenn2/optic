@@ -17,14 +17,35 @@ public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
             .HasForeignKey<Formula>(x => x.IdInvoice)
             .OnDelete(DeleteBehavior.Cascade);
 
+        //Client
         builder.HasOne(x => x.Client)
             .WithMany(x => x.Invoices)
             .HasForeignKey(x => x.ClientId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        //Business
         builder.HasOne(x => x.Business)
             .WithMany(x => x.Invoices)
             .HasForeignKey(x => x.BusinessId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        //InvoiceDetails
+        builder.HasMany(x => x.InvoiceDetails)
+            .WithOne(x => x.Invoice)
+            .HasForeignKey(x => x.IdInvoice)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        //InvoicePayments
+        builder.HasMany(x => x.InvoicePayments)
+            .WithOne(x => x.Invoice)
+            .HasForeignKey(x => x.IdInvoice)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        //InvoiceServices
+        builder.HasMany(x => x.InvoiceServices)
+            .WithOne(x => x.Invoice)
+            .HasForeignKey(x => x.IdInvoice)
+            .OnDelete(DeleteBehavior.Cascade);
+
     }
 }
