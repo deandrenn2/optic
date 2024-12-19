@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useClient from '../Clients/useClient';
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
 import ButtonNavigation from '../../shared/components/Buttons/ButtonNavigation';
+import { useListSettings } from '../../shared/components/List/useListSettings';
 export const CardClient = () => {
     const { clients } = useClient();
+    const { identificationTypes } = useListSettings();
     return (
         <div className="bg-white rounded-lg shadow p-4 ">
             <div className="flex items-center mb-4">
@@ -22,7 +24,10 @@ export const CardClient = () => {
                                     className={client.sex === 1 ? "text-blue-600 fas fa-mars text-lg mr-2" : "text-pink-600 fas fa-mars text-lg mr-2"}
                                 />
                                 {client.firstName + client.lastName}
+                               
                             </p>
+                            <span title={identificationTypes?.find(x => x.id === client.identificationTypeId)?.name} className='text-blue-700 font-bold'>{identificationTypes?.find(x => x.id === client.identificationTypeId)?.abbreviation}</span> -
+                           {client.identificationNumber}
                         </div>
                         <i className="fas fa-mars text-gray-400"></i>
                         <i className="fas fa-play text-gray-500"></i>
