@@ -49,10 +49,7 @@ export const Clients = () => {
          <div className="flex space-x-4 mb-4">
             <div className="mb-2">
                <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
-                  onClick={handleClick}>
-                  <FontAwesomeIcon
-                     icon={faPlus}
-                     className="fa-search top-3 pr-2 font-bold"
+                  onClick={handleClick}> <FontAwesomeIcon icon={faPlus} className="fa-search top-3 pr-2 font-bold"
                   />Nuevo</button>
             </div>
 

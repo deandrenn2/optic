@@ -16,7 +16,7 @@ import { ClientDetail } from './slices/Clients/ClientDetail.tsx';
 import { Products } from './slices/Products/Products.tsx';
 import { Suppliers } from './slices/Suppliers/Suppliers.tsx';
 import { Formulas } from './slices/Formulas/Formulas.tsx';
-import { Facturación } from './slices/Facturación/Facturación.tsx';
+import { Facturación } from './slices/billing/billing.tsx';
 import { Users } from './slices/Users/Users.tsx';
 import { SettingsDetail } from './slices/Users/UsersDetail.tsx';
 import { SupplierDetail } from './slices/Suppliers/SupplierDetail.tsx';
