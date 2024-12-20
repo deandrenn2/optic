@@ -30,9 +30,7 @@ export const CardClient = () => {
                             <span title={identificationTypes?.find(x => x.id === client.identificationTypeId)?.name} className='text-blue-700 font-bold'>{identificationTypes?.find(x => x.id === client.identificationTypeId)?.abbreviation}</span> -
                            {client.identificationNumber}
                         </div>
-                        <DetailButton url={`/Clientes/${client.id}`} className='text-blue-500 text-2xl hover:text-blue-700 mr-2' />
                     </div>
-
                 </div>
             ))}
             <div className="flex justify-center mt-20">
