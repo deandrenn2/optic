@@ -47,10 +47,8 @@ public class CreateCategory : ICarterModule
             {
                 return Result.Failure(new Error("Category.AlreadyExists", "La categoria ya existe"));
             }
-
-            var maxNumber = await context.Categories.MaxAsync(x => x.Number);
-
-            var category = new Category(0, maxNumber + 1, request.Name);
+            var category = Category.Create(request.Name);
+            context.Add(category);
 
             var resCount = await context.SaveChangesAsync();
 

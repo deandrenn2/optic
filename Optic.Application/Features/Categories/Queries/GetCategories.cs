@@ -29,10 +29,8 @@ public class GetCategories : ICarterModule
         public string Name { get; set; } = string.Empty;
     }
 
-    public record GetCategoriesQuery : IRequest<Result<List<GetCategoriesResponse>>>
-    {
+    public record GetCategoriesQuery() : IRequest<Result>;
 
-    }
 
     public class GetCategoriesHandler(AppDbContext context) : IRequestHandler<GetCategoriesQuery, Result>
     {

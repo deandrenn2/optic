@@ -75,13 +75,6 @@ export const Products = () => {
 
                             <button
                                 className="text-white font-bold border hover:bg-blue-700 bg-blue-500 px-4 py-2 rounded-tr-lg rounded-br-lg ">Buscar</button>
-                            <div className=" ml-2">
-                                <div className="flex items-center bg-gray-600 text-white rounded-md">
-                                    <div className="px-3 py-2 border-r border-gray-500">1</div>
-                                    <div className="px-3 py-2 flex items-center"> Filtrar <i className="fas fa-caret-down ml-2"></i>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -122,16 +115,7 @@ export const Products = () => {
                     ))}
                 </tbody>
             </table>
-            <div className="flex justify-center mt-4">
-                <nav className="inline-flex">
-                    <a href="#"
-                        className="hover:bg-blue-500 px-3 py-1 border border-gray-300 bg-white text-gray-700">1</a>
-                    <a href="#"
-                        className="hover:bg-blue-500 px-3 py-1 border border-gray-300 bg-white text-gray-700">2</a>
-                    <a href="#"
-                        className="hover:bg-blue-500 px-3 py-1 border border-gray-300 bg-white text-gray-700">3</a>
-                </nav>
-            </div>
+
             <OffCanvas titlePrincipal='Registro de Producto' visible={visible} xClose={handleClose} position={Direction.Right} >
                 <ProductForm />
             </OffCanvas>

@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
-using static Optic.Application.Features.Products.Commands.CreateProduct;
 
 public class AddCategories : ICarterModule
 {
@@ -23,6 +22,11 @@ public class AddCategories : ICarterModule
              .WithTags(nameof(Product))
              .ProducesValidationProblem()
              .Produces(StatusCodes.Status201Created);
+    }
+
+    public record CategoryModel
+    {
+        public string Name { get; set; } = string.Empty;
     }
 
     public record AddCategoriesCommand : IRequest<Result>
@@ -58,9 +62,8 @@ public class AddCategories : ICarterModule
                 }
                 else
                 {
-                    var maxNumber = await context.Categories.MaxAsync(x => x.Number);
 
-                    var newCategory = new Category(0, maxNumber + 1, category.Name);
+                    var newCategory = Category.Create(category.Name);
 
                     product.AddCategory(newCategory);
                 }

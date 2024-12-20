@@ -72,6 +72,7 @@ export const useCategories = () => {
    const queryCategories = useQuery({
       queryKey: [`CATEGORIES`],
       queryFn: getCategories,
+      refetchOnWindowFocus: false,
    });
 
    const createCategory = useMutation({

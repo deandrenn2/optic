@@ -36,6 +36,7 @@ public class GetProducts : ICarterModule
         public decimal SalePrice { get; set; }
         public int Stock { get; set; }
         public string? Image { get; set; }
+        public List<string> Categories { get; set; } = new();
     }
 
     public record GetProductsQuery() : IRequest<Result>;
@@ -44,7 +45,7 @@ public class GetProducts : ICarterModule
     {
         public async Task<Result> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            var products = await contex.Products.ToListAsync();
+            var products = await contex.Products.Include(x => x.Categories).ToListAsync();
 
             var productsList = products.Select(x => new GetProductsResponse
             {
@@ -57,14 +58,15 @@ public class GetProducts : ICarterModule
                 UnitPrice = x.UnitPrice,
                 SalePrice = x.SalePrice,
                 Stock = x.Stock,
-                Image = x.Image
+                Image = x.Image,
+                Categories = x.Categories.Select(y => y.Name).ToList()
             }).ToList();
 
             if (products == null || products.Count == 0)
             {
                 return Result.Success("No productos registrados");
             }
-            
+
             return Result<List<GetProductsResponse>>.Success(productsList, "Datos de los productos");
         }
     }
