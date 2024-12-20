@@ -3,6 +3,7 @@ import { useState } from "react";
 import ButtonNavigation from "../../shared/components/Buttons/ButtonNavigation";
 import { CardClient, } from "../Dashborad/ClientCard";
 import { FormulasDetail } from "../Formulas/FormulasNueva";
+import { ProductoCard } from "../Dashborad/ProductsCard";
 
 export const Home = () => {
    const [isOpen, setIsOpen] = useState(false);
@@ -167,46 +168,11 @@ export const Home = () => {
                      </div>
 
                   </div>
+                  {/* <!-- Clients card --> */}
                   <CardClient />
 
                   {/* <!-- Productos Section --> */}
-                  <div className="bg-white rounded-lg shadow p-4 ">
-                     <div className="flex items-center mb-4">
-                        <div className="w-4 h-4 bg-gray-400 rounded-full mr-2"></div>
-
-                        <h2 className="text-lg font-bold">Productos</h2>
-                     </div>
-                     <div className="space-y-1">
-                        <div className="rounded-lg border border-grey-500 p-4 mb-4 ">
-                           <div className="flex justify-between items-center mb-2">
-                              <p className="font-bold">#00050</p>
-                              <p className=" text-sm font-bold text-purple-500">10</p>
-                           </div>
-
-                           <div className="flex justify-between ">
-                              <p className="text-sm font-bold">Lentes UV</p>
-                              <i className="fas fa-play text-gray-500"></i>
-                           </div>
-                           <p className=" text-gray-500">Fecha:24/03/2024</p>
-                        </div>
-
-                        <div className="rounded-lg border border-grey-500 p-4 mb-4">
-                           <div className="flex justify-between items-center mb-2">
-                              <p className="text-sm font-bold">#00024</p>
-                              <p className="text-sm font-bold text-purple-500">10</p>
-                           </div>
-
-                           <div className=" flex justify-between">
-                              <p className="text-sm font-bold">Monturas Roja</p>
-                              <i className="fas fa-play text-gray-500"></i>
-                           </div>
-                           <p className=" text-gray-500">Fecha:24/03/2024</p>
-                        </div>
-                     </div>
-                     <div className="flex justify-center mt-20">
-                        <ButtonNavigation />
-                     </div>
-                  </div>
+                     <ProductoCard />
                </div>
             </div>
             {isOpen && <FormulasDetail onClose={() => setIsOpen(false)} />}

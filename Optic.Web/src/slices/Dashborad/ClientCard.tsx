@@ -18,17 +18,21 @@ export const CardClient = () => {
                 <div className="space-y-1">
                     <div className="  flex justify-betweenp-4 items-center mr-2">
                         <div className='w-full rounded-lg border border-gray-400 p-4 mb-2'>
-                            <p>
-                                {' '}
-                                <FontAwesomeIcon
-                                    icon={client.sex === 1 ? faMars : faVenus}
-                                    className={client.sex === 1 ? "text-blue-600 fas fa-mars text-lg mr-2" : "text-pink-600 fas fa-mars text-lg mr-2"}
-                                />
-                                {client.firstName + client.lastName}
-                               
-                            </p>
-                            <span title={identificationTypes?.find(x => x.id === client.identificationTypeId)?.name} className='text-blue-700 font-bold'>{identificationTypes?.find(x => x.id === client.identificationTypeId)?.abbreviation}</span> -
-                           {client.identificationNumber}
+                            <div className="relative">
+                                <p>
+                                    {' '}
+                                    <FontAwesomeIcon
+                                        icon={client.sex === 1 ? faMars : faVenus}
+                                        className={client.sex === 1 ? "text-blue-600 fas fa-mars text-lg mr-2" : "text-pink-600 fas fa-mars text-lg mr-2"}
+                                    />
+                                    {client.firstName + client.lastName}
+                                </p>
+                                <div className='justify-end'>
+                             <DetailButton url={`/Clientes/${client.id}`} className='text-blue-500 text-3xl hover:text-blue-700  absolute inset-y-0 right-0 w-10 ...' />
+                            </div>
+                                <span title={identificationTypes?.find(x => x.id === client.identificationTypeId)?.name} className='text-blue-700 font-bold'>{identificationTypes?.find(x => x.id === client.identificationTypeId)?.abbreviation}</span> -
+                                {client.identificationNumber}
+                            </div>
                         </div>
                     </div>
                 </div>
