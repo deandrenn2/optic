@@ -188,7 +188,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
 
          <div className="mb-2">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-               Existencias
+               Stock
             </label>
             <input
                type="number"

@@ -12,6 +12,7 @@ import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 import { Bar } from "../../shared/components/Progress/Bar";
 import { useListSettings } from "../../shared/components/List/useListSettings";
 import { CategoriesForm } from "./CategoriesForm";
+import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 
 export const Products = () => {
     const [visible, setVisible] = useState(false);
@@ -41,6 +42,11 @@ export const Products = () => {
 
     const handleCloseCategories = (): void => {
         setVisibleCategories(false);
+    }
+
+    const getNameBrand = (id: number): string => {
+        const brand = settings?.brands?.find(x => x.id === id);
+        return brand?.name ?? '';
     }
 
     if (queryProducts.isLoading)
@@ -89,10 +95,10 @@ export const Products = () => {
                         {settings?.isEnabledBarcode && <th className="border border-gray-300 p-2">Código de barra</th>}
                         <th className="border border-gray-300 p-2">Nombre</th>
                         <th className="border border-gray-300 p-2">Marca / Modelo</th>
-                        <th className="border border-gray-300 p-2">Cantidad</th>
-                        <th className="border border-gray-300 p-2">Precio de Costo</th>
-                        <th className="border border-gray-300 p-2">precio de venta</th>
                         <th className="border border-gray-300 p-2">Existencias</th>
+                        <th className="border border-gray-300 p-2">Costo</th>
+                        <th className="border border-gray-300 p-2">Precio de venta</th>
+                        <th className="border border-gray-300 p-2">Stock</th>
                         <th className="border border-gray-300 p-2"></th>
                     </tr>
                 </thead >
@@ -102,10 +108,10 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">{product.codeNumber}</td>
                             {settings?.isEnabledBarcode && <td className="border border-gray-300 p-2 text-center">{product.barCode}</td>}
                             <td className="border border-gray-300 p-2 text-center">{product.name}</td>
-                            <td className="border border-gray-300 p-2 text-center">{product.idBrand}</td>
-                            <td className="border border-gray-300 p-2 text-center">{product.quantity}</td>
-                            <td className="border border-gray-300 p-2 text-center">{product.unitPrice}</td>
-                            <td className="border border-gray-300 p-2 text-center">{product.salePrice}</td>
+                            <td className="border border-gray-300 p-2 text-center">{getNameBrand(product.idBrand)}</td>
+                            <td className="border border-gray-300 p-2 text-center"> {product.quantity}</td>
+                            <td className="border border-gray-300 p-2 text-center"><MoneyFormatter amount={product.unitPrice} /></td>
+                            <td className="border border-gray-300 p-2 text-center"> <MoneyFormatter amount={product.salePrice} /></td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                             <td className="border border-gray-300 p-2 text-center">
                                 <DetailButton url={`/products/${product.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />

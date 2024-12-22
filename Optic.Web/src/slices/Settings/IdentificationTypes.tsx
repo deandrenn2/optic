@@ -1,9 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useListSettings } from "../../shared/components/List/useListSettings";
-import useClient from "../Clients/useClient";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 export const IdentificationTypes = () => {
-    const { clients: Clients } = useClient();
     const { identificationTypes } = useListSettings();
 
     return (
@@ -35,19 +33,18 @@ export const IdentificationTypes = () => {
                 <table className=" bg-white rounded shadow w-full">
                     <thead>
                         <tr>
+                            <th className="border p-2">Orden</th>
                             <th className="border p-2">Tipo de Identificacion</th>
                             <th className="border p-2">Idetificacion</th>
-                            <th className="border p-2">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {Clients?.map((client) => (
-                            <tr key={client.id}>
-                                <td className="border border-gray-300 p-2 text-center">{identificationTypes?.find(x => x.id === client.identificationTypeId)?.name}</td>
-                                <td className="border border-gray-300 p-2 text-center"><span title={identificationTypes?.find(x => x.id === client.identificationTypeId)?.name} className='text-blue-700 font-bold'>{identificationTypes?.find(x => x.id === client.identificationTypeId)?.abbreviation}</span> -
-                                    {client.identificationNumber}</td>
+                        {identificationTypes?.map((identification) => (
+                            <tr key={identification.id}>
+                                <td className="border border-gray-300 p-2 text-center">{identification.orden}</td>
+                                <td className="border border-gray-300 p-2 text-center">{identification.name}</td>
                                 <td className="border border-gray-300 p-2 text-center">
-
+                                    <span title={identification?.name} className='text-blue-700 font-bold'>{identification?.abbreviation}</span>
                                 </td>
 
                             </tr>
