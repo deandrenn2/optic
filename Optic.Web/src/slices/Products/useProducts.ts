@@ -5,6 +5,7 @@ import {
    deleteProductService,
    getCategories,
    getProducts,
+   updateCategoryService,
    updateProductService,
 } from './ProductsServices';
 import { toast } from 'react-toastify';
@@ -89,9 +90,24 @@ export const useCategories = () => {
       },
    });
 
+   const updateCategory = useMutation({
+      mutationFn: updateCategoryService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+            queryCategories.refetch();
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+            }
+         }
+      },
+   });
+
    return {
       queryCategories,
       categories: queryCategories?.data?.data,
       createCategory,
+      updateCategory,
    };
 };

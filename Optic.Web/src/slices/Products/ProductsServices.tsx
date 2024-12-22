@@ -116,3 +116,22 @@ export const createCategoryService = async (model: CategoriesModel): Promise<Msg
 
    return response.data;
 };
+
+export const updateCategoryService = async (model: CategoriesModel): Promise<MsgResponse<CategoriesModel>> => {
+   const url = 'api/categories';
+   const response = await ApiClient.put<MsgResponse<CategoriesModel>>(url, model);
+
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al actualizar categoria',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};

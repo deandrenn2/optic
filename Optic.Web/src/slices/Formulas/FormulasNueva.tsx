@@ -1,7 +1,7 @@
-export const FormulasDetail = ({ onClose }: { onClose: () => void }) => {
+export const FormulasDetail = () => {
     return (
         <div
-            className="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black  bg-opacity-50 hidden ">
+            className="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black  bg-opacity-50 ">
             <div className=" bg-gray-100 p-1 mb-1 rounded-lg border border-grey-500 p-1  full fixed left-50 top-15">
                 <div className="flex justify-between items-center mb-3">
                     <h1 className="text-xl font-bold">Nueva formula</h1>
@@ -116,7 +116,7 @@ export const FormulasDetail = ({ onClose }: { onClose: () => void }) => {
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Guardar
                     Cambios
                 </button>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" onClick={onClose}>
+                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" >
                     Cancerlar
                 </button>
             </div>
