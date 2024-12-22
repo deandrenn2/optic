@@ -1,20 +1,33 @@
 import { useCategories } from "./useProducts";
-import Select, { ActionMeta, SingleValue } from "react-select";
+import Select, { MultiValue } from "react-select";
 
-export const CategoriesSelect = ({ selectedValue, name, className, xChange, required }: { selectedValue?: string, name?: string, className?: string, xChange: (newValue: SingleValue<string>, actionMeta: ActionMeta<string>) => void, required?: boolean }) => {
+export interface Option {
+    value: string;
+    label: string;
+}
+
+
+export const CategoriesSelect = ({ selectedValue, name, className, xChange, required, isSearchable }: { selectedValue?: Option[], name?: string, className?: string, xChange: (newValue: MultiValue<Option>) => void, required?: boolean, isSearchable?: boolean }) => {
     const { categories, queryCategories } = useCategories();
 
-    return (
-        <Select name={name || 'idCategorie'} className={className}
-            value={selectedValue}
-            onChange={xChange}
-            required={required}
-            loadingMessage={() => 'Cargando...'}
-            isDisabled={queryCategories?.isLoading}
-            isLoading={queryCategories?.isLoading}
-            options={categories?.map((x) => (x.name))}
+    const options: readonly Option[] | undefined = categories?.map((item) => ({
+        value: item.name,
+        label: isSearchable ? `${item.id} - ${item.id}` : (item.name),
+    }));
 
-        />
 
-    )
+    if (options)
+        return (
+            <Select name={name || 'idCategorie'} className={className}
+                value={selectedValue}
+                onChange={xChange}
+                required={required}
+                loadingMessage={() => 'Cargando...'}
+                isDisabled={queryCategories?.isLoading}
+                isLoading={queryCategories?.isLoading}
+                isClearable
+                isMulti={true}
+                options={options}
+            />
+        )
 }

@@ -9,6 +9,7 @@ export interface ProductModel {
    stock: number;
    idSupplier: number;
    image: string;
+   categories: string[];
 }
 export interface ProductsResponseModel {
    id: number;
@@ -22,6 +23,7 @@ export interface ProductsResponseModel {
    idSupplier: number;
    stock: number;
    image: string;
+   categories: string[];
 }
 
 export interface CategoriesModel {

@@ -98,7 +98,7 @@ export const getCategories = async (): Promise<MsgResponse<CategoriesModel[]>> =
    return response.data;
 };
 
-export const createCategoryService = async (model: string): Promise<MsgResponse<CategoriesModel>> => {
+export const createCategoryService = async (model: CategoriesModel): Promise<MsgResponse<CategoriesModel>> => {
    const url = 'api/Categories';
    const response = await ApiClient.post<MsgResponse<CategoriesModel>>(url, model);
 

@@ -1,7 +1,7 @@
 import { Bar } from "../../shared/components/Progress/Bar";
 import { useCategories } from "./useProducts"
 
-export const CategoriesForm = ({ id }: { id?: number }) => {
+export const CategoriesForm = () => {
 
     const { createCategory, categories, queryCategories } = useCategories();
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -10,14 +10,13 @@ export const CategoriesForm = ({ id }: { id?: number }) => {
         if (form instanceof HTMLFormElement) {
             const formData = new FormData(form);
             const categorie = Object.fromEntries(formData.entries())
-            const { name } = categorie;
-            console.log(name);
-            form.reset();
+            const nameCategory = categorie.name as string;
+            const res = await createCategory.mutateAsync({
+                name: nameCategory,
+            });
 
-            // if (categories) {
-            //     const categoriesIds = categories.map((category) => category.id);
-            //     console.log(categoriesIds);
-            // }
+            if (res.isSuccess)
+                form.reset();
         }
     }
 
@@ -40,29 +39,25 @@ export const CategoriesForm = ({ id }: { id?: number }) => {
                 </div>
                 <div className="mt-1">
 
-                    {!id &&
-                        (
-                            <>
-                                <button type="submit" disabled={createCategory.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
-                                    {createCategory.isPending ? "Creando..." : "Crear Categoria"}
-                                </button>
-                            </>)}
+                    <button type="submit" disabled={createCategory.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
+                        {createCategory.isPending ? "Creando..." : "Crear Categoria"}
+                    </button>
                 </div>
             </form>
             {
                 queryCategories.isLoading && <Bar Title="Cargando..." />
             }
             <div>
-                <h3>Categorias</h3>
+                <h3 className="text-xl font-bold pb-2">Categorias</h3>
                 <div className="flex flex-col">
                     {categories?.map((category) => (
-                        <div key={category.id} className="flex flex-row">
+                        <div key={category.id} >
                             <input type="text"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
                                 name="id"
-                                value={category.id}
+                                value={category.name}
                                 onChange={handleChange} />
-                                <span className="ml-2">{category.name}</span>
-                        </div> 
+                        </div>
                     ))}
                 </div>
             </div>

@@ -6,8 +6,8 @@ import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
 import { useListSettings } from "../../shared/components/List/useListSettings";
 import { SupplierSelect } from "../Suppliers/SupplierSelect";
 import { ComponentBrands } from "../../shared/components/List/ComponentBrands";
-import { CategoriesSelect } from "./CategoriesSelect";
-import { ActionMeta, SingleValue } from "react-select";
+import { CategoriesSelect, Option } from "./CategoriesSelect";
+import { MultiValue } from "react-select";
 export const ProductForm = ({ id }: { id?: number }) => {
    const { settings } = useListSettings();
 
@@ -23,6 +23,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
       stock: 0,
       idSupplier: 0,
       image: "",
+      categories: [],
    });
    const { createProduct, updateProduct, products } = useProducts();
 
@@ -46,12 +47,11 @@ export const ProductForm = ({ id }: { id?: number }) => {
       });
    };
 
-   const handleChangeCategories = (newValue: SingleValue<string>, actionMeta: ActionMeta<string>) => {
-      console.log(actionMeta, newValue);
-      // setForm({
-      //    ...form,
-      //    [name]: newValue
-      // });
+   const handleChangeCategories = (newValue: MultiValue<Option>) => {
+      setForm({
+         ...form,
+         categories: newValue.map((x) => x?.value),
+      });
    };
 
    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -72,6 +72,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
                stock: 0,
                idSupplier: 0,
                image: "",
+               categories: [],
             });
             formRef.current?.reset();
          }
@@ -126,7 +127,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
                xChange={(e) => handleChange(e)}
                required
                name="idSupplier"
-               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            />
          </div>
 
          <div className="mb-2">
@@ -140,7 +141,8 @@ export const ProductForm = ({ id }: { id?: number }) => {
             <label className="block text-gray-700 text-sm font-bold mb-2">
                Categoría
             </label>
-            <CategoriesSelect xChange={handleChangeCategories} />
+            {void console.log(form?.categories)}
+            <CategoriesSelect xChange={handleChangeCategories} selectedValue={form?.categories?.map((x) => ({ value: x, label: x }))} />
          </div>
 
          <div className="mb-2">

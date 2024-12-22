@@ -26,11 +26,6 @@ public class CreateProduct : ICarterModule
              .Produces(StatusCodes.Status201Created);
     }
 
-    public record CategoryModel
-    {
-        public string Name { get; set; } = string.Empty;
-    }
-
     public record CreateProductCommand : IRequest<Result>
     {
         public string Name { get; init; } = string.Empty;
@@ -45,7 +40,7 @@ public class CreateProduct : ICarterModule
         public int IdSupplier { get; init; }
         public string? Image { get; init; }
 
-        public List<CategoryModel> Categories { get; init; } = new();
+        public List<string> Categories { get; init; } = new();
     }
 
     public class CreateProductHandler(AppDbContext context, IValidator<CreateProductCommand> validator) : IRequestHandler<CreateProductCommand, Result>
@@ -65,7 +60,7 @@ public class CreateProduct : ICarterModule
 
             foreach (var category in request.Categories)
             {
-                var categoryFind = await context.Categories.FirstOrDefaultAsync(x => x.Name.ToUpper() == category.Name.ToUpper());
+                var categoryFind = await context.Categories.FirstOrDefaultAsync(x => x.Name.ToUpper() == category.ToUpper());
 
                 if (categoryFind != null)
                 {
@@ -73,9 +68,7 @@ public class CreateProduct : ICarterModule
                 }
                 else
                 {
-                    var maxNumber = await context.Categories.MaxAsync(x => x.Number);
-
-                    var newCategory = new Category(0, maxNumber + 1, request.Name);
+                    var newCategory = Category.Create(request.Name);
 
                     product.AddCategory(newCategory);
                 }
@@ -87,7 +80,7 @@ public class CreateProduct : ICarterModule
 
             if (resCount > 0)
             {
-                return Result<Product>.Success(product, "Producto creado correctamente");
+                return Result<CreateProductCommand>.Success(request, "Producto creado correctamente");
             }
             else
             {
