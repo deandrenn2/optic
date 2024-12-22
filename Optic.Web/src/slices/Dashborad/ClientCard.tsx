@@ -2,7 +2,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useClient from '../Clients/useClient';
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
-import ButtonNavigation from '../../shared/components/Buttons/ButtonNavigation';
 import { useListSettings } from '../../shared/components/List/useListSettings';
 import DetailButton from '../../shared/components/Buttons/ButtonDetail';
 export const CardClient = () => {
@@ -19,27 +18,26 @@ export const CardClient = () => {
                     <div className="  flex justify-betweenp-4 items-center mr-2">
                         <div className='w-full rounded-lg border border-gray-400 p-4 mb-2'>
                             <div className="relative">
-                                <p>
-                                    {' '}
-                                    <FontAwesomeIcon
-                                        icon={client.sex === 1 ? faMars : faVenus}
-                                        className={client.sex === 1 ? "text-blue-600 fas fa-mars text-lg mr-2" : "text-pink-600 fas fa-mars text-lg mr-2"}
-                                    />
+                                <p> 
                                     {client.firstName + client.lastName}
                                 </p>
                                 <div className='justify-end'>
-                             <DetailButton url={`/Clientes/${client.id}`} className='text-blue-500 text-3xl hover:text-blue-700  absolute inset-y-0 right-0 w-10 ...' />
+                             <DetailButton url={`/Clientes/${client.id}`} className='text-blue-500 text-3xl hover:text-blue-700  absolute inset-y-2 right-0'/>
                             </div>
                                 <span title={identificationTypes?.find(x => x.id === client.identificationTypeId)?.name} className='text-blue-700 font-bold'>{identificationTypes?.find(x => x.id === client.identificationTypeId)?.abbreviation}</span> -
                                 {client.identificationNumber}
+                                <div className='absolute inset-y-5 right-10'>
+                                {' '}
+                                    <FontAwesomeIcon
+                                        icon={client.sex === 1 ? faMars : faVenus}
+                                        className={client.sex === 1 ? "text-blue-600 fas fa-mars  text-3xl" : "text-pink-600 fas fa-mars text-3xl"}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             ))}
-            <div className="flex justify-center mt-20">
-                <ButtonNavigation />
-            </div>
         </div>
     )
 };
