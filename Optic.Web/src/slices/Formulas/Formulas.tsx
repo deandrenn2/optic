@@ -42,8 +42,8 @@ export const Formulas = () => {
                 <tbody>
                     {clients?.map((client) => (
                         <tr key={client.id}>
-                            <td className="border border-gray-300 p-2 text-center">#0023</td>
-                            <td className="border border-gray-300 p-2 ">{client.firstName + ' ' + client.lastName}</td>
+                            <td className="border border-gray-300 p-2 text-center">#1</td>
+                            <td className="border border-gray-300 p-2 text-center">{client.firstName + ' ' + client.lastName}</td>
                             <td className="border border-gray-300 p-2 text-center">$30.000</td>
                             <td className="border border-gray-300 p-2 text-center">07/08/2024</td>
                             <td className="border border-gray-300 p-2 text-center text-green-500">Entregado</td>
@@ -55,7 +55,6 @@ export const Formulas = () => {
                             </td>
                         </tr>
                     ))}
-
                 </tbody>
             </table>
             <div className="mt-4 flex justify-center">

@@ -15,7 +15,7 @@ export const EditProfile = () => {
         <div className=" flex justify-center items-center bg-gray-200">
             <div className="bg-white py-9 rounded-lg p-4 shadow-md mx-5" >
                 <div className="flex justify-center mt-4">
-                    <div className="relative cursor-pointer  hover:transition-all hover:scale-110 " onClick={() => setIsOpen(true)}>
+                    <div className="relative cursor-pointer  hover:transition-all hover:scale-110 " onClick={() => setIsOpenProfile(true)}>
                         <span className="absolute bottom-0 right-0 bg-white border border-solid border-s bg-opacity-25  block w-6 h-6 rounded-full text-center" >
                             <FontAwesomeIcon icon={faPencil} className="text-blue-500" />
                         </span>
