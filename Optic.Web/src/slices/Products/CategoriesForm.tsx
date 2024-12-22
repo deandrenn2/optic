@@ -1,9 +1,10 @@
 import { Bar } from "../../shared/components/Progress/Bar";
+import { CategoriesModel } from "./ProductModel";
 import { useCategories } from "./useProducts"
 
 export const CategoriesForm = () => {
 
-    const { createCategory, categories, queryCategories } = useCategories();
+    const { createCategory, categories, queryCategories, updateCategory } = useCategories();
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const form = event.target;
@@ -20,43 +21,43 @@ export const CategoriesForm = () => {
         }
     }
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value);
+    const handleChange = async (event: React.ChangeEvent<HTMLInputElement>, category: CategoriesModel) => {
+        const { value } = event.target;
+        await updateCategory.mutateAsync({
+            id: category.id,
+            name: value,
+        });
     }
 
     return (
         <>
-            <form className="flex flex-col" onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Nombre
-                    </label>
-                    <input
-                        required
-                        name="name"
-                        placeholder="Categoria"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                </div>
-                <div className="mt-1">
+            <form className="flex rounded-lg overflow-hidden" onSubmit={handleSubmit}>
 
-                    <button type="submit" disabled={createCategory.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
-                        {createCategory.isPending ? "Creando..." : "Crear Categoria"}
-                    </button>
-                </div>
+                <input
+                    required
+                    autoComplete="off"
+                    name="name"
+                    placeholder="Categoria"
+                    className="shadow appearance-none border rounded-tl-lg rounded-bl-lg  w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <button type="submit" disabled={createCategory.isPending}
+                    className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 font-bold">
+                    {createCategory.isPending ? "Creando..." : "Crear"}
+                </button>
             </form>
             {
                 queryCategories.isLoading && <Bar Title="Cargando..." />
             }
             <div>
-                <h3 className="text-xl font-bold pb-2">Categorias</h3>
+                <h3 className="text-xl font-bold pb-2 mt-2 text-gray-600 text-center">Categorias</h3>
                 <div className="flex flex-col">
                     {categories?.map((category) => (
                         <div key={category.id} >
                             <input type="text"
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
                                 name="id"
-                                value={category.name}
-                                onChange={handleChange} />
+                                defaultValue={category.name}
+                                onBlur={(event) => handleChange(event, category)}
+                            />
                         </div>
                     ))}
                 </div>

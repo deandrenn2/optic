@@ -26,6 +26,7 @@ import { SettingsMenu } from './slices/Settings/SettingsMenu.tsx';
 import { IdentificationTypes } from './slices/Settings/IdentificationTypes.tsx';
 import { Settings } from './slices/Settings/Settings.tsx';
 import { Business } from './slices/Business/Business.tsx';
+import { FormulasDetail } from './slices/Formulas/FormulasNueva.tsx';
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
          {
             path: 'Formulas',
             element: <Formulas />,
+         },
+         {
+            path: 'Formulas/Nueva',
+            element: <FormulasDetail />,
          },
          {
             path: 'Facturación',
