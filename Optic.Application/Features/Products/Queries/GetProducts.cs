@@ -35,6 +35,7 @@ public class GetProducts : ICarterModule
         public decimal UnitPrice { get; set; }
         public decimal SalePrice { get; set; }
         public int Stock { get; set; }
+        public int? IdSupplier { get; set; }
         public string? Image { get; set; }
         public List<string> Categories { get; set; } = new();
     }
@@ -58,6 +59,7 @@ public class GetProducts : ICarterModule
                 UnitPrice = x.UnitPrice,
                 SalePrice = x.SalePrice,
                 Stock = x.Stock,
+                IdSupplier = x.IdSupplier,
                 Image = x.Image,
                 Categories = x.Categories.Select(y => y.Name).ToList()
             }).ToList();

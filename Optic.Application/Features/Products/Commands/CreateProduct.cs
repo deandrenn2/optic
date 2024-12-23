@@ -56,7 +56,7 @@ public class CreateProduct : ICarterModule
             var product = Product.Create(0, request.IdBrand, request.Name, request.CodeNumber, request.Quantity, request.UnitPrice, request.SalePrice, request.Stock);
             product.AddSupplier(request.IdSupplier);
 
-            //Validación de la categoria
+            //Agregar categorias
 
             foreach (var category in request.Categories)
             {

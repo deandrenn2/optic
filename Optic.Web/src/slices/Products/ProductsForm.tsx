@@ -8,6 +8,7 @@ import { SupplierSelect } from "../Suppliers/SupplierSelect";
 import { ComponentBrands } from "../../shared/components/List/ComponentBrands";
 import { CategoriesSelect, Option } from "./CategoriesSelect";
 import { MultiValue } from "react-select";
+import "../../shared/helpers/Utils";
 export const ProductForm = ({ id }: { id?: number }) => {
    const { settings } = useListSettings();
 
@@ -85,11 +86,15 @@ export const ProductForm = ({ id }: { id?: number }) => {
                N° Producto
             </label>
             <input
+               type="number"
+               autoComplete="off"
                required
                name="codeNumber"
                value={form?.codeNumber}
+               min={1}
+               max={99999}
                onChange={(e) => handleChange(e)}
-               placeholder="#"
+               placeholder="#####"
                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
          </div>
@@ -122,6 +127,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
             <label className="block text-gray-700 text-sm font-bold mb-2">
                Proveedor
             </label>
+            {void console.log(form?.idSupplier)}
             <SupplierSelect
                selectedValue={form?.idSupplier?.toString()}
                xChange={(e) => handleChange(e)}
@@ -141,7 +147,6 @@ export const ProductForm = ({ id }: { id?: number }) => {
             <label className="block text-gray-700 text-sm font-bold mb-2">
                Categoría
             </label>
-            {void console.log(form?.categories)}
             <CategoriesSelect xChange={handleChangeCategories} selectedValue={form?.categories?.map((x) => ({ value: x, label: x }))} />
          </div>
 

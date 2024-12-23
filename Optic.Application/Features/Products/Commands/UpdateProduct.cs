@@ -39,6 +39,8 @@ public class UpdateProduct : ICarterModule
         public int Stock { get; init; }
         public int IdSupplier { get; init; }
         public string? Image { get; init; }
+
+        public List<string> Categories { get; init; } = new();
     }
 
     public class UpdateProductHandler(AppDbContext context, IValidator<UpdateProductCommand> validator) : IRequestHandler<UpdateProductCommand, Result>
@@ -51,7 +53,7 @@ public class UpdateProduct : ICarterModule
                 return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Product.ErrorValidation", "Se presentaron errores de validación"));
             }
 
-            var updateProduct = await context.Products.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var updateProduct = await context.Products.Include(x => x.Categories).FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if (updateProduct == null)
             {
@@ -59,6 +61,23 @@ public class UpdateProduct : ICarterModule
             }
 
             updateProduct.Update(request.IdBrand, request.Name, request.CodeNumber, request.Quantity, request.UnitPrice, request.SalePrice, request.Stock, request.BarCode);
+            updateProduct.AddSupplier(request.IdSupplier);
+
+            //Agregar categorias
+
+            foreach (var category in request.Categories)
+            {
+                var categoryFind = updateProduct.Categories.FirstOrDefault(x => x.Name.ToUpper() == category.ToUpper());
+
+                if (categoryFind == null)
+                {
+
+                    var newCategory = Category.Create(category);
+
+                    updateProduct.AddCategory(newCategory);
+
+                }
+            }
 
             var resCount = await context.SaveChangesAsync();
 
