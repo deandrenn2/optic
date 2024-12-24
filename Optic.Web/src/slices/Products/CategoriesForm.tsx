@@ -28,7 +28,6 @@ export const CategoriesForm = () => {
             name: value,
         });
     }
-
     return (
         <>
             <form className="flex rounded-lg overflow-hidden" onSubmit={handleSubmit}>

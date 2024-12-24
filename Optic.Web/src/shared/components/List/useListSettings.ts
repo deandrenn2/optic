@@ -21,5 +21,6 @@ export const useListSettings = () => {
       identificationTypes: queryIdentificationTypes?.data?.data,
       querySettings,
       queryIdentificationTypes,
+      
    };
 };
