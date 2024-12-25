@@ -1,12 +1,12 @@
 
-import { useState } from "react";
+
 import ButtonNavigation from "../../shared/components/Buttons/ButtonNavigation";
 import { CardClient, } from "../Dashborad/ClientCard";
-import { FormulasDetail } from "../Formulas/FormulasNueva";
+
 import { ProductoCard } from "../Dashborad/ProductsCard";
 
 export const Home = () => {
-   const [isOpen, setIsOpen] = useState(false);
+  
    return (
       <>
          {/* <!-- Cards Section --> */}
@@ -14,7 +14,7 @@ export const Home = () => {
             <div>
                <div className="container mx-auto p-4">
                   <div className="m-2">
-                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setIsOpen(true)}>
+                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >
                         Nueva Formula
                      </button>
                   </div>
@@ -175,7 +175,7 @@ export const Home = () => {
                      <ProductoCard />
                </div>
             </div>
-            {isOpen && <FormulasDetail onClose={() => setIsOpen(false)} />}
+           
          </div>
       </>
    );

@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { getIdentificationTypes, getSettings } from './ListServices';
-
 const KEY = 'LIST_SETTINGS';
 
 export const useListSettings = () => {
@@ -24,3 +23,4 @@ export const useListSettings = () => {
       
    };
 };
+

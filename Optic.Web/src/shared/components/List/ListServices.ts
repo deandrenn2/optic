@@ -38,3 +38,4 @@ export const getSettings = async (): Promise<MsgResponse<SettingsSystemModel>> =
 
    return response.data;
 };
+

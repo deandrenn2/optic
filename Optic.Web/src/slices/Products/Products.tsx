@@ -62,7 +62,6 @@ export const Products = () => {
                             icon={faPlus}
                             className="fa-search top-3 pr-2 font-bold" />Nuevo</button>
                 </div>
-
                 <div className="mb-2">
                     <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
                         onClick={() => setVisibleCategories(true)}>
@@ -70,7 +69,6 @@ export const Products = () => {
                             icon={faPlus}
                             className="fa-search top-3 pr-2 font-bold" />Categorias</button>
                 </div>
-
                 <div className="mb-2">
                     <div className="relative">
                         <div className=" inline-flex">
