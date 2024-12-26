@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Optic.Application.Infrastructure.Sqlite;
 
@@ -10,9 +11,11 @@ using Optic.Application.Infrastructure.Sqlite;
 namespace Optic.Application.Infrastructure.Sqlite.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241226005803_modifiedNumberFactura")]
+    partial class modifiedNumberFactura
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -20,6 +23,13 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
             modelBuilder.Entity("FormulaDiagnosis", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DiagnosisId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FormulaId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("IdDiagnostico")
@@ -34,11 +44,11 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdDiagnostico");
+                    b.HasIndex("DiagnosisId");
 
-                    b.HasIndex("IdFormula");
+                    b.HasIndex("FormulaId");
 
-                    b.ToTable("FormulasDiagnosis", (string)null);
+                    b.ToTable("FormulaDiagnosis");
                 });
 
             modelBuilder.Entity("FormulasTags", b =>
@@ -249,100 +259,13 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
                     b.ToTable("Diagnosis", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "OD, se refiere al ojo derecho. Esf (Esfera), Indica la potencia de la lente para corregir la miopía (valores negativos) o la hipermetropía (valores positivos)",
-                            Name = "OD_ESF"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = " OI, se refiere al ojo izquierdo. Esf (Esfera), Indica la potencia de la lente para corregir la miopía (valores negativos) o la hipermetropía (valores positivos)",
-                            Name = "OI_ESF"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "OD, se refiere al ojo derecho. Cil (Cilindro), Indica el poder de la lente para corregir el astigmatismo",
-                            Name = "OD_CIL"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "OI, se refiere al ojo izquierdo. Cil (Cilindro), Indica el poder de la lente para corregir el astigmatismo",
-                            Name = "OI_CIL"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "OD, se refiere al ojo derecho. Eje (Eje), Es el ángulo en grados que define la orientación del cilindro para corregir el astigmatismo",
-                            Name = "OD_EJE"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "OI, se refiere al ojo izquierdo. Eje (Eje), Es el ángulo en grados que define la orientación del cilindro para corregir el astigmatismo",
-                            Name = "OI_EJE"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "ADD (Adición), Se refiere a la potencia adicional que se añade en la parte inferior de los lentes para corregir la presbicia, o dificultad para ver de cerca.",
-                            Name = "ADD"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Description = "Podría referirse al color del lente, si tiene un tinte específico para reducir el brillo o mejorar el contraste.",
-                            Name = "COLOR"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Description = "Indica si las lentes tienen protección contra los rayos ultravioleta (UV)",
-                            Name = "UV"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Description = "Indica si las lentes tienen protección contra los rayos visibles infrarrojos (VDT)",
-                            Name = "VDT"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Description = "Indica si las lentes tienen algún tipo de relajación visual o filtro especial para reducir la fatiga ocular",
-                            Name = "RLX"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Description = "Distancia Pupilar, Es la distancia entre la entrada del ojo y la salida del mismo, en milímetros",
-                            Name = "DP"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Description = "Este campo podría hacer referencia a la altura bifocal o algún otro ajuste específico de las lentes",
-                            Name = "AB"
-                        });
                 });
 
             modelBuilder.Entity("Optic.Application.Domain.Entities.Formula", b =>
@@ -745,13 +668,13 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                 {
                     b.HasOne("Optic.Application.Domain.Entities.Diagnosis", "Diagnosis")
                         .WithMany("FormulaDiagnosis")
-                        .HasForeignKey("IdDiagnostico")
+                        .HasForeignKey("DiagnosisId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Optic.Application.Domain.Entities.Formula", "Formula")
                         .WithMany("FormulaDiagnosis")
-                        .HasForeignKey("IdFormula")
+                        .HasForeignKey("FormulaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

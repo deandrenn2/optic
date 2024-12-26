@@ -27,7 +27,7 @@ public class Formula : AggregateRoot
     public Business Business { get; private set; }
     public int BusinessId { get; private set; }
     public List<Tags> Tags { get; set; } = new();
-    public List<Diagnosis> Diagnosis { get; set; } = new();
+    public List<FormulaDiagnosis> FormulaDiagnosis { get; set; } = new();
     public int IdInvoice { get; set; }
     public Invoice Invoice { get; set; }
 
@@ -37,14 +37,14 @@ public class Formula : AggregateRoot
         return new Formula(id, description, date, state, priceLens);
     }
 
-    public void AddTags(Tags tags)
+    public void AddTag(Tags tags)
     {
         Tags.Add(tags);
     }
 
-    public void AddDiagnosis(Diagnosis diagnosis)
+    public void AddDiagnosis(FormulaDiagnosis diagnosis)
     {
-        Diagnosis.Add(diagnosis);
+        FormulaDiagnosis.Add(diagnosis);
     }
 
     public void AddInvoice(Invoice invoice)

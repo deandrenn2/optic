@@ -2,17 +2,17 @@
 import { useState } from "react";
 import ButtonNavigation from "../../shared/components/Buttons/ButtonNavigation";
 import { CardClient, } from "../Dashborad/ClientCard";
-import { FormulasDetail } from "../Formulas/FormulasNueva";
 import { ProductoCard } from "../Dashborad/ProductsCard";
+import { FormulasCreate } from "../Formulas/FormulasCreate";
 
 export const Home = () => {
    const [isOpen, setIsOpen] = useState(false);
    return (
       <>
          {/* <!-- Cards Section --> */}
-         <div className="p-4 mb-1 border border-grey-500 mb-4  ">
+         <div className="p-4 border border-grey-500 ">
             <div>
-               <div className="container mx-auto p-4">
+               <div className="container mx-auto">
                   <div className="m-2">
                      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setIsOpen(true)}>
                         Nueva Formula
@@ -172,10 +172,10 @@ export const Home = () => {
                   <CardClient />
 
                   {/* <!-- Productos Section --> */}
-                     <ProductoCard />
+                  <ProductoCard />
                </div>
             </div>
-            {isOpen && <FormulasDetail onClose={() => setIsOpen(false)} />}
+            {isOpen && <FormulasCreate />}
          </div>
       </>
    );
