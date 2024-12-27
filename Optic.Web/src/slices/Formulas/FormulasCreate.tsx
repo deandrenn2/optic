@@ -1,16 +1,32 @@
+import { useState } from "react";
+import { ClientSelect } from "../Clients/ClientSelect";
+import { LenTypeSelect } from "./LenTypeSelect";
+import { DiagnosisSelect } from "./DiagnosisSelect";
+
 export const FormulasCreate = () => {
+    // const [client, setClient] = useState<Client | undefined>();
+    const [date, setDate] = useState<Date | undefined>();
+
+    const handleChangeClient = (newValue: SingleValue<Option>) => {
+        // setClient(clients?.find(x => x.id === parseInt(newValue.value)));
+    }
+    const handleChangeTypeLen = (newValue: MultiValue<Option>) => {
+        // setTypeLen(newValue);
+    }
+    const handleChangeDiagnosis = (newValue: SingleValue<Option>) => {
+        // setDiagnosis(diagnosis?.find(x => x.id === parseInt(newValue.value)));
+    }
     return (
         <div className="mb-1 rounded-lg fixed left-50 top-15">
             <div className="grid grid-cols-2 gap-2 mb-2">
                 <div>
                     <label className="block text-sm font-medium mb-0">Cliente</label>
-                    <input type="text" className="w-full border border-gray-300 rounded p-1" />
+                    <ClientSelect xChange={handleChangeClient} />
                 </div>
                 <div>
                     <label className="block text-sm font-medium mb-0">Fecha</label>
                     <div className="relative">
-                        <input type="date" className="w-full border border-gray-300 rounded p-1"
-                            value="29/09/2024" />
+                        <input type="date" className="w-full border border-gray-300 rounded p-1" />
                         <i className="fas fa-calendar-alt absolute right-1 top-2 text-gray-400"></i>
                     </div>
                 </div>
@@ -18,30 +34,13 @@ export const FormulasCreate = () => {
             <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
                     <label className="block text-sm font-bold mb-1">Tipo Lente</label>
-                    <div className="flex items-center">
-                        <select className="w-full border border-gray-300 rounded py-1 mr-1">
-                            <option>Seleccione</option>
-                        </select>
-                        <button className="bg-green-500 text-white px-2 py-2 rounded">Agregar</button>
-                    </div>
-                    <div className="relative">
-                        <div className="flex items-center justify-between mb-1">
-                            <input type="text" className="w-full border-2  p-1 px-4 " value="Progresivo" />
-                            <button className="text-red-500"><i
-                                className="fas fa-minus-circle alt absolute right-1 top-2  "></i></button>
-                        </div>
-                        <div className="relative">
-                            <input type="text" className="w-full border-2  p-1 px-4 " value="Vidrio Blanco" />
-                            <i className="fas fa-minus-circle alt absolute right-1 top-2 text-red-500  "></i>
-                        </div>
-                    </div>
+                    <LenTypeSelect xChange={handleChangeTypeLen} />
+
                 </div>
                 <div>
                     <label className="block text-sm font-medium mb-1">Diagnóstico</label>
                     <div className="flex items-center">
-                        <select className="w-full border border-gray-300 rounded p-1 mr-1">
-                            <option>Seleccione</option>
-                        </select>
+                        <DiagnosisSelect xChange={handleChangeDiagnosis} />
                         <button className="bg-green-500 text-white px-2 py-2 rounded">Agregar</button>
                     </div>
                     <div className="mt-1">

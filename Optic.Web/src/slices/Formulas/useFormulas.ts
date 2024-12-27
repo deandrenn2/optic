@@ -1,64 +1,27 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { createFormulaService, deleteFormulaService, getFormulas, updateFormulaService } from "./FormulasServices";
-import { toast } from "react-toastify";
+import { useQuery } from '@tanstack/react-query';
+import { getDiagnosis, getTags } from './FormulasServices';
 
- 
- const KEY = 'Formula';
- const useFormula = () => {
-   const queryFormulas = useQuery({
-      queryKey: [`${KEY}`],
-      queryFn: getFormulas,
-   });
-
-   const createFormula = useMutation({
-      mutationFn: createFormulaService,
-      onSuccess: (data) => {
-         if (!data.isSuccess) {
-            toast.info(data.message);
-         } else {
-            if (data.isSuccess) {
-               toast.success(data.message);
-               queryFormulas.refetch();
-            }
-         }
-      },
-   });
-
-   const deleteFormula = useMutation({
-      mutationFn: deleteFormulaService,
-      onSuccess: (data) => {
-         if (!data.isSuccess) {
-            toast.info(data.message);
-         } else {
-            if (data.isSuccess) {
-               toast.success(data.message);
-               queryFormulas.refetch();
-            }
-         }
-      },
-   });
-
-   const updateFormula = useMutation({
-      mutationFn: updateFormulaService,
-      onSuccess: (data) => {
-         if (!data.isSuccess) {
-            toast.info(data.message);
-         } else {
-            if (data.isSuccess) {
-               toast.success(data.message);
-               queryFormulas.refetch();
-            }
-         }
-      },
+const KEY = 'Formula';
+export const useTags = () => {
+   const queryTags = useQuery({
+      queryKey: [`${KEY}_Tags`],
+      queryFn: getTags,
    });
 
    return {
-      queryFormulas,
-      formulas: queryFormulas?.data?.data,
-      createFormula,
-      deleteFormula,
-      updateFormula,
+      queryTags,
+      tags: queryTags.data?.data,
    };
-};             
+};
 
-export default useFormula;
+export const useDiagnosis = () => {
+   const queryDiagnosis = useQuery({
+      queryKey: [`${KEY}_Diagnosis`],
+      queryFn: getDiagnosis,
+   });
+
+   return {
+      queryDiagnosis,
+      diagnosis: queryDiagnosis.data?.data,
+   };
+};
