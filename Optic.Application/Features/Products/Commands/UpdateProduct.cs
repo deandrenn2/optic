@@ -61,20 +61,27 @@ public class UpdateProduct : ICarterModule
             }
 
             updateProduct.Update(request.IdBrand, request.Name, request.CodeNumber, request.Quantity, request.UnitPrice, request.SalePrice, request.Stock, request.BarCode);
-            updateProduct.AddSupplier(request.IdSupplier);
 
             //Agregar categorias
 
             foreach (var category in request.Categories)
             {
-                var categoryFind = updateProduct.Categories.FirstOrDefault(x => x.Name.ToUpper() == category.ToUpper());
+                var categoryProduct = updateProduct.Categories.FirstOrDefault(x => x.Name.ToUpper() == category.ToUpper());
 
-                if (categoryFind == null)
+                if (categoryProduct == null)
                 {
+                    var categoryFind = await context.Categories.FirstOrDefaultAsync(x => x.Name.ToUpper() == category.ToUpper());
 
-                    var newCategory = Category.Create(category);
+                    if (categoryFind == null)
+                    {
+                        var newCategory = Category.Create(category);
 
-                    updateProduct.AddCategory(newCategory);
+                        updateProduct.AddCategory(newCategory);
+                    }
+                    else
+                    {
+                        updateProduct.AddCategory(categoryFind);
+                    }
 
                 }
             }
@@ -83,7 +90,7 @@ public class UpdateProduct : ICarterModule
 
             if (resCount > 0)
             {
-                return Result<Product>.Success(updateProduct, "Producto actualizado correctamente");
+                return Result.Success("Producto actualizado correctamente");
             }
             else
             {
