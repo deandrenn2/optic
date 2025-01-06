@@ -11,6 +11,7 @@ import { MultiValue } from "react-select";
 import "../../shared/helpers/Utils";
 export const ProductForm = ({ id }: { id?: number }) => {
    const { settings } = useListSettings();
+   const isModeEdit = (id !== undefined && id !== null);
 
    const [form, setForm] = useState<ProductModel | ProductsResponseModel>({
       id: id,
@@ -57,7 +58,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
 
    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      if (id) {
+      if (isModeEdit) {
          await updateProduct.mutateAsync(form);
       } else {
          const res = await createProduct.mutateAsync(form);
@@ -91,6 +92,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
                required
                name="codeNumber"
                value={form?.codeNumber}
+               disabled={isModeEdit}
                min={1}
                max={99999}
                onChange={(e) => handleChange(e)}
@@ -124,10 +126,9 @@ export const ProductForm = ({ id }: { id?: number }) => {
                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
          </div>
          <div className="mb-2">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2" >
                Proveedor
             </label>
-            {void console.log(form?.idSupplier)}
             <SupplierSelect
                selectedValue={form?.idSupplier?.toString()}
                xChange={(e) => handleChange(e)}
@@ -202,16 +203,6 @@ export const ProductForm = ({ id }: { id?: number }) => {
                value={form?.stock}
                onChange={(e) => handleChange(e)}
                placeholder="stock"
-               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
-         </div>
-         <div className="mb-2">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-               Imagen (URL)
-            </label>
-            <input
-               value={form?.image}
-               onChange={(e) => handleChange(e)}
-               placeholder="URL de la imagen del productoge"
                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
          </div>
          <div className="mt-1">
