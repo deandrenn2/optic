@@ -3,15 +3,15 @@ import { useDiagnosis } from "./useFormulas";
 
 
 export interface Option {
-    value: string;
-    label: string;
+    value?: string;
+    label?: string;
 }
 
 export const DiagnosisSelect = ({ selectedValue, name, className, xChange, required, isSearchable }: { selectedValue?: Option[], name?: string, className?: string, xChange: (newValue: SingleValue<Option>) => void, required?: boolean, isSearchable?: boolean }) => {
     const { diagnosis, queryDiagnosis } = useDiagnosis();
 
     const options: readonly Option[] | undefined = diagnosis?.map((item) => ({
-        value: item.id.toString(),
+        value: item?.id?.toString(),
         label: isSearchable ? `${item.name}` : (item.name),
     }));
 

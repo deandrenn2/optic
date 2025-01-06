@@ -8,3 +8,8 @@ export interface MsgResponse<T> {
       message: string;
    };
 }
+
+export interface Option {
+   value?: string;
+   label?: string;
+}

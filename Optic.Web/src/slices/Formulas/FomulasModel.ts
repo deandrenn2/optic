@@ -20,8 +20,32 @@ export interface TagModel {
 }
 
 export interface DiagnosisModel {
-   id: number;
+   id?: number;
    name: string;
-   description: string;
    value: string;
+   description?: string;
+}
+
+export interface InvoiceDetailModel {
+   description: string;
+   price: number;
+   quantity: number;
+   idProduct: number;
+   idInvoice: number;
+}
+
+export interface CreateFormulasModel {
+   idBusiness: number;
+   idClient?: number;
+   description: string;
+   date: Date;
+
+   tags: string[];
+   diagnosis: DiagnosisModel[];
+   products: InvoiceDetailModel[];
+
+   priceLens: number;
+   priceConsultation?: number;
+
+   sumTotal?: number; // Note: Computed property
 }
