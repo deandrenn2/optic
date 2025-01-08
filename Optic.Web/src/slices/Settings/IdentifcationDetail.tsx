@@ -1,10 +1,9 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import { IdentificationForm } from "./IdentificationForm";
 import { Link, useParams } from "react-router-dom";
-import { ProductForm } from "./ProductsForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
-export const ProductsDetail = () => {
+export const IdentificaciónDetail = () => {
     const { id } = useParams();
     return (
         <div className="w-full">
@@ -13,11 +12,10 @@ export const ProductsDetail = () => {
                     <FontAwesomeIcon
                         icon={faArrowCircleLeft}
                         className="fa-search top-3 pr-2 font-bold"
-                    />Volver al listado de productos
-                </Link>
+                    />Volver al listado de productos</Link>
             </div>
             <div className="w-1/4 bg-white p-4 rounded-lg">
-                <ProductForm id={Number(id)} />
+                <IdentificationForm id={Number(id)} />
             </div>
 
         </div>

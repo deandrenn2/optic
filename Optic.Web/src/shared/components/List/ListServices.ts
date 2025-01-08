@@ -39,3 +39,21 @@ export const getSettings = async (): Promise<MsgResponse<SettingsSystemModel>> =
    return response.data;
 };
 
+export const upadteIdentificationType = async (identificationType: IdentificationTypeModel): Promise<MsgResponse<IdentificationTypeModel>> => {
+   const url = 'api/settings/identificationTypes';
+   const response = await ApiClient.put<MsgResponse<IdentificationTypeModel>>(url, identificationType);
+
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al obtener tipos de actulizar identificación',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};
