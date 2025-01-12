@@ -135,3 +135,22 @@ export const updateCategoryService = async (model: CategoriesModel): Promise<Msg
 
    return response.data;
 };
+
+export const getValidateProduct = async (code?: string | null): Promise<MsgResponse<ProductsResponseModel>> => {
+   const url = `api/products/validate/${code}`;
+   const response = await ApiClient.get<MsgResponse<ProductsResponseModel>>(url);
+
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al validar producto',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};

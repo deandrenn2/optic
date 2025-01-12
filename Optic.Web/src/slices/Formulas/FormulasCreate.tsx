@@ -147,6 +147,7 @@ export const FormulasCreate = () => {
                             <button className="text-red-500  flex items-center"><i
                                 className="fas fa-minus-circle ml-2"></i></button>
                             <p className=" right-0">$400.000</p>
+                            <button className="bg-red-500 text-white px-2 py-1 rounded" ><FontAwesomeIcon icon={faMinus} /></button>
 
                         </div>
                         <div className="flex justify-between">
@@ -158,6 +159,7 @@ export const FormulasCreate = () => {
                             <button className="text-red-500  justify-center"><i
                                 className="fas fa-minus-circle ml-2 "></i></button>
                             <p className=" right-0"> $400.000</p>
+                            <button className="bg-red-500 text-white px-2 py-1 rounded" ><FontAwesomeIcon icon={faMinus} /></button>
                         </div>
                         <div className="flex justify-end justify-items-end">
                             <p><span className="font-semibold">Total Productos:</span> $520.000</p>

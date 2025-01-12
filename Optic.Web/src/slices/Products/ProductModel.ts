@@ -16,12 +16,12 @@ export interface ProductsResponseModel {
    name: string;
    idBrand: number;
    codeNumber: string;
-   barCode: string;
+   barCode?: string;
    quantity: number;
    unitPrice: number;
    salePrice: number;
    idSupplier: number;
-   stock: number;
+   stock?: number;
    image: string;
    categories: string[];
 }
