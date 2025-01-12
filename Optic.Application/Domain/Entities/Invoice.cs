@@ -3,7 +3,7 @@ using Optic.Application.Domain.Primitives;
 
 public class Invoice : AggregateRoot
 {
-    public Invoice(int id, string number, DateTime date, decimal total, string state, int? clientId, int businessId) : base(id)
+    public Invoice(int id, int number, DateTime date, decimal total, string state, int businessId, int? clientId) : base(id)
     {
         Number = number;
         Date = date;
@@ -13,7 +13,7 @@ public class Invoice : AggregateRoot
         BusinessId = businessId;
     }
 
-    public string Number { get; set; }
+    public int Number { get; set; }
     public DateTime Date { get; set; }
     public decimal Total { get; set; }
     public string State { get; set; }
@@ -25,14 +25,29 @@ public class Invoice : AggregateRoot
     public Formula Formula { get; set; }
 
     public List<InvoiceDetail> InvoiceDetails { get; set; } = new();
-    public List<InvoicePayments> InvoicePayments { get; set; } = new();
-    public List<InvoiceServices> InvoiceServices { get; set; } = new();
+    public List<InvoicePayment> InvoicePayments { get; set; } = new();
+    public List<InvoiceService> InvoiceServices { get; set; } = new();
 
-    public static Invoice Create(int id, string number, DateTime date, decimal total, string state, int? clientId, int businessId)
+    public static Invoice Create(int id, int number, DateTime date, decimal total, string state, int businessId, int? clientId)
     {
-        return new Invoice(id, number, date, total, state, clientId, businessId);
+        return new Invoice(id, number, date, total, state, businessId, clientId);
     }
-    public void Update(string number, DateTime date, decimal total, string state, int? clientId, int businessId)
+
+    public void AddDetail(InvoiceDetail detail)
+    {
+        InvoiceDetails.Add(detail);
+    }
+
+    public void AddPayment(InvoicePayment payment)
+    {
+        InvoicePayments.Add(payment);
+    }
+
+    public void AddService(InvoiceService service)
+    {
+        InvoiceServices.Add(service);
+    }
+    public void Update(int number, DateTime date, decimal total, string state, int? clientId, int businessId)
     {
         Number = number;
         Date = date;

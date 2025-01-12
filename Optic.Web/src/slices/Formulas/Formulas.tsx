@@ -1,13 +1,22 @@
 import { faCircleMinus, faFileInvoiceDollar, faMagnifyingGlass, faPlay, faPlus, faPrint } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import useClient from "../Clients/useClient";
+import OffCanvas from "../../shared/components/OffCanvas/Index";
+import { FormulasCreate } from "./FormulasCreate";
+import { useState } from "react";
+import { Direction } from "../../shared/components/OffCanvas/Models";
 export const Formulas = () => {
+    const [visible, setVisible] = useState(false);
+    const handleClose = (): void => {
+        setVisible(false);
+    }
     const { clients } = useClient();
     return (
         <div> <div className="w-full p-4">
             <div className="flex space-x-4 mb-2">
                 <div className="mb-2">
                     <button type='button'
+                        onClick={() => setVisible(true)}
                         className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
                         <FontAwesomeIcon
                             icon={faPlus}
@@ -65,6 +74,9 @@ export const Formulas = () => {
                 </nav>
             </div>
         </div>
+            <OffCanvas titlePrincipal='Nueva formula' visible={visible} xClose={handleClose} position={Direction.Right} size="lg" >
+                <FormulasCreate />
+            </OffCanvas>
         </div>
     )
 }

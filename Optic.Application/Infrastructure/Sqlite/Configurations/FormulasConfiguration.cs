@@ -28,11 +28,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Configurations
             builder.HasMany(x => x.Tags)
                 .WithMany(x => x.Formulas)
                 .UsingEntity("FormulasTags");
-
-            //Diagnosis
-            builder.HasMany(x => x.Diagnosis)
-                .WithMany(x => x.Formulas)
-                .UsingEntity<FormulaDiagnosis>("FormulasDiagnosis");
         }
     }
 }

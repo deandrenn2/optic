@@ -14,11 +14,29 @@ OffCanvas
    min-width: 400px;
 }
 
+.offcanvas--sm {
+   max-width: 400px;
+}
+
+.offcanvas--md {
+   width: 600px;
+   max-width: 600px;
+}
+
+.offcanvas--lg {
+   width: 1000px;
+   max-width: 1000px;
+}
+
+.offcanvas--xl {
+   width: 1500px;
+   max-width: 1500px;
+}
+
 .offcanvas--right {
    right: 0px;
    bottom: 0px;
    top: 0px;
-   max-width: 400px;
    animation: fadeInRight 250ms ease-in;
 }
 

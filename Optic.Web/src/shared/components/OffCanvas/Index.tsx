@@ -1,4 +1,4 @@
-import { Direction } from "./Models";
+import { Direction, Size } from "./Models";
 import { useEffect } from "react";
 import './OffCanvas.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,10 +18,10 @@ function OffCanvas({
 	titleFooter,
 	headerFontIcon,
 	xAction,
-	maxWidth,
 	xClose,
 	isEnabledFooter,
 	buttonFooter,
+	size
 }: {
 	position: Direction;
 	visible: boolean;
@@ -30,10 +30,10 @@ function OffCanvas({
 	titleFooter?: string;
 	headerFontIcon?: string;
 	xAction?: () => void;
-	maxWidth?: string;
 	xClose?: () => void;
 	isEnabledFooter?: boolean;
 	buttonFooter?: ButtonFooterOffCanvas;
+	size?: Size;
 }) {
 	const handleAction = () => {
 		if (xAction) {
@@ -61,10 +61,10 @@ function OffCanvas({
 	if (visible && position === Direction.Right)
 		return (
 			<>
-				<div className="offcanvas-backdrop show" onClick={() => handleClose()}></div>
+				<div className={`offcanvas-backdrop show `}></div>
 				<div
-					className="offcanvas offcanvas--right"
-					style={{ maxWidth: maxWidth?.toString() || "400px" }}
+					className={`offcanvas offcanvas--right offcanvas--${size || "sm"}`}
+
 				>
 					<div className="offcanvas-header">
 						<div className="offcanvas-title">

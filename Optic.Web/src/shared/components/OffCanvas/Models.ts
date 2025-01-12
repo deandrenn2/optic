@@ -4,3 +4,5 @@ export enum Direction {
    Left,
    Right,
 }
+
+export type Size = 'sm' | 'md' | 'lg' | 'xl';

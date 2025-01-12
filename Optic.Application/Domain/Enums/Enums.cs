@@ -26,3 +26,22 @@ public enum LevelSetting
     User = 2
 }
 
+
+public enum InvoiceState
+{
+    Draft = 1,
+    Credit = 2,
+    Paid = 3,
+    returning = 4,
+    Canceled = 5
+}
+
+public enum FormulaState
+{
+    Draft = 1,
+    Credit = 2,
+    Paid = 3,
+    returning = 4,
+    Canceled = 5
+}
+

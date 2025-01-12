@@ -1,17 +1,13 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import './index.css';
-import App from './App.tsx';
-import { Home } from './slices/Home/Home.tsx';
-import { Clients } from './slices/Clients/Clients.tsx';
-import { Login } from './routes/Login/Login.tsx';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { UserCreate } from './routes/Login/UserCreate.tsx';
-import { BusinessCreate } from './routes/Login/BusinessCreate.tsx';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { router } from './routes/Router';
+
 import { ClientDetail } from './slices/Clients/ClientDetail.tsx';
 import { Products } from './slices/Products/Products.tsx';
 import { Suppliers } from './slices/Suppliers/Suppliers.tsx';
@@ -76,8 +72,8 @@ const router = createBrowserRouter([
             element: <FormulasDetail />,
          },
          {
-            path: 'Billing',
-            element: < Billing />,
+            path: 'Facturación',
+            element: <Facturación />,
          },
          {
             path: 'Settings',
@@ -98,10 +94,6 @@ const router = createBrowserRouter([
                {
                   path: 'IdentificationTypes',
                   element: <IdentificationTypes />
-               },
-               {
-                  path: 'Brands',
-                  element: <Brands />,
                },
                {
                   path: 'Config',

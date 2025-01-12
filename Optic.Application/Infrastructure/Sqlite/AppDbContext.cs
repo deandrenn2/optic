@@ -27,8 +27,8 @@ public class AppDbContext : DbContext
     public DbSet<Formula> Formulas => Set<Formula>();
     public DbSet<FormulaDiagnosis> FormulaDiagnosis => Set<FormulaDiagnosis>();
     public DbSet<InvoiceDetail> InvoiceDetails => Set<InvoiceDetail>();
-    public DbSet<InvoicePayments> InvoicePayments => Set<InvoicePayments>();
-    public DbSet<InvoiceServices> InvoiceServices => Set<InvoiceServices>();
+    public DbSet<InvoicePayment> InvoicePayments => Set<InvoicePayment>();
+    public DbSet<InvoiceService> InvoiceServices => Set<InvoiceService>();
     public DbSet<Diagnosis> Diagnosis => Set<Diagnosis>();
     public DbSet<Tags> Tags => Set<Tags>();
 
@@ -81,6 +81,7 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ProductConfiguration());
         modelBuilder.ApplyConfiguration(new InvoiceConfiguration());
         modelBuilder.ApplyConfiguration(new FormulasConfiguration());
+        modelBuilder.ApplyConfiguration(new FormulaDiagnosisConfiguration());
         modelBuilder.ApplyConfiguration(new DiagnosisConfiguration());
     }
 

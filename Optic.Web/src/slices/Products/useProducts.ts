@@ -5,6 +5,7 @@ import {
    deleteProductService,
    getCategories,
    getProducts,
+   getValidateProduct,
    updateCategoryService,
    updateProductService,
 } from './ProductsServices';
@@ -66,6 +67,19 @@ export const useProducts = () => {
       createProduct,
       deleteProduct,
       updateProduct,
+   };
+};
+
+export const useValidateProduct = (code?: string | null) => {
+   const queryValidateProduct = useQuery({
+      queryKey: [`${KEY}_Validate_${code}`],
+      queryFn: () => getValidateProduct(code),
+      enabled: !!code && code.length > 0,
+   });
+
+   return {
+      queryValidateProduct,
+      validateProduct: queryValidateProduct?.data?.data,
    };
 };
 
