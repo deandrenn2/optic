@@ -7,7 +7,7 @@ import { Direction } from "../../shared/components/OffCanvas/Models";
 import { useState } from "react";
 import { IdentificationTypeModel } from "../../shared/components/List/ListModels";
 export const IdentificationTypes = () => {
-    const { identificationTypes } = useListSettings();
+    const { identificationTypes ,  } = useListSettings();
     const [visible,setVisible] = useState(false);
     const [identificationType,setIdentificationType] = useState<IdentificationTypeModel>();
    
@@ -18,7 +18,13 @@ export const IdentificationTypes = () => {
         setIdentificationType(identificationType);  
         setVisible(true);
     }
-    console.log(identificationType);
+    const handleFormSubmit = (updateType: IdentificationTypeModel) => {
+        useListSettings().updateIdentificationType.mutateAsync(updateType);
+        setVisible(true);
+        
+    }
+
+    
     return (
         <div>
             <div className="flex space-x-4 mb-4">
@@ -55,6 +61,7 @@ export const IdentificationTypes = () => {
                             <tr key={identification.id}>
                                 <td className="border border-gray-300 p-2 text-center">
                                     {identification.orden}</td>
+
                                 <td className="border border-gray-300 p-2 text-center">{identification.name}</td>
                                 <td className="border border-gray-300 p-2 text-center">
                                     <span title={identification?.name} className='text-blue-700 font-bold'>{identification?.abbreviation}</span>
@@ -69,9 +76,11 @@ export const IdentificationTypes = () => {
                     </tbody>
                 </table>
             </div>
-            <OffCanvas titlePrincipal='Actulizacion Identificación' visible={visible} xClose={handleClose} position={Direction.Right} >
-                <IdentificationForm identificationType={identificationType} />
+            <OffCanvas titlePrincipal='Actualizacion Identificación' visible={visible} xClose={handleClose} position={Direction.Right} >
+                <IdentificationForm identificationType={identificationType}
+                  onSubmit={handleFormSubmit} />
             </OffCanvas>
         </div>
     )
 }
+

@@ -39,14 +39,14 @@ export const getSettings = async (): Promise<MsgResponse<SettingsSystemModel>> =
    return response.data;
 };
 
-export const upadteIdentificationType = async (identificationType: IdentificationTypeModel): Promise<MsgResponse<IdentificationTypeModel>> => {
+export const updateIdentificationTypeService = async (identificationType: IdentificationTypeModel): Promise<MsgResponse<IdentificationTypeModel>> => {
    const url = 'api/settings/identificationTypes';
    const response = await ApiClient.put<MsgResponse<IdentificationTypeModel>>(url, identificationType);
 
    if (response.status !== 200 && response.status !== 201) {
       return {
          isSuccess: false,
-         message: 'Error al obtener tipos de actulizar identificación',
+         message: 'Error al obtener tipos de actualizar identificación',
          isFailure: true,
          error: {
             code: response.status.toString(),
@@ -54,6 +54,5 @@ export const upadteIdentificationType = async (identificationType: Identificatio
          },
       };
    }
-
    return response.data;
 };

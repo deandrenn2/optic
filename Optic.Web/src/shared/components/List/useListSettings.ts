@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getIdentificationTypes, getSettings, upadteIdentificationType } from './ListServices';
+import { getIdentificationTypes, getSettings, updateIdentificationTypeService } from './ListServices';
 import { toast } from 'react-toastify';
 const KEY = 'LIST_SETTINGS';
 
@@ -17,7 +17,7 @@ export const useListSettings = () => {
    });
 
    const updateIdentificationType = useMutation({
-      mutationFn: upadteIdentificationType,
+      mutationFn: updateIdentificationTypeService,
       onSuccess: (data) => {
          if (!data.isSuccess) {
             toast.info(data.message);
@@ -29,8 +29,6 @@ export const useListSettings = () => {
          }
       },
    });
-
-
    return {
       settings: querySettings?.data?.data,
       identificationTypes: queryIdentificationTypes?.data?.data,
