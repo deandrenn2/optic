@@ -77,8 +77,23 @@ export const useValidateProduct = (code?: string | null) => {
       enabled: !!code && code.length > 0,
    });
 
+   const mutationValidateProduct = useMutation({
+      mutationFn: getValidateProduct,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               queryValidateProduct.refetch();
+            }
+         }
+      },
+   });
+
    return {
       queryValidateProduct,
+      mutationValidateProduct,
       validateProduct: queryValidateProduct?.data?.data,
    };
 };
