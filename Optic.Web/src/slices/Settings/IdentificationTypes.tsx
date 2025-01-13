@@ -77,8 +77,7 @@ export const IdentificationTypes = () => {
                 </table>
             </div>
             <OffCanvas titlePrincipal='Actualizacion Identificación' visible={visible} xClose={handleClose} position={Direction.Right} >
-                <IdentificationForm identificationType={identificationType}
-                  onSubmit={handleFormSubmit} />
+                <IdentificationForm identificationType={identificationType}/>
             </OffCanvas>
         </div>
     )

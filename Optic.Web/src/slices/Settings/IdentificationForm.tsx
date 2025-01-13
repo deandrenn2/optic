@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { IdentificationTypeModel } from "../../shared/components/List/ListModels"
 import { useListSettings } from "../../shared/components/List/useListSettings";
-export const IdentificationForm = ({identificationType}: { identificationType: IdentificationTypeModel | undefined, id: number }) => {
+export const IdentificationForm = ({identificationType}: { identificationType: IdentificationTypeModel | undefined, }) => {
    const { updateIdentificationType } = useListSettings();
    const [form, setForm] = useState({   
       id: 0,
