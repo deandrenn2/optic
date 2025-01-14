@@ -29,3 +29,10 @@ export interface IdentificationTypeModel {
    name: string;
    abbreviation: string;
 }
+
+export interface IdentificationTypeResponseModel {
+   id: number;
+   orden: number;
+   name: string;
+   abbreviation: string;
+}

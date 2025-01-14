@@ -53,7 +53,7 @@ export const SettingsForm = ({ id }: { id?: number }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white p-9 w-full max-w-md grid gap-6  my-5">
+        <form onSubmit={handleSubmit} className="bg-white w-full max-w-md grid gap-3">
             <div>
                 <label
                     htmlFor="namesTxt"

@@ -1,4 +1,4 @@
-import { faCog, faList, faUser, } from "@fortawesome/free-solid-svg-icons";
+import { faCog, faCopyright, faList, faUser, } from "@fortawesome/free-solid-svg-icons";
 
 import { NavVerticalItemModel } from "../../shared/components/Navigation/Model";
 import NavVertical from "../../shared/components/Navigation/NavVertical";
@@ -26,6 +26,14 @@ export const SettingsMenu = () => {
         },
         {
             id: 3,
+            name: 'Marcas',
+            description: 'Configuraciones de Marcas.',
+            url: '/Settings/Brands',
+            titleSection: 'Configuraciones',
+            fontIcon:faCopyright,
+        },
+        {
+            id: 4,
             name: 'Configuraciones',
             description: 'Configuraciones generales del sistema.',
             url: '/Settings/Config',

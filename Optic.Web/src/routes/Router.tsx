@@ -8,7 +8,7 @@ import { ClientDetail } from '../slices/Clients/ClientDetail.tsx';
 import { Products } from '../slices/Products/Products.tsx';
 import { Suppliers } from '../slices/Suppliers/Suppliers.tsx';
 import { Formulas } from '../slices/Formulas/Formulas.tsx';
-import { Facturación } from '../slices/billing/billing.tsx';
+import { Billing } from '../slices/Billing/Billing.tsx';
 import { SettingsDetail } from '../slices/Users/UsersDetail.tsx';
 import { SupplierDetail } from '../slices/Suppliers/SupplierDetail.tsx';
 import { ProductsDetail } from '../slices/Products/ProductsDetail.tsx';
@@ -20,10 +20,9 @@ import { Business } from '../slices/Business/Business.tsx';
 import { FormulasCreate } from '../slices/Formulas/FormulasCreate.tsx';
 import { createBrowserRouter } from 'react-router-dom';
 import { Users } from '../slices/Users/Users.tsx';
-
+import { Brands } from '../slices/Settings/Brands.tsx';
 export const router = createBrowserRouter([
     {
-
         path: '/',
         element: <App />,
         children: [
@@ -66,8 +65,8 @@ export const router = createBrowserRouter([
                 element: <FormulasCreate />,
             },
             {
-                path: 'Facturación',
-                element: <Facturación />,
+                path: 'Billing',
+                element: <Billing />,
             },
             {
                 path: 'Settings',
@@ -92,6 +91,10 @@ export const router = createBrowserRouter([
                     {
                         path: 'Config',
                         element: <Settings />,
+                    },
+                    {
+                        path: 'Brands',
+                        element: <Brands />
                     },
                 ]
             },

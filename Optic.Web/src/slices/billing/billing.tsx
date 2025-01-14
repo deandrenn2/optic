@@ -1,6 +1,6 @@
 import { faCircleMinus, faFileInvoiceDollar, faPlay, faPrint } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-export const Facturación = () => {
+export const Billing = () => {
     return (
         <div className="w-full p-4">
                 <div className="mb-2">

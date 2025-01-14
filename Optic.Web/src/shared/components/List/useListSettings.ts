@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import { getIdentificationTypes, getSettings } from './ListServices';
-
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getIdentificationTypes, getSettings, updateIdentificationTypeService } from './ListServices';
+import { toast } from 'react-toastify';
 const KEY = 'LIST_SETTINGS';
 
 export const useListSettings = () => {
@@ -16,10 +16,25 @@ export const useListSettings = () => {
       staleTime: Infinity,
    });
 
+   const updateIdentificationType = useMutation({
+      mutationFn: updateIdentificationTypeService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               queryIdentificationTypes.refetch();
+            }
+         }
+      },
+   });
    return {
       settings: querySettings?.data?.data,
       identificationTypes: queryIdentificationTypes?.data?.data,
       querySettings,
       queryIdentificationTypes,
+      updateIdentificationType,
    };
 };
+
