@@ -9,17 +9,11 @@ import { MultiValue, SingleValue } from "react-select";
 import { Option } from "../../shared/model";
 import { format } from "date-fns";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
-import { useValidateProduct } from "../Products/useProducts";
-import { ProductModel, ProductsResponseModel } from "../Products/ProductModel";
-
 
 export const FormulasCreate = () => {
     const [client, setClient] = useState<Option | undefined>();
     const [diagnosis, setDiagnosis] = useState<DiagnosisModel[]>([]);
-    const [codeProduct, setCodeProduct] = useState<string>("");
-    const [products, setProducts] = useState<ProductsResponseModel[]>([]);
-    // const [invoiceDetail, setInvoiceDetail] = useState<InvoiceDetailModel[]>([]);
-    const { mutationValidateProduct } = useValidateProduct();
+    const [invoiceDetail, setInvoiceDetail] = useState<InvoiceDetailModel[]>([]);
 
     const [formula, setFormula] = useState<CreateFormulasModel>({
         idBusiness: 0,
@@ -76,40 +70,7 @@ export const FormulasCreate = () => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { value, name } = event.target;
-        if (name === 'priceLens' || name === 'priceConsultation')
-            setFormula({ ...formula, [name]: value ? parseFloat(value) : 0 });
-        else
-            setFormula({ ...formula, [name]: value });
-    }
-
-    const handleAggregateProduct = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const response = await mutationValidateProduct.mutateAsync(codeProduct);
-        if (response.isSuccess) {
-            if (response.data) {
-                setProducts([...products, { ...response.data, quantity: 1 }]);
-            }
-            setCodeProduct("");
-        }
-    }
-
-    const handleDeleteProduct = (id: number) => {
-        setProducts(products.filter((x) => x.id !== id));
-    }
-
-    const totalProducts = products.reduce((acc, x) => acc + x.unitPrice * x.quantity, 0);
-
-    const getTotalSumaTotal = () => {
-        let total = 0;
-        total = totalProducts;
-
-        if (formula.priceLens)
-            total += formula.priceLens;
-
-        if (formula.priceConsultation)
-            total += formula.priceConsultation;
-
-        return total;
+        setFormula({ ...formula, [name]: value });
     }
 
     if (formula)
@@ -177,46 +138,49 @@ export const FormulasCreate = () => {
 
                     <div className="flex flex-col gap-2 mb-4">
 
+                        <div className="flex justify-between">
+                            <span className="font-bold">MARCO CATERPILLER</span>
+                            <input type="text" value="120000"
+                                className="border border-gray-300 rounded p-1 ml-6" />
+                            <input type="number" value="2"
+                                className="w-12 border border-gray-300 rounded p-1 ml-2" />
+                            <button className="text-red-500  flex items-center"><i
+                                className="fas fa-minus-circle ml-2"></i></button>
+                            <p className=" right-0">$400.000</p>
+                            <button className="bg-red-500 text-white px-2 py-1 rounded" ><FontAwesomeIcon icon={faMinus} /></button>
 
-                        {
-                            products.map((x) => (
-                                <div key={x.id} className="flex justify-between">
-                                    <span className="font-bold">{x.name}</span>
-                                    <input type="text" className="border border-gray-300 rounded p-1 ml-6"
-                                        value={x.unitPrice} />
-                                    <input type="number" value={x.quantity}
-                                        className="w-12 border border-gray-300 rounded p-1 ml-2" />
-                                    <button className="text-red-500  justify-center"><i
-                                        className="fas fa-minus-circle ml-2 "></i></button>
-                                    <p className=" right-0"> <MoneyFormatter amount={x.unitPrice * x.quantity} /></p>
-                                    <button className="bg-red-500 text-white px-2 py-1 rounded" ><FontAwesomeIcon icon={faMinus} onClick={() => handleDeleteProduct(x.id)} /></button>
-                                </div>
-                            ))
-                        }
+                        </div>
+                        <div className="flex justify-between">
+                            <span className="font-bold">REPARACION LENTES</span>
+                            <input type="text" className="border border-gray-300 rounded p-1 ml-6"
+                                value="35000" />
+                            <input type="number" value="1"
+                                className="w-12 border border-gray-300 rounded p-1 ml-2" />
+                            <button className="text-red-500  justify-center"><i
+                                className="fas fa-minus-circle ml-2 "></i></button>
+                            <p className=" right-0"> $400.000</p>
+                            <button className="bg-red-500 text-white px-2 py-1 rounded" ><FontAwesomeIcon icon={faMinus} /></button>
+                        </div>
                         <div className="flex justify-end justify-items-end">
-                            <p><span className="font-semibold">Total Productos:</span> <MoneyFormatter amount={totalProducts} /></p>
+                            <p><span className="font-semibold">Total Productos:</span> $520.000</p>
                         </div>
                     </div>
 
                     <div>
-                        <form onSubmit={handleAggregateProduct}>
-                            <input
-                                required
-                                name="name"
-                                onChange={(e) => setCodeProduct(e.target.value)}
-                                value={codeProduct}
-                                placeholder="Agregar producto por código"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                        </form>
 
+                        <input
+                            required
+                            name="name"
+                            onChange={(e) => handleChange(e)}
+                            placeholder="Agregar producto por código"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                 </div>
                 <div className="mb-4 text-right">
-                    <p>Consulta: <MoneyFormatter amount={formula.priceConsultation} /></p>
-                    {formula?.priceLens && <p>Lens: <MoneyFormatter amount={formula.priceLens} /></p>}
-                    <p>Productos: <MoneyFormatter amount={totalProducts} /></p>
+                    <p>Consulta: $35.000</p>
+                    <p>Productos: $520.000</p>
                     <p>Abono: $0</p>
-                    <p className="font-bold">Total: <MoneyFormatter amount={getTotalSumaTotal()} /></p>
+                    <p className="font-bold">Total: $555.000</p>
                 </div>
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1">Guardar
                     Cambios

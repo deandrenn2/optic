@@ -1,13 +1,7 @@
-
-
-import { useState } from "react";
 import ButtonNavigation from "../../shared/components/Buttons/ButtonNavigation";
 import { CardClient, } from "../Dashborad/ClientCard";
 import { ProductoCard } from "../Dashborad/ProductsCard";
-import { FormulasCreate } from "../Formulas/FormulasCreate";
-
 export const Home = () => {
-   const [isOpen] = useState(false);
    return (
       <>
          {/* <!-- Cards Section --> */}
@@ -176,7 +170,7 @@ export const Home = () => {
                   <ProductoCard />
                </div>
             </div>
-            {isOpen && <FormulasCreate />}
+           
          </div>
       </>
    );
