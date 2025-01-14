@@ -12,8 +12,8 @@ export const Sidebar = () => {
                <MenuItem icon={faUser} path='/clientes' text='Clientes' />
                <MenuItem icon={faUsers} path='/Suppliers' text='Proveedores' />
                <MenuItem icon={faTruck} path='/Products' text='Productos' />
-               <MenuItem icon={faClipboardCheck} path='/formulas' text='Formulas' />
-               <MenuItem icon={faMoneyCheckDollar} path='/Facturación' text='Facturación' />
+               <MenuItem icon={faClipboardCheck} path='/Formulas' text='Formulas' />
+               <MenuItem icon={faMoneyCheckDollar} path='/Billing' text='Facturacion' />
                <MenuItem icon={faGear} path='/Settings' text='Configuraciones' />
             </ul>
          </nav>

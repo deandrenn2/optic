@@ -68,7 +68,7 @@ export const IdentificationTypes = () => {
                                 </td>
                                 <td className="border border-gray-300 p-2 text-center">
                                 <span className="text-center" >
-                                    <FontAwesomeIcon icon={faPencil} className="text-blue-500" onClick={() => handleIdentificationType(identification)} />
+                                    <FontAwesomeIcon icon={faPencil} className="text-blue-500 cursor-pointer" onClick={() => handleIdentificationType(identification)} />
                                 </span>
                                 </td>
                             </tr>

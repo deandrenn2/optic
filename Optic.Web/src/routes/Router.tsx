@@ -20,6 +20,7 @@ import { Business } from '../slices/Business/Business.tsx';
 import { FormulasCreate } from '../slices/Formulas/FormulasCreate.tsx';
 import { createBrowserRouter } from 'react-router-dom';
 import { Users } from '../slices/Users/Users.tsx';
+import { Brands } from '../slices/Settings/Brands.tsx';
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -90,6 +91,10 @@ export const router = createBrowserRouter([
                     {
                         path: 'Config',
                         element: <Settings />,
+                    },
+                    {
+                        path: 'Brands',
+                        element: <Brands />
                     },
                 ]
             },
