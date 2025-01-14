@@ -18,7 +18,7 @@ public class UpdateIdentificationType : ICarterModule
     {
         app.MapPut("/api/settings/identificationType", async (HttpRequest req, UpdateIdentificationTypeCommand command, IMediator mediator) =>
         {
-            await mediator.Send(command);
+            return await mediator.Send(command);
         })
         .WithName(nameof(UpdateIdentificationType))
         .WithTags("Settings")
@@ -37,7 +37,7 @@ public class UpdateIdentificationType : ICarterModule
             {
                 return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Product.ErrorValidation", "Se presentaron errores de validación"));
             }
-            
+
             var identificationType = await context.IdentificationTypes.FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if (identificationType == null)
@@ -47,7 +47,7 @@ public class UpdateIdentificationType : ICarterModule
 
             identificationType.Update(request.Orden, request.Name, request.Abbreviation);
 
-           var resCount = await context.SaveChangesAsync();
+            var resCount = await context.SaveChangesAsync();
 
             if (resCount > 0)
             {
