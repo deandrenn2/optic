@@ -7,7 +7,7 @@ export const Brands = () => {
             <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                     <tr>
-                        <th className="border border-gray-300 p-2">Marca</th>
+                        <th className="border border-gray-300 p-2">Marcas</th>
                     </tr>
                 </thead>
                 <tbody>

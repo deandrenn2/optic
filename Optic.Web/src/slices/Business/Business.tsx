@@ -5,7 +5,7 @@ import ButtonSave from "../../shared/components/Buttons/ButtonSave";
 export const Business = () => {
     const [hasError] = useState<string>('');
     const { business } = useUserContext();
-
+    
     return (
         <div className="w-full flex justify-center items-center">
             <form
@@ -19,7 +19,6 @@ export const Business = () => {
                         />
                     </div>
                 </div>
-
                 <h2 className="text-3xl font-bold mb-2 text-center">
                     <span>{business?.companyName}</span>
                 </h2>
@@ -152,7 +151,7 @@ export const Business = () => {
                 </div>
 
                 <div>
-                    <div className="text-sm text-center pt-2 text-red-600 hover:text-blue-500">
+                    <div className="text-sm text-center  text-red-600 hover:text-blue-500">
                         <span>
                             <a href="">{hasError && hasError}</a>
                         </span>
