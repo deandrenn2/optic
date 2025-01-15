@@ -20,27 +20,25 @@ public class GetDiagnosis : ICarterModule
              .WithName(nameof(GetDiagnosis))
              .WithTags(nameof(Formula))
              .ProducesValidationProblem()
-             .Produces(StatusCodes.Status200OK);
+             .Produces<List<Diagnosis>>(StatusCodes.Status200OK);
     }
 
-
-
-    public record GetDiagnosisQuery : IRequest<Result>
+    public record GetDiagnosisQuery : IRequest<IResult>
     {
     }
 
-    public class GetDiagnosisHandler(AppDbContext context) : IRequestHandler<GetDiagnosisQuery, Result>
+    public class GetDiagnosisHandler(AppDbContext context) : IRequestHandler<GetDiagnosisQuery, IResult>
     {
-        public async Task<Result> Handle(GetDiagnosisQuery request, CancellationToken cancellationToken)
+        public async Task<IResult> Handle(GetDiagnosisQuery request, CancellationToken cancellationToken)
         {
             var diagnosis = await context.Diagnosis.ToListAsync();
 
             if (diagnosis == null || diagnosis.Count == 0)
             {
-                return Result.Success("No hay diagnosticos registrados");
+                return Results.Ok(Result.Success("No hay diagnosticos registrados"));
             }
 
-            return Result<List<Diagnosis>>.Success(diagnosis.Select(x => x).ToList(), "Diagnosis obtenidos correctamente");
+            return Results.Ok(Result<List<Diagnosis>>.Success(diagnosis.Select(x => x).ToList(), "Diagnosis obtenidos correctamente"));
         }
     }
 }
