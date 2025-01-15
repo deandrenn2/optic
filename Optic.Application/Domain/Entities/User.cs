@@ -69,7 +69,19 @@ public class User : AggregateRoot
 
     public bool ValidateSecurePharse(string securePharse)
     {
-        return this.SecurePharse == securePharse;
+        return this.SecurePharse.Trim().ToUpper() == securePharse.Trim().ToUpper();
+    }
+
+    public void UpdatePassword(string password)
+    {
+        this.Password = password.EncryptPassword();
+    }
+
+    public void Update(string firstName, string lastName, string email)
+    {
+        this.FirstName = firstName;
+        this.LastName = lastName;
+        this.Email = email;
     }
 
     public void SetAvatar(int id)

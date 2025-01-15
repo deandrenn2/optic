@@ -114,8 +114,6 @@ export const router = createBrowserRouter([
         path: 'Login',
         element: <Login />,
     },
-
-
     {
         path: '/Create/User',
         element: <UserCreate />,
