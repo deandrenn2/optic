@@ -49,6 +49,11 @@ public class Product : AggregateRoot
         Categories.Add(category);
     }
 
+    public void UpdateQuantity(int quantity)
+    {
+        Quantity = quantity;
+    }
+
     public void UpdateImage(string image)
     {
         Image = image;
