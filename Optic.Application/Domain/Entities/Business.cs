@@ -54,6 +54,17 @@ namespace Optic.Application.Domain.Entities
                 cellPhoneNumber,
                 phoneNumber);
         }
+
+        public void Update(string companyName, string abbreviation, string nit, string address, string city, string cellPhoneNumber, string phoneNumber)
+        {
+            this.CompanyName = companyName;
+            this.Abbreviation = abbreviation;
+            this.Nit = nit;
+            this.Address = address;
+            this.City = city;
+            this.CellPhoneNumber = cellPhoneNumber;
+            this.PhoneNumber = phoneNumber;
+        }
     }
 
 

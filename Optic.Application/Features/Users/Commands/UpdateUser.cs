@@ -50,7 +50,7 @@ public class UpdateUser : ICarterModule
 
             if (resCount > 0)
             {
-                return Result<UpdateUserCommand>.Success(new UpdateUserCommand(user.Email, user.FirstName, user.LastName), "Usuario actualizado correctamente");
+                return Result<UpdateUserCommand>.Success(request, "Usuario actualizado correctamente");
             }
             else
             {
