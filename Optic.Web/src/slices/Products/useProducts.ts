@@ -5,11 +5,14 @@ import {
    deleteProductService,
    getCategories,
    getProducts,
+   getQuantity,
    getValidateProduct,
    updateCategoryService,
    updateProductService,
+   updateQuantityService,
 } from './ProductsServices';
 import { toast } from 'react-toastify';
+
 
 const KEY = 'Products';
 
@@ -140,3 +143,32 @@ export const useCategories = () => {
       updateCategory,
    };
 };
+
+export const useQuentity = () => {
+   const queryQuantity = useQuery({
+      queryKey: [`${KEY}_Quantity`],
+      queryFn: getQuantity,
+      refetchOnWindowFocus: false,
+   });
+   
+   const updateQuantity = useMutation({
+      mutationFn: updateQuantityService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               queryQuantity.refetch();
+            }
+         }
+      },
+   });
+   return {
+      queryQuantity,
+      quantity: queryQuantity?.data?.data,
+      updateQuantity,
+   };
+};
+
+

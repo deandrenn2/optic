@@ -1,7 +1,7 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
 import { CreateClientModel } from '../Clients/ClientModel';
-import { CategoriesModel, ProductModel, ProductsResponseModel } from './ProductModel';
+import { CategoriesModel, ProductModel, ProductsResponseModel, QuantityResponseModel } from './ProductModel';
 
 export const createProductService = async (model: ProductModel): Promise<MsgResponse<ProductModel>> => {
    const url = 'api/Products';
@@ -144,6 +144,42 @@ export const getValidateProduct = async (code?: string | null): Promise<MsgRespo
       return {
          isSuccess: false,
          message: 'Error al validar producto',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};
+export const getQuantity = async (id: number): Promise<MsgResponse<QuantityResponseModel>> => {
+   const url = `api/products/quantity/${id}`;
+   const response = await ApiClient.get<MsgResponse<QuantityResponseModel>>(url);
+
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al obtener cantidad',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};
+export const updateQuantityService = async (model: QuantityResponseModel): Promise<MsgResponse<QuantityResponseModel>> => {
+   const url = 'api/products/quantity';
+   const response = await ApiClient.put<MsgResponse<QuantityResponseModel>>(url, model);
+
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al actualizar cantidad',
          isFailure: true,
          error: {
             code: response.status.toString(),

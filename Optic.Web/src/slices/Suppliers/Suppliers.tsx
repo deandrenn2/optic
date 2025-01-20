@@ -9,7 +9,6 @@ import Swal from "sweetalert2";
 import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 import { Bar } from "../../shared/components/Progress/Bar";
-
 export const Suppliers = () => {
     const [visible, setVisible] = useState(false);
 
@@ -81,7 +80,8 @@ export const Suppliers = () => {
                             <td className="border border-gray-300 p-2 text-center">{supplier.address}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.email}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <DetailButton url={`/suppliers/${supplier.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />
+                                <DetailButton url={`/suppliers/${supplier.id}`}/>
+                               
                                 <DeleteButton id={supplier.id} onDelete={handleDelete} />
                             </td>
                         </tr>

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import useUserContext from "../../shared/context/useUserContext";
 import ButtonSave from "../../shared/components/Buttons/ButtonSave";
-
 export const Business = () => {
     const [hasError] = useState<string>('');
     const { business } = useUserContext();
+
+
+
     
     return (
         <div className="w-full flex justify-center items-center">

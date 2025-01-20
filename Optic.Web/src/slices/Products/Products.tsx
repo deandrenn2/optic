@@ -13,7 +13,7 @@ import { Bar } from "../../shared/components/Progress/Bar";
 import { useListSettings } from "../../shared/components/List/useListSettings";
 import { CategoriesForm } from "./CategoriesForm";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
-
+import { QuantitykButton } from "../../shared/components/Buttons/ButtonStork";
 export const Products = () => {
     const [visible, setVisible] = useState(false);
     const [visibleCategories, setVisibleCategories] = useState(false);
@@ -23,7 +23,6 @@ export const Products = () => {
     function handleClose(): void {
         setVisible(false);
     }
-
     function handleDelete(e: MouseEvent<HTMLButtonElement>, id: number): void {
         e.preventDefault();
         Swal.fire({
@@ -39,19 +38,15 @@ export const Products = () => {
             }
         })
     }
-
     const handleCloseCategories = (): void => {
         setVisibleCategories(false);
     }
-
     const getNameBrand = (id: number): string => {
         const brand = settings?.brands?.find(x => x.id === id);
         return brand?.name ?? '';
     }
-
     if (queryProducts.isLoading)
         return <Bar Title="Cargando..." />;
-
     return (
         <div className="w-full">
             <div className="flex space-x-4 mb-2">
@@ -84,7 +79,6 @@ export const Products = () => {
                 </div>
 
             </div>
-
             {/* <!-- TABLA DE PRODUCTOS --> */}
             <table className="min-w-full bg-white border border-gray-300">
                 <thead>
@@ -111,15 +105,16 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center"><MoneyFormatter amount={product.unitPrice} /></td>
                             <td className="border border-gray-300 p-2 text-center"> <MoneyFormatter amount={product.salePrice} /></td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <DetailButton url={`/products/${product.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />
-                                <DeleteButton id={product.id} onDelete={handleDelete} />
+                            <td className="border border-gray-300 p-2 text-center flex justify-center ">
+                                <DetailButton url={`/products/${product.id}`} className=" text-blue-500 text-2xl hover:text-blue-700 mr-2" />
+                                <QuantitykButton id={product.id} onStock={undefined}/>
+                                <DeleteButton id={product.id} onDelete={handleDelete}  />
+                                
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-
             <OffCanvas titlePrincipal='Registro de Producto' visible={visible} xClose={handleClose} position={Direction.Right} >
                 <ProductForm />
             </OffCanvas>

@@ -1,5 +1,4 @@
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { useLogin } from "../../routes/Login/useLogin";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { useState } from "react";

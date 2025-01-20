@@ -1,8 +1,6 @@
 import { faKey } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 export const PasswordModel = ({onClose}: { onClose: () => void }) => {
-
     return (
         <div className=" fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
             <div className="bg-white p-4 rounded-lg shadow-md w-full max-w-md">

@@ -5,7 +5,6 @@ import { PasswordModel } from "./PasswordModel";
 import useUserContext from "../../shared/context/useUserContext";
 import { ProfileImageModal } from "./ProfileImageModal";
 import ButtonSave from "../../shared/components/Buttons/ButtonSave";
-
 export const EditProfile = () => {
     const { user } = useUserContext();
     const [isOpen, setIsOpen] = useState(false);
