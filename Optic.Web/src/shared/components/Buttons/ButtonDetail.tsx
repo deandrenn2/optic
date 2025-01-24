@@ -6,11 +6,10 @@ const DetailButton = ({ url, className }: { url: string, className?: string }) =
         <Link
             to={url}
             title="Ver detalle"
-            className={className || "text-blue-500 text-2xl hover:text-blue-700"}
+            className={className || "text-blue-500 text-2xl hover:text-blue-700 mr-2"}
         >
-            <FontAwesomeIcon icon={faPlay} />
+        <FontAwesomeIcon icon={faPlay} />
         </Link>
     );
 };
-
 export default DetailButton;

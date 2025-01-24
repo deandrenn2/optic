@@ -1,17 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useUserContext from "../../shared/context/useUserContext";
-import ButtonSave from "../../shared/components/Buttons/ButtonSave";
+import { useBusiness } from "../../routes/Businesses/useBusiness";
 export const Business = () => {
     const [hasError] = useState<string>('');
     const { business } = useUserContext();
+    const { updateBusiness } = useBusiness();
+    const [form, setForm] = useState({
+        id: 0, 
+        companyName: "",
+        abbreviation: "",
+        nit: "",
+        city: "",
+        address: "",
+        cellPhoneNumber: "",
+        phoneNumber: "",
+    });
+    useEffect(() => {
+        if (business) {
+            setForm({
+                id: 0,
+                companyName: business.companyName,
+                abbreviation: business.abbreviation,
+                nit: business.nit,
+                
+                city: business.city,
+                address: business.address,
+                cellPhoneNumber: business.cellPhoneNumber,
+                phoneNumber: business.phoneNumber,
+            });
+        }
+    }, [business]);
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setForm((prevValues) => ({
+            ...prevValues,
+            [name]: value,
+        }));
+    };
+   
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        await updateBusiness.mutateAsync(form);
+        console.log("Formulario actualizado:", form);
+    };
 
-
-    
     return (
         <div className="w-full flex justify-center items-center">
-            <form
-                className=" bg-white p-8 rounded-lg shadow-md w-full max-w-md mx-5 grid gap-2">
+            <form onSubmit={handleSubmit} className=" bg-white p-8 rounded-lg shadow-md w-full max-w-md mx-5 grid gap-2">
                 <div className="relative flex items-center justify-center">
                     <div className="shrink-0 ">
                         <img
@@ -35,7 +71,8 @@ export const Business = () => {
                         <input
                             id="comapanyNameTxt"
                             name="companyName"
-                            value={business?.companyName}
+                            value={form?.companyName}
+                            onChange={handleInputChange}
                             required
                             className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Nombre"
@@ -53,7 +90,8 @@ export const Business = () => {
                         <input
                             id="abbreviationTxt"
                             name="abbreviation"
-                            value={business?.abbreviation}
+                            value={form?.abbreviation}
+                            onChange={handleInputChange}
                             required
                             className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Abreviatura"
@@ -71,7 +109,8 @@ export const Business = () => {
                         <input
                             id="nitTxt"
                             name="nit"
-                            value={business?.nit}
+                            value={form?.nit}
+                            onChange={handleInputChange}
                             required
                             className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Nit"
@@ -90,8 +129,9 @@ export const Business = () => {
                         <input
                             id="cityTxt"
                             name="city"
-                            value={business?.city}
-                            required
+                            value={form?.city}
+                            onChange={handleInputChange}
+                           
                             className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Ciudad"
                         />
@@ -108,9 +148,9 @@ export const Business = () => {
                     <div className="relative">
                         <input
                             id="addressTxt"
-                            required
                             name="address"
-                            value={business?.address}
+                            value={form?.address}
+                            onChange={handleInputChange}
                             className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Dirección"
                         />
@@ -128,7 +168,8 @@ export const Business = () => {
                             id="cellPhoneNumberTxt"
                             name="cellPhoneNumber"
                             required
-                            value={business?.cellPhoneNumber}
+                            value={form?.cellPhoneNumber}
+                            onChange={handleInputChange}
                             className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Linea celular"
                         />
@@ -145,13 +186,13 @@ export const Business = () => {
                         <input
                             id="phoneNumberTxt"
                             name="phoneNumber"
-                            value={business?.phoneNumber}
+                            value={form?.phoneNumber}
+                            onChange={handleInputChange}
                             className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Telefóno"
                         />
                     </div>
                 </div>
-
                 <div>
                     <div className="text-sm text-center  text-red-600 hover:text-blue-500">
                         <span>
@@ -159,8 +200,10 @@ export const Business = () => {
                         </span>
                     </div>
                 </div>
-                <div className=" flex justify-start">
-                    <ButtonSave/>
+                <div className="mt-4">                
+                    <button type="submit" disabled={updateBusiness.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
+                        {updateBusiness.isPending ? "Actualizando..." : "Actualizar"}
+                    </button>
                 </div>
             </form>
         </div>

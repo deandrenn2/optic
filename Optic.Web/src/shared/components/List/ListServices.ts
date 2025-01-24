@@ -42,7 +42,6 @@ export const getSettings = async (): Promise<MsgResponse<SettingsSystemModel>> =
 export const updateIdentificationTypeService = async (identificationType: IdentificationTypeModel): Promise<MsgResponse<IdentificationTypeModel>> => {
    const url = 'api/settings/identificationType';
    const response = await ApiClient.put<MsgResponse<IdentificationTypeModel>>(url, identificationType);
-
    if (response.status !== 200 && response.status !== 201) {
       return {
          isSuccess: false,

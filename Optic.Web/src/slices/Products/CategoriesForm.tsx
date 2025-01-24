@@ -31,7 +31,6 @@ export const CategoriesForm = () => {
     return (
         <>
             <form className="flex rounded-lg overflow-hidden" onSubmit={handleSubmit}>
-
                 <input
                     required
                     autoComplete="off"

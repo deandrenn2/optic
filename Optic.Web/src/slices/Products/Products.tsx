@@ -13,13 +13,22 @@ import { Bar } from "../../shared/components/Progress/Bar";
 import { useListSettings } from "../../shared/components/List/useListSettings";
 import { CategoriesForm } from "./CategoriesForm";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
-import { QuantitykButton } from "../../shared/components/Buttons/ButtonStork";
+import { ButtonStock } from "../../shared/components/Buttons/ButtonStock";
+import { ProductsResponseModel } from "./ProductModel";
+import { QuantitykModel } from "./QuantitykModelResta";
 export const Products = () => {
     const [visible, setVisible] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [visibleCategories, setVisibleCategories] = useState(false);
     const { settings } = useListSettings();
     const { products, queryProducts, deleteProduct } = useProducts();
-
+    const [product, setProduct] = useState<ProductsResponseModel | undefined>();
+    
+    const handleClickDecrease = (product: ProductsResponseModel) => {
+        setProduct(product);
+        setIsOpen(true);
+    }
+   
     function handleClose(): void {
         setVisible(false);
     }
@@ -105,11 +114,10 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center"><MoneyFormatter amount={product.unitPrice} /></td>
                             <td className="border border-gray-300 p-2 text-center"> <MoneyFormatter amount={product.salePrice} /></td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
-                            <td className="border border-gray-300 p-2 text-center flex justify-center ">
-                                <DetailButton url={`/products/${product.id}`} className=" text-blue-500 text-2xl hover:text-blue-700 mr-2" />
-                                <QuantitykButton id={product.id} onStock={undefined}/>
-                                <DeleteButton id={product.id} onDelete={handleDelete}  />
-                                
+                            <td className="border border-gray-300 p-2 text-center  ">
+                                <DetailButton url={`/products/${product.id}`} />
+                                <ButtonStock onClick={() => handleClickDecrease(product)}/>
+                                <DeleteButton id={product.id} onDelete={handleDelete} />
                             </td>
                         </tr>
                     ))}
@@ -121,6 +129,7 @@ export const Products = () => {
             <OffCanvas titlePrincipal='Registro de Categoria' visible={visibleCategories} xClose={handleCloseCategories} position={Direction.Right} >
                 <CategoriesForm />
             </OffCanvas>
+            {isOpen && <QuantitykModel onClose={() => setIsOpen(false)} />}
         </div>
     )
 }
