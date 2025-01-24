@@ -13,12 +13,16 @@ import { Bar } from "../../shared/components/Progress/Bar";
 import { useListSettings } from "../../shared/components/List/useListSettings";
 import { CategoriesForm } from "./CategoriesForm";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
-import { ButtonStock } from "../../shared/components/Buttons/ButtonStock";
+import { ButtonStockRemove } from "../../shared/components/Buttons/ButtonStockRemove";
 import { ProductsResponseModel } from "./ProductModel";
-import { QuantitykModel } from "./QuantitykModelResta";
+import { QuantitykModelRemove } from "./QuantitykModelRemove";
+
+
+
 export const Products = () => {
     const [visible, setVisible] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    
     const [visibleCategories, setVisibleCategories] = useState(false);
     const { settings } = useListSettings();
     const { products, queryProducts, deleteProduct } = useProducts();
@@ -116,7 +120,8 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                             <td className="border border-gray-300 p-2 text-center  ">
                                 <DetailButton url={`/products/${product.id}`} />
-                                <ButtonStock onClick={() => handleClickDecrease(product)}/>
+                                <ButtonStockRemove onClick={() => handleClickDecrease(product)}/>
+                                
                                 <DeleteButton id={product.id} onDelete={handleDelete} />
                             </td>
                         </tr>
@@ -128,8 +133,8 @@ export const Products = () => {
             </OffCanvas>
             <OffCanvas titlePrincipal='Registro de Categoria' visible={visibleCategories} xClose={handleCloseCategories} position={Direction.Right} >
                 <CategoriesForm />
-            </OffCanvas>
-            {isOpen && <QuantitykModel onClose={() => setIsOpen(false)} />}
+            </OffCanvas>      
+            {isOpen && <QuantitykModelRemove product={product}/>}
         </div>
     )
 }

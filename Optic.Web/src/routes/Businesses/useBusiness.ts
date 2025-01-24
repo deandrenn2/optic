@@ -18,10 +18,12 @@ export const useBusiness = () => {
             if (data.isSuccess) {
                toast.success(data.message);
                queryBusiness.refetch();
+               console.log()
             }
          }
       },
    })
+   
    return {
       business: queryBusiness?.data?.data,
       queryBusiness,

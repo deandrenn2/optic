@@ -24,7 +24,7 @@ public class UpdateBusiness : ICarterModule
         .Produces(StatusCodes.Status200OK);
     }
 
-    public record UpdateBusinessCommand(int IdBusiness, string CompanyName, string Abbreviation, string Nit, string Address, string City, string Phone, string CellPhoneNumber) : IRequest<Result>;
+    public record UpdateBusinessCommand(int Id, string CompanyName, string Abbreviation, string Nit, string Address, string City, string PhoneNumber, string CellPhoneNumber) : IRequest<Result>;
 
     public class UpdateBusinessHandler(AppDbContext context, IValidator<UpdateBusinessCommand> validator) : IRequestHandler<UpdateBusinessCommand, Result>
     {
@@ -37,14 +37,14 @@ public class UpdateBusiness : ICarterModule
                 return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Login.ErrorValidation", "Se presentaron errores de validación"));
             }
 
-            var business = await context.Businesses.FirstOrDefaultAsync(x => x.Id == request.IdBusiness);
+            var business = await context.Businesses.FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if (business == null)
             {
                 return Result.Failure(new Error("Business.ErrorUpdateBusiness", "El negocio no existe"));
             }
 
-            business.Update(request.CompanyName, request.Abbreviation, request.Nit, request.Address, request.City, request.CellPhoneNumber, request.Phone);
+            business.Update(request.CompanyName, request.Abbreviation, request.Nit, request.Address, request.City, request.CellPhoneNumber, request.PhoneNumber);
 
             var resCount = await context.SaveChangesAsync();
 
@@ -64,7 +64,7 @@ public class UpdateBusiness : ICarterModule
     {
         public UpdateBusinessValidator()
         {
-            RuleFor(x => x.IdBusiness).NotEmpty();
+            RuleFor(x => x.Id).NotEmpty();
             RuleFor(x => x.CompanyName).NotEmpty();
             RuleFor(x => x.Abbreviation).NotEmpty();
             RuleFor(x => x.Nit).NotEmpty();
