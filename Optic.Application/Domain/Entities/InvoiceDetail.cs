@@ -3,9 +3,10 @@ using Optic.Application.Domain.Primitives;
 
 public class InvoiceDetail : AggregateRoot
 {
-    public InvoiceDetail(int id, int idInvoice, string description, decimal price, int quantity) : base(id)
+    public InvoiceDetail(int id, int idInvoice, int idProduct, string description, decimal price, int quantity) : base(id)
     {
         IdInvoice = idInvoice;
+        IdProduct = idProduct;
         Description = description;
         Price = price;
         Quantity = quantity;
@@ -19,9 +20,9 @@ public class InvoiceDetail : AggregateRoot
     public int IdProduct { get; private set; }
     public Product Product { get; private set; }
 
-    public static InvoiceDetail Create(int id, int idInvoice, string description, decimal price, int quantity)
+    public static InvoiceDetail Create(int id, int idInvoice, int idProduct, string description, decimal price, int quantity)
     {
-        return new InvoiceDetail(id, idInvoice, description, price, quantity);
+        return new InvoiceDetail(id, idInvoice, idProduct, description, price, quantity);
     }
 
     public void Update(string description, decimal price, int quantity)

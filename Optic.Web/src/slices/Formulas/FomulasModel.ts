@@ -27,11 +27,11 @@ export interface DiagnosisModel {
 }
 
 export interface InvoiceDetailModel {
-   description: string;
+   description?: string;
    price: number;
    quantity: number;
    idProduct: number;
-   idInvoice: number;
+   idInvoice?: number;
 }
 
 export interface CreateFormulasModel {

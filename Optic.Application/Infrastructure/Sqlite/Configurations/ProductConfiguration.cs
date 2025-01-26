@@ -16,5 +16,11 @@ internal class ProductConfiguration : IEntityTypeConfiguration<Product>
             .WithMany(x => x.Products)
             .HasForeignKey(x => x.IdSupplier)
             .OnDelete(DeleteBehavior.Cascade);
+
+        //InvoiceDetails
+        builder.HasMany(x => x.InvoiceDetails)
+            .WithOne(x => x.Product)
+            .HasForeignKey(x => x.IdProduct)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

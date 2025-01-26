@@ -7,7 +7,6 @@ internal class FormulaDiagnosisConfiguration : IEntityTypeConfiguration<FormulaD
     {
         builder.ToTable("FormulasDiagnosis");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).ValueGeneratedNever();
 
         builder.HasOne(x => x.Diagnosis)
             .WithMany(x => x.FormulaDiagnosis)

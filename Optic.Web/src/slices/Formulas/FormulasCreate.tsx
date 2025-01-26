@@ -4,13 +4,15 @@ import { LenTypeSelect } from "./LenTypeSelect";
 import { DiagnosisSelect } from "./DiagnosisSelect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
-import { CreateFormulasModel, DiagnosisModel, InvoiceDetailModel } from "./FomulasModel";
+import { CreateFormulasModel, DiagnosisModel } from "./FomulasModel";
 import { MultiValue, SingleValue } from "react-select";
 import { Option } from "../../shared/model";
 import { format } from "date-fns";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 import { useValidateProduct } from "../Products/useProducts";
-import { ProductModel, ProductsResponseModel } from "../Products/ProductModel";
+import { ProductsResponseModel } from "../Products/ProductModel";
+import { useFormulas } from "./useFormulas";
+import useUserContext from "../../shared/context/useUserContext";
 
 
 export const FormulasCreate = () => {
@@ -18,8 +20,9 @@ export const FormulasCreate = () => {
     const [diagnosis, setDiagnosis] = useState<DiagnosisModel[]>([]);
     const [codeProduct, setCodeProduct] = useState<string>("");
     const [products, setProducts] = useState<ProductsResponseModel[]>([]);
-    // const [invoiceDetail, setInvoiceDetail] = useState<InvoiceDetailModel[]>([]);
     const { mutationValidateProduct } = useValidateProduct();
+    const { createFormula } = useFormulas();
+    const { business } = useUserContext();
 
     const [formula, setFormula] = useState<CreateFormulasModel>({
         idBusiness: 0,
@@ -61,7 +64,7 @@ export const FormulasCreate = () => {
             if (diagnosisData)
                 return;
 
-            setDiagnosis([...diagnosis, { name: newValue.label ?? '', value: '' }]);
+            setDiagnosis([...diagnosis, { name: newValue.label ?? '', value: '', id: newValue?.value ? parseInt(newValue.value) : 0 }]);
         }
     }
 
@@ -97,7 +100,7 @@ export const FormulasCreate = () => {
         setProducts(products.filter((x) => x.id !== id));
     }
 
-    const totalProducts = products.reduce((acc, x) => acc + x.unitPrice * x.quantity, 0);
+    const totalProducts = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
 
     const getTotalSumaTotal = () => {
         let total = 0;
@@ -110,6 +113,39 @@ export const FormulasCreate = () => {
             total += formula.priceConsultation;
 
         return total;
+    }
+
+    const handleCreateFormula = async () => {
+        const formulaData: CreateFormulasModel = {
+            ...formula,
+            idClient: client?.value ? parseInt(client.value) : 0,
+            idBusiness: business?.id ? business.id : 0,
+            diagnosis:
+                diagnosis.map((x) => {
+                    return {
+                        name: x.name,
+                        value: x.value,
+                        id: x.id
+                    };
+                }),
+            products:
+                products.map((x) => {
+                    return {
+                        price: x.unitPrice,
+                        unitPrice: x.unitPrice,
+                        idProduct: x.id,
+                        quantity: x.quantity,
+
+                    };
+                }),
+            priceLens: formula.priceLens,
+            priceConsultation: formula.priceConsultation,
+            sumTotal: formula.sumTotal,
+            sumTotalProducts: formula.sumTotalProducts
+
+        };
+
+        await createFormula.mutateAsync(formulaData);
     }
 
     if (formula)
@@ -176,19 +212,17 @@ export const FormulasCreate = () => {
                     </div>
 
                     <div className="flex flex-col gap-2 mb-4">
-
-
                         {
                             products.map((x) => (
                                 <div key={x.id} className="flex justify-between">
                                     <span className="font-bold">{x.name}</span>
                                     <input type="text" className="border border-gray-300 rounded p-1 ml-6"
-                                        value={x.unitPrice} />
+                                        value={x.salePrice} />
                                     <input type="number" value={x.quantity}
                                         className="w-12 border border-gray-300 rounded p-1 ml-2" />
                                     <button className="text-red-500  justify-center"><i
                                         className="fas fa-minus-circle ml-2 "></i></button>
-                                    <p className=" right-0"> <MoneyFormatter amount={x.unitPrice * x.quantity} /></p>
+                                    <p className=" right-0"> <MoneyFormatter amount={x.salePrice * x.quantity} /></p>
                                     <button className="bg-red-500 text-white px-2 py-1 rounded" ><FontAwesomeIcon icon={faMinus} onClick={() => handleDeleteProduct(x.id)} /></button>
                                 </div>
                             ))
@@ -199,7 +233,7 @@ export const FormulasCreate = () => {
                     </div>
 
                     <div>
-                        <form onSubmit={handleAggregateProduct}>
+                        <form onSubmit={handleAggregateProduct} onClick={(e) => e.preventDefault()}>
                             <input
                                 required
                                 name="name"
@@ -213,15 +247,15 @@ export const FormulasCreate = () => {
                 </div>
                 <div className="mb-4 text-right">
                     <p>Consulta: <MoneyFormatter amount={formula.priceConsultation} /></p>
-                    {formula?.priceLens && <p>Lens: <MoneyFormatter amount={formula.priceLens} /></p>}
+                    {formula?.priceLens && <p>Lente: <MoneyFormatter amount={formula.priceLens} /></p>}
                     <p>Productos: <MoneyFormatter amount={totalProducts} /></p>
                     <p>Abono: $0</p>
                     <p className="font-bold">Total: <MoneyFormatter amount={getTotalSumaTotal()} /></p>
                 </div>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1">Guardar
-                    Cambios
+                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleCreateFormula}>
+                    Guardar Cambios
                 </button>
-                <button className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded " >
+                <button type="button" className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded " >
                     Cancelar
                 </button>
             </div>

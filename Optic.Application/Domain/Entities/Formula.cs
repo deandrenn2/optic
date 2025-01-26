@@ -28,7 +28,7 @@ public class Formula : AggregateRoot
     public int BusinessId { get; private set; }
     public List<Tags> Tags { get; set; } = new();
     public List<FormulaDiagnosis> FormulaDiagnosis { get; set; } = new();
-    public int IdInvoice { get; set; }
+    public int? IdInvoice { get; set; }
     public Invoice Invoice { get; set; }
 
 
@@ -50,6 +50,16 @@ public class Formula : AggregateRoot
     public void AddInvoice(Invoice invoice)
     {
         Invoice = invoice;
+    }
+
+    public void AddClient(int idClient)
+    {
+        ClientId = idClient;
+    }
+
+    public void AddBusiness(int idBusiness)
+    {
+        BusinessId = idBusiness;
     }
 
     public void Update(string description, DateTime date, string state, decimal priceLens)

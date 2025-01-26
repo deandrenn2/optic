@@ -63,7 +63,12 @@ public class CreateFormulas : ICarterModule
                 return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Formula.ErrorValidation", "Se presentaron errores de validación"));
             }
 
-            var invoiceMaxNumber = await context.Invoices.MaxAsync(x => x.Number);
+            int invoiceMaxNumber = 0;
+
+            var count = await context.Invoices.CountAsync();
+
+            if (count > 0)
+                invoiceMaxNumber = await context.Invoices.MaxAsync(x => x.Number);
 
             var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.PriceLens, FormulaState.Draft.ToString(), request.IdBusiness, request.IdClient);
 
@@ -98,15 +103,24 @@ public class CreateFormulas : ICarterModule
 
             }
 
+            //Add Invoice
+            formula.AddInvoice(invoice);
+
             //Agregar detalles de la factura
             foreach (var product in request.Products)
             {
-                var newDetail = InvoiceDetail.Create(0, formula.Id, product.Description, product.Price, product.Quantity);
+                var newDetail = InvoiceDetail.Create(0, invoice.Id, product.IdProduct, product.Description, product.Price, product.Quantity);
 
                 invoice.AddDetail(newDetail);
             }
 
-            formula.AddInvoice(invoice);
+            //Add Client and Business
+            if (request.IdClient != null)
+                formula.AddClient(request.IdClient.Value);
+
+            formula.AddBusiness(request.IdBusiness);
+
+
             context.Add(formula);
 
             var resCount = await context.SaveChangesAsync();

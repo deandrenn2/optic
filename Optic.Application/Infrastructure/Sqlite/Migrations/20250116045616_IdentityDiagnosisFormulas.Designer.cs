@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Optic.Application.Infrastructure.Sqlite;
 
@@ -10,9 +11,11 @@ using Optic.Application.Infrastructure.Sqlite;
 namespace Optic.Application.Infrastructure.Sqlite.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250116045616_IdentityDiagnosisFormulas")]
+    partial class IdentityDiagnosisFormulas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -116,6 +119,9 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("INTEGER");
 
@@ -123,7 +129,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
 
                     b.HasIndex("IdInvoice");
 
-                    b.HasIndex("IdProduct");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("InvoiceDetails");
                 });
@@ -362,7 +368,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("IdInvoice")
+                    b.Property<int>("IdInvoice")
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("PriceConsultation")
@@ -800,8 +806,8 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                         .IsRequired();
 
                     b.HasOne("Optic.Application.Domain.Entities.Product", "Product")
-                        .WithMany("InvoiceDetails")
-                        .HasForeignKey("IdProduct")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -836,7 +842,8 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.HasOne("Invoice", "Invoice")
                         .WithOne("Formula")
                         .HasForeignKey("Optic.Application.Domain.Entities.Formula", "IdInvoice")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Business");
 
@@ -950,11 +957,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
             modelBuilder.Entity("Optic.Application.Domain.Entities.IdentificationType", b =>
                 {
                     b.Navigation("Clients");
-                });
-
-            modelBuilder.Entity("Optic.Application.Domain.Entities.Product", b =>
-                {
-                    b.Navigation("InvoiceDetails");
                 });
 
             modelBuilder.Entity("Optic.Application.Domain.Entities.Setting", b =>
