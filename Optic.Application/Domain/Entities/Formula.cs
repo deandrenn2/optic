@@ -8,6 +8,7 @@ public class Formula : AggregateRoot
         string description,
         DateTime date,
         string state,
+        decimal priceConsultation,
         decimal priceLens
         ) : base(id)
     {
@@ -15,6 +16,7 @@ public class Formula : AggregateRoot
         Date = date;
         State = state;
         PriceLens = priceLens;
+        PriceConsultation = priceConsultation;
     }
 
     public string Description { get; private set; }
@@ -32,9 +34,9 @@ public class Formula : AggregateRoot
     public Invoice Invoice { get; set; }
 
 
-    public static Formula Create(int id, string description, DateTime date, string state, decimal priceLens)
+    public static Formula Create(int id, string description, DateTime date, string state, decimal priceConsultation, decimal? priceLens)
     {
-        return new Formula(id, description, date, state, priceLens);
+        return new Formula(id, description, date, state, priceConsultation, priceLens ?? 0);
     }
 
     public void AddTag(Tags tags)

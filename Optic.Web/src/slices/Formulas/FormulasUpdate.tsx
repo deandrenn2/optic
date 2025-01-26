@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ClientSelect } from "../Clients/ClientSelect";
 import { LenTypeSelect } from "./LenTypeSelect";
 import { DiagnosisSelect } from "./DiagnosisSelect";
@@ -11,21 +11,22 @@ import { format } from "date-fns";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 import { useValidateProduct } from "../Products/useProducts";
 import { ProductsResponseModel } from "../Products/ProductModel";
-import { useFormulas } from "./useFormulas";
+import { useFormula, useFormulas } from "./useFormulas";
 import useUserContext from "../../shared/context/useUserContext";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Bar } from "../../shared/components/Progress/Bar";
 
 
-export const FormulasCreate = () => {
+export const FormulasUpdate = () => {
+    const { id } = useParams();
     const [client, setClient] = useState<Option | undefined>();
     const [diagnosis, setDiagnosis] = useState<DiagnosisModel[]>([]);
     const [codeProduct, setCodeProduct] = useState<string>("");
     const [products, setProducts] = useState<ProductsResponseModel[]>([]);
     const { mutationValidateProduct } = useValidateProduct();
     const { createFormula } = useFormulas();
+    const { formula: formulaData, queryFormula } = useFormula(id);
     const { business } = useUserContext();
-    const navigate = useNavigate();
-
     const [formula, setFormula] = useState<CreateFormulasModel>({
         idBusiness: 0,
         idClient: 0,
@@ -38,6 +39,40 @@ export const FormulasCreate = () => {
         priceConsultation: 0,
         sumTotal: 0,
     });
+
+    useEffect(() => {
+        if (id) {
+            if (formulaData) {
+                setFormula(formulaData);
+                setClient({
+                    value: formulaData.idClient?.toString(),
+                    label: formulaData.clientName,
+                });
+                setDiagnosis(formulaData.diagnosis);
+
+                if (formulaData.products) {
+                    const products: ProductsResponseModel[] = formulaData.products.map((x) => {
+                        return {
+                            id: x.idProduct,
+                            name: x.productName || '',
+                            idBrand: 0,
+                            codeNumber: '',
+                            quantity: x.quantity,
+                            unitPrice: 0,
+                            salePrice: x.price,
+                            idSupplier: 0,
+                            categories: []
+                        }
+                    });
+                    setProducts(products);
+                }
+
+
+            }
+        }
+    }, [id, formulaData]);
+
+
 
     const handleChangeClient = (newValue: SingleValue<Option>) => {
         setClient({
@@ -147,13 +182,11 @@ export const FormulasCreate = () => {
 
         };
 
-        const res = await createFormula.mutateAsync(formulaData);
-
-        if (res.isSuccess)
-            navigate(`/Formulas/${res.data}`);
-
-
+        await createFormula.mutateAsync(formulaData);
     }
+
+    if (queryFormula.isLoading)
+        return <Bar Title="Cargando..." />;
 
     if (formula)
         return (
@@ -161,21 +194,22 @@ export const FormulasCreate = () => {
                 <div className="grid grid-cols-2 gap-2 mb-2">
                     <div>
                         <label className="block text-gray-700 text-sm font-bold mb-2">Cliente</label>
-                        <ClientSelect selectedValue={client} xChange={handleChangeClient} className="shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <ClientSelect isDisabled={true} selectedValue={client} xChange={handleChangeClient} className="shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                     <div>
                         <label className="block text-gray-700 text-sm font-bold mb-2">Fecha</label>
                         <div className="relative">
                             <input type="date" onChange={handleChangeDate}
+
                                 value={format(formula?.date, 'yyyy-LL-dd')} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <i className="fas fa-calendar-alt absolute right-1 top-2 text-gray-400"></i>
                         </div>
                     </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4 mb-4 ">
+                <div className="grid grid-cols-2 gap-4 mb-4">
                     <div>
                         <label className="block text-gray-700 text-sm font-bold mb-2">Tipo Lente</label>
-                        <LenTypeSelect xChange={handleChangeTypeLen} className="shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <LenTypeSelect selectedValue={formula?.tags?.map((x) => ({ value: x, label: x }))} xChange={handleChangeTypeLen} className="shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                     <div>
                         <label className="block text-gray-700 text-sm font-bold mb-2">Diagnóstico</label>

@@ -75,7 +75,7 @@ export const Suppliers = () => {
                     {suppliers?.map((supplier) => (
                         <tr key={supplier.id}>
 
-                            <td className="border border-gray-300 p-2 text-center">{supplier.name}</td>
+                            <td className="border border-gray-300 p-2 ">{supplier.name}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.nit}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.cellPhoneNumber}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.address}</td>

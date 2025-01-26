@@ -25,11 +25,12 @@ public class CreateFormulas : ICarterModule
              .WithName(nameof(CreateFormulas))
              .WithTags(nameof(Formula))
              .ProducesValidationProblem()
-             .Produces(StatusCodes.Status201Created);
+             .Produces<int>(StatusCodes.Status201Created);
     }
 
-    public record CreateFormulasCommand : IRequest<Result>
+    public record CreateFormulasCommand : IRequest<IResult>
     {
+        public int? Id { get; init; }
         public int IdBusiness { get; init; }
         public int? IdClient { get; init; }
         public string Description { get; init; } = string.Empty;
@@ -41,26 +42,20 @@ public class CreateFormulas : ICarterModule
 
         public List<InvoiceDetailModel> Products { get; init; } = new();
 
-        public decimal PriceLens { get; init; }
-        public decimal? PriceConsultation { get; init; }
+        public decimal? PriceLens { get; init; }
+        public decimal PriceConsultation { get; init; }
 
-        public decimal? SumTotal
-        {
-            get
-            {
-                return PriceLens + PriceConsultation;
-            }
-        }
+        public decimal SumTotal { get; init; }
     }
 
-    public class CreateFormulasHandler(AppDbContext context, IValidator<CreateFormulasCommand> validator) : IRequestHandler<CreateFormulasCommand, Result>
+    public class CreateFormulasHandler(AppDbContext context, IValidator<CreateFormulasCommand> validator) : IRequestHandler<CreateFormulasCommand, IResult>
     {
-        public async Task<Result> Handle(CreateFormulasCommand request, CancellationToken cancellationToken)
+        public async Task<IResult> Handle(CreateFormulasCommand request, CancellationToken cancellationToken)
         {
             var result = validator.Validate(request);
             if (!result.IsValid)
             {
-                return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Formula.ErrorValidation", "Se presentaron errores de validación"));
+                return Results.Ok(Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Formula.ErrorValidation", "Se presentaron errores de validación")));
             }
 
             int invoiceMaxNumber = 0;
@@ -70,9 +65,9 @@ public class CreateFormulas : ICarterModule
             if (count > 0)
                 invoiceMaxNumber = await context.Invoices.MaxAsync(x => x.Number);
 
-            var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.PriceLens, FormulaState.Draft.ToString(), request.IdBusiness, request.IdClient);
+            var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.SumTotal, FormulaState.Draft.ToString(), request.IdBusiness, request.IdClient);
 
-            var formula = Formula.Create(0, request.Description, request.Date, FormulaState.Draft.ToString(), request.PriceLens);
+            var formula = Formula.Create(0, request.Description, request.Date, FormulaState.Draft.ToString(), request.PriceConsultation, request?.PriceLens ?? 0);
 
 
 
@@ -127,11 +122,11 @@ public class CreateFormulas : ICarterModule
 
             if (resCount > 0)
             {
-                return Result<CreateFormulasCommand>.Success(request, "Formula creada correctamente");
+                return Results.Ok(Result<int>.Success(formula.Id, "Formula creada correctamente"));
             }
             else
             {
-                return Result.Failure(new Error("Formula.ErrorCreateFormula", "Error al crear la formula"));
+                return Results.Ok(Result.Failure(new Error("Formula.ErrorCreateFormula", "Error al crear la formula")));
             }
 
         }

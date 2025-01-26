@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createFormulasService, getDiagnosis, getFormulas, getTags } from './FormulasServices';
+import { createFormulasService, getDiagnosis, getFormula, getFormulas, getTags } from './FormulasServices';
 import { toast } from 'react-toastify';
 
 const KEY = 'Formula';
@@ -51,5 +51,18 @@ export const useFormulas = () => {
       queryFormulas,
       formulas: queryFormulas.data?.data,
       createFormula,
+   };
+};
+
+export const useFormula = (id: string | undefined) => {
+   const queryFormula = useQuery({
+      queryKey: [`${KEY}_Formula`, id],
+      queryFn: () => getFormula(id != undefined ? parseInt(id) : 0),
+      enabled: id !== undefined,
+   });
+
+   return {
+      queryFormula,
+      formula: queryFormula.data?.data,
    };
 };
