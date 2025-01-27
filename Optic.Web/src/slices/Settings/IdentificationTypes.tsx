@@ -18,10 +18,7 @@ export const IdentificationTypes = () => {
         setIdentificationType(identificationType);
         setVisible(true);
     }
-    const handleFormSubmit = (updateType: IdentificationTypeModel) => {
-        useListSettings().updateIdentificationType.mutateAsync(updateType);
-        setVisible(true);
-    }
+   
     return (
         <div>
             <div className="rounded-lg border border-grey-500 mb-4 w-full ">
@@ -55,7 +52,7 @@ export const IdentificationTypes = () => {
                 </table>
             </div>
             <OffCanvas titlePrincipal='Actualizar Identificación' visible={visible} xClose={handleClose} position={Direction.Right} >
-                <IdentificationForm identificationType={identificationType} />
+                <IdentificationForm identificationType={identificationType}/>
             </OffCanvas>
         </div>
     )

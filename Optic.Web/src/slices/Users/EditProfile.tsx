@@ -9,6 +9,9 @@ export const EditProfile = () => {
     const { user } = useUserContext();
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenProfile, setIsOpenProfile] = useState(false);
+ 
+
+ 
 
     return (
         <div className=" flex justify-center items-center bg-gray-200">
@@ -27,14 +30,14 @@ export const EditProfile = () => {
                     </div>
                 </div>
                 <h2 className="text-2xl font-bold mb-1 flex justify-center">Editar Usuario</h2>
-                <form className=" grid grid-cols-1 md:grid-cols-3 gap-4 mx-5 p-8">
+                <form   className=" grid grid-cols-1 md:grid-cols-3 gap-4 mx-5 p-8">
                     <div>
                         <label className="block text-gray-600 text-sm font-bold mb-2">Nombres</label>
                         <div className="relative">
                             <input
                                 type="text"
                                 value={user?.firstName}
-                                className=" w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                  className=" w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
 
@@ -44,6 +47,7 @@ export const EditProfile = () => {
                         <div className="relative">
                             <input type="lastNameTxt"
                                 value={user?.lastName}
+                            
                                 className="w-full px-1 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
@@ -54,12 +58,13 @@ export const EditProfile = () => {
                             <input
                                 type="email"
                                 value={user?.email}
+                                
                                 className="w-full px-1 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
                     </div>
                     <div className="col-span-1 md:col-span-3 flex justify-start mt-7">
-                            <ButtonSave/>
+                            <ButtonSave />
                         <button
                             type="button"
                             onClick={() => setIsOpen(true)}

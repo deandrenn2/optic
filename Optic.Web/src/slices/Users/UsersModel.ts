@@ -19,3 +19,4 @@ export interface UsersAvatarModel {
    id: number | undefined;
    idAvatar: number;
 }
+

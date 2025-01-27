@@ -9,7 +9,6 @@ import { Bar } from "../../shared/components/Progress/Bar";
 
 export const Users = () => {
     const [visible, setVisible, ] = useState(false);
-
     const { users, queryUsers } = useLogin();
 
     function handleClose(): void {
@@ -26,7 +25,6 @@ export const Users = () => {
                     <button type='button' onClick={() => setVisible(true)} className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">Nuevo Usuario</button>
                 </div>
             </div>
-                     {/* <!-- TABLA DE USUARIO --> */}
             <div className="rounded-lg border border-grey-500 mb-4 w-full ">
                 <table className=" bg-white rounded shadow w-full">
                     <thead>

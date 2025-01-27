@@ -12,10 +12,7 @@ import {
    updateQuantityService,
 } from './ProductsServices';
 import { toast } from 'react-toastify';
-
-
 const KEY = 'Products';
-
 export const useProducts = () => {
    const queryProducts = useQuery({
       queryKey: [KEY],
@@ -144,7 +141,7 @@ export const useCategories = () => {
    };
 };
 
-export const useQuentity = () => {
+export const useQuantity = () => {
    const queryQuantity = useQuery({
       queryKey: [`${KEY}_Quantity`],
       queryFn: getQuantity,

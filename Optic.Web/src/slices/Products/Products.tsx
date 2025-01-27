@@ -5,7 +5,6 @@ import { MouseEvent } from "react";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { ProductForm } from "./ProductsForm";
 import { Direction } from "../../shared/components/OffCanvas/Models";
-import { useProducts } from "./useProducts";
 import Swal from "sweetalert2";
 import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
@@ -16,23 +15,29 @@ import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 import { ButtonStockRemove } from "../../shared/components/Buttons/ButtonStockRemove";
 import { ProductsResponseModel } from "./ProductModel";
 import { QuantitykModelRemove } from "./QuantitykModelRemove";
-
-
+import { useProducts,  } from "./useProducts";
+import { QuantityModelAdd } from "./QuantityModelAdd";
+import { ButtonStockAdd } from "../../shared/components/Buttons/ButtonStockAdd";
 
 export const Products = () => {
+    const [visibleAdd, setVisibleAdd] = useState(false);
     const [visible, setVisible] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    
     const [visibleCategories, setVisibleCategories] = useState(false);
     const { settings } = useListSettings();
     const { products, queryProducts, deleteProduct } = useProducts();
     const [product, setProduct] = useState<ProductsResponseModel | undefined>();
-    
+
     const handleClickDecrease = (product: ProductsResponseModel) => {
         setProduct(product);
         setIsOpen(true);
     }
-   
+    const handleClickAdd = (product: ProductsResponseModel) => {
+        setProduct(product);
+        setVisibleAdd(true);
+    }
+
+
     function handleClose(): void {
         setVisible(false);
     }
@@ -121,7 +126,7 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center  ">
                                 <DetailButton url={`/products/${product.id}`} />
                                 <ButtonStockRemove onClick={() => handleClickDecrease(product)}/>
-                                
+                                <ButtonStockAdd onClick={() => handleClickAdd(product)}/>
                                 <DeleteButton id={product.id} onDelete={handleDelete} />
                             </td>
                         </tr>
@@ -135,6 +140,7 @@ export const Products = () => {
                 <CategoriesForm />
             </OffCanvas>      
             {isOpen && <QuantitykModelRemove product={product}/>}
+            {visibleAdd && <QuantityModelAdd product={product}/>}
         </div>
     )
 }

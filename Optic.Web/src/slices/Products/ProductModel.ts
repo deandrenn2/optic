@@ -32,11 +32,12 @@ export interface CategoriesModel {
 }
 
 export interface QuantityModel {
-   id: number;
+   id?: number;
   quantity: number;
 }
 
-export interface QuantityResponseModel {
-   id: number;
+export interface QuantityModel {
+   id?: number ;
    quantity: number;
+
 }
