@@ -32,12 +32,7 @@ export interface CategoriesModel {
 }
 
 export interface QuantityModel {
-   id?: number;
-  quantity: number;
-}
-
-export interface QuantityModel {
    id?: number ;
    quantity: number;
-
+   isIncrement: boolean;
 }

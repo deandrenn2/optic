@@ -71,7 +71,6 @@ public class UpdateQuantity : ICarterModule
         {
             RuleFor(x => x.Id).NotEmpty();
             RuleFor(x => x.Quantity).NotEmpty();
-            RuleFor(x => x.IsIncrement).NotEmpty();
         }
     }
 }

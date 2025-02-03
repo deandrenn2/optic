@@ -5,7 +5,6 @@ import {
    deleteProductService,
    getCategories,
    getProducts,
-   getQuantity,
    getValidateProduct,
    updateCategoryService,
    updateProductService,
@@ -142,12 +141,6 @@ export const useCategories = () => {
 };
 
 export const useQuantity = () => {
-   const queryQuantity = useQuery({
-      queryKey: [`${KEY}_Quantity`],
-      queryFn: getQuantity,
-      refetchOnWindowFocus: false,
-   });
-   
    const updateQuantity = useMutation({
       mutationFn: updateQuantityService,
       onSuccess: (data) => {
@@ -156,14 +149,11 @@ export const useQuantity = () => {
          } else {
             if (data.isSuccess) {
                toast.success(data.message);
-               queryQuantity.refetch();
             }
          }
       },
    });
    return {
-      queryQuantity,
-      quantity: queryQuantity?.data?.data,
       updateQuantity,
    };
 };

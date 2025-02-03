@@ -41,6 +41,7 @@ export const Products = () => {
     function handleClose(): void {
         setVisible(false);
     }
+     
     function handleDelete(e: MouseEvent<HTMLButtonElement>, id: number): void {
         e.preventDefault();
         Swal.fire({
@@ -97,7 +98,6 @@ export const Products = () => {
                 </div>
 
             </div>
-            {/* <!-- TABLA DE PRODUCTOS --> */}
             <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                     <tr>

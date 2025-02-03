@@ -9,10 +9,6 @@ export const EditProfile = () => {
     const { user } = useUserContext();
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenProfile, setIsOpenProfile] = useState(false);
- 
-
- 
-
     return (
         <div className=" flex justify-center items-center bg-gray-200">
             <div className="bg-white py-9 rounded-lg p-4 shadow-md mx-5" >

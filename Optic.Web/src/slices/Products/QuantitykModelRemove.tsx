@@ -38,11 +38,11 @@ export const QuantitykModelRemove = ({ product }: { product: ProductsResponseMod
     setQuantityToRemove('');
     setMessage('');
 
-    // Verificar que el producto tenga un id antes de realizar la mutación
     if (product?.id) {
       updateQuantity.mutate({
         id: product.id,
         quantity: newProductCount,
+        isIncrement: false
       });
     }
   };

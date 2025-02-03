@@ -35,7 +35,8 @@ export const QuantityModelAdd = ({product}: {product: ProductsResponseModel | un
     if(product?.id){
       updateQuantity.mutate({
         id: product.id,
-        quantity: newProductCount
+        quantity: newProductCount,
+        isIncrement: true
       })
     }
   };
@@ -46,7 +47,7 @@ export const QuantityModelAdd = ({product}: {product: ProductsResponseModel | un
         <h2 className="text-2xl font-bold mb-2">Agregar existencia</h2>
         <div className="font-bold mb-4">
           <p>Producto: {product?.name}</p>
-          <p>Existencia actual: {product?.quantity}</p>
+          <p>Existencia actual: {productCount}</p>
         </div>
         <p className="text-blue-500">Cantidad</p>
         <input

@@ -154,24 +154,9 @@ export const getValidateProduct = async (code?: string | null): Promise<MsgRespo
 
    return response.data;
 };
-export const getQuantity = async (): Promise<MsgResponse<QuantityModel>> => {
-   const url = `api/products/quantity`;
-   const response = await ApiClient.get<MsgResponse<QuantityModel>>(url);
 
-   if (response.status !== 200 && response.status !== 201) {
-      return {
-         isSuccess: false,
-         message: 'Error al obtener cantidad',
-         isFailure: true,
-         error: {
-            code: response.status.toString(),
-            message: response.statusText,
-         },
-      };
-   }
 
-   return response.data;
-};
+
 export const updateQuantityService = async (model: QuantityModel): Promise<MsgResponse<QuantityModel>> => {
    const url = 'api/products/quantity';
    const response = await ApiClient.put<MsgResponse<QuantityModel>>(url, model);

@@ -145,23 +145,6 @@ export const Login = () => {
                   />
                </div>
             </div>
-
-            <div className="">
-               <div className="flex items-center">
-                  <input
-                     type="checkbox"
-                     id="remember"
-                     className="form-checkbox h-4 w-4 text-blue-500"
-                  />
-                  <label
-                     htmlFor="remember"
-                     className="ml-2 text-sm"
-                  >
-                     Recordar Sesión
-                  </label>
-               </div>
-            </div>
-
             <button
                type="submit"
                className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 relative"
@@ -183,7 +166,7 @@ export const Login = () => {
 
             <div className="text-sm text-center text-blue-600 hover:text-blue-800">
                <span>
-                  <a href="">Olvidaste la contraseña</a>
+                  <a href="/Login/ChangePasswo">Olvidaste la contraseña</a>
                </span>
             </div>
          </form>
