@@ -1,10 +1,10 @@
-
 import { useState } from "react";
 import { useListSettings } from "../../shared/components/List/useListSettings";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { Direction } from "../../shared/components/OffCanvas/Models";
-import { BrandsForm } from "./BrandsForm";
+
 import ButtonDetail from "../../shared/components/Buttons/ButtonDetail";
+import { BrandsForm } from "./BrandsForm";
 export const Brands = () => {
     const { settings } = useListSettings();
     const [visible, setVisible] = useState(false);
@@ -36,7 +36,7 @@ export const Brands = () => {
                 </tbody>
             </table>
             <OffCanvas titlePrincipal='Crear Marcas' visible={visible} xClose={handleClose} position={Direction.Right} >
-                 <BrandsForm />
+                 <BrandsForm/>
             </OffCanvas>
         </div>
     )

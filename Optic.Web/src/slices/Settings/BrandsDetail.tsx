@@ -1,7 +1,8 @@
 import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link, useParams } from "react-router-dom"
-import { BrandsForm } from "./BrandsForm"
+import { BrandsForm } from "./BrandsForm";
+
 
 export const BrandsDetail = () => {
     const { id } = useParams();

@@ -1,24 +1,56 @@
+import {  useState } from "react";
+import { useListSettings } from "../../shared/components/List/useListSettings";
+import { useQueryClient } from "@tanstack/react-query";
+import { BrandModel } from "../../shared/components/List/ListModels";
 
-import { useBrands, useListSettings } from "../../shared/components/List/useListSettings";
-export const BrandsForm = ({ id }: { id?: number }) => {
-    const { settings } = useListSettings();
-    const { updateBrand, createBrand } = useBrands();
+export const BrandsForm = ({ model }: { model?: BrandModel }) => {
+    const { settings, updateSettings } = useListSettings();
+    console.log(settings);
+    const [brand, setBrand] = useState("");
+    const queryClient = useQueryClient();
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;  
+        setBrand(value);
+    };
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        if(model){
+            //Actualizar
+        } else{
+            //Crear
+            if (settings){
+                const KEY = 'LIST_SETTINGS';
+                const brands = settings.brands;
+                const count = brands.length +1;
+                const updateBrans = [...brands, {id: count, name: brand }]
+                const newSettings = {...settings, brands: updateBrans};
+
+                const res = await updateSettings.mutateAsync(newSettings);
+
+                if (res.isSuccess)
+                queryClient.setQueryData([KEY],newSettings);
+            }
+        }
+ 
+    };
+    
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit} className="w-full">
                 <input
+                    required
                     name="name"
+                    value={model?.name}
+                    onChange={handleChange}
                     placeholder="Marcas"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <div className="mt-2">
-                    <button
-                        type="submit"
-                        disabled={id ? updateBrand.isPending : createBrand.isPending}
-                        className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
-                    >
-                        {id ? (updateBrand.isPending ? "Actualizando..." : "Actualizar Marca") : (createBrand.isPending ? "Creando..." : "Crear Marca")}
+                <div>
+                    <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 font-bold mt-2 border rounded-lg">
+                        {updateSettings.isPending ? "Creando..." : "Crear Marca"}
                     </button>
                 </div>
             </form>

@@ -36,3 +36,13 @@ export interface IdentificationTypeResponseModel {
    name: string;
    abbreviation: string;
 }
+
+export interface BrandsResponseModel {
+   id: number;
+   name: string;
+   theme?: string;
+   isEnabledBarcode: boolean;
+   settings: SettingModel[];
+   sex: SexModel[];
+   brands: BrandModel[]
+}
