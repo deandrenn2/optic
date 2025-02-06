@@ -8,7 +8,7 @@ import { ClientDetail } from '../slices/Clients/ClientDetail.tsx';
 import { Products } from '../slices/Products/Products.tsx';
 import { Suppliers } from '../slices/Suppliers/Suppliers.tsx';
 import { Formulas } from '../slices/Formulas/Formulas.tsx';
-import { Billing } from '../slices/Billing/Billing.tsx';
+import { Billing } from '../slices/Billing/Billing';    
 import { SettingsDetail } from '../slices/Users/UsersDetail.tsx';
 import { SupplierDetail } from '../slices/Suppliers/SupplierDetail.tsx';
 import { ProductsDetail } from '../slices/Products/ProductsDetail.tsx';
@@ -21,6 +21,8 @@ import { FormulasCreate } from '../slices/Formulas/FormulasCreate.tsx';
 import { createBrowserRouter } from 'react-router-dom';
 import { Users } from '../slices/Users/Users.tsx';
 import { Brands } from '../slices/Settings/Brands.tsx';
+import { passwordRecover } from '../routes/Login/PasswordRecover';
+
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -121,5 +123,9 @@ export const router = createBrowserRouter([
     {
         path: '/Create/Business',
         element: <BusinessCreate />,
+    },
+    {
+        path: 'passwordRecover',
+        element: <passwordRecover />,
     },
 ]);
