@@ -96,3 +96,22 @@ export const getFormula = async (id: number): Promise<MsgResponse<FormulaModel>>
 
    return response.data;
 };
+
+export const deleteFormulaService = async (id: number): Promise<MsgResponse<number>> => {
+   const url = `api/formulas/${id}`;
+   const response = await ApiClient.delete<MsgResponse<number>>(url);
+
+   if (response.status !== 200) {
+      return {
+         isSuccess: false,
+         message: 'Error al eliminar formula',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};

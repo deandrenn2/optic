@@ -55,7 +55,10 @@ public class CreateFormulas : ICarterModule
             var result = validator.Validate(request);
             if (!result.IsValid)
             {
-                return Results.Ok(Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Formula.ErrorValidation", "Se presentaron errores de validación")));
+                return Results.Ok(Result<Dictionary<string, string[]>>.Failure(
+                    result.GetValidationProblems(),
+                    new Error("Formula.ErrorValidation", "Se presentaron errores de validación")
+                ));
             }
 
             int invoiceMaxNumber = 0;
@@ -65,16 +68,16 @@ public class CreateFormulas : ICarterModule
             if (count > 0)
                 invoiceMaxNumber = await context.Invoices.MaxAsync(x => x.Number);
 
-            var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.SumTotal, FormulaState.Draft.ToString(), request.IdBusiness, request.IdClient);
+            var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.SumTotal, "Borrador", "Contado", request.IdBusiness, request.IdClient);
 
-            var formula = Formula.Create(0, request.Description, request.Date, FormulaState.Draft.ToString(), request.PriceConsultation, request?.PriceLens ?? 0);
+            var formula = Formula.Create(0, request.Description, request.Date, "Borrador", request.PriceConsultation, request?.PriceLens ?? 0);
 
 
 
             //Agregar tags
             foreach (var tag in request.Tags)
             {
-                var tagFind = await context.Tags.FirstOrDefaultAsync(x => x.Name.ToUpper() == tag.ToUpper());
+                var tagFind = await context.Tags.Where(x => x.Name == tag).FirstOrDefaultAsync();
 
                 if (tagFind != null)
                 {
@@ -135,9 +138,9 @@ public class CreateFormulas : ICarterModule
     {
         public CreateFormulasValidator()
         {
-            RuleFor(x => x.Description).NotEmpty();
             RuleFor(x => x.Date).NotEmpty();
-            RuleFor(x => x.PriceLens).NotEmpty();
+            RuleFor(x => x.PriceConsultation).NotEmpty();
+            RuleFor(x => x.IdClient).NotEmpty().GreaterThan(0);
         }
     }
 }

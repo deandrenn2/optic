@@ -9,12 +9,28 @@ import { Bar } from "../../shared/components/Progress/Bar";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 import { format } from "date-fns";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
+import Swal from "sweetalert2";
 export const Formulas = () => {
     const [visible, setVisible] = useState(false);
     const handleClose = (): void => {
         setVisible(false);
     }
-    const { formulas, queryFormulas } = useFormulas();
+    const { formulas, queryFormulas, deleteFormula } = useFormulas();
+
+    const handleDelete = async (id: number) => {
+        Swal.fire({
+            title: '¿Estás seguro de eliminar esta formula?',
+            text: 'Esta acción no se puede deshacer',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar',
+            preConfirm: async () => {
+                await deleteFormula.mutateAsync(id);
+            }
+        })
+    };
 
     if (queryFormulas.isLoading)
         return <Bar Title="Cargando formulas..." />;
@@ -36,7 +52,7 @@ export const Formulas = () => {
                     <div className="relative">
                         <div className=" inline-flex">
                             <input type="text"
-                                placeholder="Buscar Proveedor"
+                                placeholder="Buscar formula"
                                 className="p-2 pl-10 border-blue-400 rounded-tl-lg rounded-bl-lg" />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
                             <button
@@ -66,10 +82,9 @@ export const Formulas = () => {
                             <td className="border border-gray-300 p-2 text-center text-green-500">{formula?.state}</td>
                             <td className="border border-gray-300 p-2 text-center">
                                 <DetailButton url={`/formulas/${formula.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />
-
                                 <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar} /></button>
                                 <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus} /></button>
+                                <button onClick={() => handleDelete(formula.id)} className="text-red-500 text-2xl hover:text-red-700 mr-2"><FontAwesomeIcon icon={faCircleMinus} /></button>
                             </td>
                         </tr>
                     ))}

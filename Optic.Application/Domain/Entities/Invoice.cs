@@ -3,11 +3,12 @@ using Optic.Application.Domain.Primitives;
 
 public class Invoice : AggregateRoot
 {
-    public Invoice(int id, int number, DateTime date, decimal total, string state, int businessId, int? clientId) : base(id)
+    public Invoice(int id, int number, DateTime date, decimal total, string state, string paymentType, int businessId, int? clientId) : base(id)
     {
         Number = number;
         Date = date;
         Total = total;
+        PaymentType = paymentType;
         State = state;
         ClientId = clientId;
         BusinessId = businessId;
@@ -17,6 +18,7 @@ public class Invoice : AggregateRoot
     public DateTime Date { get; set; }
     public decimal Total { get; set; }
     public string State { get; set; }
+    public string PaymentType { get; set; }
     public DateTime? DueDate { get; set; }
     public int? ClientId { get; set; }
     public Client Client { get; set; }
@@ -28,9 +30,9 @@ public class Invoice : AggregateRoot
     public List<InvoicePayment> InvoicePayments { get; set; } = new();
     public List<InvoiceService> InvoiceServices { get; set; } = new();
 
-    public static Invoice Create(int id, int number, DateTime date, decimal total, string state, int businessId, int? clientId)
+    public static Invoice Create(int id, int number, DateTime date, decimal total, string state, string paymentType, int businessId, int? clientId)
     {
-        return new Invoice(id, number, date, total, state, businessId, clientId);
+        return new Invoice(id, number, date, total, state, paymentType, businessId, clientId);
     }
 
     public void AddDetail(InvoiceDetail detail)

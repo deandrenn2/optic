@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createFormulasService, getDiagnosis, getFormula, getFormulas, getTags } from './FormulasServices';
+import { createFormulasService, deleteFormulaService, getDiagnosis, getFormula, getFormulas, getTags } from './FormulasServices';
 import { toast } from 'react-toastify';
 
 const KEY = 'Formula';
@@ -37,6 +37,20 @@ export const useFormulas = () => {
       mutationFn: createFormulasService,
       onSuccess: (data) => {
          if (!data.isSuccess) {
+            toast.info(data.error?.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               queryFormulas.refetch();
+            }
+         }
+      },
+   });
+
+   const deleteFormula = useMutation({
+      mutationFn: deleteFormulaService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
             toast.info(data.message);
          } else {
             if (data.isSuccess) {
@@ -51,6 +65,7 @@ export const useFormulas = () => {
       queryFormulas,
       formulas: queryFormulas.data?.data,
       createFormula,
+      deleteFormula,
    };
 };
 

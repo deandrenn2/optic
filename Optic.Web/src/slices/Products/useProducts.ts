@@ -81,7 +81,7 @@ export const useValidateProduct = (code?: string | null) => {
       mutationFn: getValidateProduct,
       onSuccess: (data) => {
          if (!data.isSuccess) {
-            toast.info(data.message);
+            toast.info(data.error?.message);
          } else {
             if (data.isSuccess) {
                toast.success(data.message);

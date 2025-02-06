@@ -64,3 +64,21 @@ export interface CreateFormulasModel {
    sumTotal?: number; // Note: Computed property
    sumTotalProducts?: number; // Note: Computed property
 }
+
+export interface UpdateFormulasModel {
+   id?: number;
+   idBusiness: number;
+   idClient?: number;
+   description: string;
+   date: Date;
+   state: string;
+
+   tags: string[];
+   diagnosis: DiagnosisModel[];
+   products: InvoiceDetailModel[];
+
+   priceLens?: number;
+   priceConsultation?: number;
+   sumTotal?: number; // Note: Computed property
+   sumTotalProducts?: number; // Note: Computed property
+}

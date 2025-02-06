@@ -19,7 +19,7 @@ public class Formula : AggregateRoot
         PriceConsultation = priceConsultation;
     }
 
-    public string Description { get; private set; }
+    public string? Description { get; private set; }
     public DateTime Date { get; private set; } = DateTime.Now;
     public string State { get; private set; }
     public decimal PriceLens { get; private set; }

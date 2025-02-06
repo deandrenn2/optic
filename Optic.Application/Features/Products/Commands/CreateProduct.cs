@@ -60,7 +60,7 @@ public class CreateProduct : ICarterModule
 
             foreach (var category in request.Categories)
             {
-                var categoryFind = await context.Categories.FirstOrDefaultAsync(x => x.Name.ToUpper() == category.ToUpper());
+                var categoryFind = await context.Categories.FirstOrDefaultAsync(x => x.Name == category);
 
                 if (categoryFind != null)
                 {
