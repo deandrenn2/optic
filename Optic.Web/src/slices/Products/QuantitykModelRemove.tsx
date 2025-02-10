@@ -74,7 +74,7 @@ export const QuantitykModelRemove = ({ product }: { product: ProductsResponseMod
             disabled={updateQuantity.isPending} // Cambié isPending por isLoading
             className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold"
           >
-            {updateQuantity.isPending ? "Actualizando..." : "Actualizar"}
+            {updateQuantity.isPending ? "Guardar..." : "Guardar"}
           </button>
           <button
             type="button"

@@ -34,9 +34,7 @@ export const IdentificationTypes = () => {
                     <tbody>
                         {identificationTypes?.map((identification) => (
                             <tr key={identification.id}>
-                                <td className="border border-gray-300 p-2 text-center">
-                                    {identification.orden}</td>
-
+                                <td className="border border-gray-300 p-2 text-center">{identification.orden}</td>
                                 <td className="border border-gray-300 p-2 text-center">{identification.name}</td>
                                 <td className="border border-gray-300 p-2 text-center">
                                     <span title={identification?.name} className='text-blue-700 font-bold'>{identification?.abbreviation}</span>

@@ -125,8 +125,8 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                             <td className="border border-gray-300 p-2 text-center  ">
                                 <DetailButton url={`/products/${product.id}`} />
-                                <ButtonStockRemove onClick={() => handleClickDecrease(product)}/>
                                 <ButtonStockAdd onClick={() => handleClickAdd(product)}/>
+                                <ButtonStockRemove onClick={() => handleClickDecrease(product)}/>
                                 <DeleteButton id={product.id} onDelete={handleDelete} />
                             </td>
                         </tr>
@@ -139,8 +139,8 @@ export const Products = () => {
             <OffCanvas titlePrincipal='Registro de Categoria' visible={visibleCategories} xClose={handleCloseCategories} position={Direction.Right} >
                 <CategoriesForm />
             </OffCanvas>      
-            {isOpen && <QuantitykModelRemove product={product}/>}
-            {visibleAdd && <QuantityModelAdd product={product}/>}
+            {visibleAdd && <QuantityModelAdd product={product} onClose={() => setVisibleAdd(false)} />}
+            {isOpen && <QuantitykModelRemove product={product} onClose={()=> setVisible(false)} />}   
         </div>
     )
 }

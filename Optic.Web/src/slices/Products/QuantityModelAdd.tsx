@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ProductsResponseModel } from "./ProductModel";
 import { useQuantity } from "./useProducts";
-export const QuantityModelAdd = ({product}: {product: ProductsResponseModel | undefined}) => {
+export const QuantityModelAdd = ({product,onClose}: {product: ProductsResponseModel | undefined; onClose (): void}) => {
   const [productCount, setProductCount] = useState(product?.quantity || 0);
   const [quantityToAdd, setQuantityToAdd] = useState('');
   const [message, setMessage] = useState('');
@@ -32,12 +32,11 @@ export const QuantityModelAdd = ({product}: {product: ProductsResponseModel | un
     setProductCount(newProductCount);
     setQuantityToAdd('');
     setMessage('');
-    if(product?.id){
-      updateQuantity.mutate({
-        id: product.id,
-        quantity: newProductCount,
-        isIncrement: true
-      })
+    if (product?.id) {
+      updateQuantity.mutate(
+        { id: product.id, quantity: newProductCount, isIncrement: true },
+       
+      );
     }
   };
 
@@ -65,11 +64,12 @@ export const QuantityModelAdd = ({product}: {product: ProductsResponseModel | un
             onClick={handleAdd}
             disabled={updateQuantity.isPending}
             className="mr-2 bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-400">
-             {updateQuantity.isPending ? "Actualizando..." : "Actualizar"}
+             {updateQuantity.isPending ? "Guardar..." : "Guardar"}
           </button>
          
           <button
             type="button"
+            onClick={onClose}
             className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-400 mt-2">
             Cancelar
           </button>
