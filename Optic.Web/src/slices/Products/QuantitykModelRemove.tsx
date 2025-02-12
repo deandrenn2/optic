@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ProductsResponseModel } from "./ProductModel";
 import { useQuantity } from "./useProducts";
 
-export const QuantitykModelRemove = ({ product }: { product: ProductsResponseModel | undefined }) => {
+export const QuantitykModelRemove = ({ product,onClose }: { product: ProductsResponseModel | undefined; onClose (): void}) => {
   const [productCount, setProductCount] = useState(product?.quantity || 0);
   const [quantityToRemove, setQuantityToRemove] = useState('');
   const [message, setMessage] = useState('');
@@ -39,10 +39,7 @@ export const QuantitykModelRemove = ({ product }: { product: ProductsResponseMod
     setMessage('');
 
     if (product?.id) {
-      updateQuantity.mutate({
-        id: product.id,
-        quantity: newProductCount,
-        isIncrement: false
+      updateQuantity.mutate({ id: product.id, quantity: newProductCount, isIncrement: false
       });
     }
   };
@@ -71,15 +68,15 @@ export const QuantitykModelRemove = ({ product }: { product: ProductsResponseMod
           <button
             type="submit"
             onClick={handleRemove}
-            disabled={updateQuantity.isPending} // Cambié isPending por isLoading
+            disabled={updateQuantity.isPending}
             className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold"
           >
             {updateQuantity.isPending ? "Guardar..." : "Guardar"}
           </button>
           <button
             type="button"
-            className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-400 mt-2"
-          >
+            onClick={onClose}
+            className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-400 mt-2">
             Cancelar
           </button>
         </div>
