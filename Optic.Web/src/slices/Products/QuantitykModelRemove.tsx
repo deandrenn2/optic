@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ProductsResponseModel } from "./ProductModel";
 import { useQuantity } from "./useProducts";
 
-export const QuantitykModelRemove = ({ product,onClose }: { product: ProductsResponseModel | undefined; onClose (): void}) => {
+export const QuantitykModelRemove = ({ product, onClose }: { product: ProductsResponseModel | undefined; onClose(): void }) => {
   const [productCount, setProductCount] = useState(product?.quantity || 0);
   const [quantityToRemove, setQuantityToRemove] = useState('');
   const [message, setMessage] = useState('');
@@ -39,7 +39,8 @@ export const QuantitykModelRemove = ({ product,onClose }: { product: ProductsRes
     setMessage('');
 
     if (product?.id) {
-      updateQuantity.mutate({ id: product.id, quantity: newProductCount, isIncrement: false
+      updateQuantity.mutate({
+        id: product.id, quantity, isIncrement: false
       });
     }
   };

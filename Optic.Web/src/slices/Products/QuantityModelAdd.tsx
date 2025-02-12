@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { ProductsResponseModel } from "./ProductModel";
 import { useQuantity } from "./useProducts";
-export const QuantityModelAdd = ({product,onClose}: {product: ProductsResponseModel | undefined; onClose (): void}) => {
+export const QuantityModelAdd = ({ product, onClose }: { product: ProductsResponseModel | undefined; onClose(): void }) => {
   const [productCount, setProductCount] = useState(product?.quantity || 0);
   const [quantityToAdd, setQuantityToAdd] = useState('');
   const [message, setMessage] = useState('');
-  const {updateQuantity} = useQuantity ()
+  const { updateQuantity } = useQuantity()
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -20,7 +20,7 @@ export const QuantityModelAdd = ({product,onClose}: {product: ProductsResponseMo
     const newProductCount = productCount + quantity;
     setMessage(`La existencia del producto será de ${newProductCount}.`);
   };
- 
+
   const handleAdd = () => {
     const quantity = Number(quantityToAdd);
 
@@ -34,8 +34,7 @@ export const QuantityModelAdd = ({product,onClose}: {product: ProductsResponseMo
     setMessage('');
     if (product?.id) {
       updateQuantity.mutate(
-        { id: product.id, quantity: newProductCount, isIncrement: true },
-       
+        { id: product.id, quantity, isIncrement: true },
       );
     }
   };
@@ -64,9 +63,9 @@ export const QuantityModelAdd = ({product,onClose}: {product: ProductsResponseMo
             onClick={handleAdd}
             disabled={updateQuantity.isPending}
             className="mr-2 bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-400">
-             {updateQuantity.isPending ? "Guardar..." : "Guardar"}
+            {updateQuantity.isPending ? "Guardar..." : "Guardar"}
           </button>
-         
+
           <button
             type="button"
             onClick={onClose}
