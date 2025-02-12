@@ -47,7 +47,7 @@ export const Brands = () => {
                 </tbody>
             </table>
             <OffCanvas titlePrincipal={selectedBran ? 'Actualizar Marca' : ' Crear Marca'} visible={visible} xClose={handleClose} position={Direction.Right} >
-                <BrandsForm model={selectedBran} />
+                <BrandsForm model={selectedBran} set={setVisible} />
             </OffCanvas>
         </div>
     )

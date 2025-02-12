@@ -3,7 +3,7 @@ import { useListSettings } from "../../shared/components/List/useListSettings";
 import { useQueryClient } from "@tanstack/react-query";
 import { BrandModel } from "../../shared/components/List/ListModels";
 
-export const BrandsForm = ({ model }: { model: BrandModel | undefined  }) => {
+export const BrandsForm = ({ model, set }: { model: BrandModel | undefined, set: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const { settings, updateSettings } = useListSettings();
 
     const [brand, setBrand] = useState("");
@@ -11,14 +11,14 @@ export const BrandsForm = ({ model }: { model: BrandModel | undefined  }) => {
 
     useEffect(
         () => {
-         if (model){
-            setBrand(model.name)
-         }
+            if (model) {
+                setBrand(model.name)
+            }
         }, [model]
     )
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+        const { value } = e.target;
         setBrand(value);
     };
 
@@ -45,8 +45,10 @@ export const BrandsForm = ({ model }: { model: BrandModel | undefined  }) => {
                 const updateBrans = [...brands, { id: count, name: brand }]
                 const newSettings = { ...settings, brands: updateBrans };
                 const res = await updateSettings.mutateAsync(newSettings);
-                if (res.isSuccess)
+                if (res.isSuccess) {
                     queryClient.setQueryData([KEY], newSettings);
+                    set(false);
+                }
             }
         }
 
@@ -64,9 +66,9 @@ export const BrandsForm = ({ model }: { model: BrandModel | undefined  }) => {
                     className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <div>
-                    {}
+                    { }
                     <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold mt-2">
-                        {updateSettings.isPending ? "Guardando..." :model? "Actualizar Marca" : "Crear Marca"}
+                        {updateSettings.isPending ? "Guardando..." : model ? "Actualizar Marca" : "Crear Marca"}
                     </button>
                 </div>
             </form>

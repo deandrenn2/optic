@@ -15,7 +15,7 @@ export const ComponentSexes = ({ selectedValue, name, className, xChange, requir
             {querySettings?.isLoading && <option>Cargando...</option>}
 
             {querySettings?.isError && <option>Error</option>}
-            {settings?.sex?.map((x) => (
+            {settings?.sexes?.map((x) => (
                 <option value={x.id} key={x.id}>{x.name}</option>
             ))}
         </select>

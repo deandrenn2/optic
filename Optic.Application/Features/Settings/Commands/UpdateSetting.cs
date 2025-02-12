@@ -18,15 +18,15 @@ public class UpdateSetting : ICarterModule
     {
         app.MapPut("/api/settings", async (HttpRequest req, IMediator mediator, UpdateSettingCommand command) =>
         {
-            await mediator.Send(command);
+            return await mediator.Send(command);
         })
         .WithName(nameof(UpdateSetting))
         .WithTags("Settings")
         .ProducesValidationProblem()
-        .Produces(StatusCodes.Status200OK);
+        .Produces<Result>(StatusCodes.Status200OK);
     }
 
-    public record UpdateSettingCommand() : IRequest<Result>
+    public record UpdateSettingCommand() : IRequest<IResult>
     {
         public string? Theme { get; set; } = "Light";
         public List<GetSettingsModel> Settings { get; set; } = new List<GetSettingsModel>();
@@ -45,18 +45,19 @@ public class UpdateSetting : ICarterModule
     };
 
     public record GetSettingsModel(int Id, string Name, string Description, string Value);
-    public class UpdateSettingCommandHandler(AppDbContext context, IValidator<UpdateSettingCommand> validator) : IRequestHandler<UpdateSettingCommand, Result>
+    public class UpdateSettingCommandHandler(AppDbContext context, IValidator<UpdateSettingCommand> validator) : IRequestHandler<UpdateSettingCommand, IResult>
     {
-        public async Task<Result> Handle(UpdateSettingCommand request, CancellationToken cancellationToken)
+        public async Task<IResult> Handle(UpdateSettingCommand request, CancellationToken cancellationToken)
         {
             var result = validator.Validate(request);
             if (!result.IsValid)
             {
-                return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Product.ErrorValidation", "Se presentaron errores de validación"));
+                return Results.Ok(Result<Dictionary<string, string[]>>.Failure(
+                    result.GetValidationProblems(),
+                    new Error("Formula.ErrorValidation", "Se presentaron errores de validación")
+                ));
             }
 
-
-            var settings = await context.Settings.ToListAsync();
             var sexSettings = await context.Settings.Where(x => x.Name == "LIST_SEXES").FirstOrDefaultAsync();
             var ThemeSettings = await context.Settings.Where(x => x.Name == "THEME").FirstOrDefaultAsync();
             var brandsSettings = await context.Settings.Where(x => x.Name == "LIST_BRAND").FirstOrDefaultAsync();
@@ -79,31 +80,15 @@ public class UpdateSetting : ICarterModule
                 ThemeSettings.Update(themeValue);
             }
 
-            request.Settings.ForEach(x =>
-            {
-                var setting = settings.FirstOrDefault(s => s.Name == x.Name);
-                if (setting != null)
-                {
-                    setting.Update(x.Description, x.Value);
-                }
-            });
-
-            var response = new GetSettingsResponse();
-            response.Settings = request.Settings;
-            response.Theme = request.Theme;
-            response.Sexes = request.Sexes;
-            response.Brands = request.Brands;
-
-
             var resCount = await context.SaveChangesAsync();
 
             if (resCount > 0)
             {
-                return Result<GetSettingsResponse>.Success(response, "Configuraciones actualizadas correctamente");
+                return Results.Ok(Result.Success("Configuraciones actualizadas correctamente"));
             }
             else
             {
-                return Result.Failure(new Error("Setting.ErrorUpdateSetting", "Error al actualizar la configuración"));
+                return Results.Ok(Result.Failure(new Error("Setting.ErrorUpdateSetting", "Error al actualizar la configuración")));
             }
         }
     }

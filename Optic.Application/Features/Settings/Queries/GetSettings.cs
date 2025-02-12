@@ -30,7 +30,7 @@ public class GetSettings : ICarterModule
         public string? Theme { get; set; } = "Light";
         public bool IsEnabledBarcode { get; set; } = false;
         public List<GetSettingsModel> Settings { get; set; } = new List<GetSettingsModel>();
-        public List<SexModel> Sex { get; set; } = new List<SexModel>();
+        public List<SexModel> Sexes { get; set; } = new List<SexModel>();
         public List<BrandModel> Brands { get; set; } = new List<BrandModel>();
     };
 
@@ -62,7 +62,7 @@ public class GetSettings : ICarterModule
             modelConfig.IsEnabledBarcode = barcodeSettings?.Value == "true";
 
             if (sexList != null)
-                modelConfig.Sex.AddRange(sexList);
+                modelConfig.Sexes.AddRange(sexList);
             if (brandsList != null)
                 modelConfig.Brands.AddRange(brandsList);
 

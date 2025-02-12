@@ -19,7 +19,7 @@ export interface SettingsSystemModel {
    theme?: string;
    isEnabledBarcode: boolean;
    settings: SettingModel[];
-   sex: SexModel[];
+   sexes: SexModel[];
    brands: BrandModel[];
 }
 
@@ -43,6 +43,6 @@ export interface BrandsResponseModel {
    theme?: string;
    isEnabledBarcode: boolean;
    settings: SettingModel[];
-   sex: SexModel[];
-   brands: BrandModel[]
+   sexes: SexModel[];
+   brands: BrandModel[];
 }
