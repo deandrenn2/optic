@@ -38,6 +38,7 @@ public class Product : AggregateRoot
     public Supplier Supplier { get; private set; }
     public string? Image { get; private set; }
     public List<Category> Categories { get; private set; } = new();
+    public List<InvoiceDetail> InvoiceDetails { get; private set; } = new();
 
     public static Product Create(int id, int idBrand, string name, string codeNumber, int quantity, decimal unitPrice, decimal salePrice, int stock)
     {

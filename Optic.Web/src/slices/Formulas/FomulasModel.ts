@@ -1,17 +1,30 @@
-export interface FormulaModel {
+export interface FormulaListModel {
    id: number;
-   Description: string;
-   Date: Date;
-   State: string;
-   PriceLens: number;
+   idBusiness: number;
+   idClient?: number;
+   clientName?: string;
+   description: string;
+   date: Date;
+   priceLens?: number;
+   number: number;
+   state: string;
+   priceConsultation?: number;
+   sumTotal?: number;
 }
 
-export interface FormulasResponseModel {
-   id: number;
-   Description: string;
-   Date: Date;
-   State: string;
-   PriceLens: number;
+export interface FormulaModel {
+   idBusiness: number;
+   idClient?: number;
+   clientName?: string;
+   description: string;
+   date: Date;
+   tags: string[];
+   diagnosis: DiagnosisModel[];
+   products: InvoiceDetailModel[];
+   state: string;
+   priceLens: number;
+   priceConsultation?: number;
+   sumTotal?: number; // Optional because it is calculated
 }
 
 export interface TagModel {
@@ -27,18 +40,38 @@ export interface DiagnosisModel {
 }
 
 export interface InvoiceDetailModel {
-   description: string;
+   description?: string;
+   productName?: string;
    price: number;
    quantity: number;
    idProduct: number;
-   idInvoice: number;
+   idInvoice?: number;
 }
 
 export interface CreateFormulasModel {
+   id?: number;
    idBusiness: number;
    idClient?: number;
    description: string;
    date: Date;
+
+   tags: string[];
+   diagnosis: DiagnosisModel[];
+   products: InvoiceDetailModel[];
+
+   priceLens?: number;
+   priceConsultation?: number;
+   sumTotal?: number; // Note: Computed property
+   sumTotalProducts?: number; // Note: Computed property
+}
+
+export interface UpdateFormulasModel {
+   id?: number;
+   idBusiness: number;
+   idClient?: number;
+   description: string;
+   date: Date;
+   state: string;
 
    tags: string[];
    diagnosis: DiagnosisModel[];

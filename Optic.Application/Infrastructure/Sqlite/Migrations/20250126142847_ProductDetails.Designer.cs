@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Optic.Application.Infrastructure.Sqlite;
 
@@ -10,9 +11,11 @@ using Optic.Application.Infrastructure.Sqlite;
 namespace Optic.Application.Infrastructure.Sqlite.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250126142847_ProductDetails")]
+    partial class ProductDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -77,10 +80,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
 
                     b.Property<int>("Number")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("PaymentType")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -363,6 +362,7 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("IdInvoice")

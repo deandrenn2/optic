@@ -16,14 +16,14 @@ export interface ProductsResponseModel {
    name: string;
    idBrand: number;
    codeNumber: string;
-   barCode?: string;
    quantity: number;
    unitPrice: number;
    salePrice: number;
    idSupplier: number;
-   stock?: number;
-   image: string;
+   image?: string;
    categories: string[];
+   stock?: number;
+   barCode?: string;
 }
 
 export interface CategoriesModel {

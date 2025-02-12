@@ -14,21 +14,21 @@ using Optic.Domain.Shared;
 
 namespace Optic.Application.Features.Formulas;
 
-public class CreateFormulas : ICarterModule
+public class UpdateFormulas : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("api/formulas", async (HttpRequest req, IMediator mediator, CreateFormulasCommand command) =>
+        app.MapPut("api/formulas", async (HttpRequest req, IMediator mediator, UpdateFormulaCommand command) =>
         {
             return await mediator.Send(command);
         })
-             .WithName(nameof(CreateFormulas))
+             .WithName(nameof(UpdateFormulas))
              .WithTags(nameof(Formula))
              .ProducesValidationProblem()
              .Produces<int>(StatusCodes.Status201Created);
     }
 
-    public record CreateFormulasCommand : IRequest<IResult>
+    public record UpdateFormulaCommand : IRequest<IResult>
     {
         public int? Id { get; init; }
         public int IdBusiness { get; init; }
@@ -48,9 +48,9 @@ public class CreateFormulas : ICarterModule
         public decimal SumTotal { get; init; }
     }
 
-    public class CreateFormulasHandler(AppDbContext context, IValidator<CreateFormulasCommand> validator) : IRequestHandler<CreateFormulasCommand, IResult>
+    public class UpdateFormulasHandler(AppDbContext context, IValidator<UpdateFormulaCommand> validator) : IRequestHandler<UpdateFormulaCommand, IResult>
     {
-        public async Task<IResult> Handle(CreateFormulasCommand request, CancellationToken cancellationToken)
+        public async Task<IResult> Handle(UpdateFormulaCommand request, CancellationToken cancellationToken)
         {
             var result = validator.Validate(request);
             if (!result.IsValid)
@@ -134,9 +134,9 @@ public class CreateFormulas : ICarterModule
 
         }
     }
-    public class CreateFormulasValidator : AbstractValidator<CreateFormulasCommand>
+    public class UpdateFormulasValidator : AbstractValidator<UpdateFormulaCommand>
     {
-        public CreateFormulasValidator()
+        public UpdateFormulasValidator()
         {
             RuleFor(x => x.Date).NotEmpty();
             RuleFor(x => x.PriceConsultation).NotEmpty();

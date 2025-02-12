@@ -1,18 +1,42 @@
-import { faCircleMinus, faFileInvoiceDollar, faMagnifyingGlass, faPlay, faPlus, faPrint } from "@fortawesome/free-solid-svg-icons"
+import { faCircleMinus, faFileInvoiceDollar, faMagnifyingGlass, faPlus, faPrint } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import useClient from "../Clients/useClient";
+import { useFormulas } from "./useFormulas";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { FormulasCreate } from "./FormulasCreate";
 import { useState } from "react";
 import { Direction } from "../../shared/components/OffCanvas/Models";
+import { Bar } from "../../shared/components/Progress/Bar";
+import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
+import { format } from "date-fns";
+import DetailButton from "../../shared/components/Buttons/ButtonDetail";
+import Swal from "sweetalert2";
 export const Formulas = () => {
     const [visible, setVisible] = useState(false);
     const handleClose = (): void => {
         setVisible(false);
     }
-    const { clients } = useClient();
+    const { formulas, queryFormulas, deleteFormula } = useFormulas();
+
+    const handleDelete = async (id: number) => {
+        Swal.fire({
+            title: '¿Estás seguro de eliminar esta formula?',
+            text: 'Esta acción no se puede deshacer',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar',
+            preConfirm: async () => {
+                await deleteFormula.mutateAsync(id);
+            }
+        })
+    };
+
+    if (queryFormulas.isLoading)
+        return <Bar Title="Cargando formulas..." />;
+
     return (
-        <div> <div className="w-full p-4">
+        <div> <div className="w-full">
             <div className="flex space-x-4 mb-2">
                 <div className="mb-2">
                     <button type='button'
@@ -21,14 +45,14 @@ export const Formulas = () => {
                         <FontAwesomeIcon
                             icon={faPlus}
                             className="fa-search top-3 pr-2 font-bold" />
-                        Nuevo
+                        Nueva formula
                     </button>
                 </div>
                 <div className="mb-2">
                     <div className="relative">
                         <div className=" inline-flex">
                             <input type="text"
-                                placeholder="Buscar Proveedor"
+                                placeholder="Buscar formula"
                                 className="p-2 pl-10 border-blue-400 rounded-tl-lg rounded-bl-lg" />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
                             <button
@@ -40,7 +64,7 @@ export const Formulas = () => {
             <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                     <tr>
-                        <th className="border border-gray-300 p-2">#</th>
+                        <th className="border border-gray-300 p-2">Nº Formula</th>
                         <th className="border border-gray-300 p-2">Cliente</th>
                         <th className="border border-gray-300 p-2">Valor Consulta</th>
                         <th className="border border-gray-300 p-2">Fecha</th>
@@ -49,30 +73,23 @@ export const Formulas = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {clients?.map((client) => (
-                        <tr key={client.id}>
-                            <td className="border border-gray-300 p-2 text-center">#1</td>
-                            <td className="border border-gray-300 p-2 text-center">{client.firstName + ' ' + client.lastName}</td>
-                            <td className="border border-gray-300 p-2 text-center">$30.000</td>
-                            <td className="border border-gray-300 p-2 text-center">07/08/2024</td>
-                            <td className="border border-gray-300 p-2 text-center text-green-500">Entregado</td>
+                    {formulas?.map((formula) => (
+                        <tr key={formula.id}>
+                            <td className="border border-gray-300 p-2 text-center">#{formula.number.toString().padWithZeros(5)}</td>
+                            <td className="border border-gray-300 p-2">{formula.clientName}</td>
+                            <td className="border border-gray-300 p-2 text-center"><MoneyFormatter amount={formula?.priceConsultation} /></td>
+                            <td className="border border-gray-300 p-2 text-center">{format(formula?.date, ' dd/LL/yyyy')}</td>
+                            <td className="border border-gray-300 p-2 text-center text-green-500">{formula?.state}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
+                                <DetailButton url={`/formulas/${formula.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />
                                 <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar} /></button>
                                 <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus} /></button>
+                                <button onClick={() => handleDelete(formula.id)} className="text-red-500 text-2xl hover:text-red-700 mr-2"><FontAwesomeIcon icon={faCircleMinus} /></button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <div className="mt-4 flex justify-center">
-                <nav className="inline-flex rounded-md shadow">
-                    <a href="#" className="px-4 py-2 bg-white hover:bg-blue-500  border border-gray-300">1</a>
-                    <a href="#" className="px-4 py-2 bg-white hover:bg-blue-500  border border-gray-300">2</a>
-                    <a href="#" className="px-4 py-2 bg-white hover:bg-blue-500 border border-gray-300">3</a>
-                </nav>
-            </div>
         </div>
             <OffCanvas titlePrincipal='Nueva formula' visible={visible} xClose={handleClose} position={Direction.Right} size="lg" >
                 <FormulasCreate />

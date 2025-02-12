@@ -61,7 +61,7 @@ function OffCanvas({
 	if (visible && position === Direction.Right)
 		return (
 			<>
-				<div className={`offcanvas-backdrop show `}></div>
+				<div className={`offcanvas-backdrop show `} onClick={handleClose}></div>
 				<div
 					className={`offcanvas offcanvas--right offcanvas--${size || "sm"}`}
 
