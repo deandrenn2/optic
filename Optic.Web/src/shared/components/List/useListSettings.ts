@@ -1,8 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getIdentificationTypes, getSettings, updateIdentificationTypeService } from './ListServices';
+import { getIdentificationTypes, getSettings,  updateIdentificationTypeService, updateSettingService } from './ListServices';
 import { toast } from 'react-toastify';
 const KEY = 'LIST_SETTINGS';
-
 export const useListSettings = () => {
    const querySettings = useQuery({
       queryKey: [KEY],
@@ -29,12 +28,28 @@ export const useListSettings = () => {
          }
       },
    });
+
+   const updateSettings = useMutation({
+      mutationFn: updateSettingService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               querySettings.refetch();
+            }
+         }
+      },
+   });
+
    return {
       settings: querySettings?.data?.data,
       identificationTypes: queryIdentificationTypes?.data?.data,
       querySettings,
       queryIdentificationTypes,
       updateIdentificationType,
+      updateSettings,
    };
 };
 

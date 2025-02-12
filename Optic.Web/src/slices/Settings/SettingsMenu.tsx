@@ -5,7 +5,6 @@ import NavVertical from "../../shared/components/Navigation/NavVertical";
 import { Outlet } from "react-router-dom";
 
 export const SettingsMenu = () => {
-
     const navBarImportar: NavVerticalItemModel[] = [
         {
             id: 1,

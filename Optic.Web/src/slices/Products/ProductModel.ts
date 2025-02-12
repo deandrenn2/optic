@@ -30,3 +30,9 @@ export interface CategoriesModel {
    id?: number;
    name: string;
 }
+
+export interface QuantityModel {
+   id?: number ;
+   quantity: number;
+   isIncrement: boolean;
+}

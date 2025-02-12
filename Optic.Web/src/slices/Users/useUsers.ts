@@ -1,9 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { createUserService, getUsers, setAvatarService } from './UsersServices';
+import { createUserService, getUsers, setAvatarService, updateUserService } from './UsersServices';
 import useUserContext from '../../shared/context/useUserContext';
 const KEY = 'Users';
-
 export const useUsers = () => {
    const queryUsers = useQuery({
       queryKey: [KEY],
@@ -24,7 +23,7 @@ export const useUsers = () => {
       },
    });
    const updateUsers = useMutation({
-      mutationFn: createUserService,
+      mutationFn: updateUserService,
       onSuccess: (data) => {
          if (!data.isSuccess) {
             toast.info(data.message);
@@ -36,6 +35,7 @@ export const useUsers = () => {
          }
       },
    });
+   
 
    return {
       queryUsers,
@@ -61,6 +61,8 @@ export const useUserAvatar = () => {
          }
       },
    });
+
+
 
    return {
       setAvatar,

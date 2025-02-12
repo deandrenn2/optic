@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import { getBusiness } from './BusinessServices';
-
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getBusiness, updateBusinessService } from './BusinessServices';
+import { toast } from 'react-toastify';
 const KEY = 'BUSINESS';
 export const useBusiness = () => {
    const queryBusiness = useQuery({
@@ -9,8 +9,25 @@ export const useBusiness = () => {
       refetchOnWindowFocus: false,
    });
 
+   const updateBusiness = useMutation({
+      mutationFn: updateBusinessService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               queryBusiness.refetch();
+            }
+         }
+      },
+   })
+   
    return {
       business: queryBusiness?.data?.data,
       queryBusiness,
+      updateBusiness
    };
 };
+
+

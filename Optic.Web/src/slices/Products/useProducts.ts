@@ -8,11 +8,10 @@ import {
    getValidateProduct,
    updateCategoryService,
    updateProductService,
+   updateQuantityService,
 } from './ProductsServices';
 import { toast } from 'react-toastify';
-
 const KEY = 'Products';
-
 export const useProducts = () => {
    const queryProducts = useQuery({
       queryKey: [KEY],
@@ -140,3 +139,23 @@ export const useCategories = () => {
       updateCategory,
    };
 };
+
+export const useQuantity = () => {
+   const updateQuantity = useMutation({
+      mutationFn: updateQuantityService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+            }
+         }
+      },
+   });
+   return {
+      updateQuantity,
+   };
+};
+
+

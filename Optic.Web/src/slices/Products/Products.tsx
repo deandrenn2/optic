@@ -5,7 +5,6 @@ import { MouseEvent } from "react";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { ProductForm } from "./ProductsForm";
 import { Direction } from "../../shared/components/OffCanvas/Models";
-import { useProducts } from "./useProducts";
 import Swal from "sweetalert2";
 import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
@@ -13,17 +12,36 @@ import { Bar } from "../../shared/components/Progress/Bar";
 import { useListSettings } from "../../shared/components/List/useListSettings";
 import { CategoriesForm } from "./CategoriesForm";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
+import { ButtonStockRemove } from "../../shared/components/Buttons/ButtonStockRemove";
+import { ProductsResponseModel } from "./ProductModel";
+import { QuantitykModelRemove } from "./QuantitykModelRemove";
+import { useProducts,  } from "./useProducts";
+import { QuantityModelAdd } from "./QuantityModelAdd";
+import { ButtonStockAdd } from "../../shared/components/Buttons/ButtonStockAdd";
 
 export const Products = () => {
+    const [visibleAdd, setVisibleAdd] = useState(false);
     const [visible, setVisible] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [visibleCategories, setVisibleCategories] = useState(false);
     const { settings } = useListSettings();
     const { products, queryProducts, deleteProduct } = useProducts();
+    const [product, setProduct] = useState<ProductsResponseModel | undefined>();
+
+    const handleClickDecrease = (product: ProductsResponseModel) => {
+        setProduct(product);
+        setIsOpen(true);
+    }
+    const handleClickAdd = (product: ProductsResponseModel) => {
+        setProduct(product);
+        setVisibleAdd(true);
+    }
+
 
     function handleClose(): void {
         setVisible(false);
     }
-
+     
     function handleDelete(e: MouseEvent<HTMLButtonElement>, id: number): void {
         e.preventDefault();
         Swal.fire({
@@ -39,19 +57,15 @@ export const Products = () => {
             }
         })
     }
-
     const handleCloseCategories = (): void => {
         setVisibleCategories(false);
     }
-
     const getNameBrand = (id: number): string => {
         const brand = settings?.brands?.find(x => x.id === id);
         return brand?.name ?? '';
     }
-
     if (queryProducts.isLoading)
         return <Bar Title="Cargando..." />;
-
     return (
         <div className="w-full">
             <div className="flex space-x-4 mb-2">
@@ -84,8 +98,6 @@ export const Products = () => {
                 </div>
 
             </div>
-
-            {/* <!-- TABLA DE PRODUCTOS --> */}
             <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                     <tr>
@@ -111,21 +123,24 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center"><MoneyFormatter amount={product.unitPrice} /></td>
                             <td className="border border-gray-300 p-2 text-center"> <MoneyFormatter amount={product.salePrice} /></td>
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <DetailButton url={`/products/${product.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />
+                            <td className="border border-gray-300 p-2 text-center  ">
+                                <DetailButton url={`/products/${product.id}`} />
+                                <ButtonStockAdd onClick={() => handleClickAdd(product)}/>
+                                <ButtonStockRemove onClick={() => handleClickDecrease(product)}/>
                                 <DeleteButton id={product.id} onDelete={handleDelete} />
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-
             <OffCanvas titlePrincipal='Registro de Producto' visible={visible} xClose={handleClose} position={Direction.Right} >
                 <ProductForm />
             </OffCanvas>
             <OffCanvas titlePrincipal='Registro de Categoria' visible={visibleCategories} xClose={handleCloseCategories} position={Direction.Right} >
                 <CategoriesForm />
-            </OffCanvas>
+            </OffCanvas>      
+            {visibleAdd && <QuantityModelAdd product={product} onClose={() => setVisibleAdd(false)} />}
+            {isOpen && <QuantitykModelRemove product={product} onClose={()=> setVisible(false)} />}   
         </div>
     )
 }

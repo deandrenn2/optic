@@ -1,14 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleMinus } from '@fortawesome/free-solid-svg-icons';
+import { faTrash  } from '@fortawesome/free-solid-svg-icons';
 export const ButtonDelete = ({ id, onDelete }: { id: number; onDelete: any }) => {
   return (
     <button
-        className="text-red-500 text-2xl hover:text-red-700"
+        className="text-red-500 text-2xl hover:text-red-700 mr-2"
       onClick={(e) => onDelete(e, id)}
     >
-      <FontAwesomeIcon icon={faCircleMinus} className="ml-2" />
-      
-    </button>
+      <FontAwesomeIcon icon={faTrash} />
+      </button>
   );
 };
 

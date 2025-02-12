@@ -1,17 +1,41 @@
-import { useState } from "react";
+import {  useState } from "react";
 import useUserContext from "../../shared/context/useUserContext";
-import ButtonSave from "../../shared/components/Buttons/ButtonSave";
+import { useBusiness } from "../../routes/Businesses/useBusiness";
 
 export const Business = () => {
-    const [hasError] = useState<string>('');
-    const { business } = useUserContext();
+    const [hasError, setHasError] = useState<string>('');
+    const { business, setBusiness } = useUserContext();
+    const { updateBusiness } = useBusiness();
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        if (business)
+        setBusiness(  {
+            ...business,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        try {
+           if (business)
+            await updateBusiness.mutateAsync(business);
+            setHasError('');
+        } catch (error: any) {
+            setHasError("");
+           console.log(Business);
+        }
+    };
 
     return (
         <div className="w-full flex justify-center items-center">
             <form
-                className=" bg-white p-8 rounded-lg shadow-md w-full max-w-md mx-5 grid gap-2">
+                onSubmit={handleSubmit}
+                className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mx-5 grid gap-2"
+            >
                 <div className="relative flex items-center justify-center">
-                    <div className="shrink-0 ">
+                    <div className="shrink-0">
                         <img
                             src={`${import.meta.env.BASE_URL}initials-logo.svg`}
                             alt="logo"
@@ -23,146 +47,124 @@ export const Business = () => {
                 <h2 className="text-3xl font-bold mb-2 text-center">
                     <span>{business?.companyName}</span>
                 </h2>
+
                 <div>
-                    <label
-                        htmlFor="comapanyNameTxt"
-                        className="block text-gray-600 text-sm font-bold mb-2"
-                    >
+                    <label htmlFor="companyName" className="block text-gray-600 text-sm font-bold mb-2">
                         Nombre
                     </label>
-                    <div className="relative">
-                        <input
-                            id="comapanyNameTxt"
-                            name="companyName"
-                            value={business?.companyName}
-                            required
-                            className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Nombre"
-                        />
-                    </div>
+                    <input
+                        id="companyName"
+                        name="companyName"
+                        value={business?.companyName}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Nombre"
+                    />
                 </div>
+
                 <div>
-                    <label
-                        htmlFor="comapanyNameTxt"
-                        className="block text-gray-600 text-sm font-bold mb-2"
-                    >
+                    <label htmlFor="abbreviation" className="block text-gray-600 text-sm font-bold mb-2">
                         Abreviatura
                     </label>
-                    <div className="relative">
-                        <input
-                            id="abbreviationTxt"
-                            name="abbreviation"
-                            value={business?.abbreviation}
-                            required
-                            className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Abreviatura"
-                        />
-                    </div>
+                    <input
+                        id="abbreviation"
+                        name="abbreviation"
+                        value={business?.abbreviation}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Abreviatura"
+                    />
                 </div>
+
                 <div>
-                    <label
-                        htmlFor="nitTxt"
-                        className="block text-gray-600 text-sm font-bold mb-2"
-                    >
+                    <label htmlFor="nit" className="block text-gray-600 text-sm font-bold mb-2">
                         NIT
                     </label>
-                    <div className="relative">
-                        <input
-                            id="nitTxt"
-                            name="nit"
-                            value={business?.nit}
-                            required
-                            className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Nit"
-                        />
-                    </div>
+                    <input
+                        id="nit"
+                        name="nit"
+                        value={business?.nit}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Nit"
+                    />
                 </div>
 
                 <div>
-                    <label
-                        htmlFor="cityTxt"
-                        className="block text-gray-600 text-sm font-bold mb-2"
-                    >
+                    <label htmlFor="city" className="block text-gray-600 text-sm font-bold mb-2">
                         Ciudad
                     </label>
-                    <div className="relative">
-                        <input
-                            id="cityTxt"
-                            name="city"
-                            value={business?.city}
-                            required
-                            className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Ciudad"
-                        />
-                    </div>
+                    <input
+                        id="city"
+                        name="city"
+                        value={business?.city}
+                        onChange={handleInputChange}
+                        className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Ciudad"
+                    />
                 </div>
 
                 <div>
-                    <label
-                        htmlFor="addressTxt"
-                        className="block text-gray-600 text-sm font-bold mb-2"
-                    >
+                    <label htmlFor="address" className="block text-gray-600 text-sm font-bold mb-2">
                         Dirección
                     </label>
-                    <div className="relative">
-                        <input
-                            id="addressTxt"
-                            required
-                            name="address"
-                            value={business?.address}
-                            className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Dirección"
-                        />
-                    </div>
-                </div>
-                <div>
-                    <label
-                        htmlFor="cellPhoneNumberTxt"
-                        className="block text-gray-600 text-sm font-bold mb-2"
-                    >
-                        Linea celular
-                    </label>
-                    <div className="relative">
-                        <input
-                            id="cellPhoneNumberTxt"
-                            name="cellPhoneNumber"
-                            required
-                            value={business?.cellPhoneNumber}
-                            className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Linea celular"
-                        />
-                    </div>
-                </div>
-                <div>
-                    <label
-                        htmlFor="phoneNumberTxt"
-                        className="block text-gray-600 text-sm font-bold mb-2"
-                    >
-                        Telefóno
-                    </label>
-                    <div className="relative">
-                        <input
-                            id="phoneNumberTxt"
-                            name="phoneNumber"
-                            value={business?.phoneNumber}
-                            className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Telefóno"
-                        />
-                    </div>
+                    <input
+                        id="address"
+                        name="address"
+                        value={business?.address}
+                        onChange={handleInputChange}
+                        className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Dirección"
+                    />
                 </div>
 
                 <div>
-                    <div className="text-sm text-center pt-2 text-red-600 hover:text-blue-500">
-                        <span>
-                            <a href="">{hasError && hasError}</a>
-                        </span>
-                    </div>
+                    <label htmlFor="cellPhoneNumber" className="block text-gray-600 text-sm font-bold mb-2">
+                        Línea celular
+                    </label>
+                    <input
+                        id="cellPhoneNumber"
+                        name="cellPhoneNumber"
+                        value={business?.cellPhoneNumber}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Línea celular"
+                    />
                 </div>
-                <div className=" flex justify-start">
-                    <ButtonSave/>
+
+                <div>
+                    <label htmlFor="phoneNumber" className="block text-gray-600 text-sm font-bold mb-2">
+                        Teléfono
+                    </label>
+                    <input
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        value={business?.phoneNumber}
+                        onChange={handleInputChange}
+                        className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Teléfono"
+                    />
+                </div>
+                {hasError && (
+                    <div className="text-sm text-center text-red-600 mt-2">
+                        {hasError}
+                    </div>
+                )}
+
+                <div className="mt-4">
+                    <button
+                        type="submit"
+                        disabled={updateBusiness.isPending}
+                        className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
+                    >
+                        {updateBusiness.isPending ? "Actualizando..." : "Actualizar"}
+                    </button>
                 </div>
             </form>
         </div>
     );
 };
-
