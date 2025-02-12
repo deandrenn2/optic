@@ -3,7 +3,7 @@ import { ClientSelect } from "../Clients/ClientSelect";
 import { LenTypeSelect } from "./LenTypeSelect";
 import { DiagnosisSelect } from "./DiagnosisSelect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faCircleInfo, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faCircle, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { CreateFormulasModel, DiagnosisModel, UpdateFormulasModel } from "./FomulasModel";
 import { MultiValue, SingleValue } from "react-select";
 import { Option } from "../../shared/model";
