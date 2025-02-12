@@ -21,11 +21,8 @@ import { FormulasCreate } from '../slices/Formulas/FormulasCreate.tsx';
 import { createBrowserRouter } from 'react-router-dom';
 import { Users } from '../slices/Users/Users.tsx';
 import { Brands } from '../slices/Settings/Brands.tsx';
-<<<<<<< HEAD
 import { BrandsDetail } from '../slices/Settings/BrandsDetail.tsx';
-=======
 import { FormulasDetail } from '../slices/Formulas/FormulasDetail.tsx';
->>>>>>> 89415afecc81f6558a5467fe2c6c3d5245d1a99a
 export const router = createBrowserRouter([
     {
         path: '/',
