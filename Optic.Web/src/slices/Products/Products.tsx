@@ -18,7 +18,6 @@ import { QuantitykModelRemove } from "./QuantitykModelRemove";
 import { useProducts,  } from "./useProducts";
 import { QuantityModelAdd } from "./QuantityModelAdd";
 import { ButtonStockAdd } from "../../shared/components/Buttons/ButtonStockAdd";
-
 export const Products = () => {
     const [visibleAdd, setVisibleAdd] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -37,11 +36,10 @@ export const Products = () => {
         setVisibleAdd(true);
     }
 
-
     function handleClose(): void {
         setVisible(false);
     }
-     
+
     function handleDelete(e: MouseEvent<HTMLButtonElement>, id: number): void {
         e.preventDefault();
         Swal.fire({
@@ -139,8 +137,8 @@ export const Products = () => {
             <OffCanvas titlePrincipal='Registro de Categoria' visible={visibleCategories} xClose={handleCloseCategories} position={Direction.Right} >
                 <CategoriesForm />
             </OffCanvas>      
-            {visibleAdd && <QuantityModelAdd product={product} onClose={() => setVisibleAdd(false)} />}
-            {isOpen && <QuantitykModelRemove product={product} onClose={()=> setVisible(false)} />}   
+            {visibleAdd && <QuantityModelAdd product={product} onClose={() => setVisibleAdd(false)}/>}
+            {isOpen && <QuantitykModelRemove product={product} onClose={()=> setIsOpen(false)} />}   
         </div>
     )
 }

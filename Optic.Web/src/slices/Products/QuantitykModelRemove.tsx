@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { ProductsResponseModel } from "./ProductModel";
 import { useQuantity } from "./useProducts";
-
 export const QuantitykModelRemove = ({ product, onClose }: { product: ProductsResponseModel | undefined; onClose(): void }) => {
   const [productCount, setProductCount] = useState(product?.quantity || 0);
   const [quantityToRemove, setQuantityToRemove] = useState('');
   const [message, setMessage] = useState('');
   const { updateQuantity } = useQuantity();
+ 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setQuantityToRemove(inputValue);
@@ -40,7 +40,8 @@ export const QuantitykModelRemove = ({ product, onClose }: { product: ProductsRe
 
     if (product?.id) {
       updateQuantity.mutate({
-        id: product.id, quantity, isIncrement: false
+        id: product.id, quantity,
+        isIncrement: false
       });
     }
   };
@@ -52,7 +53,7 @@ export const QuantitykModelRemove = ({ product, onClose }: { product: ProductsRe
           <h2 className="text-2xl font-bold mb-2">Restar existencia</h2>
           <div className="font-bold mb-4">
             <p>Producto: {product?.name}</p>
-            <p>Existencia actual: {productCount}</p>
+            <p>Existencia actual: {product?.quantity}</p>
           </div>
           <p className="text-blue-500">Cantidad a restar:</p>
           <input
@@ -83,5 +84,5 @@ export const QuantitykModelRemove = ({ product, onClose }: { product: ProductsRe
         </div>
       </div>
     </div>
-  );
+  )
 };

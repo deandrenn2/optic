@@ -12,7 +12,6 @@ export const QuantityModelAdd = ({ product, onClose }: { product: ProductsRespon
     setQuantityToAdd(inputValue);
 
     const quantity = Number(inputValue);
-
     if (!inputValue) {
       setMessage('');
       return;
@@ -45,7 +44,7 @@ export const QuantityModelAdd = ({ product, onClose }: { product: ProductsRespon
         <h2 className="text-2xl font-bold mb-2">Agregar existencia</h2>
         <div className="font-bold mb-4">
           <p>Producto: {product?.name}</p>
-          <p>Existencia actual: {productCount}</p>
+          <p>Existencia actual: {product?.quantity}</p>
         </div>
         <p className="text-blue-500">Cantidad</p>
         <input
@@ -58,6 +57,7 @@ export const QuantityModelAdd = ({ product, onClose }: { product: ProductsRespon
         <p className="text-gray-500">¿Cuántos productos de este tipo deseas agregar?</p>
         {message && <p className="text-green-500">{message}</p>}
         <div className="mt-4">
+         
           <button
             type="button"
             onClick={handleAdd}
@@ -65,7 +65,7 @@ export const QuantityModelAdd = ({ product, onClose }: { product: ProductsRespon
             className="mr-2 bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-400">
             {updateQuantity.isPending ? "Guardar..." : "Guardar"}
           </button>
-
+         
           <button
             type="button"
             onClick={onClose}

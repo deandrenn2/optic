@@ -32,8 +32,6 @@ export const IdentificationForm = ({ identificationType }: { identificationType:
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       await updateIdentificationType.mutateAsync(form);
-
-      console.log("Formulario actualizado:", form);
    };
 
    return (
@@ -93,8 +91,8 @@ export const IdentificationForm = ({ identificationType }: { identificationType:
                   {identificationType &&
                      (
                         <button type="submit" disabled={updateIdentificationType.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
-                        {updateIdentificationType.isPending ? "Actualizando..." : "Actualizar Identificación"}
-                     </button>
+                           {updateIdentificationType.isPending ? "Actualizando..." : "Actualizar Identificación"}
+                        </button>
                      )}
                </div>
             </div>
