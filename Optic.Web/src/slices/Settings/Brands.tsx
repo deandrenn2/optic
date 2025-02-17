@@ -38,11 +38,11 @@ export const Brands = () => {
                 <tbody>
                     {settings?.brands?.map((brand) => (
                         <tr key={brand.id}>
-                            <td className="border border-gray-300 p-2 text-center">
+                            <td className="border border-gray-300 p-2 text-center m-9">
                                 <span className="m-2">
                                     {brand.name}
                                 </span>
-                                <FontAwesomeIcon icon={faPencil} className="text-blue-500 cursor-pointer hover:text-blue-700 text-center" onClick={() => handleSetting(brand)} />
+                                <FontAwesomeIcon icon={faPencil} className="text-blue-500 cursor-pointer hover:text-blue-700 absolute right-90 " onClick={() => handleSetting(brand)} />
                             </td>
                         </tr>
                     ))}
