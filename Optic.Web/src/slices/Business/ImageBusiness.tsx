@@ -12,8 +12,8 @@ export const ImageBusiness = () => {
     };
     
     return (
-        <div className=" relative bottom-40 left-16 ">
-            <div className="bg-whit p-6 rounded-lg shadow-lg text-center">
+        <div className=" relative bottom-40 left-40 ">
+            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
                 <label
                     htmlFor="file-upload"
                     className="block border-2 border-dashed border-gray-500 rounded-lg p-1 cursor-pointer hover:border-blue-500 m-4 w-60 h-30"
@@ -38,7 +38,7 @@ export const ImageBusiness = () => {
                     accept="image/*"
                     onChange={habdleImageChange} />
                 <button className=" bg-teal-500 text-white px-4 py-3 rounded-md shadow-md mr-4 hover:bg-teal-400 ">
-                    <FontAwesomeIcon icon={faCamera} className="" />
+                    <FontAwesomeIcon icon={faCamera}/>
                 </button>
             </div>
         </div>
