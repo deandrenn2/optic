@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ProductsResponseModel } from "./ProductModel";
 import { useQuantity } from "./useProducts";
-export const QuantityModelAdd = ({ product, onClose }: { product: ProductsResponseModel | undefined; onClose(): void }) => {
+export const QuantityModelAdd = ({ product, onClose,onUpdate }: { product: ProductsResponseModel | undefined; onClose(): void; onUpdate(): void }) => {
   const [productCount, setProductCount] = useState(product?.quantity || 0);
   const [quantityToAdd, setQuantityToAdd] = useState('');
   const [message, setMessage] = useState('');
@@ -27,13 +27,19 @@ export const QuantityModelAdd = ({ product, onClose }: { product: ProductsRespon
       return;
     }
 
-    const newProductCount = productCount + quantity;
-    setProductCount(newProductCount);
-    setQuantityToAdd('');
-    setMessage('');
     if (product?.id) {
       updateQuantity.mutate(
         { id: product.id, quantity, isIncrement: true },
+        {
+          onSuccess: () => {
+            const newProductCount = productCount + quantity;
+            setProductCount(newProductCount);
+            product.quantity = newProductCount;
+            setQuantityToAdd('');
+            setMessage('');
+            onUpdate ();
+          },
+        }
       );
     }
   };
@@ -57,7 +63,7 @@ export const QuantityModelAdd = ({ product, onClose }: { product: ProductsRespon
         <p className="text-gray-500">¿Cuántos productos de este tipo deseas agregar?</p>
         {message && <p className="text-green-500">{message}</p>}
         <div className="mt-4">
-         
+
           <button
             type="button"
             onClick={handleAdd}
@@ -65,7 +71,7 @@ export const QuantityModelAdd = ({ product, onClose }: { product: ProductsRespon
             className="mr-2 bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-400">
             {updateQuantity.isPending ? "Guardar..." : "Guardar"}
           </button>
-         
+
           <button
             type="button"
             onClick={onClose}

@@ -1,6 +1,6 @@
 import { faMagnifyingGlass, faPlus, } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MouseEvent } from "react";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { ProductForm } from "./ProductsForm";
@@ -26,6 +26,11 @@ export const Products = () => {
     const { settings } = useListSettings();
     const { products, queryProducts, deleteProduct } = useProducts();
     const [product, setProduct] = useState<ProductsResponseModel | undefined>();
+    const [refresh, setRefresh] = useState(false);
+
+    useEffect(() =>{
+        queryProducts.refetch();
+    },[refresh]);
 
     const handleClickDecrease = (product: ProductsResponseModel) => {
         setProduct(product);
@@ -137,8 +142,8 @@ export const Products = () => {
             <OffCanvas titlePrincipal='Registro de Categoria' visible={visibleCategories} xClose={handleCloseCategories} position={Direction.Right} >
                 <CategoriesForm />
             </OffCanvas>      
-            {visibleAdd && <QuantityModelAdd product={product} onClose={() => setVisibleAdd(false)}/>}
-            {isOpen && <QuantitykModelRemove product={product} onClose={()=> setIsOpen(false)} />}   
+            {visibleAdd && <QuantityModelAdd product={product} onClose={() => setVisibleAdd(false)} onUpdate={() => setRefresh(prev => !prev)}/>}
+            {isOpen && <QuantitykModelRemove product={product} onClose={()=> setIsOpen(false)}  onUpdate={() => setRefresh(prev => !prev)} />}   
         </div>
     )
 }
