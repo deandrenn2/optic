@@ -1,6 +1,6 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
-import { UsersAvatarModel, UsersModel, UsersProfileModel, UsersResponseModel, UsersUpdatePasswordModel } from './UsersModel';
+import { passwordRecoverModel, UsersAvatarModel, UsersModel, UsersProfileModel, UsersResponseModel, UsersUpdatePasswordModel } from './UsersModel';
 
 export const createUserService = async (model: UsersModel): Promise<MsgResponse<UsersModel>> => {
    const url = 'api/users';
@@ -59,7 +59,7 @@ export const updateUserService = async (model: UsersProfileModel): Promise<MsgRe
 
 export const updateUserPasswordService = async (model: UsersUpdatePasswordModel): Promise<MsgResponse<UsersModel>> => {
    const url = `api/users/password`;
-   const response = await ApiClient.put<MsgResponse<UsersModel>>(url, model);
+   const response = await ApiClient.post<MsgResponse<UsersModel>>(url, model);
 
    if (response.status !== 200 && response.status !== 201) {
       return {
@@ -84,6 +84,25 @@ export const setAvatarService = async (avatar: UsersAvatarModel): Promise<MsgRes
       return {
          isSuccess: false,
          message: 'Error al actualizar avatar',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};
+
+export const passwordRecoverService = async (model: passwordRecoverModel): Promise<MsgResponse<UsersModel>> => {
+   const url = `api/users/passwordRecover`;
+   const response = await ApiClient.post<MsgResponse<UsersModel>>(url, model);
+
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al recuperar contraseña',
          isFailure: true,
          error: {
             code: response.status.toString(),
