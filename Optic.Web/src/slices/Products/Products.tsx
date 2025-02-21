@@ -15,7 +15,7 @@ import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 import { ButtonStockRemove } from "../../shared/components/Buttons/ButtonStockRemove";
 import { ProductsResponseModel } from "./ProductModel";
 import { QuantitykModelRemove } from "./QuantitykModelRemove";
-import { useProducts,  } from "./useProducts";
+import { useProducts, } from "./useProducts";
 import { QuantityModelAdd } from "./QuantityModelAdd";
 import { ButtonStockAdd } from "../../shared/components/Buttons/ButtonStockAdd";
 export const Products = () => {
@@ -28,9 +28,9 @@ export const Products = () => {
     const [product, setProduct] = useState<ProductsResponseModel | undefined>();
     const [refresh, setRefresh] = useState(false);
 
-    useEffect(() =>{
+    useEffect(() => {
         queryProducts.refetch();
-    },[refresh]);
+    }, [refresh]);
 
     const handleClickDecrease = (product: ProductsResponseModel) => {
         setProduct(product);
@@ -128,8 +128,8 @@ export const Products = () => {
                             <td className="border border-gray-300 p-2 text-center">{product.stock}</td>
                             <td className="border border-gray-300 p-2 text-center  ">
                                 <DetailButton url={`/products/${product.id}`} />
-                                <ButtonStockAdd onClick={() => handleClickAdd(product)}/>
-                                <ButtonStockRemove onClick={() => handleClickDecrease(product)}/>
+                                <ButtonStockAdd onClick={() => handleClickAdd(product)} />
+                                <ButtonStockRemove onClick={() => handleClickDecrease(product)} />
                                 <DeleteButton id={product.id} onDelete={handleDelete} />
                             </td>
                         </tr>
@@ -141,9 +141,9 @@ export const Products = () => {
             </OffCanvas>
             <OffCanvas titlePrincipal='Registro de Categoria' visible={visibleCategories} xClose={handleCloseCategories} position={Direction.Right} >
                 <CategoriesForm />
-            </OffCanvas>      
-            {visibleAdd && <QuantityModelAdd product={product} onClose={() => setVisibleAdd(false)} onUpdate={() => setRefresh(prev => !prev)}/>}
-            {isOpen && <QuantitykModelRemove product={product} onClose={()=> setIsOpen(false)}  onUpdate={() => setRefresh(prev => !prev)} />}   
+            </OffCanvas>
+            {visibleAdd && <QuantityModelAdd product={product} onClose={() => setVisibleAdd(false)} onUpdate={() => setRefresh(prev => !prev)} />}
+            {isOpen && <QuantitykModelRemove product={product} onClose={() => setIsOpen(false)} onUpdate={() => setRefresh(prev => !prev)} />}
         </div>
     )
 }

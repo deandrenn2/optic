@@ -22,7 +22,6 @@ export const BrandsForm = ({ model, set }: { model: BrandModel | undefined, set:
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         if (model) {
             //Actualizar
             if (settings) {
