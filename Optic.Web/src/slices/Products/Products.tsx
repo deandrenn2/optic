@@ -27,7 +27,7 @@ export const Products = () => {
     const { products, queryProducts, deleteProduct } = useProducts();
     const [product, setProduct] = useState<ProductsResponseModel | undefined>();
     const [refresh, setRefresh] = useState(false);
-    const [searchProduct, setSearchProduct] = useState ('')
+    const [searchProduct, setSearchProduct] = useState('')
 
     useEffect(() => {
         queryProducts.refetch();
@@ -61,6 +61,7 @@ export const Products = () => {
             }
         })
     }
+
     const handleCloseCategories = (): void => {
         setVisibleCategories(false);
     }
@@ -74,8 +75,6 @@ export const Products = () => {
     const filteredProducts = products?.filter(product =>
         `${product.name}`.toLowerCase().includes(searchProduct.toLowerCase())
     )
-
-
 
     return (
         <div className="w-full">
@@ -100,7 +99,7 @@ export const Products = () => {
                             <input type="text"
                                 placeholder="Buscar Proveedor"
                                 value={searchProduct}
-                                onChange={(e) => setSearchProduct (e.target.value)}
+                                onChange={(e) => setSearchProduct(e.target.value)}
                                 className="p-2 pl-10 rounded-tl-lg rounded-bl-lg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
 
