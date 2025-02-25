@@ -10,12 +10,11 @@ import DeleteButton from '../../shared/components/Buttons/ButtonDelete';
 import DetailButton from '../../shared/components/Buttons/ButtonDetail';
 import { Bar } from '../../shared/components/Progress/Bar';
 import { useListSettings } from '../../shared/components/List/useListSettings';
-
 export const Clients = () => {
    const [visible, setVisible] = useState(false);
-
    const { clients, deleteClient, queryClients } = useClient();
    const { identificationTypes } = useListSettings();
+   const [searchClients, setSearchClient] = useState('')
 
    const handleClose = () => {
       setVisible(false);
@@ -43,6 +42,10 @@ export const Clients = () => {
 
    if (queryClients.isLoading)
       return <Bar Title="Cargando..." />;
+   
+   const filteredClients = clients?.filter(client =>
+       `${client.firstName} ${client.lastName}`.toLowerCase().includes(searchClients.toLowerCase())
+   );
 
    return (
       <div className="w-full">
@@ -53,24 +56,21 @@ export const Clients = () => {
                   />Nuevo</button>
             </div>
 
-            <div className="mb-2">
-               <div className="relative">
-                  <div className="inline-flex">
+            
+               <div className="relative inline-flex mb-2">
+                  
                      <input
                         type="text"
+                        value={searchClients}
+                        onChange={(e) => setSearchClient(e.target.value)}
                         placeholder="Buscar Cliente"
-                        className="p-2 pl-10 border-blue-400 rounded-tl-lg rounded-bl-lg"
-                     />
-                     <FontAwesomeIcon
-                        icon={faMagnifyingGlass}
-                        className="fa-search absolute left-3 top-3 text-gray-400"
-                     />
-
-                     <button className="text-white font-bold border hover:bg-blue-700 bg-blue-500 px-4 py-2 rounded-tr-lg rounded-br-lg ">Buscar</button>
+                        className="p-2 pl-10 rounded-tl-lg rounded-bl-lg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                         <FontAwesomeIcon icon={faMagnifyingGlass}
+                        className="fa-search absolute left-3 top-3 text-gray-400"/>
+                     <button className="text-white font-bold border hover:bg-blue-700 bg-blue-500 px-6 py-1 rounded-tr-lg rounded-br-lg ">Buscar</button>
                   </div>
                </div>
-            </div>
-         </div>
+         
          {/* <!-- TABLA DE CLIENTES --> */}
          <div className="rounded-lg border border-grey-500 mb-4 w-full ">
             <table className=" bg-white rounded shadow w-full">
@@ -85,7 +85,7 @@ export const Clients = () => {
                   </tr>
                </thead>
                <tbody>
-                  {clients?.map((client) => (
+                  {filteredClients?.map((client) => (
                      <tr key={client.id}>
                         <td className=" p-2 border-b border-gray-200">
                            {' '}

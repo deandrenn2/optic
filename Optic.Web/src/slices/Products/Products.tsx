@@ -27,6 +27,7 @@ export const Products = () => {
     const { products, queryProducts, deleteProduct } = useProducts();
     const [product, setProduct] = useState<ProductsResponseModel | undefined>();
     const [refresh, setRefresh] = useState(false);
+    const [searchProduct, setSearchProduct] = useState ('')
 
     useEffect(() => {
         queryProducts.refetch();
@@ -69,6 +70,13 @@ export const Products = () => {
     }
     if (queryProducts.isLoading)
         return <Bar Title="Cargando..." />;
+
+    const filteredProducts = products?.filter(product =>
+        `${product.name}`.toLowerCase().includes(searchProduct.toLowerCase())
+    )
+
+
+
     return (
         <div className="w-full">
             <div className="flex space-x-4 mb-2">
@@ -91,7 +99,9 @@ export const Products = () => {
                         <div className=" inline-flex">
                             <input type="text"
                                 placeholder="Buscar Proveedor"
-                                className="p-2 pl-10 border-blue-400 rounded-tl-lg rounded-bl-lg" />
+                                value={searchProduct}
+                                onChange={(e) => setSearchProduct (e.target.value)}
+                                className="p-2 pl-10 rounded-tl-lg rounded-bl-lg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
 
                             <button
@@ -116,7 +126,7 @@ export const Products = () => {
                     </tr>
                 </thead >
                 <tbody>
-                    {products?.map((product) => (
+                    {filteredProducts?.map((product) => (
                         <tr key={product.id}>
                             <td className="border border-gray-300 p-2 text-center">#{product.codeNumber.padWithZeros(5)}</td>
                             {settings?.isEnabledBarcode && <td className="border border-gray-300 p-2 text-center">{product.barCode}</td>}
