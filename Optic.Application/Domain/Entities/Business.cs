@@ -65,6 +65,11 @@ namespace Optic.Application.Domain.Entities
             this.CellPhoneNumber = cellPhoneNumber;
             this.PhoneNumber = phoneNumber;
         }
+
+        public void UpdateLogo(string urlLogo)
+        {
+            this.UrlLogo = urlLogo;
+        }
     }
 
 

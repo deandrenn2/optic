@@ -18,7 +18,7 @@ builder.Services.AddApplicationCore();
 // Configurar DbContext con SQLite
 builder.Services.AddPersistence(builder.Configuration);
 
-// Autorización y autenticación
+// Autorizaciï¿½n y autenticaciï¿½n
 builder.AddAutenticationServices();
 builder.Services.ConfigureServices();
 
@@ -38,6 +38,7 @@ app.UseReDoc(settings =>
 app.UseCors("AllowSpecificOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseStaticFiles();
 app.MapCarter();
 app.Run();
 

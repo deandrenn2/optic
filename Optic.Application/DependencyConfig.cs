@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Optic.Application.Infrastructure.Files;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Authentications;
 using Optic.Infrastructure.Authentications;
@@ -50,6 +51,7 @@ public static class DependencyConfig
     public static void AddInfraestructure(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IManagerToken, ManagerToken>();
+        builder.Services.AddScoped<IFileManager, FileManager>();
     }
 
     public static IServiceCollection AddApplicationCore(this IServiceCollection services)
@@ -94,5 +96,5 @@ public static class DependencyConfig
         return services;
     }
 
-  
+
 }
