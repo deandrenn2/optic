@@ -73,7 +73,7 @@ export const Products = () => {
         return <Bar Title="Cargando..." />;
 
     const filteredProducts = products?.filter(product =>
-        `${product.name}`.toLowerCase().includes(searchProduct.toLowerCase())
+        `${product.codeNumber} ${product.name}`.toLowerCase().includes(searchProduct.toLowerCase())
     )
 
     return (

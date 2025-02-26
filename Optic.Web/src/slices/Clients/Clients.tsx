@@ -44,7 +44,7 @@ export const Clients = () => {
       return <Bar Title="Cargando..." />;
    
    const filteredClients = clients?.filter(client =>
-       `${client.firstName} ${client.lastName}`.toLowerCase().includes(searchClients.toLowerCase())
+       `${client.firstName} ${client.lastName} ${client.identificationNumber}`.toLowerCase().includes(searchClients.toLowerCase())
    );
 
    return (

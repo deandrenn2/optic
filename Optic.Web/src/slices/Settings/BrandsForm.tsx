@@ -27,7 +27,9 @@ export const BrandsForm = ({ model, set }: { model: BrandModel | undefined, set:
             if (settings) {
                 const KEY = 'LIST_SETTINGS';
                 const brands = settings.brands;
-                const updateBrans = [...brands.filter(x => x.id !== model.id), { id: model.id, name: brand }]
+                const updateBrans = brands.map(x =>
+                    x.id === model.id ? {id: model.id, name: brand} : x
+                );
                 const newSettings = { ...settings, brands: updateBrans };
                 const res = await updateSettings.mutateAsync(newSettings);
                 if (res.isSuccess)
@@ -49,7 +51,7 @@ export const BrandsForm = ({ model, set }: { model: BrandModel | undefined, set:
             }
         }
 
-    };
+    }
 
     return (
         <div>
