@@ -21,7 +21,6 @@ import { FormulasCreate } from '../slices/Formulas/FormulasCreate.tsx';
 import { createBrowserRouter } from 'react-router-dom';
 import { Users } from '../slices/Users/Users.tsx';
 import { Brands } from '../slices/Settings/Brands.tsx';
-import { BrandsDetail } from '../slices/Settings/BrandsDetail.tsx';
 import { FormulasDetail } from '../slices/Formulas/FormulasDetail.tsx';
 export const router = createBrowserRouter([
     {
@@ -103,10 +102,7 @@ export const router = createBrowserRouter([
                         element: <Brands />
                     },
 
-                    {
-                        path: 'Brands/:id',
-                        element: <BrandsDetail />
-                    },
+
                 ]
             },
 
