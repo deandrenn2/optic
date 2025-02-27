@@ -7,8 +7,9 @@ export interface BusinessResponseModel {
    address: string;
    cellPhoneNumber: string;
    phoneNumber: string;
+   urlLogo: string;
 }
-export interface BusinessResponseModel{
+export interface BusinessResponseModel {
    id: number;
    companyName: string;
    abbreviation: string;
@@ -17,5 +18,5 @@ export interface BusinessResponseModel{
    address: string;
    cellPhoneNumber: string;
    phoneNumber: string;
+   urlLogo: string;
 }
-

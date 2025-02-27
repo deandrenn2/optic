@@ -12,9 +12,9 @@ export const Logo = () => {
         <div onClick={handleClick} className=" flex items-center gap-4 bg-blue-50 pr-4 rounded-lg border-r-2 border-blue-200 cursor-pointer">
             <div className="shrink-0">
                 <img
-                    src={`${import.meta.env.BASE_URL}initials-logo.svg`}
+                    src={business?.urlLogo ? `${import.meta.env.VITE_API_URL}static/logos/${business.urlLogo}` : `${import.meta.env.BASE_URL}initials-logo.svg`}
                     alt="logo"
-                    className="h-full w-16 rounded-lg"
+                    className="h-full rounded-lg max-h-[64px] p-1 radius-sm"
                 />
             </div>
             <div className="shrink-0">
