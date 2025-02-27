@@ -4,7 +4,7 @@ import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { Direction } from "../../shared/components/OffCanvas/Models";
 import { BrandsForm } from "./BrandsForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { BrandModel, } from "../../shared/components/List/ListModels";
 export const Brands = () => {
     const { settings } = useListSettings();
@@ -38,9 +38,11 @@ export const Brands = () => {
                 <tbody>
                     {settings?.brands?.map((brand) => (
                         <tr key={brand.id}>
-                            <td className="border border-gray-300 p-2 text-center">{brand.name}</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <FontAwesomeIcon icon={faPlay} className=" text-blue-500 cursor-pointer hover:text-blue-700 text-2xl" onClick={() => handleSetting(brand)} />
+                            <td className="border border-gray-300 p-2 text-center m-9">
+                                <span className="m-2">
+                                    {brand.name}
+                                </span>
+                                <FontAwesomeIcon icon={faPencil} className="text-blue-500 cursor-pointer hover:text-blue-700 absolute right-90 " onClick={() => handleSetting(brand)} />
                             </td>
                         </tr>
                     ))}

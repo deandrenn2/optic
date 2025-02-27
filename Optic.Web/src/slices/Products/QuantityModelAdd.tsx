@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ProductsResponseModel } from "./ProductModel";
 import { useQuantity } from "./useProducts";
-export const QuantityModelAdd = ({ product, onClose }: { product: ProductsResponseModel | undefined; onClose(): void }) => {
+export const QuantityModelAdd = ({ product, onClose,onUpdate }: { product: ProductsResponseModel | undefined; onClose(): void; onUpdate(): void }) => {
   const [productCount, setProductCount] = useState(product?.quantity || 0);
   const [quantityToAdd, setQuantityToAdd] = useState('');
   const [message, setMessage] = useState('');
@@ -12,7 +12,6 @@ export const QuantityModelAdd = ({ product, onClose }: { product: ProductsRespon
     setQuantityToAdd(inputValue);
 
     const quantity = Number(inputValue);
-
     if (!inputValue) {
       setMessage('');
       return;
@@ -28,13 +27,19 @@ export const QuantityModelAdd = ({ product, onClose }: { product: ProductsRespon
       return;
     }
 
-    const newProductCount = productCount + quantity;
-    setProductCount(newProductCount);
-    setQuantityToAdd('');
-    setMessage('');
     if (product?.id) {
       updateQuantity.mutate(
         { id: product.id, quantity, isIncrement: true },
+        {
+          onSuccess: () => {
+            const newProductCount = productCount + quantity;
+            setProductCount(newProductCount);
+            product.quantity = newProductCount;
+            setQuantityToAdd('');
+            setMessage('');
+            onUpdate ();
+          },
+        }
       );
     }
   };
@@ -45,7 +50,7 @@ export const QuantityModelAdd = ({ product, onClose }: { product: ProductsRespon
         <h2 className="text-2xl font-bold mb-2">Agregar existencia</h2>
         <div className="font-bold mb-4">
           <p>Producto: {product?.name}</p>
-          <p>Existencia actual: {productCount}</p>
+          <p>Existencia actual: {product?.quantity}</p>
         </div>
         <p className="text-blue-500">Cantidad</p>
         <input
@@ -58,6 +63,7 @@ export const QuantityModelAdd = ({ product, onClose }: { product: ProductsRespon
         <p className="text-gray-500">¿Cuántos productos de este tipo deseas agregar?</p>
         {message && <p className="text-green-500">{message}</p>}
         <div className="mt-4">
+
           <button
             type="button"
             onClick={handleAdd}

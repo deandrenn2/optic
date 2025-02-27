@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import { useListSettings } from "../../shared/components/List/useListSettings";
 import { useQueryClient } from "@tanstack/react-query";
 import { BrandModel } from "../../shared/components/List/ListModels";
-
 export const BrandsForm = ({ model, set }: { model: BrandModel | undefined, set: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const { settings, updateSettings } = useListSettings();
-
     const [brand, setBrand] = useState("");
     const queryClient = useQueryClient();
 
@@ -24,13 +22,14 @@ export const BrandsForm = ({ model, set }: { model: BrandModel | undefined, set:
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         if (model) {
             //Actualizar
             if (settings) {
                 const KEY = 'LIST_SETTINGS';
                 const brands = settings.brands;
-                const updateBrans = [...brands.filter(x => x.id !== model.id), { id: model.id, name: brand }]
+                const updateBrans = brands.map(x =>
+                    x.id === model.id ? {id: model.id, name: brand} : x
+                );
                 const newSettings = { ...settings, brands: updateBrans };
                 const res = await updateSettings.mutateAsync(newSettings);
                 if (res.isSuccess)
@@ -52,7 +51,7 @@ export const BrandsForm = ({ model, set }: { model: BrandModel | undefined, set:
             }
         }
 
-    };
+    }
 
     return (
         <div>
@@ -66,7 +65,6 @@ export const BrandsForm = ({ model, set }: { model: BrandModel | undefined, set:
                     className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <div>
-                    { }
                     <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold mt-2">
                         {updateSettings.isPending ? "Guardando..." : model ? "Actualizar Marca" : "Crear Marca"}
                     </button>

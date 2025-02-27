@@ -11,13 +11,11 @@ import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 import { Bar } from "../../shared/components/Progress/Bar";
 export const Suppliers = () => {
     const [visible, setVisible] = useState(false);
-
     const { suppliers, querySuppliers, deleteSupplier } = useSupplier();
-
+    const [searchSuppliers, setSearchSuppliers] = useState ('')
     function handleClose(): void {
         setVisible(false);
     }
-
 
     function handleDelete(e: MouseEvent<HTMLButtonElement>, id: number): void {
         e.preventDefault();
@@ -38,6 +36,10 @@ export const Suppliers = () => {
     if (querySuppliers.isLoading)
         return <Bar Title="Cargando..." />;
 
+    const filteredSuppliers = suppliers?.filter(supplier =>
+     `${supplier.name}`.toLowerCase().includes(searchSuppliers.toLowerCase())
+    )
+
     return (
         <div className="w-full "> {/* <!-- TABLA DE PROVEEDORES --> */}
             <div className="flex space-x-4 mb-4">
@@ -49,6 +51,8 @@ export const Suppliers = () => {
                     <div className="relative">
                         <div className="inline-flex">
                             <input type="text"
+                                value={searchSuppliers}
+                                onChange={(e) => setSearchSuppliers(e.target.value)}
                                 placeholder="Buscar Proveedor"
                                 className="p-2 pl-10 border-blue-400 rounded-tl-lg rounded-bl-lg" />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
@@ -71,7 +75,7 @@ export const Suppliers = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {suppliers?.map((supplier) => (
+                    {filteredSuppliers?.map((supplier) => (
                         <tr key={supplier.id}>
 
                             <td className="border border-gray-300 p-2 ">{supplier.name}</td>
