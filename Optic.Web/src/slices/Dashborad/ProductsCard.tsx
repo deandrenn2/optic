@@ -10,9 +10,9 @@ export const ProductoCard = () => {
             {products?.map((product) => (
                 <div key={product.id}>
                     <div className="space-y-1">
-                        <div className="rounded-lg border border-grey-500 p-4 mb-4">
+                        <div className="rounded-lg border border-gray-400 p-4 mb-2">
                             <div className="flex justify-between items-center mb-2">
-                                <p className="text-sm font-bold text-plurple-500">#00050</p>
+                                <p className="text-sm font-bold text-plurple-500">{product.codeNumber}</p>
                                 <p className=" text-sm font-bold text-purple-500">{product.quantity}</p>
                             </div>
 

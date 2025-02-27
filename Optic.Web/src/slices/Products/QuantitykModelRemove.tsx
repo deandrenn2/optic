@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { ProductsResponseModel } from "./ProductModel";
 import { useQuantity } from "./useProducts";
-
-export const QuantitykModelRemove = ({ product, onClose }: { product: ProductsResponseModel | undefined; onClose(): void }) => {
+export const QuantitykModelRemove = ({ product, onClose,onUpdate }: { product: ProductsResponseModel | undefined; onClose(): void; onUpdate(): void }) => {
   const [productCount, setProductCount] = useState(product?.quantity || 0);
   const [quantityToRemove, setQuantityToRemove] = useState('');
   const [message, setMessage] = useState('');
   const { updateQuantity } = useQuantity();
+
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setQuantityToRemove(inputValue);
-
+    
     const quantity = Number(inputValue);
     if (!inputValue) {
       setMessage('');
@@ -19,29 +19,34 @@ export const QuantitykModelRemove = ({ product, onClose }: { product: ProductsRe
     const newProductCount = productCount - quantity;
     setMessage(`La existencia del producto será de ${newProductCount}.`);
   };
-
+  
   const handleRemove = () => {
     const quantity = Number(quantityToRemove);
-
+  
     if (isNaN(quantity) || quantity <= 0) {
       setMessage('Por favor ingrese una cantidad válida.');
       return;
     }
-
+  
     if (quantity > productCount) {
       setMessage('No puedes restar más cantidad de la que hay en stock.');
       return;
     }
-
-    const newProductCount = productCount - quantity;
-    setProductCount(newProductCount);
-    setQuantityToRemove('');
-    setMessage('');
-
+  
     if (product?.id) {
-      updateQuantity.mutate({
-        id: product.id, quantity, isIncrement: false
-      });
+      updateQuantity.mutate(
+        { id: product.id, quantity, isIncrement: false },
+        {
+          onSuccess: () => {
+            const newProductCount = productCount - quantity;
+            setProductCount(newProductCount);
+            product.quantity = newProductCount; 
+            setQuantityToRemove('');
+            setMessage('');
+            onUpdate();
+          },
+        }
+      );
     }
   };
 
@@ -52,7 +57,7 @@ export const QuantitykModelRemove = ({ product, onClose }: { product: ProductsRe
           <h2 className="text-2xl font-bold mb-2">Restar existencia</h2>
           <div className="font-bold mb-4">
             <p>Producto: {product?.name}</p>
-            <p>Existencia actual: {productCount}</p>
+            <p>Existencia actual: {product?.quantity}</p>
           </div>
           <p className="text-blue-500">Cantidad a restar:</p>
           <input
@@ -83,5 +88,5 @@ export const QuantitykModelRemove = ({ product, onClose }: { product: ProductsRe
         </div>
       </div>
     </div>
-  );
+  )
 };

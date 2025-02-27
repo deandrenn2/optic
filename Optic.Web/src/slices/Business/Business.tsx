@@ -1,7 +1,7 @@
-import {  useState } from "react";
+import { useState } from "react";
 import useUserContext from "../../shared/context/useUserContext";
 import { useBusiness } from "../../routes/Businesses/useBusiness";
-
+import { ImageBusiness } from "./ImageBusiness";
 export const Business = () => {
     const [hasError, setHasError] = useState<string>('');
     const { business, setBusiness } = useUserContext();
@@ -10,21 +10,21 @@ export const Business = () => {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         if (business)
-        setBusiness(  {
-            ...business,
-            [name]: value,
-        });
+            setBusiness({
+                ...business,
+                [name]: value,
+            });
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-           if (business)
-            await updateBusiness.mutateAsync(business);
+            if (business)
+                await updateBusiness.mutateAsync(business);
             setHasError('');
         } catch (error: any) {
             setHasError("");
-           console.log(Business);
+            console.log(Business);
         }
     };
 
@@ -154,17 +154,16 @@ export const Business = () => {
                         {hasError}
                     </div>
                 )}
-
                 <div className="mt-4">
                     <button
                         type="submit"
                         disabled={updateBusiness.isPending}
-                        className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
-                    >
+                        className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
                         {updateBusiness.isPending ? "Actualizando..." : "Actualizar"}
                     </button>
                 </div>
             </form>
+            <ImageBusiness />
         </div>
     );
 };

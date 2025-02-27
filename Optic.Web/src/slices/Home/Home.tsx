@@ -1,5 +1,6 @@
 import ButtonNavigation from "../../shared/components/Buttons/ButtonNavigation";
 import { CardClient, } from "../Dashborad/ClientCard";
+import { DashboradStatistcs } from "../Dashborad/DashbordStatistcs";
 import { ProductoCard } from "../Dashborad/ProductsCard";
 export const Home = () => {
    return (
@@ -7,6 +8,7 @@ export const Home = () => {
          {/* <!-- Cards Section --> */}
          <div className="p-4 border border-grey-500 ">
             <div>
+              <DashboradStatistcs/>
                <div className="container mx-auto">
                   <div className="m-2">
                      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >
@@ -170,7 +172,7 @@ export const Home = () => {
                   <ProductoCard />
                </div>
             </div>
-           
+
          </div>
       </>
    );
