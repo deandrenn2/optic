@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
-using Optic.Application.Domain.Enums;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
@@ -30,9 +29,10 @@ public class UpdateFormulas : ICarterModule
 
     public record UpdateFormulaCommand : IRequest<IResult>
     {
-        public int? Id { get; init; }
+        public int Id { get; init; }
         public int IdBusiness { get; init; }
         public int? IdClient { get; init; }
+        public int IdInvoice { get; init; }
         public string Description { get; init; } = string.Empty;
         public DateTime Date { get; init; } = DateTime.Now;
 
@@ -60,66 +60,62 @@ public class UpdateFormulas : ICarterModule
                     new Error("Formula.ErrorValidation", "Se presentaron errores de validación")
                 ));
             }
+            var formula = context.Formulas.Find(request.Id);
+            var invoice = context.Invoices.Find(request.IdInvoice);
 
-            int invoiceMaxNumber = 0;
-
-            var count = await context.Invoices.CountAsync();
-
-            if (count > 0)
-                invoiceMaxNumber = await context.Invoices.MaxAsync(x => x.Number);
-
-            var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.SumTotal, "Borrador", "Contado", request.IdBusiness, request.IdClient);
-
-            var formula = Formula.Create(0, request.Description, request.Date, "Borrador", request.PriceConsultation, request?.PriceLens ?? 0);
-
-
+            if (formula == null || invoice == null)
+                return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "No se pudo actualizar la formula")));
 
             //Agregar tags
             foreach (var tag in request.Tags)
             {
-                var tagFind = await context.Tags.Where(x => x.Name == tag).FirstOrDefaultAsync();
-
-                if (tagFind != null)
+                var tagFormulaFind = formula.Tags.FirstOrDefault(x => x.Name.ToUpper() == tag.ToUpper());
+                if (tagFormulaFind == null)
                 {
-                    formula.AddTag(tagFind);
-                }
-                else
-                {
-                    var newTag = new Tags(0, tag);
+                    var tagFind = await context.Tags.Where(x => x.Name == tag).FirstOrDefaultAsync();
 
-                    formula.AddTag(newTag);
+                    if (tagFind != null)
+                    {
+                        formula.AddTag(tagFind);
+                    }
+                    else
+                    {
+                        var newTag = new Tags(0, tag);
+                        formula.AddTag(newTag);
+                    }
                 }
             }
 
             //agregar diagnosis
             foreach (var diagnosis in request.Diagnosis)
             {
-
-                var newDiagnosis = new FormulaDiagnosis(0, diagnosis.Id, formula.Id, diagnosis.Value);
-
-                formula.AddDiagnosis(newDiagnosis);
-
+                var diagnosisFind = await context.FormulaDiagnosis.Where(x => x.IdDiagnostico == diagnosis.Id && x.IdFormula == formula.Id).FirstOrDefaultAsync();
+                if (diagnosisFind != null)
+                {
+                    diagnosisFind.Update(diagnosis.Value);
+                }
+                else
+                {
+                    var newDiagnosis = new FormulaDiagnosis(0, diagnosis.Id, formula.Id, diagnosis.Value);
+                    formula.AddDiagnosis(newDiagnosis);
+                }
             }
 
-            //Add Invoice
-            formula.AddInvoice(invoice);
 
             //Agregar detalles de la factura
             foreach (var product in request.Products)
             {
-                var newDetail = InvoiceDetail.Create(0, invoice.Id, product.IdProduct, product.Description, product.Price, product.Quantity);
-
-                invoice.AddDetail(newDetail);
+                var detailFind = context.InvoiceDetails.FirstOrDefault(x => x.IdProduct == product.IdProduct);
+                if (detailFind == null)
+                {
+                    var newDetail = InvoiceDetail.Create(0, invoice.Id, product.IdProduct, product.Description, product.Price, product.Quantity);
+                    invoice.AddDetail(newDetail);
+                }
+                else
+                {
+                    detailFind.Update(product.Description, product.Price, product.Quantity);
+                }
             }
-
-            //Add Client and Business
-            if (request.IdClient != null)
-                formula.AddClient(request.IdClient.Value);
-
-            formula.AddBusiness(request.IdBusiness);
-
-
-            context.Add(formula);
 
             var resCount = await context.SaveChangesAsync();
 
@@ -138,6 +134,9 @@ public class UpdateFormulas : ICarterModule
     {
         public UpdateFormulasValidator()
         {
+            RuleFor(x => x.IdInvoice).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.IdBusiness).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.IdInvoice).NotEmpty().GreaterThan(0);
             RuleFor(x => x.Date).NotEmpty();
             RuleFor(x => x.PriceConsultation).NotEmpty();
             RuleFor(x => x.IdClient).NotEmpty().GreaterThan(0);

@@ -15,6 +15,8 @@ import useUserContext from "../../shared/context/useUserContext";
 import { useParams } from "react-router-dom";
 import { Bar } from "../../shared/components/Progress/Bar";
 import { FormulaProducts } from "./Common/FormulaProducts";
+import { SumTotal } from "./Common/SumTotal";
+import { ListStatus } from "./Common/ListStatus";
 
 
 export const FormulasUpdate = () => {
@@ -123,19 +125,6 @@ export const FormulasUpdate = () => {
 
     const totalProducts = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
 
-    const getTotalSumaTotal = () => {
-        let total = 0;
-        total = totalProducts;
-
-        if (formula.priceLens)
-            total += formula.priceLens;
-
-        if (formula.priceConsultation)
-            total += formula.priceConsultation;
-
-        return total;
-    }
-
     const handleCreateFormula = async () => {
         const formulaData: CreateFormulasModel = {
             ...formula,
@@ -167,6 +156,10 @@ export const FormulasUpdate = () => {
         };
 
         await createFormula.mutateAsync(formulaData);
+    }
+
+    const handleChangeStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setFormula({ ...formula, state: e.target.value });
     }
 
     if (queryFormula.isLoading)
@@ -228,16 +221,21 @@ export const FormulasUpdate = () => {
                     <textarea name="description" onChange={handleChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                 </div>
                 <FormulaProducts products={products} setProducts={setProducts} />
-                <div className="mb-4 text-right">
-                    <p>Consulta: <MoneyFormatter amount={formula.priceConsultation} /></p>
-                    <p>Lente: <MoneyFormatter amount={formula.priceLens} /></p>
-                    <p>Productos: <MoneyFormatter amount={totalProducts} /></p>
-                    <p className="font-bold">Total: <MoneyFormatter amount={getTotalSumaTotal()} /></p>
-                </div>
-                <div className="flex justify-between">
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleCreateFormula}>
-                        Guardar Cambios
-                    </button>
+                <SumTotal formula={formula} sumTotalProducts={totalProducts} />
+                <div className="flex justify-between gap-0">
+                    <div className="flex">
+                        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleCreateFormula}>
+                            Guardar Cambios
+                        </button>
+                        <div className="flex">
+                            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" onClick={handleCreateFormula}>
+                                Cambiar estado
+                            </button>
+                            <ListStatus name="state" xChange={handleChangeStatus} status={formula.state} />
+                        </div>
+                    </div>
+
+
                     <label className="block text-gray-500 text-lg font-bold mb-2">Estado: <FontAwesomeIcon className="text-gray-600" icon={faCircle} /> {formula.state}</label>
                 </div>
 

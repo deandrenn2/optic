@@ -57,7 +57,6 @@ public class CreateProduct : ICarterModule
             product.AddSupplier(request.IdSupplier);
 
             //Agregar categorias
-
             foreach (var category in request.Categories)
             {
                 var categoryFind = await context.Categories.FirstOrDefaultAsync(x => x.Name == category);
