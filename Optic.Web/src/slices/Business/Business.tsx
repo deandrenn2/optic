@@ -37,9 +37,9 @@ export const Business = () => {
                 <div className="relative flex items-center justify-center">
                     <div className="shrink-0">
                         <img
-                            src={`${import.meta.env.BASE_URL}initials-logo.svg`}
+                            src={business?.urlLogo ? `${import.meta.env.VITE_API_URL}static/logos/${business.urlLogo}` : `${import.meta.env.BASE_URL}initials-logo.svg`}
                             alt="logo"
-                            className="h-full w-16 rounded-lg"
+                            className="h-full w-20 rounded-lg"
                         />
                     </div>
                 </div>
@@ -163,7 +163,7 @@ export const Business = () => {
                     </button>
                 </div>
             </form>
-            <ImageBusiness />
+            <ImageBusiness business={business}/>
         </div>
     );
 };
