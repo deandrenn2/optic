@@ -103,11 +103,10 @@ export const FormulasCreate = () => {
             products:
                 products.map((x) => {
                     return {
-                        price: x.unitPrice,
-                        unitPrice: x.unitPrice,
+                        price: x.salePrice,
+                        unitPrice: x.salePrice,
                         idProduct: x.id,
                         quantity: x.quantity,
-
                     };
                 }),
             priceLens: formula.priceLens,

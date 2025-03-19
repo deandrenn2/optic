@@ -44,9 +44,19 @@ public class Formula : AggregateRoot
         Tags.Add(tags);
     }
 
+    public void RemoveTag(List<Tags> tags)
+    {
+        Tags.RemoveAll(x => tags.Contains(x));
+    }
+
     public void AddDiagnosis(FormulaDiagnosis diagnosis)
     {
         FormulaDiagnosis.Add(diagnosis);
+    }
+
+    public void RemoveDiagnosis(FormulaDiagnosis diagnosis)
+    {
+        FormulaDiagnosis.Remove(diagnosis);
     }
 
     public void AddInvoice(Invoice invoice)
@@ -64,12 +74,17 @@ public class Formula : AggregateRoot
         BusinessId = idBusiness;
     }
 
-    public void Update(string description, DateTime date, string state, decimal priceLens)
+    public void Update(string description, DateTime date, decimal priceLens, decimal priceConsultation)
     {
         Description = description;
         Date = date;
-        State = state;
         PriceLens = priceLens;
+        PriceConsultation = priceConsultation;
+    }
+
+    public void UpdateState(string state)
+    {
+        State = state;
     }
 }
 

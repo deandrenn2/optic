@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Domain.Primitives;
 
@@ -38,6 +39,11 @@ public class Invoice : AggregateRoot
     public void AddDetail(InvoiceDetail detail)
     {
         InvoiceDetails.Add(detail);
+    }
+
+    public void RemoveDetail(List<InvoiceDetail> detail)
+    {
+        InvoiceDetails.RemoveAll(x => detail.Contains(x));
     }
 
     public void AddPayment(InvoicePayment payment)
