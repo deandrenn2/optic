@@ -17,14 +17,18 @@ import { Bar } from "../../shared/components/Progress/Bar";
 import { FormulaProducts } from "./Common/FormulaProducts";
 import { SumTotal } from "./Common/SumTotal";
 import { ListStatus } from "./Common/ListStatus";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import { getStatusColorInvoice } from "./FormulasUtils";
 
 
 export const FormulasUpdate = () => {
     const { id } = useParams();
     const [client, setClient] = useState<Option | undefined>();
     const [diagnosis, setDiagnosis] = useState<DiagnosisModel[]>([]);
+    const [stateFormula, setStateFormula] = useState<string>("Borrador");
     const [products, setProducts] = useState<ProductsResponseModel[]>([]);
-    const { updateFormula } = useFormulaMutation();
+    const { updateFormula, updateStateFormula } = useFormulaMutation();
     const { formula: formulaData, queryFormula } = useFormula(id);
     const { business } = useUserContext();
     const [formula, setFormula] = useState<UpdateFormulasModel>({
@@ -75,6 +79,13 @@ export const FormulasUpdate = () => {
         }
     }, [id, formulaData]);
 
+    useEffect(() => {
+        const body = document.querySelector("body");
+        if (body) {
+            body.style.overflowY = "auto";
+        }
+    }, []);
+
 
 
     const handleChangeClient = (newValue: SingleValue<Option>) => {
@@ -91,7 +102,6 @@ export const FormulasUpdate = () => {
 
     const handleChangeTypeLen = (newValues: MultiValue<Option>) => {
         let values: string[] = [];
-        console.log(newValues, 'values');
         values = newValues.map((x) => {
             return x.value ?? '';
         });
@@ -166,8 +176,32 @@ export const FormulasUpdate = () => {
         await updateFormula.mutateAsync(formulaData);
     }
 
-    const handleChangeStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setFormula({ ...formula, state: e.target.value });
+    const handleSelectStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setStateFormula(e.target.value);
+    }
+
+    const handleChangeStatus = () => {
+        if (stateFormula === '') {
+            toast.info('Debes seleccionar un estado antes de cambiar el estado');
+            return;
+        }
+        Swal.fire({
+            title: "Cambiar estado",
+            text: `¿Estás seguro de que quieres cambiar el estado a ${stateFormula}?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si",
+            cancelButtonText: "No",
+            showLoaderOnConfirm: true,
+            preConfirm: async () => {
+                const res = await updateStateFormula.mutateAsync({ id: Number(id), state: stateFormula });
+                if (res.isSuccess)
+                    setFormula({ ...formula, state: stateFormula });
+            }
+
+        })
     }
 
     const diagnosisData = diagnosis.filter((x) => x.stateChange !== 3);
@@ -238,15 +272,14 @@ export const FormulasUpdate = () => {
                             {updateFormula.isPending ? "Guardando..." : "Guardar Cambios"}
                         </button>
                         <div className="flex rounded overflow-hidden">
-                            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2" onClick={handleUpdateFormula}>
+                            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2" onClick={handleChangeStatus}>
                                 Cambiar estado
                             </button>
-                            <ListStatus className="w-auto border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleChangeStatus} status={formula.state} />
+                            <ListStatus className="w-auto border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={formula.state} />
                         </div>
                     </div>
 
-
-                    <label className="block text-gray-500 text-lg font-bold mb-2">Estado: <FontAwesomeIcon className="text-gray-600" icon={faCircle} /> {formula.state}</label>
+                    <label className={`block ${getStatusColorInvoice(formula.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(formula.state)} icon={faCircle} /> {formula.state}</label>
                 </div>
 
             </div>

@@ -86,7 +86,7 @@ export interface UpdateFormulasModel {
    sumTotalProducts?: number; // Note: Computed property
 }
 
-export interface UpdateStateFormulaCommand {
+export interface UpdateStateFormula {
    id: number;
    state: string;
 }

@@ -10,6 +10,7 @@ import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 import { format } from "date-fns";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 import Swal from "sweetalert2";
+import { getStatusColorInvoice } from "./FormulasUtils";
 export const Formulas = () => {
     const [visible, setVisible] = useState(false);
     const handleClose = (): void => {
@@ -79,7 +80,7 @@ export const Formulas = () => {
                             <td className="border border-gray-300 p-2">{formula.clientName}</td>
                             <td className="border border-gray-300 p-2 text-center"><MoneyFormatter amount={formula?.priceConsultation} /></td>
                             <td className="border border-gray-300 p-2 text-center">{format(formula?.date, ' dd/LL/yyyy')}</td>
-                            <td className="border border-gray-300 p-2 text-center text-green-500">{formula?.state}</td>
+                            <td className={`border border-gray-300 p-2 text-center font-semibold ${getStatusColorInvoice(formula?.state)}`}>{formula?.state}</td>
                             <td className="border border-gray-300 p-2 text-center">
                                 <DetailButton url={`/formulas/${formula.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />
                                 <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar} /></button>

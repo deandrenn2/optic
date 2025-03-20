@@ -17,7 +17,7 @@ import { FormulaProducts } from "./Common/FormulaProducts";
 import { SumTotal } from "./Common/SumTotal";
 
 
-export const FormulasCreate = () => {
+export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
     const [client, setClient] = useState<Option | undefined>();
     const [diagnosis, setDiagnosis] = useState<DiagnosisModel[]>([]);
     const [products, setProducts] = useState<ProductsResponseModel[]>([]);
@@ -118,8 +118,12 @@ export const FormulasCreate = () => {
 
         const res = await createFormula.mutateAsync(formulaData);
 
-        if (res.isSuccess)
+        if (res.isSuccess) {
+            if (xChange)
+                xChange();
+
             navigate(`/Formulas/${res.data}`);
+        }
 
 
     }

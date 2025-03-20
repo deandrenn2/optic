@@ -97,7 +97,6 @@ export const useFormulaMutation = () => {
    const updateFormula = useMutation({
       mutationFn: updateFormulaService,
       onSuccess: (data) => {
-         console.log(data, 'mutación"');
          if (!data.isSuccess) {
             toast.info(data.error?.message);
          } else {

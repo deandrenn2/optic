@@ -1,6 +1,14 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
-import { CreateFormulasModel, DiagnosisModel, FormulaListModel, FormulaModel, TagModel, UpdateFormulasModel } from '../Formulas/FomulasModel';
+import {
+   CreateFormulasModel,
+   DiagnosisModel,
+   FormulaListModel,
+   FormulaModel,
+   TagModel,
+   UpdateFormulasModel,
+   UpdateStateFormula,
+} from '../Formulas/FomulasModel';
 
 export const getTags = async (): Promise<MsgResponse<TagModel[]>> => {
    const url = 'api/tags';
@@ -135,9 +143,9 @@ export const updateFormulaService = async (formula: UpdateFormulasModel): Promis
    return response.data;
 };
 
-export const updateStateFormulaServices = async (model: UpdateFormulasModel): Promise<MsgResponse<number>> => {
+export const updateStateFormulaServices = async (model: UpdateStateFormula): Promise<MsgResponse<number>> => {
    const url = `api/formulas/${model.id}/state`;
-   const response = await ApiClient.put<MsgResponse<number>>(url);
+   const response = await ApiClient.put<MsgResponse<number>>(url, model);
 
    if (response.status !== 200) {
       return {

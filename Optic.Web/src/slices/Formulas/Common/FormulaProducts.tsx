@@ -36,7 +36,6 @@ export const FormulaProducts = ({ products, setProducts }: { products: ProductsR
     }
 
     const handleDeleteProduct = (id: number) => {
-        console.log(id, 'delete');
         setProducts(products.filter((x) => x.id !== id));
     }
 
