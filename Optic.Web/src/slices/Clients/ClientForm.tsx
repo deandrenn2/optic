@@ -138,6 +138,7 @@ export const ClientForm = ({ id }: { id?: number }) => {
                   Email
                </label>
                <input
+                  required
                   type="text"
                   value={client?.email}
                   onChange={(e) => handleChange(e)}
@@ -152,6 +153,7 @@ export const ClientForm = ({ id }: { id?: number }) => {
                   Dirección
                </label>
                <input
+                  required
                   type="text"
                   value={client?.address}
                   onChange={(e) => handleChange(e)}

@@ -98,10 +98,12 @@ export const Business = () => {
                         Ciudad
                     </label>
                     <input
+                        
                         id="city"
                         name="city"
                         value={business?.city}
                         onChange={handleInputChange}
+                        required
                         className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Ciudad"
                     />
@@ -116,6 +118,7 @@ export const Business = () => {
                         name="address"
                         value={business?.address}
                         onChange={handleInputChange}
+                        required
                         className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Dirección"
                     />
@@ -145,6 +148,7 @@ export const Business = () => {
                         name="phoneNumber"
                         value={business?.phoneNumber}
                         onChange={handleInputChange}
+                        required
                         className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Teléfono"
                     />

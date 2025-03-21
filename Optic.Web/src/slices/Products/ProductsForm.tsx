@@ -158,6 +158,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
                value={form?.quantity}
                onChange={(e) => handleChange(e)}
                placeholder="Cantidad"
+               required
                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
          </div>
 
@@ -171,6 +172,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
                name="unitPrice"
                value={form?.unitPrice}
                onChange={(e) => handleChange(e)}
+               required
                placeholder="0"
                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
          </div>
@@ -185,6 +187,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
                name="salePrice"
                value={form?.salePrice}
                onChange={(e) => handleChange(e)}
+               required
                placeholder="0"
                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
          </div>
@@ -199,6 +202,7 @@ export const ProductForm = ({ id }: { id?: number }) => {
                name="stock"
                value={form?.stock}
                onChange={(e) => handleChange(e)}
+               required
                placeholder="stock"
                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
          </div>

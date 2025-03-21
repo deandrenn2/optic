@@ -1,18 +1,19 @@
 export interface UsersModel {
+   id?:number;
    firstName: string;
    lastName: string;
    email: string;
-   password: string;
-   securePharse: string;
+   password?: string;
+   securePharse?: string;
 }
 
 export interface UsersResponseModel {
-   id: number;
+   id?: number;
    firstName: string;
    lastName: string;
    email: string;
-   password: string;
-   securePharse: string;
+   password?: string;
+   securePharse?: string;
 }
 
 export interface UsersAvatarModel {
