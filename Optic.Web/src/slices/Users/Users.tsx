@@ -2,17 +2,17 @@ import { useLogin } from "../../routes/Login/useLogin";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { useState } from "react";
 import { Direction } from "../../shared/components/OffCanvas/Models";
-import { UsersForm } from "./UsersForm"; // Formulario de actualización
-import { UsersCreateForm } from "./UsersCreate"; // Formulario de creación
+import { UsersForm } from "./UsersForm";
+import { UsersCreateForm } from "./UsersCreate";
 import { Bar } from "../../shared/components/Progress/Bar";
-import { UsersModel, UsersResponseModel } from "./UsersModel";
+import { UsersModel } from "./UsersModel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export const Users = () => {
     const [visible, setVisible] = useState(false);
     const { users, queryUsers } = useLogin();
-    const [selectedUser, setSelectedUser] = useState<UsersResponseModel | null>(null);
+    const [selectedUser, setSelectedUser] = useState<UsersModel | null>(null);
     const [seleCreating, setSeleCreating] = useState(false);
 
     function handleClose(): void {
@@ -67,7 +67,7 @@ export const Users = () => {
                                 </td>
                                 <td className="border border-gray-300 p-2 text-center">
                                     <FontAwesomeIcon
-                                        icon={faPencil}className="text-blue-500 hover:text-blue-700 cursor-pointer" onClick={() => handleEdit(user)}/>
+                                        icon={faPencil} className="text-blue-500 hover:text-blue-700 cursor-pointer" onClick={() => handleEdit(user)}/>
                                 </td>
                             </tr>
                         ))}
@@ -80,7 +80,7 @@ export const Users = () => {
                 xClose={handleClose}
                 position={Direction.Right}
             >
-              {selectedUser ? <UsersForm id={selectedUser.id} /> : <UsersCreateForm />}
+                {selectedUser ? <UsersForm id={selectedUser.id} /> : <UsersCreateForm />}
             </OffCanvas>
         </div>
     );
