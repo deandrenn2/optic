@@ -34,6 +34,8 @@ public class GetFormula : ICarterModule
         public string State { get; init; } = string.Empty;
         public DateTime Date { get; init; } = DateTime.Now;
 
+        public int IdInvoice { get; init; }
+
         public List<string> Tags { get; init; } = new();
 
         public List<DiagnosisModel> Diagnosis { get; init; } = new();
@@ -78,6 +80,7 @@ public class GetFormula : ICarterModule
                 IdClient = formula.ClientId,
                 ClientName = formula.Client.LastName + " " + formula.Client.FirstName,
                 Description = formula.Description,
+                IdInvoice = formula.Invoice.Id,
                 State = formula.State,
                 Date = formula.Date,
                 Tags = formula.Tags.Select(y => y.Name).ToList(),

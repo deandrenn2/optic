@@ -1,6 +1,14 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
-import { CreateFormulasModel, DiagnosisModel, FormulaListModel, FormulaModel, TagModel } from '../Formulas/FomulasModel';
+import {
+   CreateFormulasModel,
+   DiagnosisModel,
+   FormulaListModel,
+   FormulaModel,
+   TagModel,
+   UpdateFormulasModel,
+   UpdateStateFormula,
+} from '../Formulas/FomulasModel';
 
 export const getTags = async (): Promise<MsgResponse<TagModel[]>> => {
    const url = 'api/tags';
@@ -105,6 +113,44 @@ export const deleteFormulaService = async (id: number): Promise<MsgResponse<numb
       return {
          isSuccess: false,
          message: 'Error al eliminar formula',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};
+
+export const updateFormulaService = async (formula: UpdateFormulasModel): Promise<MsgResponse<number>> => {
+   const url = `api/formulas/${formula.id}`;
+   const response = await ApiClient.put<MsgResponse<number>>(url, formula);
+
+   if (response.status !== 200) {
+      return {
+         isSuccess: false,
+         message: 'Error al actualizar formula',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};
+
+export const updateStateFormulaServices = async (model: UpdateStateFormula): Promise<MsgResponse<number>> => {
+   const url = `api/formulas/${model.id}/state`;
+   const response = await ApiClient.put<MsgResponse<number>>(url, model);
+
+   if (response.status !== 200) {
+      return {
+         isSuccess: false,
+         message: 'Error al actualizar formula',
          isFailure: true,
          error: {
             code: response.status.toString(),

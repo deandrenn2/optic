@@ -30,10 +30,17 @@ export const FormulaProducts = ({ products, setProducts }: { products: ProductsR
         setProducts(products.map((x) => (x.id === id ? { ...x, quantity: parseInt(value) } : x)));
     }
 
+    const handleChangeSalePrice = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
+        const { value } = e.target;
+        setProducts(products.map((x) => (x.id === id ? { ...x, salePrice: parseFloat(value) } : x)));
+    }
+
     const handleDeleteProduct = (id: number) => {
         setProducts(products.filter((x) => x.id !== id));
     }
+
     const totalProducts = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
+
     return (
         <div className="bg-gray-100 py-1 px-2 rounded-lg border border-gray-300">
             <div className="flex w-full gap-4 justify-between">
@@ -46,14 +53,15 @@ export const FormulaProducts = ({ products, setProducts }: { products: ProductsR
                         <div key={x.id} className="grid grid-cols-[3fr_3fr_3fr_3fr_1fr] gap-2">
                             <span className="font-bold">{x.name}</span>
                             <input type="text" className="border border-gray-300 rounded p-1 ml-6"
-                                value={x.salePrice} />
+                                value={x.salePrice}
+                                onChange={(e) => handleChangeSalePrice(e, x.id)} />
                             <input type="number" value={x.quantity}
                                 onChange={(e) => handleChangeQuantity(e, x.id)}
                                 min={0} max={999}
                                 className="w-14 border border-gray-300 rounded p-1 ml-2" />
                             <p className=" right-0"> <MoneyFormatter amount={x.salePrice * x.quantity} /></p>
                             <div className="flex justify-end ">
-                                <button className="w-8 bg-red-500 text-white px-2 py-1 rounded" ><FontAwesomeIcon icon={faMinus} onClick={() => handleDeleteProduct(x.id)} /></button>
+                                <button className="w-8 bg-red-500 text-white px-2 py-1 rounded" onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button>
                             </div>
                         </div>
                     ))

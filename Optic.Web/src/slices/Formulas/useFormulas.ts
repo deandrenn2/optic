@@ -1,5 +1,14 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createFormulasService, deleteFormulaService, getDiagnosis, getFormula, getFormulas, getTags } from './FormulasServices';
+import {
+   createFormulasService,
+   deleteFormulaService,
+   getDiagnosis,
+   getFormula,
+   getFormulas,
+   getTags,
+   updateFormulaService,
+   updateStateFormulaServices,
+} from './FormulasServices';
 import { toast } from 'react-toastify';
 
 const KEY = 'Formula';
@@ -79,5 +88,40 @@ export const useFormula = (id: string | undefined) => {
    return {
       queryFormula,
       formula: queryFormula.data?.data,
+   };
+};
+
+/* Mutations*/
+
+export const useFormulaMutation = () => {
+   const updateFormula = useMutation({
+      mutationFn: updateFormulaService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.error?.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+            }
+         }
+      },
+   });
+
+   const updateStateFormula = useMutation({
+      mutationFn: updateStateFormulaServices,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.error?.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+            }
+         }
+      },
+   });
+
+   return {
+      updateFormula,
+      updateStateFormula,
    };
 };

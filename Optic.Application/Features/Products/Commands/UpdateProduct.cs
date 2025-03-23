@@ -1,4 +1,5 @@
-﻿using Carter;
+﻿
+using Carter;
 using Carter.ModelBinding;
 using FluentValidation;
 using MediatR;

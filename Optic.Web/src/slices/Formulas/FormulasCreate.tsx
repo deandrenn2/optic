@@ -14,9 +14,10 @@ import { useFormulas } from "./useFormulas";
 import useUserContext from "../../shared/context/useUserContext";
 import { useNavigate } from "react-router-dom";
 import { FormulaProducts } from "./Common/FormulaProducts";
+import { SumTotal } from "./Common/SumTotal";
 
 
-export const FormulasCreate = () => {
+export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
     const [client, setClient] = useState<Option | undefined>();
     const [diagnosis, setDiagnosis] = useState<DiagnosisModel[]>([]);
     const [products, setProducts] = useState<ProductsResponseModel[]>([]);
@@ -102,11 +103,10 @@ export const FormulasCreate = () => {
             products:
                 products.map((x) => {
                     return {
-                        price: x.unitPrice,
-                        unitPrice: x.unitPrice,
+                        price: x.salePrice,
+                        unitPrice: x.salePrice,
                         idProduct: x.id,
                         quantity: x.quantity,
-
                     };
                 }),
             priceLens: formula.priceLens,
@@ -118,27 +118,18 @@ export const FormulasCreate = () => {
 
         const res = await createFormula.mutateAsync(formulaData);
 
-        if (res.isSuccess)
+        if (res.isSuccess) {
+            if (xChange)
+                xChange();
+
             navigate(`/Formulas/${res.data}`);
+        }
 
 
     }
 
     //Calculos
     const totalProducts = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
-
-    const getTotalSumaTotal = () => {
-        let total = 0;
-        total = totalProducts;
-
-        if (formula.priceLens)
-            total += formula.priceLens;
-
-        if (formula.priceConsultation)
-            total += formula.priceConsultation;
-
-        return total;
-    }
 
     if (formula)
         return (
@@ -195,13 +186,7 @@ export const FormulasCreate = () => {
                     <textarea name="description" onChange={handleChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                 </div>
                 <FormulaProducts products={products} setProducts={setProducts} />
-                <div className="mb-4 text-right">
-                    <p>Consulta: <MoneyFormatter amount={formula.priceConsultation} /></p>
-                    <p>Lente: <MoneyFormatter amount={formula.priceLens} /></p>
-                    <p>Productos: <MoneyFormatter amount={totalProducts} /></p>
-                    <p>Abono: $0</p>
-                    <p className="font-bold">Total: <MoneyFormatter amount={getTotalSumaTotal()} /></p>
-                </div>
+                <SumTotal formula={formula} sumTotalProducts={totalProducts} />
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleCreateFormula}>
                     Crear formula
                 </button>

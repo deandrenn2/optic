@@ -24,6 +24,8 @@ public class Product : AggregateRoot
         SalePrice = salePrice;
         Stock = stock;
         BarCode = barCode;
+        CreateDate = DateTime.Now;
+        UpdateDate = DateTime.Now;
     }
 
     public string Name { get; private set; }
@@ -37,6 +39,10 @@ public class Product : AggregateRoot
     public int? IdSupplier { get; private set; }
     public Supplier Supplier { get; private set; }
     public string? Image { get; private set; }
+    public int? IdUserUpdate { get; private set; }
+    public int? IdUserCreate { get; private set; }
+    public DateTime UpdateDate { get; private set; }
+    public DateTime CreateDate { get; private set; }
     public List<Category> Categories { get; private set; } = new();
     public List<InvoiceDetail> InvoiceDetails { get; private set; } = new();
 
@@ -80,6 +86,7 @@ public class Product : AggregateRoot
         SalePrice = salePrice;
         Stock = stock;
         BarCode = barCode;
+        UpdateDate = DateTime.Now;
     }
 }
 

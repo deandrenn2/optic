@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 using Carter;
 using Carter.ModelBinding;
 using FluentValidation;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Domain.Enums;
 using Optic.Application.Infrastructure.Sqlite;
@@ -18,7 +20,7 @@ public class UpdateFormulas : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPut("api/formulas", async (HttpRequest req, IMediator mediator, UpdateFormulaCommand command) =>
+        app.MapPut("api/formulas/{id}", async (int id, HttpRequest req, IMediator mediator, UpdateFormulaCommand command) =>
         {
             return await mediator.Send(command);
         })
@@ -30,9 +32,10 @@ public class UpdateFormulas : ICarterModule
 
     public record UpdateFormulaCommand : IRequest<IResult>
     {
-        public int? Id { get; init; }
+        public int Id { get; init; }
         public int IdBusiness { get; init; }
         public int? IdClient { get; init; }
+        public int IdInvoice { get; init; }
         public string Description { get; init; } = string.Empty;
         public DateTime Date { get; init; } = DateTime.Now;
 
@@ -60,76 +63,83 @@ public class UpdateFormulas : ICarterModule
                     new Error("Formula.ErrorValidation", "Se presentaron errores de validación")
                 ));
             }
+            var formula = await context.Formulas.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == request.Id);
+            var invoice = await context.Invoices.FindAsync(request.IdInvoice);
 
-            int invoiceMaxNumber = 0;
+            if (formula == null || invoice == null)
+                return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "No se pudo actualizar la formula")));
 
-            var count = await context.Invoices.CountAsync();
-
-            if (count > 0)
-                invoiceMaxNumber = await context.Invoices.MaxAsync(x => x.Number);
-
-            var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.SumTotal, "Borrador", "Contado", request.IdBusiness, request.IdClient);
-
-            var formula = Formula.Create(0, request.Description, request.Date, "Borrador", request.PriceConsultation, request?.PriceLens ?? 0);
+            if (formula.State != "Borrador")
+                return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "La formula no puede ser actualizada porque está en estado " + formula.State)));
 
 
+            formula.Update(request.Description, request.Date, request.PriceLens.Value, request.PriceConsultation);
 
             //Agregar tags
+            formula.RemoveTag(formula.Tags);
             foreach (var tag in request.Tags)
             {
-                var tagFind = await context.Tags.Where(x => x.Name == tag).FirstOrDefaultAsync();
-
-                if (tagFind != null)
+                var tagFind = await context.Tags.FirstOrDefaultAsync(x => x.Name == tag);
+                if (tagFind == null)
                 {
-                    formula.AddTag(tagFind);
+                    var newTag = new Tags(0, tag);
+                    formula.AddTag(newTag);
                 }
                 else
                 {
-                    var newTag = new Tags(0, tag);
-
-                    formula.AddTag(newTag);
+                    formula.AddTag(tagFind);
                 }
             }
 
             //agregar diagnosis
             foreach (var diagnosis in request.Diagnosis)
             {
+                var diagnosisFind = await context.FormulaDiagnosis.Where(x => x.IdDiagnostico == diagnosis.Id && x.IdFormula == formula.Id).FirstOrDefaultAsync();
 
-                var newDiagnosis = new FormulaDiagnosis(0, diagnosis.Id, formula.Id, diagnosis.Value);
+                if (diagnosis.stateChange == DataStateChange.Deleted && diagnosisFind != null)
+                {
+                    formula.RemoveDiagnosis(diagnosisFind);
+                    continue;
+                }
 
-                formula.AddDiagnosis(newDiagnosis);
-
+                if (diagnosisFind != null)
+                {
+                    diagnosisFind.Update(diagnosis.Value);
+                }
+                else
+                {
+                    var newDiagnosis = new FormulaDiagnosis(0, diagnosis.Id, formula.Id, diagnosis.Value);
+                    formula.AddDiagnosis(newDiagnosis);
+                }
             }
-
-            //Add Invoice
-            formula.AddInvoice(invoice);
 
             //Agregar detalles de la factura
+            var products = await context.InvoiceDetails.Where(x => x.IdInvoice == invoice.Id).ToListAsync();
+            var productsDelete = products.Where(x => !request.Products.Any(y => y.IdProduct == x.IdProduct)).ToList();
+            invoice.RemoveDetail(productsDelete);
             foreach (var product in request.Products)
             {
-                var newDetail = InvoiceDetail.Create(0, invoice.Id, product.IdProduct, product.Description, product.Price, product.Quantity);
-
-                invoice.AddDetail(newDetail);
+                var detailFind = products.FirstOrDefault(x => x.IdProduct == product.IdProduct);
+                if (detailFind == null)
+                {
+                    var newDetail = InvoiceDetail.Create(0, invoice.Id, product.IdProduct, product.Description, product.Price, product.Quantity);
+                    invoice.AddDetail(newDetail);
+                }
+                else
+                {
+                    detailFind.Update(product.Description, product.Price, product.Quantity);
+                }
             }
-
-            //Add Client and Business
-            if (request.IdClient != null)
-                formula.AddClient(request.IdClient.Value);
-
-            formula.AddBusiness(request.IdBusiness);
-
-
-            context.Add(formula);
 
             var resCount = await context.SaveChangesAsync();
 
             if (resCount > 0)
             {
-                return Results.Ok(Result<int>.Success(formula.Id, "Formula creada correctamente"));
+                return Results.Ok(Result<int>.Success(formula.Id, "Formula actualizada correctamente"));
             }
             else
             {
-                return Results.Ok(Result.Failure(new Error("Formula.ErrorCreateFormula", "Error al crear la formula")));
+                return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "Error al actualizar la formula")));
             }
 
         }
@@ -138,6 +148,9 @@ public class UpdateFormulas : ICarterModule
     {
         public UpdateFormulasValidator()
         {
+            RuleFor(x => x.IdInvoice).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.IdBusiness).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.IdInvoice).NotEmpty().GreaterThan(0);
             RuleFor(x => x.Date).NotEmpty();
             RuleFor(x => x.PriceConsultation).NotEmpty();
             RuleFor(x => x.IdClient).NotEmpty().GreaterThan(0);

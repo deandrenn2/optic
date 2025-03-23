@@ -6,7 +6,7 @@ export const ComponentBrands = ({ selectedValue, name, className, xChange, requi
     return (
         <select
             name={name || 'idBrand'}
-            className={className || 'w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500'}
+            className={className || 'border border-gray-300 rounded-md shadow-sm py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500'}
             value={selectedValue}
             onChange={xChange}
             required={required}

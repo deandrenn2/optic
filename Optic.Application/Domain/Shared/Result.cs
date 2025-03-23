@@ -20,6 +20,8 @@ public class Result
 
     public Error? Error { get; }
 
+    public int Count { get; }
+
     public static Result Success(string message) => new(true, message);
 
     public static Result Failure(Error error) => new(false, error);

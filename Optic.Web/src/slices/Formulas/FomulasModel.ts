@@ -16,6 +16,7 @@ export interface FormulaModel {
    idBusiness: number;
    idClient?: number;
    clientName?: string;
+   idInvoice: number;
    description: string;
    date: Date;
    tags: string[];
@@ -37,6 +38,7 @@ export interface DiagnosisModel {
    name: string;
    value: string;
    description?: string;
+   stateChange?: number;
 }
 
 export interface InvoiceDetailModel {
@@ -69,6 +71,7 @@ export interface UpdateFormulasModel {
    id?: number;
    idBusiness: number;
    idClient?: number;
+   idInvoice: number;
    description: string;
    date: Date;
    state: string;
@@ -81,4 +84,9 @@ export interface UpdateFormulasModel {
    priceConsultation?: number;
    sumTotal?: number; // Note: Computed property
    sumTotalProducts?: number; // Note: Computed property
+}
+
+export interface UpdateStateFormula {
+   id: number;
+   state: string;
 }
