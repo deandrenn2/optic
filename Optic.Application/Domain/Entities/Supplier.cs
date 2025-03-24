@@ -43,6 +43,7 @@ namespace Optic.Application.Domain.Entities
         public string CellPhoneNumber { get; private set; }
         public string? PhoneNumber { get; private set; }
         public List<Product> Products { get; set; } = new();
+        public List<Purchase> Purchases { get; set; } = new();
 
         public static Supplier Create(
             int id,

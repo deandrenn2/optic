@@ -32,6 +32,7 @@ namespace Optic.Application.Domain.Entities
         public string UrlLogo { get; private set; } = "initials-logo.svg";
         public List<Formula> Formulas { get; set; } = new();
         public List<Invoice> Invoices { get; set; } = new();
+        public List<Purchase> Purchases { get; set; } = new();
 
 
         public static Business Create(
