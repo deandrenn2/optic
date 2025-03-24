@@ -60,7 +60,7 @@ export const EditProfile = () => {
                         </div>
                     </div>
                     <div className="col-span-1 md:col-span-3 flex justify-start mt-7">
-                            <ButtonSave />
+                         <ButtonSave />
                         <button
                             type="button"
                             onClick={() => setIsOpen(true)}
