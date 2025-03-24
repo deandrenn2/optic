@@ -9,7 +9,7 @@ using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
-namespace Optic.Application.Features.Products.Queries;
+namespace Optic.Application.Features.Products;
 public class GetProducts : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)

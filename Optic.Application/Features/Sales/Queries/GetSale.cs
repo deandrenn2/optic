@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
-
+namespace Optic.Application.Features.Sales;
 public class GetSale : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)

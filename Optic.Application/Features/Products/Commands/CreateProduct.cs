@@ -10,7 +10,7 @@ using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
-namespace Optic.Application.Features.Products.Commands;
+namespace Optic.Application.Features.Products;
 
 public class CreateProduct : ICarterModule
 {

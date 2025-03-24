@@ -9,6 +9,8 @@ using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
+namespace Optic.Application.Features.Formulas;
+
 public class UpdateStateFormula : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)

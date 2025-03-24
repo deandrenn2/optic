@@ -1,6 +1,6 @@
-using System.Security.Cryptography.X509Certificates;
-using Optic.Application.Domain.Entities;
 using Optic.Application.Domain.Primitives;
+
+namespace Optic.Application.Domain.Entities;
 
 public class Invoice : AggregateRoot
 {
@@ -59,13 +59,18 @@ public class Invoice : AggregateRoot
     {
         InvoiceServices.Add(service);
     }
-    public void Update(int number, DateTime date, decimal total, string state, int? clientId, int businessId)
+
+    public void UpdateState(string state)
+    {
+        State = state;
+    }
+
+    public void Update(int number, string paymentType, DateTime date, decimal total, int? clientId)
     {
         Number = number;
+        PaymentType = paymentType;
         Date = date;
         Total = total;
-        State = state;
         ClientId = clientId;
-        BusinessId = businessId;
     }
 }

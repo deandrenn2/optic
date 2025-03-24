@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
-using Optic.Application.Domain.Enums;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
