@@ -14,7 +14,7 @@ export const Logo = () => {
                 <img
                     src={business?.urlLogo ? `${import.meta.env.VITE_API_URL}static/logos/${business.urlLogo}` : `${import.meta.env.BASE_URL}initials-logo.svg`}
                     alt="logo"
-                    className="h-full rounded-lg max-h-[64px] p-1 radius-sm"
+                    className="h-full w-full rounded-lg max-h-[64px] p-1 radius-sm"
                 />
             </div>
             <div className="shrink-0">
