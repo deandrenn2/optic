@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Optic.Application.Infrastructure.Files;
+using Optic.Application.Infrastructure.Report;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Authentications;
 using Optic.Infrastructure.Authentications;
@@ -52,6 +53,7 @@ public static class DependencyConfig
     {
         builder.Services.AddScoped<IManagerToken, ManagerToken>();
         builder.Services.AddScoped<IFileManager, FileManager>();
+        builder.Services.AddScoped<IClosedXmlReportManager, ClosedXmlReportManager>();
     }
 
     public static IServiceCollection AddApplicationCore(this IServiceCollection services)
