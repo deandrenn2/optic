@@ -3,18 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { BusinessResponseModel } from "../../routes/Businesses/BusinessModel";
 import { uploadBusinessLogo } from "../../routes/Businesses/BusinessServices";
-import { useBusiness } from "../../routes/Businesses/useBusiness";
+import useUserContext from "../../shared/context/useUserContext";
 
 export const ImageBusiness = ({ business }: { business: BusinessResponseModel | null }) => {
     const defaultLogo = `${import.meta.env.BASE_URL}initials-logo.svg`;
-
+    const {  setBusiness } = useUserContext();
     const [imagePreview, setImagePreview] = useState<string>(
         business?.urlLogo
             ? `${import.meta.env.VITE_API_URL}static/logos/${business.urlLogo}`
             : defaultLogo
     );
     const [isUploading, setIsUploading] = useState<boolean>(false);
-    const { queryBusiness } = useBusiness();
 
     useEffect(() => {
         if (business?.urlLogo) {
@@ -34,8 +33,9 @@ export const ImageBusiness = ({ business }: { business: BusinessResponseModel | 
 
         try {
             const response = await uploadBusinessLogo(business.id, file);
+            console.log(response,"respuestaLogo")
             if (response.isSuccess && response.data) {
-                await queryBusiness.refetch();
+             
                 setImagePreview(`${import.meta.env.VITE_API_URL}static/logos/${response.data.urlLogo}`);
             }
         } catch (error) {
