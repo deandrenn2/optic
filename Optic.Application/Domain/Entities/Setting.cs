@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using Optic.Application.Domain.Primitives;
+﻿using Optic.Application.Domain.Primitives;
 
 namespace Optic.Application.Domain.Entities;
 public class Setting : AggregateRoot

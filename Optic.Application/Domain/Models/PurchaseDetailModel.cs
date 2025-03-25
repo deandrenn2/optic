@@ -1,5 +1,6 @@
 namespace Optic.Application.Domain;
-public record InvoiceDetailModel
+
+public record PurchaseDetailModel
 {
     public int? Id { get; set; }
     public string Description { get; set; } = string.Empty;
@@ -9,5 +10,5 @@ public record InvoiceDetailModel
 
     public int Quantity { get; set; }
     public int IdProduct { get; set; }
-    public int IdInvoice { get; set; }
+    public int IdPurchase { get; set; }
 }

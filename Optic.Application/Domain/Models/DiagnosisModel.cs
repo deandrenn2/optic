@@ -1,5 +1,5 @@
 using Optic.Application.Domain.Enums;
-
+namespace Optic.Application.Domain;
 public record DiagnosisModel
 {
     public int Id { get; set; }
