@@ -6,16 +6,21 @@ import { uploadBusinessLogo } from "../../routes/Businesses/BusinessServices";
 import { useBusiness } from "../../routes/Businesses/useBusiness";
 
 export const ImageBusiness = ({ business }: { business: BusinessResponseModel | null }) => {
+    const defaultLogo = `${import.meta.env.BASE_URL}initials-logo.svg`;
+
     const [imagePreview, setImagePreview] = useState<string>(
-        business?.urlLogo ? `${import.meta.env.VITE_API_URL}static/logos/${business.urlLogo}` : ""
+        business?.urlLogo
+            ? `${import.meta.env.VITE_API_URL}static/logos/${business.urlLogo}`
+            : defaultLogo
     );
     const [isUploading, setIsUploading] = useState<boolean>(false);
     const { queryBusiness } = useBusiness();
 
     useEffect(() => {
         if (business?.urlLogo) {
-            const fullUrl = `${import.meta.env.VITE_API_URL}static/logos/${business.urlLogo}`;
-            setImagePreview(fullUrl);
+            setImagePreview(`${import.meta.env.VITE_API_URL}static/logos/${business.urlLogo}`);
+        } else {
+            setImagePreview(defaultLogo);
         }
     }, [business?.urlLogo]);
 
@@ -30,10 +35,8 @@ export const ImageBusiness = ({ business }: { business: BusinessResponseModel | 
         try {
             const response = await uploadBusinessLogo(business.id, file);
             if (response.isSuccess && response.data) {
-              await queryBusiness.refetch();
-
-              const updateUrl = `${import.meta.env.VITE_API_URL}static/logos/${response.data.urlLogo}`;
-              setImagePreview(updateUrl);
+                await queryBusiness.refetch();
+                setImagePreview(`${import.meta.env.VITE_API_URL}static/logos/${response.data.urlLogo}`);
             }
         } catch (error) {
             console.error("Error al subir la imagen:", error);
@@ -51,14 +54,14 @@ export const ImageBusiness = ({ business }: { business: BusinessResponseModel | 
                     className="block border-2 border-dashed border-gray-500 rounded-lg p-1 cursor-pointer hover:border-blue-500 m-4 w-60 h-30"
                 >
                     <div>
-                        {imagePreview ? (
-                            <img
-                                src={imagePreview}
-                                className="w-60 h-32 object-cover rounded-lg"
-                            />
-                        ) : (
-                            <p className="text-gray-600 text-sm">Haz clic para seleccionar</p>
-                        )}
+                        <img
+                            src={imagePreview}
+                            className="w-60 h-32 object-cover rounded-lg"
+                            onError={(e) => {
+                                e.currentTarget.onerror = null; // Previene bucles infinitos
+                                e.currentTarget.src = defaultLogo;
+                            }}
+                        />
                     </div>
                 </label>
                 <input

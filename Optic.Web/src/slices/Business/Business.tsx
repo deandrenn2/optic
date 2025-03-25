@@ -6,6 +6,7 @@ export const Business = () => {
     const [hasError, setHasError] = useState<string>('');
     const { business, setBusiness } = useUserContext();
     const { updateBusiness } = useBusiness();
+    const defaultLogo = `${import.meta.env.BASE_URL}initials-logo.svg`;
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -37,8 +38,15 @@ export const Business = () => {
                 <div className="relative flex items-center justify-center">
                     <div className="shrink-0">
                         <img
-                            src={business?.urlLogo ? `${import.meta.env.VITE_API_URL}static/logos/${business.urlLogo}` : `${import.meta.env.BASE_URL}initials-logo.svg`}
+                            src={
+                                business?.urlLogo
+                                    ? `${import.meta.env.VITE_API_URL}static/logos/${business.urlLogo}`
+                                    : defaultLogo}
                             alt="logo"
+                            onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src = defaultLogo;
+                            }}
                             className="h-full w-20 rounded-lg"
                         />
                     </div>
@@ -98,7 +106,7 @@ export const Business = () => {
                         Ciudad
                     </label>
                     <input
-                        
+
                         id="city"
                         name="city"
                         value={business?.city}
@@ -167,7 +175,7 @@ export const Business = () => {
                     </button>
                 </div>
             </form>
-            <ImageBusiness business={business}/>
+            <ImageBusiness business={business} />
         </div>
     );
 };
