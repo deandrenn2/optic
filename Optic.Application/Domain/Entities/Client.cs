@@ -25,6 +25,8 @@ public class Client : AggregateRoot
         Address = address;
         CellPhoneNumber = cellPhoneNumber;
         PhoneNumber = phoneNumber;
+        CreateDate = DateTime.Now;
+        UpdateDate = DateTime.Now;
     }
 
     public string FirstName { get; private set; }
@@ -36,6 +38,11 @@ public class Client : AggregateRoot
     public string Address { get; private set; }
     public string CellPhoneNumber { get; private set; }
     public string PhoneNumber { get; private set; }
+    public DateTime UpdateDate { get; private set; }
+    public DateTime CreateDate { get; private set; }
+    public int? IdUserCreate { get; private set; }
+    public int? IdUserUpdate { get; private set; }
+
     public IdentificationType IdentificationType { get; private set; }
     public List<Formula> Formulas { get; set; } = new();
     public List<Invoice> Invoices { get; set; } = new();
@@ -77,6 +84,7 @@ public class Client : AggregateRoot
         Address = address;
         CellPhoneNumber = cellPhoneNumber;
         PhoneNumber = phoneNumber;
+        UpdateDate = DateTime.Now;
     }
 
 }

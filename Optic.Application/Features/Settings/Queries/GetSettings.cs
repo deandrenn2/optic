@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using Optic.Application.Domain.Models;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 using System.Text.Json;
+using Optic.Application.Domain;
 
 namespace Optic.Application.Features.Settings;
 

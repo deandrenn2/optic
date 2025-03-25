@@ -46,20 +46,17 @@ public class PagedResult<T> : PagedResult where T : class
 {
 
     public T Data { get; private set; }
-    public IList<T> Results { get; set; }
 
     private PagedResult(T data, bool isSuccess, Error error)
         : base(isSuccess, error)
     {
         Data = data;
-        Results = new List<T>();
     }
     private PagedResult(T data, bool isSuccess, string message)
         : base(isSuccess, message)
     {
 
         Data = data;
-        Results = new List<T>();
     }
 
     public static PagedResult Success(T data, string message) => new PagedResult<T>(data, true, message);

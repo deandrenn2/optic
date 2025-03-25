@@ -27,13 +27,15 @@ public class Formula : AggregateRoot
     public Client Client { get; private set; }
     public int ClientId { get; private set; }
     public Business Business { get; private set; }
+    public int? IdInvoice { get; set; }
     public int BusinessId { get; private set; }
+    public DateTime UpdateDate { get; private set; }
+    public DateTime CreateDate { get; private set; }
+    public int? IdUserCreate { get; private set; }
+    public int? IdUserUpdate { get; private set; }
+    public Invoice Invoice { get; set; }
     public List<Tags> Tags { get; set; } = new();
     public List<FormulaDiagnosis> FormulaDiagnosis { get; set; } = new();
-    public int? IdInvoice { get; set; }
-    public Invoice Invoice { get; set; }
-
-
     public static Formula Create(int id, string description, DateTime date, string state, decimal priceConsultation, decimal? priceLens)
     {
         return new Formula(id, description, date, state, priceConsultation, priceLens ?? 0);

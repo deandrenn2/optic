@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Optic.Application.Infrastructure.Sqlite;
 
@@ -10,9 +11,11 @@ using Optic.Application.Infrastructure.Sqlite;
 namespace Optic.Application.Infrastructure.Sqlite.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250324185601_updateandcreatedateClient")]
+    partial class updateandcreatedateClient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -327,9 +330,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
@@ -337,12 +337,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("IdInvoice")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("IdUserCreate")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("IdUserUpdate")
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("PriceConsultation")
@@ -353,9 +347,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("UpdateDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -598,118 +589,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.HasIndex("IdSupplier");
 
                     b.ToTable("Products", (string)null);
-                });
-
-            modelBuilder.Entity("Optic.Application.Domain.Entities.Purchase", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BusinessId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("DueDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("IdUserCreate")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("IdUserUpdate")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("PaymentType")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BusinessId");
-
-                    b.HasIndex("Number")
-                        .IsUnique();
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("Purchases", (string)null);
-                });
-
-            modelBuilder.Entity("Optic.Application.Domain.Entities.PurchaseDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("IdProduct")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IdPurchase")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdPurchase");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("PurchaseDetail");
-                });
-
-            modelBuilder.Entity("Optic.Application.Domain.Entities.PurchasePayment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("IdPurchase")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdPurchase");
-
-                    b.ToTable("PurchasePayment");
                 });
 
             modelBuilder.Entity("Optic.Application.Domain.Entities.Setting", b =>
@@ -1040,55 +919,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("Optic.Application.Domain.Entities.Purchase", b =>
-                {
-                    b.HasOne("Optic.Application.Domain.Entities.Business", "Business")
-                        .WithMany("Purchases")
-                        .HasForeignKey("BusinessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Optic.Application.Domain.Entities.Supplier", "Supplier")
-                        .WithMany("Purchases")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Business");
-
-                    b.Navigation("Supplier");
-                });
-
-            modelBuilder.Entity("Optic.Application.Domain.Entities.PurchaseDetail", b =>
-                {
-                    b.HasOne("Optic.Application.Domain.Entities.Purchase", "Purchase")
-                        .WithMany("PuerchaseDetails")
-                        .HasForeignKey("IdPurchase")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Optic.Application.Domain.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Purchase");
-                });
-
-            modelBuilder.Entity("Optic.Application.Domain.Entities.PurchasePayment", b =>
-                {
-                    b.HasOne("Optic.Application.Domain.Entities.Purchase", "Purchase")
-                        .WithMany("PuerchasePayments")
-                        .HasForeignKey("IdPurchase")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Purchase");
-                });
-
             modelBuilder.Entity("Optic.Application.Domain.Entities.SettingUser", b =>
                 {
                     b.HasOne("Optic.Application.Domain.Entities.Setting", "Setting")
@@ -1128,8 +958,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.Navigation("Formulas");
 
                     b.Navigation("Invoices");
-
-                    b.Navigation("Purchases");
                 });
 
             modelBuilder.Entity("Optic.Application.Domain.Entities.Client", b =>
@@ -1171,13 +999,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.Navigation("InvoiceDetails");
                 });
 
-            modelBuilder.Entity("Optic.Application.Domain.Entities.Purchase", b =>
-                {
-                    b.Navigation("PuerchaseDetails");
-
-                    b.Navigation("PuerchasePayments");
-                });
-
             modelBuilder.Entity("Optic.Application.Domain.Entities.Setting", b =>
                 {
                     b.Navigation("SettingUsers");
@@ -1186,8 +1007,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
             modelBuilder.Entity("Optic.Application.Domain.Entities.Supplier", b =>
                 {
                     b.Navigation("Products");
-
-                    b.Navigation("Purchases");
                 });
 #pragma warning restore 612, 618
         }

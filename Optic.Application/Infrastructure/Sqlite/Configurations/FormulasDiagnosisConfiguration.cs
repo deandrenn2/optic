@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+namespace Optic.Application.Infrastructure.Sqlite.Configurations;
 internal class FormulaDiagnosisConfiguration : IEntityTypeConfiguration<FormulaDiagnosis>
 {
     public void Configure(EntityTypeBuilder<FormulaDiagnosis> builder)
