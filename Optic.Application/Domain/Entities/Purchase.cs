@@ -30,22 +30,22 @@ public class Purchase : AggregateRoot
     public int? IdUserUpdate { get; set; }
     public int? IdUserCreate { get; set; }
 
-    public List<PurchaseDetail> PuerchaseDetails { get; set; } = new();
+    public List<PurchaseDetail> PurchaseDetails { get; set; } = new();
     public List<PurchasePayment> PuerchasePayments { get; set; } = new();
 
-    public static Invoice Create(int id, int number, DateTime date, decimal total, string state, string paymentType, int businessId, int supplierId)
+    public static Purchase Create(int id, int number, DateTime date, decimal total, string state, string paymentType, int businessId, int supplierId)
     {
-        return new Invoice(id, number, date, total, state, paymentType, businessId, supplierId);
+        return new Purchase(id, number, date, total, state, paymentType, businessId, supplierId);
     }
 
     public void AddDetail(PurchaseDetail detail)
     {
-        PuerchaseDetails.Add(detail);
+        PurchaseDetails.Add(detail);
     }
 
     public void RemoveDetail(List<PurchaseDetail> detail)
     {
-        PuerchaseDetails.RemoveAll(x => detail.Contains(x));
+        PurchaseDetails.RemoveAll(x => detail.Contains(x));
     }
 
     public void AddPayment(PurchasePayment payment)

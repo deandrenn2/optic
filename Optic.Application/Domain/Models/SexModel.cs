@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Optic.Application.Domain.Models;
+namespace Optic.Application.Domain;
 public class SexModel
 {
     public SexModel()

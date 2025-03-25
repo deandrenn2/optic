@@ -26,7 +26,7 @@ public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase>
             .OnDelete(DeleteBehavior.Cascade);
 
         //InvoiceDetails
-        builder.HasMany(x => x.PuerchaseDetails)
+        builder.HasMany(x => x.PurchaseDetails)
             .WithOne(x => x.Purchase)
             .HasForeignKey(x => x.IdPurchase)
             .OnDelete(DeleteBehavior.Cascade);
