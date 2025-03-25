@@ -36,12 +36,12 @@ export const updateBusinessService = async (model: BusinessResponseModel): Promi
    return response.data;
 };
 
-export const uploadBusinessLogo = async (id: number, file: File): Promise<MsgResponse<BusinessResponseModel >> => {
+export const uploadBusinessLogo = async (id: number, file: File): Promise<MsgResponse<string >> => {
    const url = `api/businesses/${id}`;
    try {
       const formData = new FormData();
       formData.append("file", file); 
-      const response = await ApiClient.post<MsgResponse<BusinessResponseModel>>(url, formData, {
+      const response = await ApiClient.post<MsgResponse<string>>(url, formData, {
          headers: {
             "Content-Type": "multipart/form-data",
          },

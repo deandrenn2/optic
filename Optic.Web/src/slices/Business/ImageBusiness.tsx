@@ -33,10 +33,10 @@ export const ImageBusiness = ({ business }: { business: BusinessResponseModel | 
 
         try {
             const response = await uploadBusinessLogo(business.id, file);
-            console.log(response,"respuestaLogo")
+            
             if (response.isSuccess && response.data) {
-             
-                setImagePreview(`${import.meta.env.VITE_API_URL}static/logos/${response.data.urlLogo}`);
+                setImagePreview(`${import.meta.env.VITE_API_URL}static/logos/${response.data}`);
+                setBusiness({...business,urlLogo: response.data })
             }
         } catch (error) {
             console.error("Error al subir la imagen:", error);
