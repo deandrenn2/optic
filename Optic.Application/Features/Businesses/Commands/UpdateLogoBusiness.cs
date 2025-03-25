@@ -5,7 +5,6 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Files;
 using Optic.Application.Infrastructure.Sqlite;
@@ -26,38 +25,38 @@ public class UpdateLogoBusiness : ICarterModule
         .Accepts<IFormFile>("multipart/form-data")
         .ProducesValidationProblem()
         .Produces<string>(StatusCodes.Status400BadRequest)
-        .Produces(StatusCodes.Status201Created);
+        .Produces<string>(StatusCodes.Status200OK);
     }
 
-    public record UpdateLogoBusinessCommand(IFormFile? File, int BusinessId) : IRequest<Result>;
+    public record UpdateLogoBusinessCommand(IFormFile? File, int BusinessId) : IRequest<IResult>;
 
-    public class UpdateLogoBusinessHandler(AppDbContext context, IFileManager fileManager, IValidator<UpdateLogoBusinessCommand> validator) : IRequestHandler<UpdateLogoBusinessCommand, Result>
+    public class UpdateLogoBusinessHandler(AppDbContext context, IFileManager fileManager, IValidator<UpdateLogoBusinessCommand> validator) : IRequestHandler<UpdateLogoBusinessCommand, IResult>
     {
-        public async Task<Result> Handle(UpdateLogoBusinessCommand request, CancellationToken cancellationToken)
+        public async Task<IResult> Handle(UpdateLogoBusinessCommand request, CancellationToken cancellationToken)
         {
             var result = validator.Validate(request);
             if (!result.IsValid)
             {
-                return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Login.ErrorValidation", "Se presentaron errores de validación"));
+                return Results.Ok(Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Login.ErrorValidation", "Se presentaron errores de validación")));
             }
 
             var business = await context.Businesses.FindAsync(request.BusinessId);
 
             if (business == null)
             {
-                return Result.Failure(new Error("Business.NotFound", "Business no encontrada"));
+                return Results.Ok(Result.Failure(new Error("Business.NotFound", "Business no encontrada")));
             }
 
             if (request.File == null)
             {
-                return Result.Failure(new Error("Business.ErrorUploadFile", "Error al subir el archivo"));
+                return Results.Ok(Result.Failure(new Error("Business.ErrorUploadFile", "Error al subir el archivo")));
             }
 
             var resFile = await fileManager.UploadFileAsync(request.File);
 
             if (resFile.IsFailure)
             {
-                return Result.Failure(new Error("Business.ErrorUploadFile", "Error al subir el archivo"));
+                return Results.Ok(Result.Failure(new Error("Business.ErrorUploadFile", "Error al subir el archivo")));
             }
 
             if (!string.IsNullOrEmpty(resFile.Message))
@@ -65,14 +64,16 @@ public class UpdateLogoBusiness : ICarterModule
 
             var resCount = await context.SaveChangesAsync();
 
-
             if (resCount > 0)
             {
-                return Result.Success("Logo actualizado correctamente");
+                return Results.Ok(Result<string>.Success(
+                         resFile.Message ?? string.Empty,
+                         "Logo actualizado correctamente")
+                );
             }
             else
             {
-                return Result.Failure(new Error("Business.ErrorUpdateLogo", "Error al actualizar el logo"));
+                return Results.Ok(Result.Failure(new Error("Business.ErrorUpdateLogo", "Error al actualizar el logo")));
             }
         }
     }
