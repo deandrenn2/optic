@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import useUserContext from '../shared/context/useUserContext';
 export const Logo = () => {
-    const { business, setBusiness } = useUserContext();
+    const { business } = useUserContext();
     const navigator = useNavigate();
     const defaultLogo = `${import.meta.env.BASE_URL}initials-logo.svg`;
     
@@ -23,9 +23,7 @@ export const Logo = () => {
                     className="h-full w-full rounded-lg max-h-[64px] p-1 radius-sm"
                     onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = defaultLogo;
-                       // setBusiness({...business, urlLogo : defaultLogo})
-                       console.log(defaultLogo,"logol")
+                        e.currentTarget.src = defaultLogo;                       
                     }}
                 />
             </div>

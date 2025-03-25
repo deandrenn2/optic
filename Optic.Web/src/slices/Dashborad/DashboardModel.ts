@@ -6,7 +6,7 @@ export interface DashboardMolde{
 }
 
 export interface DashboardResponseModel  {
-    clientCount: 0;
+    clientCount:  0;
     productCount: 0;
     dailyRevenue: 0;
 }
