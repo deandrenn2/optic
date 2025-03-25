@@ -20,3 +20,8 @@ export interface BusinessResponseModel {
    phoneNumber: string;
    urlLogo: string;
 }
+
+export interface UploadBusinessLogoRequest {
+   id: number;
+   file: File; 
+}

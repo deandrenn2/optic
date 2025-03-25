@@ -22,6 +22,7 @@ export const useUsers = () => {
          }
       },
    });
+   
    const updateUsers = useMutation({
       mutationFn: updateUserService,
       onSuccess: (data) => {
@@ -35,7 +36,6 @@ export const useUsers = () => {
          }
       },
    });
-   
 
    return {
       queryUsers,
@@ -61,8 +61,6 @@ export const useUserAvatar = () => {
          }
       },
    });
-
-
 
    return {
       setAvatar,

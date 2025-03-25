@@ -6,6 +6,7 @@ export const Business = () => {
     const [hasError, setHasError] = useState<string>('');
     const { business, setBusiness } = useUserContext();
     const { updateBusiness } = useBusiness();
+    const defaultLogo = `${import.meta.env.BASE_URL}initials-logo.svg`;
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -37,9 +38,16 @@ export const Business = () => {
                 <div className="relative flex items-center justify-center">
                     <div className="shrink-0">
                         <img
-                            src={`${import.meta.env.BASE_URL}initials-logo.svg`}
+                            src={
+                                business?.urlLogo
+                                    ? `${import.meta.env.VITE_API_URL}static/logos/${business.urlLogo}`
+                                    : defaultLogo}
                             alt="logo"
-                            className="h-full w-16 rounded-lg"
+                            onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src = defaultLogo;
+                            }}
+                            className="h-full w-20 rounded-lg"
                         />
                     </div>
                 </div>
@@ -98,10 +106,12 @@ export const Business = () => {
                         Ciudad
                     </label>
                     <input
+
                         id="city"
                         name="city"
                         value={business?.city}
                         onChange={handleInputChange}
+                        required
                         className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Ciudad"
                     />
@@ -116,6 +126,7 @@ export const Business = () => {
                         name="address"
                         value={business?.address}
                         onChange={handleInputChange}
+                        required
                         className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Dirección"
                     />
@@ -145,6 +156,7 @@ export const Business = () => {
                         name="phoneNumber"
                         value={business?.phoneNumber}
                         onChange={handleInputChange}
+                        required
                         className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Teléfono"
                     />
@@ -163,7 +175,7 @@ export const Business = () => {
                     </button>
                 </div>
             </form>
-            <ImageBusiness />
+            <ImageBusiness business={business} />
         </div>
     );
 };

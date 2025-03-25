@@ -3,7 +3,7 @@ import { UsersModel, UsersResponseModel } from "./UsersModel";
 import { useUsers } from "./useUsers";
 import { ButtonReset } from "../../shared/components/Buttons/ButtonReset";
 
-export const SettingsForm = ({ id }: { id?: number }) => {
+export const UsersCreateForm = ({ id }: { id?: number }) => {
     const [form, setForm] = useState<UsersModel | UsersResponseModel>({
         id: id,
         firstName: '',
@@ -184,7 +184,7 @@ export const SettingsForm = ({ id }: { id?: number }) => {
                     (
                         <>
                             <button type="submit" disabled={createUser.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
-                                {createUser.isPending ? "Creando..." : "Crear Producto"}
+                                {createUser.isPending ? "Creando..." : "Crear Usuario"}
                             </button>
                             <ButtonReset />
                         </>)}

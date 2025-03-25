@@ -13,7 +13,7 @@ export const CardClient = () => {
                 <div className="w-4 h-4 bg-gray-400 rounded-full mr-2"></div>
                 <h2 className="text-gray-500 font-bold">Clientes</h2>
             </div>
-            {clients?.map((client) => (
+            {clients?.map((client) => (  
                 <div className="space-y-1">
                     <div className="  flex justify-betweenp-4 items-center mr-2">
                         <div className='w-full rounded-lg border border-gray-400 p-4 mb-2'>

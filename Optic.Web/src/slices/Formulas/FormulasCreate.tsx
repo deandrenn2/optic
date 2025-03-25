@@ -15,8 +15,9 @@ import useUserContext from "../../shared/context/useUserContext";
 import { useNavigate } from "react-router-dom";
 import { FormulaProducts } from "./Common/FormulaProducts";
 import { SumTotal } from "./Common/SumTotal";
-
-
+import OffCanvas from "../../shared/components/OffCanvas/Index";
+import { ClientForm } from "../Clients/ClientForm";
+import { Direction } from "../../shared/components/OffCanvas/Models";
 export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
     const [client, setClient] = useState<Option | undefined>();
     const [diagnosis, setDiagnosis] = useState<DiagnosisModel[]>([]);
@@ -24,6 +25,7 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
     const { createFormula } = useFormulas();
     const { business } = useUserContext();
     const navigate = useNavigate();
+    const [visible, setVisible] = useState(false);
 
     const [formula, setFormula] = useState<CreateFormulasModel>({
         idBusiness: 0,
@@ -37,6 +39,14 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
         priceConsultation: 0,
         sumTotal: 0,
     });
+    
+    const handleClose = () =>{
+        setVisible(false);
+    }
+
+    const handleClick = () =>{
+        setVisible(true);
+    }
 
     const handleChangeClient = (newValue: SingleValue<Option>) => {
         setClient({
@@ -187,9 +197,16 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
                 </div>
                 <FormulaProducts products={products} setProducts={setProducts} />
                 <SumTotal formula={formula} sumTotalProducts={totalProducts} />
+
+                <OffCanvas titlePrincipal='Registro de Cliente' visible={visible} xClose={handleClose} position={Direction.Right}  >
+                    <ClientForm />
+                </OffCanvas>
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleCreateFormula}>
                     Crear formula
                 </button>
+                <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1"
+                onClick={handleClick}
+                >Crear Cliente</button>
             </div>
         );
 };

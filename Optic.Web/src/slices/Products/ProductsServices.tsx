@@ -3,6 +3,24 @@ import { MsgResponse } from '../../shared/model';
 import { CreateClientModel } from '../Clients/ClientModel';
 import { CategoriesModel, ProductModel, ProductsResponseModel, QuantityModel } from './ProductModel';
 
+
+export const getProducts = async (): Promise<MsgResponse<ProductsResponseModel[]>> => {
+   const url = 'api/Products';
+   const response = await ApiClient.get<MsgResponse<ProductsResponseModel[]>>(url);
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al obtener productos',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+   return response.data;
+};
+
 export const createProductService = async (model: ProductModel): Promise<MsgResponse<ProductModel>> => {
    const url = 'api/Products';
    const response = await ApiClient.post<MsgResponse<ProductModel>>(url, model);
@@ -49,25 +67,6 @@ export const updateProductService = async (model: ProductModel): Promise<MsgResp
       return {
          isSuccess: false,
          message: 'Error al actualizar producto',
-         isFailure: true,
-         error: {
-            code: response.status.toString(),
-            message: response.statusText,
-         },
-      };
-   }
-
-   return response.data;
-};
-
-export const getProducts = async (): Promise<MsgResponse<ProductsResponseModel[]>> => {
-   const url = 'api/Products';
-   const response = await ApiClient.get<MsgResponse<ProductsResponseModel[]>>(url);
-
-   if (response.status !== 200 && response.status !== 201) {
-      return {
-         isSuccess: false,
-         message: 'Error al obtener productos',
          isFailure: true,
          error: {
             code: response.status.toString(),
