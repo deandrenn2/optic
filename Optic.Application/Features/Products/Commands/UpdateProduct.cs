@@ -8,11 +8,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
-using Optic.Application.Features.Products.Commands;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
-namespace Optic.Application.Features.Products.Command;
+namespace Optic.Application.Features.Products;
 public class UpdateProduct : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)

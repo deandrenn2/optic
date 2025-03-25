@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
+
+namespace Optic.Application.Features.Sales;
 
 public class CreateSale : ICarterModule
 {
@@ -32,7 +35,6 @@ public class CreateSale : ICarterModule
         public string PaymentType { get; init; } = string.Empty;
         public List<string> Tags { get; init; } = new();
         public List<InvoiceDetailModel> Products { get; init; } = new();
-
         public decimal SumTotal { get; init; }
     }
 

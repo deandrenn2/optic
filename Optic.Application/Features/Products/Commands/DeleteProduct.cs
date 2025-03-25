@@ -10,15 +10,15 @@ using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
-namespace Optic.Application.Features.Products.Commands;
+namespace Optic.Application.Features.Products;
 
-public class DeleteProduct: ICarterModule
+public class DeleteProduct : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapDelete("api/products/{idProduct:int}", async (int idProduct, IMediator mediator) =>
         {
-            return await mediator.Send(new DeleteProductCommand { Id = idProduct});
+            return await mediator.Send(new DeleteProductCommand { Id = idProduct });
         })
              .WithName(nameof(DeleteProduct))
              .WithTags(nameof(Product))
