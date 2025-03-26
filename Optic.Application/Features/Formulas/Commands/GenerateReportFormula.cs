@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Optic.Application.Domain;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Report;
 using Optic.Application.Infrastructure.Sqlite;
@@ -39,17 +40,27 @@ public class GenerateReportFormula : ICarterModule
         public string UrlLogo { get; init; } = string.Empty;
         public string Nit { get; init; } = string.Empty;
         public string Address { get; init; } = string.Empty;
-        public string CellPhoneNumber { get; init; } = string.Empty;
         public string PhoneNumber { get; init; } = string.Empty;
-        public decimal Total { get; init; } = 0;
-        public decimal PriceConsultation { get; init; } = 0;
+        public string ClientName { get; init; } = string.Empty;
+        public string ClientPhoneNumber { get; init; } = string.Empty;
+        public string FormulaNumber { get; init; } = string.Empty;
+        public string FormulaDate { get; init; } = string.Empty;
+        public string FormulaDescription { get; init; } = string.Empty;
+        public string GenerationDate { get; init; } = string.Empty;
+        public List<string> Tags { get; init; } = new();
+        public List<DiagnosisModel> Diagnosis { get; init; } = new();
     }
 
     public class GetReportFormulaHandler(AppDbContext context, IClosedXmlReportManager reportManager) : IRequestHandler<GenerateReportCommand, IResult>
     {
         public async Task<IResult> Handle(GenerateReportCommand request, CancellationToken cancellationToken)
         {
-            var formula = await context.Formulas.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var formula = await context.Formulas
+                                    .Include(x => x.Client)
+                                    .Include(x => x.Invoice)
+                                    .Include(x => x.Tags)
+                                    .Include(x => x.FormulaDiagnosis).ThenInclude(x => x.Diagnosis)
+                                    .FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if (formula == null)
             {
@@ -71,9 +82,19 @@ public class GenerateReportFormula : ICarterModule
                 UrlLogo = business.UrlLogo,
                 Nit = business.Nit,
                 Address = business.Address,
-                CellPhoneNumber = business.CellPhoneNumber,
                 PhoneNumber = business.PhoneNumber,
-                PriceConsultation = formula.PriceConsultation
+                ClientName = formula.Client.LastName + " " + formula.Client.FirstName,
+                ClientPhoneNumber = formula.Client.PhoneNumber,
+                FormulaNumber = formula.Invoice.Number.ToString("D5"),
+                FormulaDate = formula.Invoice.Date.ToString("dd/MM/yyyy"),
+                FormulaDescription = formula.Description ?? string.Empty,
+                GenerationDate = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"),
+                Tags = [.. formula.Tags.Select(x => x.Name)],
+                Diagnosis = [.. formula.FormulaDiagnosis.Select(x => new DiagnosisModel
+                {
+                    Name = x.Diagnosis.Name,
+                    Value = x.Value
+                })]
             };
 
             var resArray = reportManager.GenerateReportAsync("Invoice", reportData);
