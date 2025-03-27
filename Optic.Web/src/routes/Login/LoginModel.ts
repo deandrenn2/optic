@@ -40,3 +40,4 @@ export interface CreateBusinessModel {
    phoneNumber: string;
    urlLogo: string;
 }
+

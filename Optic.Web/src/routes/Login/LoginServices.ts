@@ -1,6 +1,6 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
-import { passwordRecoverModel } from '../../slices/Users/UsersModel';
+import { passwordRecoverModel, UsersUpdatePasswordModel } from '../../slices/Users/UsersModel';
 import { CreateBusinessModel, CreateUserModel, LoginModel, TokenModel, UserResponseModel } from './LoginModel';
 
 export const loginUser = async (model: LoginModel): Promise<MsgResponse<TokenModel>> => {
@@ -97,12 +97,31 @@ export const createBusinessServices = async (model: CreateBusinessModel): Promis
 };
 
 export const PasswordRecover = async (model: passwordRecoverModel): Promise<MsgResponse<passwordRecoverModel>> => {
-   const url = 'api/users/SecurePhrase';
+   const url = 'api/users/securePharse';
    const response = await ApiClient.post<MsgResponse<passwordRecoverModel>>(url, model);
    if (response.status !== 200) {
       return {
          isSuccess: false,
          message: 'Frase no valida',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};
+
+export const updatePassword = async (model: UsersUpdatePasswordModel): Promise<MsgResponse<UsersUpdatePasswordModel>> => {
+   const url = `api/users/password`;
+   const response = await ApiClient.post<MsgResponse<UsersUpdatePasswordModel>>(url, model);
+
+   if (response.status !== 200) {
+      return {
+         isSuccess: false,
+         message: 'Error al actualizar contraseña',
          isFailure: true,
          error: {
             code: response.status.toString(),

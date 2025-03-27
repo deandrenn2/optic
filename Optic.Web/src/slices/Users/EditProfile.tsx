@@ -1,7 +1,7 @@
 import { faFloppyDisk, faKey, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { PasswordModel } from "./ChangePassword";
+import  PasswordModel  from "./ChangePassword";
 import useUserContext from "../../shared/context/useUserContext";
 import { ProfileImageModal } from "./ProfileImageModal";
 import useUsers from "./useUsers";

@@ -7,7 +7,7 @@ export interface UsersModel {
 }
 
 export interface UsersResponseModel {
-   id: number;
+   id?: number;
    firstName: string;
    lastName: string;
    email: string;
@@ -34,7 +34,7 @@ export interface UsersProfileModel {
 } 
 
 export interface passwordRecoverModel {
-   id: number;
+   id?: number;
    email: string;
    securePharse: string;
 }

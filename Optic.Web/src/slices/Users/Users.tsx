@@ -7,14 +7,21 @@ import { Direction } from "../../shared/components/OffCanvas/Models";
 import { SettingsForm } from "./UsersCreate";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 import { Bar } from "../../shared/components/Progress/Bar";
+import ButtonChangePassword from "../../shared/components/Buttons/ButtonChangePassword";
+import DetailPasswordModel from "./DetailChangePassword";
+import { UsersResponseModel } from "./UsersModel";
+
+
 
 export const Users = () => {
     const [visible, setVisible, ] = useState(false);
-
+    const [selectedUser, setSelectedUser] = useState<UsersResponseModel | null>(null);
     const { users, queryUsers } = useLogin();
+
 
     function handleClose(): void {
         setVisible(false);
+        setSelectedUser(null);
     }
 
     if (queryUsers.isLoading)
@@ -58,14 +65,19 @@ export const Users = () => {
                             <tr key={user.id}>
                                 <td className="border border-gray-300 p-2 text-center">{user.firstName + ' ' + user.lastName}</td>
                                 <td className="border border-gray-300 p-2 text-center">{user.email}</td>
-                                <td className="border border-gray-300 p-2 text-center">
-                                    <DetailButton url={`/Settings/Users/${user.id}`} />
+                                <td className="border border-gray-300 p-2 text-center gap-4 flex justify-center">
+                                    <DetailButton url={`/Settings/Users/${user.id}`} />                                     
+                                    {/* Pasamos la función para abrir el modal con el usuario seleccionado */}
+                                    <ButtonChangePassword onClick={() => setSelectedUser(user)}/>
                                 </td>
+                               
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+            {/* MODAL */}
+            {selectedUser && <DetailPasswordModel user={selectedUser} onClose={handleClose} />}
             <OffCanvas titlePrincipal='Registro de Usuario' visible={visible} xClose={handleClose} position={Direction.Right} >
                 <SettingsForm />
             </OffCanvas>
@@ -73,4 +85,3 @@ export const Users = () => {
 
     )
 };
-
