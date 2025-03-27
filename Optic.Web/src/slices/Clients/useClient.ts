@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { createClientServices, deleteClientServices, getClients, updateClientServices } from './ClientServices';
 import { toast } from 'react-toastify';
-
 const KEY = 'CLIENTS';
+
 const useClient = () => {
    const queryClients = useQuery({
       queryKey: [`${KEY}`],

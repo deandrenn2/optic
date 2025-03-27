@@ -1,6 +1,6 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
-import { ClientsResponseModel, CreateClientModel } from './ClientModel';
+import { ClientsResponseModel, ClientStoryResponseModel, CreateClientModel } from './ClientModel';
 
 export const getClients = async (): Promise<MsgResponse<ClientsResponseModel[]>> => {
    const url = `api/clients`;
@@ -74,5 +74,23 @@ export const deleteClientServices = async (id: number): Promise<MsgResponse<Crea
       };
    }
 
+   return response.data;
+};
+
+export const getClientStories = async (id:number): Promise<MsgResponse<ClientStoryResponseModel[]>> => {
+   const url = `api/client/${id}/formulas`;
+   const response = await ApiClient.get<MsgResponse<ClientStoryResponseModel[]>>(url);
+
+   if (response.status !== 200) {
+      return {
+         isSuccess: false,
+         message: "Error al obtener las historias de los clientes",
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
    return response.data;
 };

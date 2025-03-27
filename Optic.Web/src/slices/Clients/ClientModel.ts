@@ -23,3 +23,16 @@ export interface ClientsResponseModel {
    cellPhoneNumber: string;
    phoneNumber: string;
 }
+
+export interface ClientStoryResponseModel{
+   id: number;
+   idBusiness: number;
+   idClient: number;
+   clientName: string;
+   description: string;
+   date: string;
+   number: number;
+   state: string;
+   tags: string[];
+   diagnosis: {name:string}[];
+}

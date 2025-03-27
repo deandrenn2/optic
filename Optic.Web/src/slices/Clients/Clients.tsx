@@ -10,6 +10,7 @@ import DeleteButton from '../../shared/components/Buttons/ButtonDelete';
 import DetailButton from '../../shared/components/Buttons/ButtonDetail';
 import { Bar } from '../../shared/components/Progress/Bar';
 import { useListSettings } from '../../shared/components/List/useListSettings';
+import { ClientStory } from './ClientStory';
 export const Clients = () => {
    const [visible, setVisible] = useState(false);
    const { clients, deleteClient, queryClients } = useClient();
@@ -55,10 +56,7 @@ export const Clients = () => {
                   onClick={handleClick}> <FontAwesomeIcon icon={faPlus} className="fa-search top-3 pr-2 font-bold"
                   />Nuevo</button>
             </div>
-
-            
-               <div className="relative inline-flex mb-2">
-                  
+               <div className="relative inline-flex mb-2">   
                      <input
                         type="text"
                         value={searchClients}
@@ -103,7 +101,8 @@ export const Clients = () => {
                         <td className="border border-gray-300 p-2 text-center">{client.address}</td>
                         <td className="border border-gray-300 p-2 text-center">{client.email}</td>
                         <td className="border border-gray-300 p-2 text-center">
-                           <DetailButton url={`/Clientes/${client.id}`} className='text-blue-500 text-2xl hover:text-blue-700 mr-2' />
+                           <DetailButton url={`/Clientes/${client.id}`} className='text-blue-500 text-2xl hover:text-blue-700 mr-2' {...<ClientStory/>}/>
+                           
                            <DeleteButton id={client.id} onDelete={handleDelete} />
                         </td>
                      </tr>
@@ -114,6 +113,7 @@ export const Clients = () => {
          <OffCanvas titlePrincipal='Registro de Cliente' visible={visible} xClose={handleClose} position={Direction.Right}  >
             <ClientForm />
          </OffCanvas>
+         
       </div>
    );
 };

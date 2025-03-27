@@ -1,19 +1,46 @@
+import { useState } from "react";
 import ButtonNavigation from "../../shared/components/Buttons/ButtonNavigation";
 import { CardClient, } from "../Dashborad/ClientCard";
 import { DashboradStatistcs } from "../Dashborad/DashbordStatistcs";
 import { ProductoCard } from "../Dashborad/ProductsCard";
+import { FormulasCreate } from "../Formulas/FormulasCreate";
+import OffCanvas from "../../shared/components/OffCanvas/Index";
+import { Direction } from "../../shared/components/OffCanvas/Models";
+import { SaleModel } from "../Dashborad/SaleModel";
+
 export const Home = () => {
+   const [visible, setVisible] = useState(false)
+   const [visibleSale, setVisibleSale] = useState(false)
+   const handleSaleClick = () => {
+      setVisibleSale(true)
+   }
+
+   const handleClick = () => {
+      setVisible(true)
+   }
+
+   const handleClose = (): void => {
+      setVisible(false)
+   }
+
    return (
       <>
          {/* <!-- Cards Section --> */}
          <div className="p-4 border border-grey-500 ">
             <div>
-              <DashboradStatistcs/>
+               <DashboradStatistcs />
                <div className="container mx-auto">
+                  <OffCanvas titlePrincipal='Nueva formula' visible={visible} xClose={handleClose} position={Direction.Right} size="lg" >
+                     <FormulasCreate/>
+                  </OffCanvas>
                   <div className="m-2">
-                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >
+                     <button onClick={handleClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" >
                         Nueva Formula
                      </button>
+                     <button onClick={handleSaleClick} className="text-red-500 font-bold py-2 px-4 rounded  border border-red-700 hover:bg-red-200">
+                        Nueva Venta
+                     </button>
+
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                      {/* <!-- Formulas Section --> */}
@@ -123,6 +150,7 @@ export const Home = () => {
                         </div>
                      </div>
                   </div>
+
                </div>
             </div>
 
@@ -171,9 +199,11 @@ export const Home = () => {
                   {/* <!-- Productos Section --> */}
                   <ProductoCard />
                </div>
-            </div>
-
+            </div> 
          </div>
+         {visibleSale && <SaleModel/>}
+      
       </>
+      
    );
 };

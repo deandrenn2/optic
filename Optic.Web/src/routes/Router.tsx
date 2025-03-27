@@ -40,6 +40,7 @@ export const router = createBrowserRouter([
                 element: <ClientDetail />,
 
             },
+
             {
                 path: 'suppliers',
                 element: <Suppliers />,
