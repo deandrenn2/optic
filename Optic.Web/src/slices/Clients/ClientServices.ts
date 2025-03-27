@@ -78,7 +78,7 @@ export const deleteClientServices = async (id: number): Promise<MsgResponse<Crea
 };
 
 export const getClientStories = async (id:number): Promise<MsgResponse<ClientStoryResponseModel[]>> => {
-   const url = `api/client/${id}/formulas`;
+   const url = `api/clients/${id}/formulas`;
    const response = await ApiClient.get<MsgResponse<ClientStoryResponseModel[]>>(url);
 
    if (response.status !== 200) {
