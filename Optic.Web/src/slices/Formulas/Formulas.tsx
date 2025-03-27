@@ -1,4 +1,4 @@
-import { faCircleMinus, faFileInvoiceDollar, faMagnifyingGlass, faPlus, faPrint } from "@fortawesome/free-solid-svg-icons"
+import { faCircleMinus, faFileExcel, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useFormulas } from "./useFormulas";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
@@ -11,12 +11,14 @@ import { format } from "date-fns";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 import Swal from "sweetalert2";
 import { getStatusColorInvoice } from "./FormulasUtils";
+import { useFileDownload } from "../../shared/components/FilesDowload";
 export const Formulas = () => {
     const [visible, setVisible] = useState(false);
     const handleClose = (): void => {
         setVisible(false);
     }
     const { formulas, queryFormulas, deleteFormula } = useFormulas();
+    const { descargarArchivo } = useFileDownload();
 
     const handleDelete = async (id: number) => {
         Swal.fire({
@@ -32,6 +34,11 @@ export const Formulas = () => {
             }
         })
     };
+
+    const handleDownload = async (id: number) => {
+        const urlBlob = `/api/formulas/${id}/report`;
+        await descargarArchivo(urlBlob, "Formula_" + id + "_" + new Date().toISOString().split('T')[0] + ".xlsx");
+    }
 
     if (queryFormulas.isLoading)
         return <Bar Title="Cargando formulas..." />;
@@ -83,8 +90,7 @@ export const Formulas = () => {
                             <td className={`border border-gray-300 p-2 text-center font-semibold ${getStatusColorInvoice(formula?.state)}`}>{formula?.state}</td>
                             <td className="border border-gray-300 p-2 text-center">
                                 <DetailButton url={`/formulas/${formula.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />
-                                <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar} /></button>
-                                <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint} /></button>
+                                <button onClick={() => handleDownload(formula.id)} className="text-green-500 mr-3  text-2xl"><FontAwesomeIcon icon={faFileExcel} /></button>
                                 <button onClick={() => handleDelete(formula.id)} className="text-red-500 text-2xl hover:text-red-700 mr-2"><FontAwesomeIcon icon={faCircleMinus} /></button>
                             </td>
                         </tr>

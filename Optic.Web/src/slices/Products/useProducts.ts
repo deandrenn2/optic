@@ -4,6 +4,7 @@ import {
    createProductService,
    deleteProductService,
    getCategories,
+   getPagerProducts,
    getProducts,
    getValidateProduct,
    updateCategoryService,
@@ -66,6 +67,19 @@ export const useProducts = () => {
       createProduct,
       deleteProduct,
       updateProduct,
+   };
+};
+
+export const useProductsPager = (page: number = 1, pageSize: number = 10) => {
+   const queryProducts = useQuery({
+      queryKey: [`${KEY}_pager`, page, pageSize],
+      queryFn: () => getPagerProducts(page, pageSize),
+      refetchOnWindowFocus: false,
+   });
+
+   return {
+      queryProducts,
+      products: queryProducts?.data?.data,
    };
 };
 
@@ -157,5 +171,3 @@ export const useQuantity = () => {
       updateQuantity,
    };
 };
-
-

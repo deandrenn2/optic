@@ -1,6 +1,12 @@
-import { useProducts } from "../Products/useProducts";
+import { formatDistance, parseISO, setDefaultOptions } from "date-fns";
+import { es } from 'date-fns/locale';
+import { useProductsPager } from "../Products/useProducts";
+
+//Textos de fechas en español
+setDefaultOptions({ locale: es });
+
 export const ProductoCard = () => {
-    const { products } = useProducts();
+    const { products } = useProductsPager();
     return (
         <div className="bg-white rounded-lg shadow p-4 ">
             <div className="flex items-center mb-4">
@@ -20,7 +26,7 @@ export const ProductoCard = () => {
                                 <p className="text-sm font-bold">{product.name}</p>
                                 <i className="fas fa-play text-gray-500"></i>
                             </div>
-                            <p className=" text-gray-500">Fecha:24/03/2024</p>
+                            <p className=" text-gray-500 text-sm">Hace, {formatDistance(new Date(), parseISO(product.updateDate ? product.updateDate.toString() : new Date().toString()))}</p>
                         </div>
                     </div>
                 </div>

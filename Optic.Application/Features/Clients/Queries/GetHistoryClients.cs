@@ -13,7 +13,7 @@ public class GetHistoryClient : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/client/{id:int}/formulas", async (int id, IMediator mediator) =>
+        app.MapGet("api/clients/{id:int}/formulas", async (int id, IMediator mediator) =>
         {
             return await mediator.Send(new GetHistoryClientQuery(id));
         })
