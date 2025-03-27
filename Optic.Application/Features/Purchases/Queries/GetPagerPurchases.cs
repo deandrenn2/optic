@@ -51,6 +51,8 @@ public class GetPagerPurchases : ICarterModule
                 return Results.Ok(resultError);
             }
 
+            var countPurchase = await context.Purchases.CountAsync();
+
             var purchases = await context.Purchases
                 .OrderBy(x => x.UpdateDate)
                 .Skip((request.Page - 1) * request.PageSize)
@@ -69,7 +71,7 @@ public class GetPagerPurchases : ICarterModule
                 purchasesResponse.Add(purchaseResponse);
             }
 
-            var pager = PagedResult<List<GetPurchaseResponse>>.Success(purchasesResponse, "Lista de compras");
+            var pager = PagedResult<List<GetPurchaseResponse>>.Success(purchasesResponse, "Lista de compras", countPurchase);
 
 
             return Results.Ok(pager);

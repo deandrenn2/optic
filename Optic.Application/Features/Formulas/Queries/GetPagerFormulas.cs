@@ -54,6 +54,8 @@ public class GetPagerFormulas : ICarterModule
                 return Results.Ok(resultError);
             }
 
+            var countFormulas = await context.Formulas.CountAsync();
+
             var formulas = await context.Formulas.Include(x => x.Invoice).Include(x => x.Client)
                 .OrderByDescending(x => x.UpdateDate)
                 .Skip((request.Page - 1) * request.PageSize)
@@ -75,7 +77,7 @@ public class GetPagerFormulas : ICarterModule
                 formulasResponse.Add(formulaResponse);
             }
 
-            var pager = PagedResult<List<GetFormulaResponse>>.Success(formulasResponse, "Lista formulaos");
+            var pager = PagedResult<List<GetFormulaResponse>>.Success(formulasResponse, "Lista de formulas", countFormulas);
 
 
             return Results.Ok(pager);

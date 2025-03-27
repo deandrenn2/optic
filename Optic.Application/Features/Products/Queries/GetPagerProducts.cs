@@ -55,6 +55,8 @@ public class GetPagerProducts : ICarterModule
                 return Results.Ok(resultError);
             }
 
+            var countProduct = await context.Products.CountAsync();
+
             var products = await context.Products.Include(x => x.Categories)
                 .OrderByDescending(x => x.UpdateDate)
                 .Skip((request.Page - 1) * request.PageSize)
@@ -77,7 +79,7 @@ public class GetPagerProducts : ICarterModule
                 productsResponse.Add(productResponse);
             }
 
-            var pager = PagedResult<List<GetProductResponse>>.Success(productsResponse, "Lista Productos");
+            var pager = PagedResult<List<GetProductResponse>>.Success(productsResponse, "Lista Productos", countProduct);
 
 
             return Results.Ok(pager);

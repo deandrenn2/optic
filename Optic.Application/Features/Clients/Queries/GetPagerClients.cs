@@ -56,6 +56,8 @@ public class GetPagerClients : ICarterModule
                 return Results.Ok(resultError);
             }
 
+            var countClient = await context.Clients.CountAsync();
+
             var clients = await context.Clients.Include(x => x.IdentificationType)
                 .OrderByDescending(x => x.UpdateDate)
                 .Skip((request.Page - 1) * request.PageSize)
@@ -79,7 +81,7 @@ public class GetPagerClients : ICarterModule
                 clientsResponse.Add(productResponse);
             }
 
-            var pager = PagedResult<List<GetClientResponse>>.Success(clientsResponse, "Lista de clientes");
+            var pager = PagedResult<List<GetClientResponse>>.Success(clientsResponse, "Lista de clientes", countClient);
 
 
             return Results.Ok(pager);
