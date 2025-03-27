@@ -36,23 +36,9 @@ public class GetSale : ICarterModule
         public string ClientName { get; init; } = string.Empty;
         public string State { get; init; } = string.Empty;
         public DateTime Date { get; init; } = DateTime.Now;
-
         public int IdInvoice { get; init; }
-
-        public List<string> Tags { get; init; } = new();
-
+        public string PaymentType { get; init; } = string.Empty;
         public List<InvoiceDetailModel> Products { get; init; } = new();
-
-        public decimal? PriceLens { get; init; }
-        public decimal PriceConsultation { get; init; }
-
-        public decimal? SumTotal
-        {
-            get
-            {
-                return PriceLens + PriceConsultation;
-            }
-        }
     }
 
 

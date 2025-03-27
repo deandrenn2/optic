@@ -31,10 +31,9 @@ public class CreateSale : ICarterModule
     {
         public int? Id { get; init; }
         public int IdBusiness { get; init; }
-        public int? IdClient { get; init; }
+        public int? IdClient { get; init; } = null;
         public DateTime Date { get; init; } = DateTime.Now;
         public string PaymentType { get; init; } = string.Empty;
-        public List<string> Tags { get; init; } = new();
         public List<InvoiceDetailModel> Products { get; init; } = new();
         public decimal SumTotal { get; init; }
     }
@@ -59,7 +58,9 @@ public class CreateSale : ICarterModule
             if (count > 0)
                 invoiceMaxNumber = await context.Invoices.MaxAsync(x => x.Number);
 
-            var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.SumTotal, "Borrador", request.PaymentType, request.IdBusiness, request.IdClient);
+            var status = request.PaymentType == "Contado" ? "Pagada" : "Crédito";
+
+            var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.SumTotal, status, request.PaymentType, request.IdBusiness, request.IdClient);
 
             //Agregar detalles de la factura
             foreach (var product in request.Products)
@@ -89,7 +90,7 @@ public class CreateSale : ICarterModule
         public CreateSaleValidator()
         {
             RuleFor(x => x.Date).NotEmpty();
-            RuleFor(x => x.IdClient).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.PaymentType).NotEmpty();
         }
     }
 }

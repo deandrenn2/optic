@@ -19,7 +19,6 @@ export const ClientSelect = ({ selectedValue, name, className, xChange, required
     if (options)
         return (
             <Select
-
                 name={name || 'idClient'}
                 className={className}
                 value={selectedValue}

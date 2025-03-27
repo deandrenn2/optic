@@ -35,20 +35,8 @@ public class GetSales : ICarterModule
         public string ClientName { get; init; } = string.Empty;
         public string State { get; init; } = string.Empty;
         public DateTime Date { get; init; } = DateTime.Now;
-
         public int IdInvoice { get; init; }
-        public List<InvoiceDetailModel> Products { get; init; } = new();
-
-        public decimal? PriceLens { get; init; }
-        public decimal PriceConsultation { get; init; }
-
-        public decimal? SumTotal
-        {
-            get
-            {
-                return PriceLens + PriceConsultation;
-            }
-        }
+        public string PaymentType { get; init; } = string.Empty;
     }
 
 
@@ -58,11 +46,6 @@ public class GetSales : ICarterModule
         {
             var sales = await context.Invoices
             .Include(x => x.Client)
-            .Include(x => x.InvoiceDetails).ThenInclude(x => x.Product)
-            .Include(x => x.InvoicePayments)
-            .ThenInclude(x => x.Invoice)
-            .Include(x => x.InvoiceServices)
-            .ThenInclude(x => x.Invoice)
             .Where(x => x.State == "Borrador")
             .ToListAsync();
 
@@ -77,17 +60,7 @@ public class GetSales : ICarterModule
                     ClientName = sale.Client.LastName + " " + sale.Client.FirstName,
                     IdInvoice = sale.Id,
                     State = sale.State,
-                    Date = sale.Date,
-                    Products = sale.InvoiceDetails.Select(y => new InvoiceDetailModel
-                    {
-                        Id = y.Id,
-                        IdInvoice = y.IdInvoice,
-                        IdProduct = y.IdProduct,
-                        Description = y.Description,
-                        Price = y.Price,
-                        Quantity = y.Quantity,
-                        ProductName = y.Product.Name,
-                    }).ToList()
+                    Date = sale.Date
                 };
 
                 salesResponse.Add(saleResponse);

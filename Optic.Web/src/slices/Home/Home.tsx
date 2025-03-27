@@ -1,9 +1,18 @@
+import { useState } from "react";
+import OffCanvas from "../../shared/components/OffCanvas/Index";
+import { Direction } from "../../shared/components/OffCanvas/Models";
 import { CardClient, } from "../Dashborad/ClientCard";
 import { DashboradStatistcs } from "../Dashborad/DashbordStatistcs";
 import { FormulasCard } from "../Dashborad/FormulasCard";
 import { ProductoCard } from "../Dashborad/ProductsCard";
 import { ProductsStockCard } from "../Dashborad/ProductsStockCard";
+import { SalesCreate } from "../Sales/SalesCreate";
 export const Home = () => {
+
+   const [visibleButtonSales, setVisibleButtonSales] = useState(false);
+   const handleClose = (): void => {
+      setVisibleButtonSales(false);
+   }
    return (
       <>
          {/* <!-- Cards Section --> */}
@@ -12,8 +21,11 @@ export const Home = () => {
                <DashboradStatistcs />
                <div className="container mx-auto">
                   <div className="m-2">
-                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >
+                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4" >
                         Nueva Formula
+                     </button>
+                     <button className="bg-teal-500 hover:bg-teal-400 text-white font-bold py-2 px-4 rounded" onClick={() => setVisibleButtonSales(true)}>
+                        Nueva venta
                      </button>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -102,7 +114,9 @@ export const Home = () => {
                   <ProductoCard />
                </div>
             </div>
-
+            <OffCanvas titlePrincipal='Nueva formula' visible={visibleButtonSales} xClose={handleClose} position={Direction.Right} size="lg" >
+               <SalesCreate />
+            </OffCanvas>
          </div>
       </>
    );
