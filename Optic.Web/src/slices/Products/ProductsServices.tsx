@@ -1,12 +1,29 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
 import { CreateClientModel } from '../Clients/ClientModel';
-import { CategoriesModel, ProductModel, ProductsResponseModel, QuantityModel } from './ProductModel';
+import { CategoriesModel, ProductModel, ProductPagerModel, ProductsResponseModel, QuantityModel } from './ProductModel';
 
 
 export const getProducts = async (): Promise<MsgResponse<ProductsResponseModel[]>> => {
    const url = 'api/Products';
    const response = await ApiClient.get<MsgResponse<ProductsResponseModel[]>>(url);
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al obtener productos',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+   return response.data;
+};
+
+export const getPagerProducts = async (page: number = 1, pageSize: number = 5): Promise<MsgResponse<ProductPagerModel[]>> => {
+   const url = `api/Products/pager?pageIndex=${page}&pagerSize=${pageSize}`;
+   const response = await ApiClient.get<MsgResponse<ProductPagerModel[]>>(url);
    if (response.status !== 200 && response.status !== 201) {
       return {
          isSuccess: false,

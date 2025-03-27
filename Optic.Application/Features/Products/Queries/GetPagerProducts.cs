@@ -56,7 +56,7 @@ public class GetPagerProducts : ICarterModule
             }
 
             var products = await context.Products.Include(x => x.Categories)
-                .OrderBy(x => x.UpdateDate)
+                .OrderByDescending(x => x.UpdateDate)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
 

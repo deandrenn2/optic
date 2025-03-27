@@ -26,13 +26,24 @@ export interface ProductsResponseModel {
    barCode?: string;
 }
 
+export interface ProductPagerModel {
+   id: number;
+   name: string;
+   codeNumber: string;
+   quantity: number;
+   unitPrice: number;
+   salePrice: number;
+   stock: number;
+   updateDate?: Date;
+}
+
 export interface CategoriesModel {
    id?: number;
    name: string;
 }
 
 export interface QuantityModel {
-   id?: number ;
+   id?: number;
    quantity: number;
    isIncrement: boolean;
 }
