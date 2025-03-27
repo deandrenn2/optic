@@ -59,11 +59,13 @@ public class Product : AggregateRoot
     public void UpdateQuantity(int quantity)
     {
         Quantity = quantity;
+        UpdateDate = DateTime.Now;
     }
 
     public void UpdateImage(string image)
     {
         Image = image;
+        UpdateDate = DateTime.Now;
     }
 
     public void AddSupplier(Supplier supplier)

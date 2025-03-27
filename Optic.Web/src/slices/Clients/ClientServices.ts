@@ -1,6 +1,6 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
-import { ClientsResponseModel, CreateClientModel } from './ClientModel';
+import { ClientPagerModel, ClientsResponseModel, CreateClientModel } from './ClientModel';
 
 export const getClients = async (): Promise<MsgResponse<ClientsResponseModel[]>> => {
    const url = `api/clients`;
@@ -17,6 +17,23 @@ export const getClients = async (): Promise<MsgResponse<ClientsResponseModel[]>>
       };
    }
 
+   return response.data;
+};
+
+export const getPagerClients = async (page: number = 1, pageSize: number = 5): Promise<MsgResponse<ClientPagerModel[]>> => {
+   const url = `api/clients/pager?pageIndex=${page}&pageSize=${pageSize}`;
+   const response = await ApiClient.get<MsgResponse<ClientPagerModel[]>>(url);
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al obtener clientes',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
    return response.data;
 };
 

@@ -22,7 +22,24 @@ export const getProducts = async (): Promise<MsgResponse<ProductsResponseModel[]
 };
 
 export const getPagerProducts = async (page: number = 1, pageSize: number = 5): Promise<MsgResponse<ProductPagerModel[]>> => {
-   const url = `api/Products/pager?pageIndex=${page}&pagerSize=${pageSize}`;
+   const url = `api/Products/pager?pageIndex=${page}&pageSize=${pageSize}`;
+   const response = await ApiClient.get<MsgResponse<ProductPagerModel[]>>(url);
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al obtener productos',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+   return response.data;
+};
+
+export const getPagerProductsStock = async (page: number = 1, pageSize: number = 5): Promise<MsgResponse<ProductPagerModel[]>> => {
+   const url = `api/products/pager/stock?pageIndex=${page}&pageSize=${pageSize}`;
    const response = await ApiClient.get<MsgResponse<ProductPagerModel[]>>(url);
    if (response.status !== 200 && response.status !== 201) {
       return {

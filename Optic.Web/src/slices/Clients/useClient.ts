@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createClientServices, deleteClientServices, getClients, updateClientServices } from './ClientServices';
+import { createClientServices, deleteClientServices, getClients, getPagerClients, updateClientServices } from './ClientServices';
 import { toast } from 'react-toastify';
 
 const KEY = 'CLIENTS';
@@ -57,6 +57,19 @@ const useClient = () => {
       createClient,
       deleteClient,
       updateClient,
+   };
+};
+
+export const useClientPager = (page: number = 1, pageSize: number = 5) => {
+   const queryClients = useQuery({
+      queryKey: [`${KEY}_pager`, page, pageSize],
+      queryFn: () => getPagerClients(page, pageSize),
+      refetchOnWindowFocus: false,
+   });
+
+   return {
+      queryClients,
+      clients: queryClients?.data?.data,
    };
 };
 

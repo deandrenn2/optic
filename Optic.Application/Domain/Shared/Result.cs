@@ -2,10 +2,11 @@
 
 public class Result
 {
-    protected internal Result(bool isSuccess, string? message)
+    protected internal Result(bool isSuccess, string? message, int? count = 0)
     {
         IsSuccess = isSuccess;
         Message = message;
+        Count = count ?? 0;
     }
 
     protected internal Result(bool isSuccess, Error? error)

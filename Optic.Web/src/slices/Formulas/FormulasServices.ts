@@ -5,6 +5,7 @@ import {
    DiagnosisModel,
    FormulaListModel,
    FormulaModel,
+   FormulaPagerModel,
    TagModel,
    UpdateFormulasModel,
    UpdateStateFormula,
@@ -83,6 +84,23 @@ export const getFormulas = async (): Promise<MsgResponse<FormulaListModel[]>> =>
       };
    }
 
+   return response.data;
+};
+
+export const getPagerFormulas = async (page: number = 1, pageSize: number = 5): Promise<MsgResponse<FormulaPagerModel[]>> => {
+   const url = `api/formulas/pager?pageIndex=${page}&pageSize=${pageSize}`;
+   const response = await ApiClient.get<MsgResponse<FormulaPagerModel[]>>(url);
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al obtener formulas',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
    return response.data;
 };
 

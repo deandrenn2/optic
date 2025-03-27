@@ -55,10 +55,18 @@ public class GetPagerStockProducts : ICarterModule
                 return Results.Ok(resultError);
             }
 
+            var productsCount = 0;
+
+            productsCount = await context.Products.Where(x => x.Quantity <= x.Stock).CountAsync();
+
+
             var products = await context.Products.Include(x => x.Categories)
-                .OrderBy(x => x.UpdateDate).Where(x => x.Stock <= x.Quantity)
+                .Where(x => x.Quantity <= x.Stock)
+                .OrderBy(x => x.UpdateDate)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
+
+
 
             var productsResponse = new List<GetProductResponse>();
             foreach (var product in products)
@@ -77,7 +85,8 @@ public class GetPagerStockProducts : ICarterModule
                 productsResponse.Add(productResponse);
             }
 
-            var pager = PagedResult<List<GetProductResponse>>.Success(productsResponse, "Lista Productos");
+            var pager = PagedResult<List<GetProductResponse>>.Success(productsResponse, "Lista Productos", productsCount);
+
 
 
             return Results.Ok(pager);

@@ -3,10 +3,11 @@ namespace Optic.Domain.Shared;
 
 public abstract class PagedResult
 {
-    protected internal PagedResult(bool isSuccess, string? message)
+    protected internal PagedResult(bool isSuccess, string? message, int? count = 0)
     {
         IsSuccess = isSuccess;
         Message = message;
+        Count = count ?? 0;
     }
 
     protected internal PagedResult(bool isSuccess, Error? error)
@@ -23,7 +24,7 @@ public abstract class PagedResult
 
     public int Count { get; }
 
-    public static Result Success(string message) => new(true, message);
+    public static Result Success(string message, int? count = 0) => new(true, message, count);
 
     public static Result Failure(Error error) => new(false, error);
 
@@ -52,14 +53,14 @@ public class PagedResult<T> : PagedResult where T : class
     {
         Data = data;
     }
-    private PagedResult(T data, bool isSuccess, string message)
-        : base(isSuccess, message)
+    private PagedResult(T data, bool isSuccess, string message, int? count = 0)
+        : base(isSuccess, message, count)
     {
 
         Data = data;
     }
 
-    public static PagedResult Success(T data, string message) => new PagedResult<T>(data, true, message);
+    public static PagedResult Success(T data, string message, int? count) => new PagedResult<T>(data, true, message, count);
 
     public static PagedResult Failure(T data, Error error) => new PagedResult<T>(data, false, error);
 

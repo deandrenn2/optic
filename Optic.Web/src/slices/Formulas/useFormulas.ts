@@ -5,6 +5,7 @@ import {
    getDiagnosis,
    getFormula,
    getFormulas,
+   getPagerFormulas,
    getTags,
    updateFormulaService,
    updateStateFormulaServices,
@@ -75,6 +76,19 @@ export const useFormulas = () => {
       formulas: queryFormulas.data?.data,
       createFormula,
       deleteFormula,
+   };
+};
+
+export const useFormulasPager = (page: number = 1, pageSize: number = 5) => {
+   const queryFormulas = useQuery({
+      queryKey: [`${KEY}_Formulas_pager`, page, pageSize],
+      queryFn: () => getPagerFormulas(page, pageSize),
+      refetchOnWindowFocus: false,
+   });
+
+   return {
+      queryFormulas,
+      formulas: queryFormulas?.data?.data,
    };
 };
 

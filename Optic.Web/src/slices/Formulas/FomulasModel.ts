@@ -28,6 +28,16 @@ export interface FormulaModel {
    sumTotal?: number; // Optional because it is calculated
 }
 
+export interface FormulaPagerModel {
+   id: number;
+   codeNumber: number;
+   fullName: string;
+   firstName: string;
+   lastName: string;
+   sumTotal: number;
+   updateDate?: Date;
+}
+
 export interface TagModel {
    id: number;
    name: string;

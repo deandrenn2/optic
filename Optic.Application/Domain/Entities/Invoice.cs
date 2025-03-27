@@ -13,6 +13,8 @@ public class Invoice : AggregateRoot
         State = state;
         ClientId = clientId;
         BusinessId = businessId;
+        UpdateDate = DateTime.Now;
+        CreateDate = DateTime.Now;
     }
 
     public int Number { get; set; }
@@ -72,5 +74,6 @@ public class Invoice : AggregateRoot
         Date = date;
         Total = total;
         ClientId = clientId;
+        UpdateDate = DateTime.Now;
     }
 }

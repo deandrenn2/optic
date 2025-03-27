@@ -17,6 +17,8 @@ public class Formula : AggregateRoot
         State = state;
         PriceLens = priceLens;
         PriceConsultation = priceConsultation;
+        UpdateDate = DateTime.Now;
+        CreateDate = DateTime.Now;
     }
 
     public string? Description { get; private set; }
@@ -82,6 +84,7 @@ public class Formula : AggregateRoot
         Date = date;
         PriceLens = priceLens;
         PriceConsultation = priceConsultation;
+        UpdateDate = DateTime.Now;
     }
 
     public void UpdateState(string state)

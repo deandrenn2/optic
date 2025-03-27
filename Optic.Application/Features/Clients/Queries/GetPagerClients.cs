@@ -34,9 +34,10 @@ public class GetPagerClients : ICarterModule
         public string FullName { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        public string CodeNumber { get; set; } = string.Empty;
         public string IdentificationType { get; set; } = string.Empty;
+        public string IdentificationAbbreviation { get; set; } = string.Empty;
         public string IdentificationNumber { get; set; } = string.Empty;
+        public int Sex { get; set; }
         public DateTime? UpdateDate { get; set; }
     }
 
@@ -56,7 +57,7 @@ public class GetPagerClients : ICarterModule
             }
 
             var clients = await context.Clients.Include(x => x.IdentificationType)
-                .OrderBy(x => x.UpdateDate)
+                .OrderByDescending(x => x.UpdateDate)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
 
@@ -71,7 +72,9 @@ public class GetPagerClients : ICarterModule
                     FirstName = client.FirstName,
                     UpdateDate = client.UpdateDate,
                     IdentificationNumber = client.IdentificationNumber,
-                    IdentificationType = client.IdentificationType.Abbreviation,
+                    IdentificationType = client.IdentificationType.Name,
+                    IdentificationAbbreviation = client.IdentificationType.Abbreviation,
+                    Sex = client.Sex,
                 };
                 clientsResponse.Add(productResponse);
             }

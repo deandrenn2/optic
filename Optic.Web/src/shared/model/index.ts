@@ -7,6 +7,7 @@ export interface MsgResponse<T> {
       code: string;
       message: string;
    };
+   count?: number;
 }
 
 export interface Option {

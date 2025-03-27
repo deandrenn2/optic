@@ -23,3 +23,15 @@ export interface ClientsResponseModel {
    cellPhoneNumber: string;
    phoneNumber: string;
 }
+
+export interface ClientPagerModel {
+   id: number;
+   fullName: string;
+   firstName: string;
+   lastName: string;
+   identificationType: string;
+   identificationAbbreviation: string;
+   identificationNumber: string;
+   sex: number;
+   updateDate?: Date;
+}

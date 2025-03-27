@@ -5,6 +5,7 @@ import {
    deleteProductService,
    getCategories,
    getPagerProducts,
+   getPagerProductsStock,
    getProducts,
    getValidateProduct,
    updateCategoryService,
@@ -70,7 +71,7 @@ export const useProducts = () => {
    };
 };
 
-export const useProductsPager = (page: number = 1, pageSize: number = 10) => {
+export const useProductsPager = (page: number = 1, pageSize: number = 5) => {
    const queryProducts = useQuery({
       queryKey: [`${KEY}_pager`, page, pageSize],
       queryFn: () => getPagerProducts(page, pageSize),
@@ -80,6 +81,20 @@ export const useProductsPager = (page: number = 1, pageSize: number = 10) => {
    return {
       queryProducts,
       products: queryProducts?.data?.data,
+   };
+};
+
+export const useProductsStockPager = (page: number = 1, pageSize: number = 5) => {
+   const queryProducts = useQuery({
+      queryKey: [`${KEY}_stock_pager`, page, pageSize],
+      queryFn: () => getPagerProductsStock(page, pageSize),
+      refetchOnWindowFocus: false,
+   });
+
+   return {
+      queryProducts,
+      products: queryProducts?.data?.data,
+      count: queryProducts?.data?.count,
    };
 };
 
