@@ -23,7 +23,7 @@ export const ClientStory = () => {
 
       try {
         const response = await getClientStories(clientId);
-        console.log("Datos recibidos:", response); // 🔍 Verifica la respuesta en la consola
+        console.log("Datos recibidos:", response);
 
         if (response?.isSuccess) {
           setClientStories(response.data ?? []);
@@ -54,7 +54,7 @@ export const ClientStory = () => {
   }
 
   return (
-    <div className="flex flex-col items-center w-full max-w-2xl xl p-6">
+    <div className="flex flex-col items-center w-full max-w-2xl xl ">
       <div className="relative border-l-4 border-gray-300">
         {clientStories.map((story) => (
           <div key={story.id ?? crypto.randomUUID()} className="mb-8 ml-6 flex flex-col gap-2">
@@ -62,7 +62,7 @@ export const ClientStory = () => {
               <FontAwesomeIcon className={getStatusColorInvoice(story.state)} icon={faCircle} />
             </div>
 
-            <p className="text-lg font-bold">
+            <p className="text-lg font-bold p-2">
               {story.date
                 ? new Date(story.date).toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric" })
                 : "Fecha no disponible"}
@@ -92,7 +92,6 @@ export const ClientStory = () => {
                   </div>
                 </div>
               </div>
-
               <div>
                 <p className="text-sm font-bold">{story.description ?? "Sin descripción"}</p>
               </div>
