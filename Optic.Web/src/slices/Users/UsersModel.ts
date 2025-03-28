@@ -1,5 +1,5 @@
 export interface UsersModel {
-   id?:number;
+   id?: number;
    firstName: string;
    lastName: string;
    email: string;
@@ -20,4 +20,3 @@ export interface UsersAvatarModel {
    id: number | undefined;
    idAvatar: number;
 }
-

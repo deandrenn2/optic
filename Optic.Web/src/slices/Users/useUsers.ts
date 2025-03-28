@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { createUserService, getUsers, setAvatarService, updateUserService } from './UsersServices';
+import { createUserService, getUsers, passwordRecoverService, setAvatarService, updateUserPasswordService, updateUserService } from './UsersServices';
 import useUserContext from '../../shared/context/useUserContext';
 const KEY = 'Users';
 export const useUsers = () => {
@@ -22,9 +22,51 @@ export const useUsers = () => {
          }
       },
    });
-   
+
    const updateUsers = useMutation({
       mutationFn: updateUserService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               queryUsers.refetch();
+            }
+         }
+      },
+   });
+
+   const updateUsersProfiles = useMutation({
+      mutationFn: updateUserService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               queryUsers.refetch();
+            }
+         }
+      },
+   });
+
+   const updateUsersPassword = useMutation({
+      mutationFn: updateUserPasswordService,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         } else {
+            if (data.isSuccess) {
+               toast.success(data.message);
+               queryUsers.refetch();
+            }
+         }
+      },
+   });
+
+   const Passwordrecover = useMutation({
+      mutationFn: passwordRecoverService,
       onSuccess: (data) => {
          if (!data.isSuccess) {
             toast.info(data.message);
@@ -42,6 +84,9 @@ export const useUsers = () => {
       users: queryUsers?.data?.data,
       createUser,
       updateUsers,
+      updateUsersProfiles,
+      updateUsersPassword,
+      Passwordrecover,
    };
 };
 
@@ -66,4 +111,5 @@ export const useUserAvatar = () => {
       setAvatar,
    };
 };
+
 export default useUsers;
