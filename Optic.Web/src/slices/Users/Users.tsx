@@ -11,19 +11,13 @@ import { UsersResponseModel } from "./UsersModel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { SettingsForm } from "../Settings/SettingsForm";
-import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 import { UserResponseModel } from "../../routes/Login/LoginModel";
 
 
 
 export const Users = () => {
     const [visible, setVisible,] = useState(false);
-    const [selectedUser, setSelectedUser] = useState<UsersResponseModel | UserResponseModel | null>({
-        email: '',
-        firstName: '',
-        id: 0,
-        lastName: '',
-    });
+    const [selectedUser, setSelectedUser] = useState<UsersResponseModel | UserResponseModel | null>(null);
     const { users, queryUsers } = useLogin();
     const [seleCreating, setSeleCreating] = useState(false);
 
@@ -80,9 +74,8 @@ export const Users = () => {
                                 </td>
                                 <td className="border border-gray-300 p-2 text-center">
                                     <FontAwesomeIcon
-                                        icon={faPencil} className="text-blue-500 hover:text-blue-700 cursor-pointer" onClick={() => handleEdit(user)} />
+                                        icon={faPencil} className="text-blue-500 hover:text-blue-700 cursor-pointer text-2xl mr-4" onClick={() => handleEdit(user)} />
 
-                                    <DetailButton url={`/Settings/Users/${user.id}`} />
                                     {/* Pasamos la función para abrir el modal con el usuario seleccionado */}
                                     <ButtonChangePassword onClick={() => setSelectedUser(user)} />
                                 </td>

@@ -4,7 +4,6 @@ import { useState } from "react";
 import PasswordModel from "./ChangePassword";
 import useUserContext from "../../shared/context/useUserContext";
 import { ProfileImageModal } from "./ProfileImageModal";
-import ButtonSave from "../../shared/components/Buttons/ButtonSave";
 import useUsers from "./useUsers";
 
 export const EditProfile = () => {
@@ -90,11 +89,9 @@ export const EditProfile = () => {
 
 
                     <div className="col-span-1 md:col-span-3 flex justify-start mt-7">
-                        <ButtonSave />
-
                         <button type="submit"
                             disabled={updateUsersProfiles.isPending}
-                            className="mr-2 bg-teal-500 text-white px-4 py-3 rounded-md shadow-md flex items-center mr-4 hover:bg-teal-400">
+                            className="bg-teal-500 text-white px-4 py-3 rounded-md shadow-md flex items-center mr-4 hover:bg-teal-400">
                             <FontAwesomeIcon icon={faFloppyDisk} className="mr-2" />
                             {updateUsersProfiles.isPending ? "Actualiazando..." : "Guardar"}
                         </button>
