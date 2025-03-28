@@ -35,3 +35,16 @@ export interface ClientPagerModel {
    sex: number;
    updateDate?: Date;
 }
+
+export interface ClientStoryResponseModel {
+   id: number;
+   idBusiness: number;
+   idClient: number;
+   clientName: string;
+   description: string;
+   date: string;
+   number: number;
+   state: string;
+   tags: string[];
+   diagnosis: { name: string }[];
+}

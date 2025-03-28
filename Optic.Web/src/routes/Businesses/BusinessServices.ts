@@ -36,7 +36,7 @@ export const updateBusinessService = async (model: BusinessResponseModel): Promi
    return response.data;
 };
 
-export const uploadBusinessLogo = async (id: number, file: File): Promise<MsgResponse<string >> => {
+export const updatedBusinessLogo = async (id: number, file: File): Promise<MsgResponse<string >> => {
    const url = `api/businesses/${id}`;
    try {
       const formData = new FormData();

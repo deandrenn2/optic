@@ -5,8 +5,7 @@ const DetailButton = ({ url, className }: { url: string, className?: string }) =
     return (
         <Link
             to={url}
-            className={className || "text-blue-500 text-2xl hover:text-blue-700 mr-2"}
-        >
+            className={className || "text-blue-500 text-2xl hover:text-blue-700 mr-2"}>
         <FontAwesomeIcon icon={faPlay} />
         </Link>
     );

@@ -24,8 +24,8 @@ export default function Root() {
             <Sidebar />
             <div
                id="detail"
-               className="w-full p-4"
-            >
+               className="w-full p-4">
+   
                <Outlet />
             </div>
          </div>
