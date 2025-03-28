@@ -35,16 +35,12 @@ export const Home = () => {
                      <FormulasCreate />
                   </OffCanvas>
                   <div className="m-2">
-                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4" >
+                     <button onClick={handleClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" >
                         Nueva Formula
                      </button>
                      <button className="bg-teal-500 hover:bg-teal-400 text-white font-bold py-2 px-4 rounded" onClick={() => setVisibleButtonSales(true)}>
                         Nueva venta
                      </button>
-                     <button onClick={handleClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" >
-                        Nueva Formula
-                     </button>
-
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                      {/* <!-- Formulas Section --> */}
