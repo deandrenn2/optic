@@ -34,7 +34,7 @@ export const CardClient = () => {
                                 <p className=" text-gray-500 text-sm">Hace, {formatDistance(new Date(), parseISO(client.updateDate ? client.updateDate.toString() : new Date().toString()))}</p>
                             </div>
                         </div>
-                    </Link>
+                    </div>
                 </div>
             ))}
         </div>
