@@ -1,6 +1,6 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelopeOpen, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelopeOpen, faEye, faEyeSlash, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { loginUser } from './LoginServices';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { useBusiness } from '../Businesses/useBusiness';
 export const Login = () => {
    const [email, setEmail] = useState<string>('');
    const [password, setPassword] = useState<string>('');
+   const [showPassword, setShowPassword] = useState(false);
 
    const navigate = useNavigate();
    const { setToken, setBusiness, setUser, isAuthenticated, setIsAuthenticated } = useUserContext();
@@ -136,13 +137,19 @@ export const Login = () => {
                      </div>
                   </span>
                   <input
-                     type="password"
+                     type={showPassword ? "text" : "password"}
                      id="password"
                      required
                      onChange={(e) => setPassword(e.target.value)}
                      className="w-full px-10 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                      placeholder="Contraseña"
                   />
+                  <button
+                     type="button"
+                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
+                     onClick={() => setShowPassword(!showPassword)}>
+                     <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </button>
                </div>
             </div>
             <button
@@ -166,7 +173,7 @@ export const Login = () => {
 
             <div className="text-sm text-center text-blue-600 hover:text-blue-800">
                <span>
-                  <a href="/Login/ChangePasswo">Olvidaste la contraseña</a>
+                  <a href="./PasswordRecover">Olvidaste la contraseña</a>
                </span>
             </div>
          </form>

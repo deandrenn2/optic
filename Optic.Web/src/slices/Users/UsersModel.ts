@@ -1,5 +1,5 @@
 export interface UsersModel {
-   id?:number;
+   id?: number;
    firstName: string;
    lastName: string;
    email: string;
@@ -21,3 +21,21 @@ export interface UsersAvatarModel {
    idAvatar: number;
 }
 
+export interface UsersProfileModel {
+   id: number;
+   firstName: string;
+   lastName: string;
+   email: string;
+}
+
+export interface UsersUpdatePasswordModel {
+   id: number;
+   email: string;
+   password: string;
+}
+
+export interface passwordRecoverModel {
+   id?: number;
+   email: string;
+   securePharse: string;
+}

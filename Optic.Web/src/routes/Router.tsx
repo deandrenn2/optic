@@ -22,6 +22,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Users } from '../slices/Users/Users.tsx';
 import { Brands } from '../slices/Settings/Brands.tsx';
 import { FormulasDetail } from '../slices/Formulas/FormulasDetail.tsx';
+import PasswordRecoverPage from './Login/PasswordRecover.tsx';
+
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -128,5 +130,9 @@ export const router = createBrowserRouter([
     {
         path: '/Create/Business',
         element: <BusinessCreate />,
+    },
+    {
+        path: 'PasswordRecover',
+        element: <PasswordRecoverPage />,
     },
 ]);
