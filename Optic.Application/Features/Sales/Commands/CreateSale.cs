@@ -60,7 +60,7 @@ public class CreateSale : ICarterModule
 
             var status = request.PaymentType == "Contado" ? "Pagada" : "Crédito";
 
-            var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.SumTotal, status, request.PaymentType, request.IdBusiness, request.IdClient);
+            var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.SumTotal, status, request.PaymentType, request.IdBusiness, request.IdClient, "Venta");
 
             //Agregar detalles de la factura
             foreach (var product in request.Products)

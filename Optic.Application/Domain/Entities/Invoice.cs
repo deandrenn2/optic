@@ -4,7 +4,7 @@ namespace Optic.Application.Domain.Entities;
 
 public class Invoice : AggregateRoot
 {
-    public Invoice(int id, int number, DateTime date, decimal total, string state, string paymentType, int businessId, int? clientId) : base(id)
+    public Invoice(int id, int number, DateTime date, decimal total, string state, string paymentType, int businessId, int? clientId, string? documentType) : base(id)
     {
         Number = number;
         Date = date;
@@ -15,6 +15,7 @@ public class Invoice : AggregateRoot
         BusinessId = businessId;
         UpdateDate = DateTime.Now;
         CreateDate = DateTime.Now;
+        DocumentType = documentType ?? "Formula";
     }
 
     public int Number { get; set; }
@@ -22,6 +23,7 @@ public class Invoice : AggregateRoot
     public decimal Total { get; set; }
     public string State { get; set; }
     public string PaymentType { get; set; }
+    public string DocumentType { get; set; }
     public DateTime? DueDate { get; set; }
     public int? ClientId { get; set; }
     public Client Client { get; set; }
@@ -37,9 +39,9 @@ public class Invoice : AggregateRoot
     public List<InvoicePayment> InvoicePayments { get; set; } = new();
     public List<InvoiceService> InvoiceServices { get; set; } = new();
 
-    public static Invoice Create(int id, int number, DateTime date, decimal total, string state, string paymentType, int businessId, int? clientId)
+    public static Invoice Create(int id, int number, DateTime date, decimal total, string state, string paymentType, int businessId, int? clientId, string? documentType = "Formula")
     {
-        return new Invoice(id, number, date, total, state, paymentType, businessId, clientId);
+        return new Invoice(id, number, date, total, state, paymentType, businessId, clientId, documentType);
     }
 
     public void AddDetail(InvoiceDetail detail)

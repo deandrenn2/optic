@@ -114,7 +114,7 @@ export const Home = () => {
                   <ProductoCard />
                </div>
             </div>
-            <OffCanvas titlePrincipal='Nueva formula' visible={visibleButtonSales} xClose={handleClose} position={Direction.Right} size="lg" >
+            <OffCanvas titlePrincipal='Nueva venta' visible={visibleButtonSales} xClose={handleClose} position={Direction.Right} size="lg" >
                <SalesCreate />
             </OffCanvas>
          </div>
