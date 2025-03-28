@@ -1,4 +1,3 @@
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useClientPager } from '../Clients/useClient';
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
@@ -35,9 +34,9 @@ export const CardClient = () => {
                                 <p className=" text-gray-500 text-sm">Hace, {formatDistance(new Date(), parseISO(client.updateDate ? client.updateDate.toString() : new Date().toString()))}</p>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
             ))}
         </div>
-    )
+    );
 };

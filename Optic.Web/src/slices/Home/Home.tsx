@@ -7,19 +7,33 @@ import { FormulasCard } from "../Dashborad/FormulasCard";
 import { ProductoCard } from "../Dashborad/ProductsCard";
 import { ProductsStockCard } from "../Dashborad/ProductsStockCard";
 import { SalesCreate } from "../Sales/SalesCreate";
+
+import { FormulasCreate } from "../Formulas/FormulasCreate";
 export const Home = () => {
+   const [visible, setVisible] = useState(false);
+   const handleClick = () => {
+      setVisible(true)
+   }
 
    const [visibleButtonSales, setVisibleButtonSales] = useState(false);
-   const handleClose = (): void => {
+   const handleCloseSales = (): void => {
       setVisibleButtonSales(false);
    }
+
+   const handleClose = (): void => {
+      setVisible(false)
+   }
+
    return (
-      <>
+      <div>
          {/* <!-- Cards Section --> */}
          <div className="p-4 border border-grey-500 ">
             <div>
                <DashboradStatistcs />
                <div className="container mx-auto">
+                  <OffCanvas titlePrincipal='Nueva formula' visible={visible} xClose={handleClose} position={Direction.Right} size="lg" >
+                     <FormulasCreate />
+                  </OffCanvas>
                   <div className="m-2">
                      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4" >
                         Nueva Formula
@@ -27,6 +41,10 @@ export const Home = () => {
                      <button className="bg-teal-500 hover:bg-teal-400 text-white font-bold py-2 px-4 rounded" onClick={() => setVisibleButtonSales(true)}>
                         Nueva venta
                      </button>
+                     <button onClick={handleClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" >
+                        Nueva Formula
+                     </button>
+
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                      {/* <!-- Formulas Section --> */}
@@ -97,6 +115,7 @@ export const Home = () => {
                      {/* <!-- Products Stock --> */}
                      <ProductsStockCard />
                   </div>
+
                </div>
             </div>
 
@@ -114,10 +133,11 @@ export const Home = () => {
                   <ProductoCard />
                </div>
             </div>
-            <OffCanvas titlePrincipal='Nueva venta' visible={visibleButtonSales} xClose={handleClose} position={Direction.Right} size="lg" >
+            <OffCanvas titlePrincipal='Nueva venta' visible={visibleButtonSales} xClose={handleCloseSales} position={Direction.Right} size="lg" >
                <SalesCreate />
             </OffCanvas>
          </div>
-      </>
+      </div>
+
    );
 };

@@ -2,8 +2,8 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { BusinessResponseModel } from "../../routes/Businesses/BusinessModel";
-import { uploadBusinessLogo } from "../../routes/Businesses/BusinessServices";
 import useUserContext from "../../shared/context/useUserContext";
+import { updatedBusinessLogo } from "../../routes/Businesses/BusinessServices";
 
 export const ImageBusiness = ({ business }: { business: BusinessResponseModel | null }) => {
     const defaultLogo = `${import.meta.env.BASE_URL}initials-logo.svg`;
@@ -32,7 +32,7 @@ export const ImageBusiness = ({ business }: { business: BusinessResponseModel | 
         setIsUploading(true);
 
         try {
-            const response = await uploadBusinessLogo(business.id, file);
+            const response = await updatedBusinessLogo(business.id, file);
             
             if (response.isSuccess && response.data) {
                 setImagePreview(`${import.meta.env.VITE_API_URL}static/logos/${response.data}`);
