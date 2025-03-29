@@ -6,7 +6,7 @@ import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 export const ProductsDetail = () => {
     const { id } = useParams();
     const location = useLocation();
-    const fromHome = location.state?.fromHome; // Detectamos si venimos desde Home
+    const fromHome = location.state?.fromHome; 
 
     return (
         <div className="w-full flex flex-col items-center">
