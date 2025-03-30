@@ -5,7 +5,6 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using Optic.Application.Domain;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
@@ -29,13 +28,9 @@ public class UpdateSale : ICarterModule
     {
         public int Id { get; init; }
         public int Number { get; init; }
-        public int IdBusiness { get; init; }
         public int? IdClient { get; init; }
         public DateTime Date { get; init; } = DateTime.Now;
         public string PaymentType { get; init; } = string.Empty;
-        public List<string> Tags { get; init; } = new();
-        public List<InvoiceDetailModel> Products { get; init; } = new();
-
         public decimal SumTotal { get; init; }
     }
 
@@ -76,7 +71,6 @@ public class UpdateSale : ICarterModule
         public UpdateSaleValidator()
         {
             RuleFor(x => x.Id).NotEmpty();
-            RuleFor(x => x.IdBusiness).NotEmpty();
             RuleFor(x => x.Date).NotEmpty();
             RuleFor(x => x.PaymentType).NotEmpty();
             RuleFor(x => x.IdClient).NotEmpty().GreaterThan(0);
