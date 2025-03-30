@@ -146,7 +146,7 @@ export const Billing = () => {
                                                 ${bill.total.toLocaleString()}
                                             </td>
                                             <td className="border border-gray-300 p-2 text-center">
-                                                <ButtonDetail />
+                                                <ButtonDetail url={""} />
                                                 <button className="text-green-500 mr-2 text-2xl">
                                                     <FontAwesomeIcon icon={faFileInvoiceDollar} />
                                                 </button>
