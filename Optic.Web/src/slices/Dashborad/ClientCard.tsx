@@ -13,16 +13,16 @@ export const CardClient = () => {
                 <h2 className="text-gray-500 font-bold">Clientes</h2>
             </div>
             {clients?.map((client) => (
-                <div className="space-y-1">
+                <div className="space-y-1 ">
                     <Link to={`/Clientes/${client.id}`}
                         state={{ fromHome: location.pathname === "/" }}>
                         <div className="  flex justify-betweenp-4 items-center mr-2">
-                            <div className='w-full rounded-lg border border-gray-400 p-4 mb-2'>
+                            <div className='w-full rounded-lg border border-gray-400 p-4 mb-2 hover:border-blue-700 transition-colors duration-300 '>
                                 <div className="relative">
                                     <p>{client.fullName}</p>
                                     <span title={client.identificationType} className='text-blue-700 font-bold'>{client.identificationAbbreviation}</span> -
                                     {" "}{client.identificationNumber}
-                                    <div className='absolute inset-y-5 right-10'>
+                                    <div className='absolute inset-y-5 right-1'>
                                         {' '}
                                         <FontAwesomeIcon
                                             icon={client.sex === 1 ? faMars : faVenus}
