@@ -176,7 +176,7 @@ export const SettingsForm = ({ id }: { id?: number }) => {
                 {id &&
                     (
                         <button type="submit" disabled={updateUsers.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
-                            {updateUsers.isPending ? "Actualizando..." : "Actualizar Producto"}
+                            {updateUsers.isPending ? "Actualizando..." : "Actualizar Usuario"}
                         </button>
                     )}
 
@@ -184,7 +184,7 @@ export const SettingsForm = ({ id }: { id?: number }) => {
                     (
                         <>
                             <button type="submit" disabled={createUser.isPending} className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
-                                {createUser.isPending ? "Creando..." : "Crear Producto"}
+                                {createUser.isPending ? "Creando..." : "Crear Usuario"}
                             </button>
                             <ButtonReset />
                         </>)}

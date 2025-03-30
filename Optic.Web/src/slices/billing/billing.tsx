@@ -1,190 +1,165 @@
-import { faCircleMinus, faFileInvoiceDollar, faPlay, faPrint } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {  faFileInvoiceDollar, faSearch } from "@fortawesome/free-solid-svg-icons";
+
+import { BillingDocumentModel } from "./BillingModal";
+import { getDocuments } from "./BillingServices";
+import ButtonDelete from "../../shared/components/Buttons/ButtonDelete";
+import ButtonDetail from "../../shared/components/Buttons/ButtonDetail";
+
 export const Billing = () => {
+    const [bills, setBills] = useState<BillingDocumentModel[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    // Estados para los filtros
+    const [filterNumber, setFilterNumber] = useState<number | undefined>();
+    const [filterStatus, setFilterStatus] = useState<string | undefined>();
+    const [filterClient, setFilterClient] = useState<number | undefined>();
+    const [filterSupplier, setFilterSupplier] = useState<number | undefined>();
+    const [filterFrom, setFilterFrom] = useState<string | undefined>();
+    const [filterTo, setFilterTo] = useState<string | undefined>();
+
+    const fetchBills = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await getDocuments(filterNumber, filterStatus);
+            if (!response.isSuccess) throw new Error(response.message);
+            setBills(response.data ?? []);
+        } catch (err) {
+            console.error("Error al obtener facturas:", err);
+            setError("Error al obtener facturas");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchBills();
+    }, []);
+
     return (
         <div className="w-full p-4">
-            <div className="mb-2">
-                <div className="max-w-8xl mx-auto bg-white p-6 rounded shadow mb-4 ">
-                    <div className="grid grid-cols-4 gap-4 mb-4">
-                        <div>
-                            <label htmlFor="invoice-number" className="block text-sm font-medium text-gray-700">Número de factura</label>
-                            <input type="text" id="invoice-number" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                        </div>
-                        <div>
-                            <label htmlFor="payment-status" className="block text-sm font-medium text-gray-700">Estado de pago</label>
-                            <select id="payment-status" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-                                <option>Todas las transacciones</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label htmlFor="clients" className="block text-sm font-medium text-gray-700">Clientes</label>
-                            <select id="clients" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-                                <option>Todos los Clientes</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label htmlFor="period" className="block text-sm font-medium text-gray-700">Periodo</label>
-                            <div className="relative mt-1">
-                                <input type="text" id="period" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                                <i className="fas fa-calendar-alt absolute top-3 right-3 text-gray-500"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex justify-end mb-4">
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded shadow flex items-center hover:bg-blue-700">
-                            <i className="fas fa-search mr-2"></i> Buscar
-                        </button>
-                    </div>
+            <div className="max-w-8xl mx-auto bg-white p-6 rounded shadow mb-4">
+
+                {/* Filtros */}
+                <div className="grid grid-cols-6 gap-4 mb-4">
+                    <input
+                        type="text"
+                        placeholder="Número de factura"
+                        value={filterNumber || ""}
+                        onChange={(e) => setFilterNumber(e.target.value ? parseInt(e.target.value) : undefined)}
+                        className="border p-2 rounded"
+                    />
+
+                    <select
+                        value={filterStatus || ""}
+                        onChange={(e) => setFilterStatus(e.target.value || undefined)}
+                        className="border p-2 rounded"
+                    >
+                        <option value="">Todas las transacciones</option>
+                        <option value="Pago">Pagado</option>
+                        <option value="Sin pagar">Sin pagar</option>
+                    </select>
+
+                    <input
+                        type="text"
+                        placeholder="ID Cliente"
+                        value={filterClient || ""}
+                        onChange={(e) => setFilterClient(e.target.value ? parseInt(e.target.value) : undefined)}
+                        className="border p-2 rounded"
+                    />
+
+                    <input
+                        type="text"
+                        placeholder="ID Proveedor"
+                        value={filterSupplier || ""}
+                        onChange={(e) => setFilterSupplier(e.target.value ? parseInt(e.target.value) : undefined)}
+                        className="border p-2 rounded"
+                    />
+
+                    <input
+                        type="date"
+                        value={filterFrom || ""}
+                        onChange={(e) => setFilterFrom(e.target.value || undefined)}
+                        className="border p-2 rounded"
+                    />
+
+                    <input
+                        type="date"
+                        value={filterTo || ""}
+                        onChange={(e) => setFilterTo(e.target.value || undefined)}
+                        className="border p-2 rounded"
+                    />
+
+                    <button
+                        onClick={fetchBills}
+                        className="bg-blue-500 text-white px-4 py-2 rounded flex items-center justify-center"
+                    >
+                        <FontAwesomeIcon icon={faSearch} className="mr-2" />
+                        Buscar
+                    </button>
                 </div>
 
-                <table className="min-w-full bg-white border border-gray-300">
-                    <thead>
-                        <tr>
-                            <th className="border border-gray-300 p-2"># Factura</th>
-                            <th className="border border-gray-300 p-2">Tipo documento</th>
-                            <th className="border border-gray-300 p-2">Estado</th>
-                            <th className="border border-gray-300 p-2">Cliente o Proveedor</th>
-                            <th className="border border-gray-300 p-2">Fecha</th>
-                            <th className="border border-gray-300 p-2">Tipo de pago</th>
-                            <th className="border border-gray-300 p-2">Total</th>
-                            <th className="border border-gray-300 p-2">Opciones</th>
-                        </tr>
-                    </thead>
+                {/* Tabla de Facturas */}
+                {loading ? (
+                    <p className="text-center text-blue-500">Cargando facturas...</p>
+                ) : error ? (
+                    <p className="text-center text-red-500">{error}</p>
+                ) : (
+                    <div className="overflow-x-auto">
+                        <div className="overflow-y-auto max-h-96 border border-gray-300 rounded">
+                            <table className="min-w-full bg-white border border-gray-300">
+                                <thead className="bg-gray-100">
+                                    <tr>
+                                        <th className="border border-gray-300 p-2"># Factura</th>
+                                        <th className="border border-gray-300 p-2">Tipo documento</th>
+                                        <th className="border border-gray-300 p-2">Estado</th>
+                                        <th className="border border-gray-300 p-2">Cliente o Proveedor</th>
+                                        <th className="border border-gray-300 p-2">Fecha</th>
+                                        <th className="border border-gray-300 p-2">Tipo de pago</th>
+                                        <th className="border border-gray-300 p-2">Total</th>
+                                        <th className="border border-gray-300 p-2">Opciones</th>
+                                    </tr>
+                                </thead>
 
-                    <tbody>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">0045</td>
-                            <td className="border border-gray-300 p-2 text-center">Compra</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <span className="bg-green-500 text-white px-2 py-1 rounded">Pago</span></td>
-                            <td className="border border-gray-300 p-2 text-center">Gafas el Imperio</td>
-                            <td className="border border-gray-300 p-2 text-center">09/08/2024</td>
-                            <td className="border border-gray-300 p-2 text-center">Efectivo</td>
-                            <td className="border border-gray-300 p-2 text-center">1.200.000</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
-                                <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar} /></button>
-                                <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus} /></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">0046</td>
-                            <td className="border border-gray-300 p-2 text-center">Compra</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <span className="bg-red-500 text-white px-2 py-1 rounded">Sin pagar</span></td>
-                            <td className="border border-gray-300 p-2 text-center">Colgafas</td>
-                            <td className="border border-gray-300 p-2 text-center">10/08/2024</td>
-                            <td className="border border-gray-300 p-2 text-center">Creditos</td>
-                            <td className="border border-gray-300 p-2 text-center">8.534.000</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
-                                <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar} /></button>
-                                <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus} /></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">0047</td>
-                            <td className="border border-gray-300 p-2 text-center">Venta</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <span className="bg-green-500 text-white px-2 py-1 rounded">pago</span></td>
-                            <td className="border border-gray-300 p-2 text-center">Pedreo Mantinez</td>
-                            <td className="border border-gray-300 p-2 text-center">11/08/2024</td>
-                            <td className="border border-gray-300 p-2 text-center">Efectivo</td>
-                            <td className="border border-gray-300 p-2 text-center">1.200.000</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
-                                <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar} /></button>
-                                <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus} /></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">0048</td>
-                            <td className="border border-gray-300 p-2 text-center">Venta</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <span className="bg-green-500 text-white px-2 py-1 rounded">pago</span></td>
-                            <td className="border border-gray-300 p-2 text-center">Jose Bravo</td>
-                            <td className="border border-gray-300 p-2 text-center">13/08/2024</td>
-                            <td className="border border-gray-300 p-2 text-center">Efectivo</td>
-                            <td className="border border-gray-300 p-2 text-center">1.200.000</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
-                                <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar} /></button>
-                                <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus} /></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">0049</td>
-                            <td className="border border-gray-300 p-2 text-center">Compra</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <span className="bg-red-500 text-white px-2 py-1 rounded">Sin pagar</span></td>
-                            <td className="border border-gray-300 p-2 text-center">Camila Medrano</td>
-                            <td className="border border-gray-300 p-2 text-center">14/08/2024</td>
-                            <td className="border border-gray-300 p-2 text-center">Efectivo</td>
-                            <td className="border border-gray-300 p-2 text-center">1.200.000</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
-                                <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar} /></button>
-                                <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus} /></button>
-                            </td>
-                        </tr>
+                                <tbody>
+                                    {bills.map((bill) => (
+                                        <tr key={bill.id} className="hover:bg-gray-50">
+                                            <td className="border border-gray-300 p-2 text-center">{bill.number}</td>
+                                            <td className="border border-gray-300 p-2 text-center">{bill.typeDocument}</td>
+                                            <td className="border border-gray-300 p-2 text-center">
 
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">0049</td>
-                            <td className="border border-gray-300 p-2 text-center">Venta</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <span className="bg-red-500 text-white px-2 py-1 rounded">Sin pagar</span></td>
-                            <td className="border border-gray-300 p-2 text-center">Andrea Martinez</td>
-                            <td className="border border-gray-300 p-2 text-center">15/08/2024</td>
-                            <td className="border border-gray-300 p-2 text-center">Efectivo</td>
-                            <td className="border border-gray-300 p-2 text-center">1.200.000</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
-                                <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar} /></button>
-                                <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus} /></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">0050</td>
-                            <td className="border border-gray-300 p-2 text-center">Compra</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <span className="bg-green-500 text-white px-2 py-1 rounded">pago</span></td>
-                            <td className="border border-gray-300 p-2 text-center">Maria Peña</td>
-                            <td className="border border-gray-300 p-2 text-center">/17/2024</td>
-                            <td className="border border-gray-300 p-2 text-center">Efectivo</td>
-                            <td className="border border-gray-300 p-2 text-center">1.200.000</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
-                                <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar} /></button>
-                                <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus} /></button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td className="border border-gray-300 p-2 text-center">0051</td>
-                            <td className="border border-gray-300 p-2 text-center">Formula</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <span className="bg-green-500 text-white px-2 py-1 rounded">pago</span></td>
-                            <td className="border border-gray-300 p-2 text-center">Cristina muños</td>
-                            <td className="border border-gray-300 p-2 text-center">20/08/2024</td>
-                            <td className="border border-gray-300 p-2 text-center">Efectivo</td>
-                            <td className="border border-gray-300 p-2 text-center">1.200.000</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="text-blue-500 mr-3"> <FontAwesomeIcon icon={faPlay} /></button>
-                                <button className="text-green-500 mr-3"><FontAwesomeIcon icon={faFileInvoiceDollar} /></button>
-                                <button className="text-blue-500 mr-3"><FontAwesomeIcon icon={faPrint} /></button>
-                                <button className="text-red-500"><FontAwesomeIcon icon={faCircleMinus} /></button>
-                            </td>
-                        </tr>
-                    </tbody >
-                </table >
+                                                <span className={`px-2 py-1 rounded text-white ${bill.state === "Pago" ? "bg-green-500" : "bg-red-500"}`}>
+                                                    {bill.state === "Pago" ? "Pagado" : "Sin pagar"}
+                                                </span>
+                                            </td>
+                                            <td className="border border-gray-300 p-2 text-center">
+                                                {bill.clientOrSupplier ? bill.clientOrSupplier : "Desconocido"}
+                                            </td>
+                                            <td className="border border-gray-300 p-2 text-center">
+                                                {new Date(bill.date).toLocaleDateString()}
+                                            </td>
+                                            <td className="border border-gray-300 p-2 text-center">{bill.paymentMethod}</td>
+                                            <td className="border border-gray-300 p-2 text-center font-bold">
+                                                ${bill.total.toLocaleString()}
+                                            </td>
+                                            <td className="border border-gray-300 p-2 text-center">
+                                                <ButtonDetail url={""} />
+                                                <button className="text-green-500 mr-2 text-2xl">
+                                                    <FontAwesomeIcon icon={faFileInvoiceDollar} />
+                                                </button>
+                                                <ButtonDelete id={0} onDelete={undefined} />
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
-    )
-}
+    );
+};
