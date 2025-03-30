@@ -51,6 +51,9 @@ public class CreateSale : ICarterModule
                 ));
             }
 
+            if (request.PaymentType == "Crédito" && request.IdClient == null)
+                return Results.Ok(Result.Failure(new Error("Sale.ErrorValidation", "Debe seleccionar un cliente para pagar con crédito")));
+
             int invoiceMaxNumber = 0;
 
             var count = await context.Invoices.CountAsync();
