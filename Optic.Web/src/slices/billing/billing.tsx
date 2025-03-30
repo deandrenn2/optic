@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faFileInvoiceDollar, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faFileInvoiceDollar, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import { BillingDocumentModel } from "./BillingModal";
 import { getDocuments } from "./BillingServices";
@@ -125,8 +125,8 @@ export const Billing = () => {
                                 </thead>
 
                                 <tbody>
-                                    {bills.map((bill) => (
-                                        <tr key={bill.id} className="hover:bg-gray-50">
+                                    {bills.map((bill, i) => (
+                                        <tr key={i} className="hover:bg-gray-50">
                                             <td className="border border-gray-300 p-2 text-center">{bill.number}</td>
                                             <td className="border border-gray-300 p-2 text-center">{bill.typeDocument}</td>
                                             <td className="border border-gray-300 p-2 text-center">
@@ -146,7 +146,7 @@ export const Billing = () => {
                                                 ${bill.total.toLocaleString()}
                                             </td>
                                             <td className="border border-gray-300 p-2 text-center">
-                                                <ButtonDetail url={""} />
+                                                <ButtonDetail url={bill.typeDocument === 'Venta' ? '/Sales/' + bill.id : bill.typeDocument === "Formula" ? '/Formulas/' + bill.id : ''} />
                                                 <button className="text-green-500 mr-2 text-2xl">
                                                     <FontAwesomeIcon icon={faFileInvoiceDollar} />
                                                 </button>

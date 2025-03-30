@@ -17,12 +17,12 @@ import { SettingsMenu } from '../slices/Settings/SettingsMenu.tsx';
 import { IdentificationTypes } from '../slices/Settings/IdentificationTypes.tsx';
 import { Settings } from '../slices/Settings/Settings.tsx';
 import { Business } from '../slices/Business/Business.tsx';
-import { FormulasCreate } from '../slices/Formulas/FormulasCreate.tsx';
 import { createBrowserRouter } from 'react-router-dom';
 import { Users } from '../slices/Users/Users.tsx';
 import { Brands } from '../slices/Settings/Brands.tsx';
 import { FormulasDetail } from '../slices/Formulas/FormulasDetail.tsx';
 import PasswordRecoverPage from './Login/PasswordRecover.tsx';
+import { SalesDetail } from '../slices/Sales/SalesDetail.tsx';
 
 export const router = createBrowserRouter([
     {
@@ -68,10 +68,7 @@ export const router = createBrowserRouter([
                 path: 'Formulas/:id',
                 element: <FormulasDetail />,
             },
-            {
-                path: 'Formulas/Nueva',
-                element: <FormulasCreate />,
-            },
+            { path: 'Sales/:id', element: <SalesDetail /> },
             {
                 path: 'Billing',
                 element: <Billing />,
