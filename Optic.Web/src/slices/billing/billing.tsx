@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileInvoiceDollar, faSearch } from "@fortawesome/free-solid-svg-icons";
-
 import { BillingDocumentModel } from "./BillingModal";
 import { getDocuments } from "./BillingServices";
 import ButtonDelete from "../../shared/components/Buttons/ButtonDelete";
 import ButtonDetail from "../../shared/components/Buttons/ButtonDetail";
-
 export const Billing = () => {
     const [bills, setBills] = useState<BillingDocumentModel[]>([]);
     const [loading, setLoading] = useState(true);
@@ -19,7 +17,6 @@ export const Billing = () => {
     const [filterSupplier, setFilterSupplier] = useState<number | undefined>();
     const [filterFrom, setFilterFrom] = useState<string | undefined>();
     const [filterTo, setFilterTo] = useState<string | undefined>();
-
     const fetchBills = async () => {
         setLoading(true);
         setError(null);
@@ -127,7 +124,7 @@ export const Billing = () => {
                                 <tbody>
                                     {bills.map((bill, i) => (
                                         <tr key={i} className="hover:bg-gray-50">
-                                            <td className="border border-gray-300 p-2 text-center">{bill.number}</td>
+                                            <td className="border border-gray-300 p-2 text-center">{bill.number.toString().padWithZeros(5)}</td>
                                             <td className="border border-gray-300 p-2 text-center">{bill.typeDocument}</td>
                                             <td className="border border-gray-300 p-2 text-center">
 

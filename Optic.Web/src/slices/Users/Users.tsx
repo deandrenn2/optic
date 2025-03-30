@@ -11,17 +11,18 @@ import { UsersResponseModel } from "./UsersModel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { UserResponseModel } from "../../routes/Login/LoginModel";
-
 export const Users = () => {
     const [visible, setVisible,] = useState(false);
     const [selectedUser, setSelectedUser] = useState<UsersResponseModel | UserResponseModel | null>(null);
     const { users, queryUsers } = useLogin();
     const [seleCreating, setSeleCreating] = useState(false);
-    
+    const [showPasswordModel, setShowPasswordModel] = useState(false);
+
     function handleClose(): void {
         setVisible(false);
         setSelectedUser(null);
         setSeleCreating(false);
+        setShowPasswordModel(false);
     }
 
     const handleEdit = (user: UserResponseModel): void => {
@@ -35,9 +36,7 @@ export const Users = () => {
         setSeleCreating(true);
         setVisible(true);
     }
-
     if (queryUsers.isLoading) return <Bar Title="Cargando..." />;
-
     return (
         <div>
             <div className="flex space-x-4 mb-2">
@@ -72,7 +71,12 @@ export const Users = () => {
                                     <FontAwesomeIcon
                                         icon={faPencil} className="text-blue-500 hover:text-blue-700 cursor-pointer text-2xl mr-4" onClick={() => handleEdit(user)} />
                                     {/* Pasamos la función para abrir el modal con el usuario seleccionado */}
-                                    <ButtonChangePassword onClick={() => setSelectedUser(user)} />
+                                    <ButtonChangePassword onClick={() => {
+                                        setSelectedUser(user)
+                                        setShowPasswordModel(true);
+                                    }}
+
+                                    />
                                 </td>
 
                             </tr>
@@ -88,10 +92,9 @@ export const Users = () => {
             >
                 {selectedUser ? <UsersForm id={selectedUser.id} /> : <UsersCreateForm />}
             </OffCanvas>
-
             {/* MODAL */}
-            {selectedUser && <DetailPasswordModel user={selectedUser} onClose={handleClose} />}
-            
+            {showPasswordModel && selectedUser &&
+                (<DetailPasswordModel user={selectedUser} onClose={handleClose} />)}
         </div>
     )
 };
