@@ -48,11 +48,10 @@ public class GetSale : ICarterModule
         {
             var sale = await context.Invoices
             .Include(x => x.Client)
-            .Include(x => x.InvoiceDetails).ThenInclude(x => x.Product)
+            .Include(x => x.InvoiceDetails)
+            .ThenInclude(x => x.Product)
             .Include(x => x.InvoicePayments)
-            .ThenInclude(x => x.Invoice)
             .Include(x => x.InvoiceServices)
-            .ThenInclude(x => x.Invoice)
             .FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if (sale == null)
