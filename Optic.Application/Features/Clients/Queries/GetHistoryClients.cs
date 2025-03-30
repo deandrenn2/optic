@@ -53,6 +53,7 @@ public class GetHistoryClient : ICarterModule
                 .Include(x => x.FormulaDiagnosis)
                 .ThenInclude(x => x.Diagnosis)
                 .Where(x => x.ClientId == request.IdClient)
+                .OrderByDescending(x => x.Date)
                 .ToListAsync();
 
             var formulasList = formulas.Select(x => new FormulasResponse
@@ -61,7 +62,7 @@ public class GetHistoryClient : ICarterModule
                 IdBusiness = x.BusinessId,
                 IdClient = x.ClientId,
                 ClientName = x.Client.LastName + " " + x.Client.FirstName,
-                Description = x.Description,
+                Description = x.Description ?? string.Empty,
                 Date = x.Date,
                 State = x.State,
                 Number = x.Invoice?.Number ?? 0,
