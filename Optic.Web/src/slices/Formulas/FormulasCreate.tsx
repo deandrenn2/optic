@@ -31,7 +31,7 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
         idBusiness: 0,
         idClient: 0,
         description: "",
-        date: new Date(),
+        date: new Date(new Date().setHours(0, 0, 0, 0)),
         tags: [],
         diagnosis: [],
         products: [],
@@ -39,12 +39,12 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
         priceConsultation: 0,
         sumTotal: 0,
     });
-    
-    const handleClose = () =>{
+
+    const handleClose = () => {
         setVisible(false);
     }
 
-    const handleClick = () =>{
+    const handleClick = () => {
         setVisible(true);
     }
 
@@ -204,11 +204,11 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleCreateFormula}>
                     Crear formula
                 </button>
-                <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1"onClick={handleClick}> 
+                <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1" onClick={handleClick}>
                     Crear Cliente
                 </button>
-            
-                
+
+
             </div>
         );
 };

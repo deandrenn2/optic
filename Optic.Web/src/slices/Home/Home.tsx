@@ -130,7 +130,7 @@ export const Home = () => {
                </div>
             </div>
             <OffCanvas titlePrincipal='Nueva venta' visible={visibleButtonSales} xClose={handleCloseSales} position={Direction.Right} size="lg" >
-               <SalesCreate />
+               <SalesCreate xChange={handleCloseSales} />
             </OffCanvas>
          </div>
       </div>

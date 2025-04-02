@@ -13,17 +13,20 @@ import { Direction } from "../../shared/components/OffCanvas/Models";
 import { FormulaProducts } from "../Formulas/Common/FormulaProducts";
 import { ListPaymentTypes } from "./Common/ListPaymentTypes";
 import { SumTotal } from "./Common/SumTotal";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 export const SalesCreate = ({ xChange }: { xChange?: () => void }) => {
     const [client, setClient] = useState<Option | undefined>();
     const [products, setProducts] = useState<ProductsResponseModel[]>([]);
     const { createSale } = useSalesMutation();
     const { business } = useUserContext();
     const [visible, setVisible] = useState(false);
+    const navigate = useNavigate();
 
     const [formula, setFormula] = useState<CreateSaleModel>({
         idBusiness: 0,
         idClient: 0,
-        date: new Date(),
+        date: new Date(new Date().setHours(0, 0, 0, 0)),
         products: [],
         sumTotal: 0,
         paymentType: "Contado",
@@ -46,6 +49,7 @@ export const SalesCreate = ({ xChange }: { xChange?: () => void }) => {
 
     const handleChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
+        console.log(value);
         setFormula({ ...formula, date: new Date(`${value}T00:00:00`) });
     }
 
@@ -68,11 +72,25 @@ export const SalesCreate = ({ xChange }: { xChange?: () => void }) => {
 
         };
 
+        console.log(formulaData);
         const res = await createSale.mutateAsync(formulaData);
 
         if (res.isSuccess) {
+            Swal.fire({
+                title: '¿Quieres mantenerte en esta ventana o ir al detalle de la factura?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ir al detalle',
+                cancelButtonText: 'Cerrar',
+                preConfirm: async () => {
+                    navigate(`/Sales/${res.data}`);
+                }
+            });
+
             if (xChange)
                 xChange();
+
         }
 
 

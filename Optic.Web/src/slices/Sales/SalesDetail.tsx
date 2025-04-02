@@ -7,7 +7,7 @@ export const SalesDetail = () => {
     return (
         <div className="w-full">
             <div className="flex space-x-4 mb-4">
-                <Link to={"/Documents"} title='Volver al listado de formulas' className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
+                <Link to={"/Billing"} title='Volver al listado de formulas' className="bg-blue-500 hover:bg-blue-700 mr-1 text-white px-4 py-2 rounded font-bold">
                     <FontAwesomeIcon
                         icon={faArrowCircleLeft}
                         className="fa-search top-3 pr-2 font-bold"

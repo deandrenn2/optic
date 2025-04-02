@@ -20,8 +20,6 @@ import { ListStatus } from "./Common/ListStatus";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { getStatusColorInvoice } from "./FormulasUtils";
-
-
 export const FormulasUpdate = () => {
     const { id } = useParams();
     const [client, setClient] = useState<Option | undefined>();

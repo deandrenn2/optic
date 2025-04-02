@@ -32,7 +32,7 @@ public class CreateSale : ICarterModule
         public int? Id { get; init; }
         public int IdBusiness { get; init; }
         public int? IdClient { get; init; } = null;
-        public DateTime Date { get; init; } = DateTime.Now;
+        public DateTime Date { get; init; }
         public string PaymentType { get; init; } = string.Empty;
         public List<InvoiceDetailModel> Products { get; init; } = new();
         public decimal SumTotal { get; init; }

@@ -47,6 +47,11 @@ public class DeleteFormula : ICarterModule
                 return Results.Ok(Result.Failure(new Error("Formula.ErrorDelete", "No se encontró la formula")));
             }
 
+            if (formula.State != "Borrador")
+            {
+                return Results.Ok(Result.Failure(new Error("Formula.ErrorDelete", "La formula solo se puede eliminar si está en estado borrador")));
+            }
+
             context.Formulas.Remove(formula);
 
             var resCount = await context.SaveChangesAsync();

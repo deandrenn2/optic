@@ -1,4 +1,4 @@
-import { faCircleMinus, faFileExcel, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
+import { faFileExcel, faMagnifyingGlass, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useFormulas } from "./useFormulas";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
@@ -91,7 +91,10 @@ export const Formulas = () => {
                             <td className="border border-gray-300 p-2 text-center">
                                 <DetailButton url={`/formulas/${formula.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />
                                 <button onClick={() => handleDownload(formula.id)} className="text-green-500 mr-3  text-2xl"><FontAwesomeIcon icon={faFileExcel} /></button>
-                                <button onClick={() => handleDelete(formula.id)} className="text-red-500 text-2xl hover:text-red-700 mr-2"><FontAwesomeIcon icon={faCircleMinus} /></button>
+                                {
+                                    formula.state === 'Borrador' &&
+                                    <button onClick={() => handleDelete(formula.id)} className="text-red-500 text-2xl hover:text-red-700 mr-2"><FontAwesomeIcon icon={faTrashAlt} /></button>
+                                }
                             </td>
                         </tr>
                     ))}
