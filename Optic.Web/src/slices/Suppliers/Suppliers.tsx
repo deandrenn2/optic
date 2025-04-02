@@ -1,4 +1,4 @@
-import { faMagnifyingGlass, faPlus, } from "@fortawesome/free-solid-svg-icons"
+import { faBoxesPacking, faMagnifyingGlass, faPlus, } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { SuppliersForm } from "./SuppliersForm"
 import { MouseEvent, useState } from "react";
@@ -9,13 +9,24 @@ import Swal from "sweetalert2";
 import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 import { Bar } from "../../shared/components/Progress/Bar";
+import { PurchasesCreate } from "../Purchase/PurchasesCreate";
 export const Suppliers = () => {
     const [visible, setVisible] = useState(false);
+    const [visiblePurchase, setVisiblePurchase] = useState(false);
     const { suppliers, querySuppliers, deleteSupplier } = useSupplier();
     const [searchSuppliers, setSearchSuppliers] = useState ('')
     function handleClose(): void {
         setVisible(false);
     }
+
+    function handleClosePurchase(): void {
+        setVisiblePurchase(false);
+    }
+    
+    function handleOpenPurchase(): void {
+        setVisiblePurchase(true);
+    }
+    
 
     function handleDelete(e: MouseEvent<HTMLButtonElement>, id: number): void {
         e.preventDefault();
@@ -46,6 +57,10 @@ export const Suppliers = () => {
                 <div className="mb-2">
                     <button type='button' onClick={() => setVisible(true)} className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
                         <FontAwesomeIcon icon={faPlus} className="fa-search top-3 pr-2 font-bold" />Nuevo</button>
+                </div>
+                <div className="mb-2">
+                    <button type='button' onClick={handleOpenPurchase} className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold">
+                        <FontAwesomeIcon icon={faBoxesPacking} className="fa-search top-3 pr-2 font-bold" />Pedidos</button>
                 </div>
                 <div className="mb-2">
                     <div className="relative">
@@ -93,6 +108,9 @@ export const Suppliers = () => {
                 </tbody>
                 <tbody id="listaProveedores"></tbody>
             </table>
+            <OffCanvas titlePrincipal='Registro de Compra' visible={visiblePurchase} xClose={handleClosePurchase} position={Direction.Right}size="lg"  >
+                <PurchasesCreate xChange={handleClosePurchase} />
+            </OffCanvas>
             <OffCanvas titlePrincipal='Registro de Proveedor' visible={visible} xClose={handleClose} position={Direction.Right} >
                 <SuppliersForm />
             </OffCanvas>
