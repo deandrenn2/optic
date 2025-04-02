@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { DashboardResponseModel } from "./DashboardModel";
 import { getDashboard } from "./DashboardServices";
+import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 
 export const DashboradStatistcs = () => {
     const [dashboarData, setDashboardData] = useState<DashboardResponseModel | undefined>(undefined);
@@ -22,7 +23,7 @@ export const DashboradStatistcs = () => {
             </div>
             <div className="bg-white shadow-lg rounded-lg p-4 w-56 text-center border-b-4 border-blue-500 mr-2">
                 <p className="text-blue-500 text-ms font-bold">Promedio Recaudo (Hoy)</p>
-                <p className="text-blue-500 text-3xl font-bold">${dashboarData?.dailyRevenue}</p>
+                <p className="text-blue-500 text-3xl font-bold"><MoneyFormatter abbreviation={true} amount={dashboarData?.dailyRevenue} /></p>
             </div>
             <div className="bg-white shadow-lg rounded-lg p-4 w-56 text-center border-b-4 border-red-500">
                 <p className="text-red-500 text-ms font-bold">Total de Clientes</p>

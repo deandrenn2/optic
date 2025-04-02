@@ -21,8 +21,14 @@ export const useSalesMutation = () => {
    const createSale = useMutation({
       mutationFn: createSaleService,
       onSuccess: (data) => {
+         console.log(data);
          if (!data.isSuccess) {
-            toast.info(data.message);
+            if (data?.message) {
+               toast.info(data.message);
+            }
+            if (data?.error) {
+               toast.info(data.error.message);
+            }
          } else {
             if (data.isSuccess) {
                toast.success(data.message);
