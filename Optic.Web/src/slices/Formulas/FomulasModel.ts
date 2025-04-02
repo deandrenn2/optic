@@ -92,8 +92,8 @@ export interface UpdateFormulasModel {
 
    priceLens?: number;
    priceConsultation?: number;
-   sumTotal?: number; // Note: Computed property
-   sumTotalProducts?: number; // Note: Computed property
+   sumTotal?: number; 
+   sumTotalProducts?: number; 
 }
 
 export interface UpdateStateFormula {

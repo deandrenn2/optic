@@ -52,7 +52,7 @@ public class GetDocuments : ICarterModule
         public async Task<IResult> Handle(GetDocumentsQuery request, CancellationToken cancellationToken)
         {
             var purchasesQuery = context.Purchases.Include(x => x.Supplier).AsQueryable();
-            var invoicesQuery = context.Invoices.Include(x => x.Client).AsQueryable();
+            var invoicesQuery = context.Invoices.Include(x => x.Client).Include(x => x.Formula).AsQueryable();
 
 
             //Invoices query
@@ -109,7 +109,7 @@ public class GetDocuments : ICarterModule
             foreach (var invoice in dataInvoices)
             {
                 documents.Add(new GetDocumentsResponse(
-                    invoice.Id,
+                    invoice.DocumentType == "Formula" ? invoice.Formula.Id : invoice.Id,
                     invoice.Number,
                     invoice.DocumentType,
                     invoice.State,

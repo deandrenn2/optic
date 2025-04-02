@@ -60,7 +60,7 @@ const DetailPasswordModel = ({ user, onClose }: { user: any, onClose: () => void
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 transition-opacity duration-300">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 transition-opacity duration-300 h-screen">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md animate-fadeIn">
                 <h2 className="text-2xl font-bold text-center text-blue-600"> Cambiar Contraseña</h2>
                 <p className="text-center text-gray-500 mb-4">Cambiar contraseña para {user.email}</p>
@@ -75,13 +75,14 @@ const DetailPasswordModel = ({ user, onClose }: { user: any, onClose: () => void
                             onChange={handleChange}
                             className="w-full px-4 py-2 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
+                        <div className="relative">
                         <button
-                            
-                            className="absolute right-3 top-9 transform -translate-y-1/2 text-gray-600"
-                            onClick={() => setShowPassword(!showPassword)}
-                        >
+                            className="absolute right-3  transform -translate-y-8 text-gray-600"
+                            onClick={() => setShowPassword(!showPassword)}>
                             <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                         </button>
+                        </div>
+                        
                     </div>
 
                     <div className="relative">
@@ -93,13 +94,15 @@ const DetailPasswordModel = ({ user, onClose }: { user: any, onClose: () => void
                             onChange={handleChange}
                             className="w-full px-4 py-2 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
+                        <div className="relative">
                         <button
                             type="button"
-                            className="absolute right-3 top-9 transform -translate-y-1/2 text-gray-600"
-                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        >
+                            className="absolute right-3  transform -translate-y-8 text-gray-600"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                             <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
                         </button>
+                        </div>
+                        
                     </div>
 
                     {errorMessage && (

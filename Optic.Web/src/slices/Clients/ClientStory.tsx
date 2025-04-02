@@ -4,7 +4,7 @@ import { ClientStoryResponseModel } from "./ClientModel";
 import { getClientStories } from "./ClientServices";
 import { getStatusColorInvoice } from "../Formulas/FormulasUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCircle, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 
 export const ClientStory = () => {
   const { id } = useParams();
@@ -50,7 +50,10 @@ export const ClientStory = () => {
   }
 
   if (!clientStories || clientStories.length === 0) {
-    return <p className="text-center text-gray-500">No hay historias disponibles</p>;
+    return <div className="flex justify-center items-center mr-2 flex-col">
+      <p className="text-center text-gray-500 text-2xl">No hay historias disponibles</p>
+      <FontAwesomeIcon className="text-4xl text-yellow-500" icon={faFolderOpen} />
+    </div>
   }
 
   return (
@@ -70,7 +73,7 @@ export const ClientStory = () => {
 
             <div className="bg-white p-4 rounded-lg shadow-md border border-gray-200 w-80">
               <div className="grid grid-cols-2 gap-4 text-lg">
-                <p className="text-gray-600 font-bold"># {story.number ?? "N/A"}</p>
+                <p className="text-gray-600 font-bold"># {story.number.toString().padWithZeros(5) ?? "N/A"}</p>
                 <label className={`block ${getStatusColorInvoice(story.state)} text-lg font-bold mb-2`}>
                   <FontAwesomeIcon className={getStatusColorInvoice(story.state)} icon={faCircle} /> {story.state}
                 </label>

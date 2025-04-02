@@ -5,7 +5,7 @@ import { SingleValue } from "react-select";
 import { Option } from "../../shared/model";
 import { format } from "date-fns";
 import { ProductsResponseModel } from "../Products/ProductModel";
-import { useSales } from "./useSales";
+import { useSalesMutation } from "./useSales";
 import useUserContext from "../../shared/context/useUserContext";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { ClientForm } from "../Clients/ClientForm";
@@ -16,7 +16,7 @@ import { SumTotal } from "./Common/SumTotal";
 export const SalesCreate = ({ xChange }: { xChange?: () => void }) => {
     const [client, setClient] = useState<Option | undefined>();
     const [products, setProducts] = useState<ProductsResponseModel[]>([]);
-    const { createSale } = useSales();
+    const { createSale } = useSalesMutation();
     const { business } = useUserContext();
     const [visible, setVisible] = useState(false);
 

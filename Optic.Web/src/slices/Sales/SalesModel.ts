@@ -2,13 +2,14 @@ import { InvoiceDetailModel } from '../Formulas/FomulasModel';
 
 export interface SalesResponseModel {
    id: number;
+   number: number;
    idBusiness: number;
    idClient?: number;
-   clientName: string;
+   clientName?: string;
    state: string;
    date: Date;
-   idInvoice: number;
    paymentType: string;
+   sumTotal: number;
    products: InvoiceDetailModel[];
 }
 
@@ -20,4 +21,21 @@ export interface CreateSaleModel {
    paymentType: string;
    products: InvoiceDetailModel[];
    sumTotal: number;
+}
+
+export interface UpdateSaleModel {
+   id: number;
+   number: number;
+   idBusiness: number;
+   idClient?: number;
+   state: string;
+   date: Date;
+   paymentType: string;
+   sumTotal: number;
+   products: InvoiceDetailModel[];
+}
+
+export interface UpdateStateSale {
+   id: number;
+   state: string;
 }

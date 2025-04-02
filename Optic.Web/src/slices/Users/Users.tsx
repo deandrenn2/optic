@@ -10,11 +10,7 @@ import DetailPasswordModel from "./DetailChangePassword";
 import { UsersResponseModel } from "./UsersModel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { SettingsForm } from "../Settings/SettingsForm";
 import { UserResponseModel } from "../../routes/Login/LoginModel";
-
-
-
 export const Users = () => {
     const [visible, setVisible,] = useState(false);
     const [selectedUser, setSelectedUser] = useState<UsersResponseModel | UserResponseModel | null>(null);
@@ -45,9 +41,7 @@ export const Users = () => {
         setSeleCreating(true);
         setVisible(true);
     }
-
     if (queryUsers.isLoading) return <Bar Title="Cargando..." />;
-
     return (
         <div>
             <div className="flex space-x-4 mb-2">
@@ -81,7 +75,6 @@ export const Users = () => {
                                 <td className="border border-gray-300 p-2 text-center">
                                     <FontAwesomeIcon
                                         icon={faPencil} className="text-blue-500 hover:text-blue-700 cursor-pointer text-2xl mr-4" onClick={() => handleEdit(user)} />
-
                                     {/* Pasamos la función para abrir el modal con el usuario seleccionado */}
                                     <ButtonChangePassword onClick={() => handlePasswordChange(user)}/>
                                 </td>
@@ -99,7 +92,6 @@ export const Users = () => {
             >
                 {selectedUser ? <UsersForm id={selectedUser.id} /> : <UsersCreateForm />}
             </OffCanvas>
-
             {/* MODAL */}
             {showPasswordModal && selectedUser && (
              <DetailPasswordModel user={selectedUser} onClose={() => setShowPasswordModal(false)} />
@@ -109,6 +101,5 @@ export const Users = () => {
                 <SettingsForm />
             </OffCanvas>
         </div>
-
     )
 };
