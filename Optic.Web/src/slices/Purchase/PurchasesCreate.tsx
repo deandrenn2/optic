@@ -12,7 +12,7 @@ import { ListPaymentTypes } from "../Sales/Common/ListPaymentTypes";
 import { SumTotal } from "../Sales/Common/SumTotal";
 import { ProductsResponseModel } from "../Products/ProductModel";
 import { SuppliersForm } from "../Suppliers/SuppliersForm";
-import { PurchaseProducts} from "./PurchaseProducts";
+import { PurchaseProducts } from "./PurchaseProducts";
 
 export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
     const [supplier, setSupplier] = useState<Option | undefined>();
@@ -71,10 +71,13 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
                     <label className="block text-gray-700 text-sm font-bold mb-2">Proveedor</label>
                     <SupplierSelect
                         selectedValue={supplier?.value || ""}
-                        xChange={(e) => handleChangeSupplier({
-                            value: e.target.value,
-                            label: e.target.options[e.target.selectedIndex].text,
-                        })}
+                        xChange={(e) => {
+                            const selectElement = e.target as HTMLSelectElement;
+                            handleChangeSupplier({
+                                value: selectElement.value,
+                                label: selectElement.options[selectElement.selectedIndex].text,
+                            });
+                        }}
                     />
                 </div>
                 <div>

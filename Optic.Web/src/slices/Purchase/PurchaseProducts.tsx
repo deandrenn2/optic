@@ -34,11 +34,15 @@ export const PurchaseProducts = ({ products, setProducts }: { products: Products
     const handleChangeSalePrice = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
         const { value } = e.target;
         setProducts(products.map((x) => (x.id === id ? { ...x, salePrice: parseFloat(value) } : x)));
+    } 
+    const handleChangeUnitPrice = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
+        const { value } = e.target; 
+        setProducts(products.map((x) => (x.id === id ? { ...x, unitPrice: parseFloat(value) } : x)));
     }
-
     const handleDeleteProduct = (id: number) => {
         setProducts(products.filter((x) => x.id !== id));
     }
+    
 
     const totalProducts = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
 
@@ -53,11 +57,18 @@ export const PurchaseProducts = ({ products, setProducts }: { products: Products
                     products.map((x) => (
                         <div key={x.id} className="grid grid-cols-[3fr_3fr_3fr_3fr_1fr] gap-2">
                             <span className="font-bold">{x.name}</span>
+                            <label className="text-gray-600 text-sm">Precio de Venta</label>
                             <input type="text" className="border border-gray-300 rounded p-1 ml-6"
                                 value={x.salePrice}
                                 onChange={(e) => handleChangeSalePrice(e, x.id)} />
+                            <label className="text-gray-600 text-sm">Cantidad</label>
                             <input type="number" value={x.quantity}
                                 onChange={(e) => handleChangeQuantity(e, x.id)}
+                                min={0} max={999}
+                                className="w-14 border border-gray-300 rounded p-1 ml-2" />
+                            <label className="text-gray-600 text-sm">Precio costo</label>
+                            <input type="number" value={x.unitPrice}    
+                                onChange={(e) => handleChangeUnitPrice(e, x.id)}
                                 min={0} max={999}
                                 className="w-14 border border-gray-300 rounded p-1 ml-2" />
                             <p className=" right-0"> <MoneyFormatter amount={x.salePrice * x.quantity} /></p>
@@ -87,4 +98,5 @@ export const PurchaseProducts = ({ products, setProducts }: { products: Products
             </div>
         </div>
     );
+   
 };  
