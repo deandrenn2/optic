@@ -57,7 +57,7 @@ export const PurchaseProducts = ({ products, setProducts }: { products: Products
                     products.map((x) => (
                         <div key={x.id} className="grid grid-cols-[3fr_3fr_3fr_3fr_1fr] gap-2">
                             <span className="font-bold">{x.name}</span>
-                            <label className="text-gray-600 text-sm">Precio de Venta</label>
+                            <label className="text-gray-600 text-sm">Precio de Venta.</label>
                             <input type="text" className="border border-gray-300 rounded p-1 ml-6"
                                 value={x.salePrice}
                                 onChange={(e) => handleChangeSalePrice(e, x.id)} />
