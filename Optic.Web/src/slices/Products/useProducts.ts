@@ -95,6 +95,7 @@ export const useProductsStockPager = (page: number = 1, pageSize: number = 5) =>
       queryProducts,
       products: queryProducts?.data?.data,
       count: queryProducts?.data?.count,
+      pager: queryProducts?.data,
    };
 };
 

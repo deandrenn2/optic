@@ -8,6 +8,8 @@ export interface MsgResponse<T> {
       message: string;
    };
    count?: number;
+   pageSize?: number;
+   pageCount?: number;
 }
 
 export interface Option {

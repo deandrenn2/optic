@@ -48,9 +48,15 @@ public class Purchase : AggregateRoot
         PurchaseDetails.RemoveAll(x => detail.Contains(x));
     }
 
+
     public void AddPayment(PurchasePayment payment)
     {
         PuerchasePayments.Add(payment);
+    }
+
+    public void RemovePayment(PurchasePayment payment)
+    {
+        PuerchasePayments.Remove(payment);
     }
 
     public void UpdateState(string state)

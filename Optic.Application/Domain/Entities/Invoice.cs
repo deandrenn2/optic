@@ -59,6 +59,11 @@ public class Invoice : AggregateRoot
         InvoicePayments.Add(payment);
     }
 
+    public void RemovePayment(InvoicePayment payment)
+    {
+        InvoicePayments.Remove(payment);
+    }
+
     public void AddService(InvoiceService service)
     {
         InvoiceServices.Add(service);

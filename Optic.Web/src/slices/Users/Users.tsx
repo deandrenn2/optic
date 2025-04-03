@@ -16,26 +16,18 @@ export const Users = () => {
     const [selectedUser, setSelectedUser] = useState<UsersResponseModel | UserResponseModel | null>(null);
     const { users, queryUsers } = useLogin();
     const [seleCreating, setSeleCreating] = useState(false);
-    const [showPasswordModal, setShowPasswordModal] = useState(false);
-
-
+    const [showPasswordModel, setShowPasswordModel] = useState(false);
     function handleClose(): void {
         setVisible(false);
         setSelectedUser(null);
         setSeleCreating(false);
-        setShowPasswordModal(false);
+        setShowPasswordModel(false);
     }
-
     const handleEdit = (user: UserResponseModel): void => {
         setSelectedUser(user);
         setSeleCreating(false);
         setVisible(true);
     }
-    const handlePasswordChange = (user: UserResponseModel): void => {
-        setSelectedUser(user);
-        setShowPasswordModal(true); 
-    }
-
     function handleCreate(): void {
         setSelectedUser(null);
         setSeleCreating(true);
@@ -76,9 +68,12 @@ export const Users = () => {
                                     <FontAwesomeIcon
                                         icon={faPencil} className="text-blue-500 hover:text-blue-700 cursor-pointer text-2xl mr-4" onClick={() => handleEdit(user)} />
                                     {/* Pasamos la función para abrir el modal con el usuario seleccionado */}
-                                    <ButtonChangePassword onClick={() => handlePasswordChange(user)}/>
+                                    <ButtonChangePassword onClick={() => {
+                                        setSelectedUser(user)
+                                        setShowPasswordModel(true);
+                                    }}
+                                    />
                                 </td>
-
                             </tr>
                         ))}
                     </tbody>
@@ -93,13 +88,8 @@ export const Users = () => {
                 {selectedUser ? <UsersForm id={selectedUser.id} /> : <UsersCreateForm />}
             </OffCanvas>
             {/* MODAL */}
-            {showPasswordModal && selectedUser && (
-             <DetailPasswordModel user={selectedUser} onClose={() => setShowPasswordModal(false)} />
-            )}
-
-            <OffCanvas titlePrincipal='Registro de Usuario' visible={visible} xClose={handleClose} position={Direction.Right} >
-                <SettingsForm />
-            </OffCanvas>
+            {showPasswordModel && selectedUser &&
+                (<DetailPasswordModel user={selectedUser} onClose={handleClose} />)}
         </div>
     )
 };

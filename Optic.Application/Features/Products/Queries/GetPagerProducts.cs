@@ -15,18 +15,18 @@ public class GetPagerProducts : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/products/pager", async (HttpRequest req, IMediator mediator, int pageSize = 5, int pageIndex = 1) =>
+        app.MapGet("api/products/pager", async (HttpRequest req, IMediator mediator, int pageSize = 5, int pageIndex = 1, bool? orderByName = false, string? search = null) =>
         {
-            return await mediator.Send(new GetPagerProductsQuery(pageIndex, pageSize));
+            return await mediator.Send(new GetPagerProductsQuery(pageIndex, pageSize, orderByName, search));
         })
         .WithName(nameof(GetPagerProducts))
         .WithTags(nameof(Product))
         .ProducesValidationProblem()
-        .Produces<List<GetProductResponse>>(StatusCodes.Status200OK);
+        .Produces<PagedResultQuery<GetProductResponse>>(StatusCodes.Status200OK);
 
     }
 
-    public record GetPagerProductsQuery(int Page, int PageSize) : IRequest<IResult>;
+    public record GetPagerProductsQuery(int Page, int PageSize, bool? OrderByName, string? Search) : IRequest<IResult>;
 
     public record GetProductResponse
     {
@@ -57,32 +57,39 @@ public class GetPagerProducts : ICarterModule
 
             var countProduct = await context.Products.CountAsync();
 
-            var products = await context.Products.Include(x => x.Categories)
-                .OrderByDescending(x => x.UpdateDate)
-                .Skip((request.Page - 1) * request.PageSize)
-                .Take(request.PageSize).ToListAsync();
+            var productsQuery = context.Products.Include(x => x.Categories).AsQueryable();
 
-            var productsResponse = new List<GetProductResponse>();
-            foreach (var product in products)
+            if (request.OrderByName != null)
             {
-                var productResponse = new GetProductResponse
+                if (request.OrderByName == true)
                 {
-                    Id = product.Id,
-                    Name = product.Name,
-                    CodeNumber = product.CodeNumber,
-                    Quantity = product.Quantity,
-                    UnitPrice = product.UnitPrice,
-                    SalePrice = product.SalePrice,
-                    Stock = product.Stock,
-                    UpdateDate = product.UpdateDate,
-                };
-                productsResponse.Add(productResponse);
+                    productsQuery = productsQuery.OrderBy(x => x.Name);
+                }
+                else
+                {
+                    productsQuery = productsQuery.OrderByDescending(x => x.UpdateDate);
+                }
             }
 
-            var pager = PagedResult<List<GetProductResponse>>.Success(productsResponse, "Lista Productos", countProduct);
+            if (request.Search != null)
+            {
+                productsQuery = productsQuery.Where(x => x.Name.Contains(request.Search) || x.CodeNumber.Contains(request.Search));
+            }
+            var productsQueryModel = productsQuery.Select(x => new GetProductResponse
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CodeNumber = x.CodeNumber,
+                Quantity = x.Quantity,
+                UnitPrice = x.UnitPrice,
+                SalePrice = x.SalePrice,
+                Stock = x.Stock,
+                UpdateDate = x.UpdateDate,
+            });
 
+            var products = await productsQueryModel.GetPagedAsync(request.Page, request.PageSize);
 
-            return Results.Ok(pager);
+            return Results.Ok(products);
         }
     }
 
