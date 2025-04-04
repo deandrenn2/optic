@@ -4,7 +4,7 @@ import { CreatePurchaseModel } from "./PurchaseModel";
 import { SingleValue } from "react-select";
 import { Option } from "../../shared/model";
 import { format } from "date-fns";
-import { usePurchases } from "./usePurchases";
+import { usePurchaseMutation } from "./usePurchases";
 import useUserContext from "../../shared/context/useUserContext";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { Direction } from "../../shared/components/OffCanvas/Models";
@@ -12,26 +12,28 @@ import { ListPaymentTypes } from "../Sales/Common/ListPaymentTypes";
 import { SumTotal } from "../Sales/Common/SumTotal";
 import { ProductsResponseModel } from "../Products/ProductModel";
 import { SuppliersForm } from "../Suppliers/SuppliersForm";
-import { PurchaseProducts } from "./PurchaseProducts";
+import { PurchaseProducts } from "./Common/PurchaseProducts";
+import { ProductForm } from "../Products/ProductsForm";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
     const [supplier, setSupplier] = useState<Option | undefined>();
     const [products, setProducts] = useState<ProductsResponseModel[]>([]);
-    const { createPurchase } = usePurchases();
+    const { createPurchase } = usePurchaseMutation();
     const { business } = useUserContext();
-    const [visible, setVisible] = useState(false);
+    const [visibleModalSupplier, setVisibleModalSupplier] = useState(false);
+    const [visibleModalProduct, setVisibleModalProduct] = useState(false);
+    const navigate = useNavigate();
 
     const [purchase, setPurchase] = useState<CreatePurchaseModel>({
         idBusiness: 0,
-        idSupplier: 0,
-        date: new Date(),
+        supplierId: 0,
+        date: new Date(new Date().setHours(0, 0, 0, 0)),
         products: [],
         totalAmount: 0,
         paymentType: "Contado",
     });
-
-    const handleClose = () => setVisible(false);
-    const handleClick = () => setVisible(true);
 
     const handleChangeSupplier = (newValue: SingleValue<Option>) => {
         setSupplier({
@@ -47,7 +49,7 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
     const handleCreatePurchase = async () => {
         const purchaseData: CreatePurchaseModel = {
             idBusiness: business?.id ? business.id : 0,
-            idSupplier: supplier?.value ? parseInt(supplier.value) : 0,
+            supplierId: supplier?.value ? parseInt(supplier.value) : 0,
             date: purchase.date,
             products: products.map((x) => ({
                 idProduct: x.id,
@@ -59,9 +61,24 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
             paymentType: purchase.paymentType,
         };
 
-        console.log("Enviando compra:", purchaseData);
         const res = await createPurchase.mutateAsync(purchaseData);
-        if (res.isSuccess && xChange) xChange();
+        if (res.isSuccess) {
+            Swal.fire({
+                title: '¿Quieres mantenerte en esta ventana o ir al detalle de la factura?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ir al detalle',
+                cancelButtonText: 'Cerrar',
+                preConfirm: async () => {
+                    navigate(`/Sales/${res.data}`);
+                }
+            });
+
+            if (xChange)
+                xChange();
+
+        }
     };
 
     return (
@@ -98,19 +115,22 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
             <PurchaseProducts products={products} setProducts={setProducts} />
             <SumTotal sumTotalProducts={products.reduce((acc, x) => acc + x.unitPrice * x.quantity, 0)} />
 
-            <OffCanvas titlePrincipal='Registro de Proveedor' visible={visible} xClose={handleClose} position={Direction.Right}>
-                <SuppliersForm />
-            </OffCanvas>
-
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleCreatePurchase}>
                 {createPurchase.isPending ? "Guardando..." : "Guardar Compra"}
             </button>
-            <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1" onClick={handleClick}>
+            <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1" onClick={() => setVisibleModalSupplier(true)}>
                 Crear Proveedor
             </button>
-            <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1" onClick={handleClick}>
+            <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1" onClick={() => setVisibleModalProduct(true)}>
                 Crear Producto
             </button>
+
+            <OffCanvas titlePrincipal='Registro de Proveedor' visible={visibleModalSupplier} xClose={() => setVisibleModalSupplier(false)} position={Direction.Right}>
+                <SuppliersForm />
+            </OffCanvas>
+            <OffCanvas titlePrincipal='Registro de Producto' visible={visibleModalProduct} xClose={() => setVisibleModalProduct(false)} position={Direction.Right}>
+                <ProductForm />
+            </OffCanvas>
         </div>
     );
 };

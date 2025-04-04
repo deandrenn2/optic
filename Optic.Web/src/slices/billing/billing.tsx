@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileInvoiceDollar, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faFileExcel, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { BillingDocumentModel } from "./BillingModal";
 import { getDocuments } from "./BillingServices";
 import ButtonDelete from "../../shared/components/Buttons/ButtonDelete";
 import ButtonDetail from "../../shared/components/Buttons/ButtonDetail";
+import { useFileDownload } from "../../shared/components/FilesDowload";
 
 export const Billing = () => {
     const [bills, setBills] = useState<BillingDocumentModel[]>([]);
+    const { descargarArchivo } = useFileDownload();
 
     // Estados para los filtros
     const [filterNumber, setFilterNumber] = useState<number | undefined>();
@@ -34,6 +36,18 @@ export const Billing = () => {
             console.error("Error al obtener facturas:", err);
         }
     };
+
+    const handleDownload = async (id: number, typeDocument: string) => {
+        let urlBlob = "";
+        if (typeDocument === 'Venta')
+            urlBlob = `/api/invoices/${id}/report`;
+        if (typeDocument === 'Compra')
+            urlBlob = `/api/purchases/${id}/report`;
+        if (typeDocument === 'Formula')
+            urlBlob = `/api/formulas/${id}/report`;
+
+        await descargarArchivo(urlBlob, `${typeDocument}_${id}_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
 
     useEffect(() => {
         fetchBills();
@@ -149,11 +163,8 @@ export const Billing = () => {
                                     <td className="border p-2 text-center">{bill.paymentMethod}</td>
                                     <td className="border p-2 text-center font-bold">${bill.total.toLocaleString()}</td>
                                     <td className="border p-2 text-center">
-                                        <ButtonDetail url={bill.typeDocument === 'Venta' ? `/Sales/${bill.id}` : bill.typeDocument === "Formula" ? `/Formulas/${bill.id}` : ''} />
-                                        <button className="text-green-500 mr-2 text-2xl">
-                                            <FontAwesomeIcon icon={faFileInvoiceDollar} />
-                                        </button>
-                                        <ButtonDelete id={bill.id} onDelete={fetchBills} />
+                                        <ButtonDetail url={bill.typeDocument === 'Venta' ? `/Sales/${bill.id}` : bill.typeDocument === "Formula" ? `/Formulas/${bill.id}` : `/Purchases/${bill.id}`} />
+                                        <button onClick={() => handleDownload(bill.id, bill.typeDocument)} className="text-green-500 mr-3  text-2xl"><FontAwesomeIcon icon={faFileExcel} /></button>
                                     </td>
                                 </tr>
                             ))}

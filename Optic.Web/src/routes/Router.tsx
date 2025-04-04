@@ -23,6 +23,7 @@ import { Brands } from '../slices/Settings/Brands.tsx';
 import { FormulasDetail } from '../slices/Formulas/FormulasDetail.tsx';
 import PasswordRecoverPage from './Login/PasswordRecover.tsx';
 import { SalesDetail } from '../slices/Sales/SalesDetail.tsx';
+import { PurchaseDetail } from '../slices/Purchase/PurchaseDetail.tsx';
 
 export const router = createBrowserRouter([
     {
@@ -69,6 +70,7 @@ export const router = createBrowserRouter([
                 element: <FormulasDetail />,
             },
             { path: 'Sales/:id', element: <SalesDetail /> },
+            { path: 'Purchases/:id', element: <PurchaseDetail /> },
             {
                 path: 'Billing',
                 element: <Billing />,

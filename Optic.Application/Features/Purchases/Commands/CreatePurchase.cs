@@ -31,7 +31,6 @@ public class CreatePurchase : ICarterModule
     {
         public int? Id { get; init; }
         public int IdBusiness { get; init; }
-        public int? IdClient { get; init; }
         public int SupplierId { get; init; }
         public string PaymentType { get; init; } = string.Empty;
         public DateTime Date { get; init; } = DateTime.Now;
@@ -60,7 +59,9 @@ public class CreatePurchase : ICarterModule
             if (count > 0)
                 purchaseMaxNumber = await context.Purchases.MaxAsync(x => x.Number);
 
-            var purchase = Purchase.Create(0, purchaseMaxNumber + 1, request.Date, request.SumTotal, "Borrador", request.PaymentType, request.IdBusiness, request.SupplierId);
+            var status = request.PaymentType == "Contado" ? "Pagada" : "Crédito";
+
+            var purchase = Purchase.Create(0, purchaseMaxNumber + 1, request.Date, request.SumTotal, status, request.PaymentType, request.IdBusiness, request.SupplierId);
 
 
             //Agregar detalles de la factura
@@ -92,7 +93,6 @@ public class CreatePurchase : ICarterModule
         public CreatePurchaseValidator()
         {
             RuleFor(x => x.Date).NotEmpty();
-            RuleFor(x => x.IdClient).NotEmpty().GreaterThan(0);
             RuleFor(x => x.SupplierId).NotEmpty().GreaterThan(0);
             RuleFor(x => x.PaymentType).NotEmpty();
 

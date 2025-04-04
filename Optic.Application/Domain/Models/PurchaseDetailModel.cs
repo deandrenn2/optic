@@ -11,4 +11,6 @@ public record PurchaseDetailModel
     public int Quantity { get; set; }
     public int IdProduct { get; set; }
     public int IdPurchase { get; set; }
+
+    public decimal TotalCost { get { return Price * Quantity; } }
 }

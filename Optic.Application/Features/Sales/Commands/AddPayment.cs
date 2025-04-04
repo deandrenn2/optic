@@ -14,14 +14,14 @@ public class AddPayment : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("api/sales/{id:int}/payments", async (int id, HttpRequest req, IMediator mediator, decimal amount) =>
+        app.MapPost("api/sales/{id:int}/payments", async (int id, HttpRequest req, IMediator mediator, AddPaymentRequest command) =>
         {
-            return await mediator.Send(new AddPaymentRequest(id, amount));
+            return await mediator.Send(command);
         })
         .WithName(nameof(AddPayment))
         .WithTags(nameof(Invoice))
         .ProducesValidationProblem()
-        .Produces<int>(StatusCodes.Status201Created);
+        .Produces<decimal>(StatusCodes.Status201Created);
     }
 
     public record AddPaymentRequest(int InvoiceId, decimal Amount) : IRequest<IResult>;

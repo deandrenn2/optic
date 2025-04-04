@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { useValidateProduct } from "../Products/useProducts";
-import { ProductsResponseModel } from "../Products/ProductModel";
-import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
+import { useValidateProduct } from "../../Products/useProducts";
+import { ProductsResponseModel } from "../../Products/ProductModel";
+import { MoneyFormatter } from "../../../shared/components/Numbers/MoneyFormatter";
 
 
 export const PurchaseProducts = ({ products, setProducts }: { products: ProductsResponseModel[], setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>> }) => {
@@ -34,15 +34,15 @@ export const PurchaseProducts = ({ products, setProducts }: { products: Products
     const handleChangeSalePrice = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
         const { value } = e.target;
         setProducts(products.map((x) => (x.id === id ? { ...x, salePrice: parseFloat(value) } : x)));
-    } 
+    }
     const handleChangeUnitPrice = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-        const { value } = e.target; 
+        const { value } = e.target;
         setProducts(products.map((x) => (x.id === id ? { ...x, unitPrice: parseFloat(value) } : x)));
     }
     const handleDeleteProduct = (id: number) => {
         setProducts(products.filter((x) => x.id !== id));
     }
-    
+
 
     const totalProducts = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
 
@@ -67,7 +67,7 @@ export const PurchaseProducts = ({ products, setProducts }: { products: Products
                                 min={0} max={999}
                                 className="w-14 border border-gray-300 rounded p-1 ml-2" />
                             <label className="text-gray-600 text-sm">Precio costo</label>
-                            <input type="number" value={x.unitPrice}    
+                            <input type="number" value={x.unitPrice}
                                 onChange={(e) => handleChangeUnitPrice(e, x.id)}
                                 min={0} max={999}
                                 className="w-14 border border-gray-300 rounded p-1 ml-2" />
@@ -98,5 +98,5 @@ export const PurchaseProducts = ({ products, setProducts }: { products: Products
             </div>
         </div>
     );
-   
+
 };  
