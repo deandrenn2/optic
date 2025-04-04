@@ -39,3 +39,14 @@ export interface UpdateStateSale {
    id: number;
    state: string;
 }
+
+export interface SalesPaymerModel{
+   id: number,
+   amount: 0,
+   date: string;
+}
+
+export interface SalesCreatePaymerModel{
+   amount: number;
+   date: string; 
+}

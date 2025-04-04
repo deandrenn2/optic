@@ -1,7 +1,7 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
 import { CreateClientModel } from '../Clients/ClientModel';
-import { CategoriesModel, ProductModel, ProductPagerModel, ProductsResponseModel, QuantityModel } from './ProductModel';
+import { CategoriesModel, ProductModel, ProductPagerModel,  ProductSearchResponse,  ProductsResponseModel, QuantityModel } from './ProductModel';
 
 
 export const getProducts = async (): Promise<MsgResponse<ProductsResponseModel[]>> => {
@@ -27,13 +27,14 @@ export const getPagerProducts = async (page: number = 1, pageSize: number = 5): 
    if (response.status !== 200 && response.status !== 201) {
       return {
          isSuccess: false,
-         message: 'Error al obtener productos',
+         message: "Error al obtener productos",
          isFailure: true,
          error: {
             code: response.status.toString(),
             message: response.statusText,
          },
       };
+      
    }
    return response.data;
 };
@@ -205,4 +206,48 @@ export const updateQuantityService = async (model: QuantityModel): Promise<MsgRe
       };
    }
    return response.data;
+};
+
+
+export const getPagerProduct = async (
+   page: number = 1,
+   pageSize: number = 5,
+   orderByName: boolean = false,
+   search: string = ""
+): Promise<MsgResponse<ProductSearchResponse[]>> => {
+   try {
+      const queryParams = new URLSearchParams({
+         pageIndex: page.toString(),
+         pageSize: pageSize.toString(),
+         orderByName: orderByName.toString(),
+         search: search,
+      }).toString();
+
+      const url = `api/products/pager?${queryParams}`;
+      const response = await ApiClient.get<MsgResponse<ProductSearchResponse[]>>(url);
+
+      if (response.status !== 200 && response.status !== 201) {
+         return {
+            isSuccess: false,
+            message: "Error al obtener productos",
+            isFailure: true,
+            error: {
+               code: response.status.toString(),
+               message: response.statusText,
+            },
+         };
+      }
+
+      return response.data;
+   } catch (error) {
+      return {
+         isSuccess: false,
+         message: "Error en la solicitud",
+         isFailure: true,
+         error: {
+            code: "500",
+            message: (error as Error).message,
+         },
+      };
+   }
 };

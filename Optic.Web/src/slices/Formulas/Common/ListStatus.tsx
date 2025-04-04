@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { getStatusInvoice } from "./ListServices";
-
 export const ListStatus = ({ selectedValue, name, className, xChange, required, status }: { selectedValue?: string, name?: string, className?: string, xChange: (e: React.ChangeEvent<HTMLSelectElement>) => void, required?: boolean, status: string }) => {
     const [listStatus, setStatus] = useState<string[]>([]);
-
+    
     useEffect(() => {
         getStatus();
     }, []);
