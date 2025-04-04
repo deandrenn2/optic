@@ -1,5 +1,4 @@
 using Carter;
-using DocumentFormat.OpenXml.ExtendedProperties;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -12,18 +11,18 @@ using Optic.Application.Infrastructure.Report;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
 
-namespace Optic.Application.Features.Formulas;
+namespace Optic.Application.Features.Sales;
 
-public class GenerateReportFormula : ICarterModule
+public class GenerateReportInvoice : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("api/formulas/{id:int}/report", async (int id, IMediator mediator, string templateName = "") =>
+        app.MapPost("api/invoices/{id:int}/report", async (int id, IMediator mediator, string templateName = "") =>
         {
             return await mediator.Send(new GenerateReportCommand(id, templateName));
         })
-        .WithName(nameof(GenerateReportFormula))
-        .WithTags(nameof(Formula))
+        .WithName(nameof(GenerateReportInvoice))
+        .WithTags(nameof(Invoice))
         .Produces(StatusCodes.Status200OK)
         .Produces<GenerateReportResponse>(StatusCodes.Status200OK);
     }
@@ -43,31 +42,29 @@ public class GenerateReportFormula : ICarterModule
         public string PhoneNumber { get; init; } = string.Empty;
         public string ClientName { get; init; } = string.Empty;
         public string ClientPhoneNumber { get; init; } = string.Empty;
-        public string FormulaNumber { get; init; } = string.Empty;
-        public string FormulaDate { get; init; } = string.Empty;
-        public string FormulaDescription { get; init; } = string.Empty;
+        public string InvoiceNumber { get; init; } = string.Empty;
+        public string InvoiceDate { get; init; } = string.Empty;
         public string GenerationDate { get; init; } = string.Empty;
-        public List<string> Tags { get; init; } = new();
-        public List<DiagnosisModel> Diagnosis { get; init; } = new();
+        public List<InvoiceDetailModel> Details { get; init; } = new();
+        public decimal TotalProducts { get { return Details.Sum(x => x.TotalCost); } }
     }
 
-    public class GetReportFormulaHandler(AppDbContext context, IClosedXmlReportManager reportManager) : IRequestHandler<GenerateReportCommand, IResult>
+    public class GetReportInvoiceHandler(AppDbContext context, IClosedXmlReportManager reportManager) : IRequestHandler<GenerateReportCommand, IResult>
     {
         public async Task<IResult> Handle(GenerateReportCommand request, CancellationToken cancellationToken)
         {
-            var formula = await context.Formulas
+            var invoice = await context.Invoices
                                     .Include(x => x.Client)
-                                    .Include(x => x.Invoice)
-                                    .Include(x => x.Tags)
-                                    .Include(x => x.FormulaDiagnosis).ThenInclude(x => x.Diagnosis)
+                                    .Include(x => x.InvoiceDetails)
+                                    .ThenInclude(x => x.Product)
                                     .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            if (formula == null)
+            if (invoice == null)
             {
-                return Results.Ok(Result.Failure(new Error("Formula.NotFound", "Formula no encontrada")));
+                return Results.Ok(Result.Failure(new Error("Invoice.NotFound", "Invoice no encontrada")));
             }
 
-            var business = await context.Businesses.FirstOrDefaultAsync(x => x.Id == formula.BusinessId);
+            var business = await context.Businesses.FirstOrDefaultAsync(x => x.Id == invoice.BusinessId);
 
             if (business == null)
             {
@@ -76,37 +73,40 @@ public class GenerateReportFormula : ICarterModule
 
             var reportData = new ReportDataQuery
             {
-                Id = formula.Id,
+                Id = invoice.Id,
                 CompanyName = business.CompanyName,
                 Abbreviation = business.Abbreviation,
                 UrlLogo = business.UrlLogo,
                 Nit = business.Nit,
                 Address = business.Address,
                 PhoneNumber = business.PhoneNumber,
-                ClientName = formula.Client.LastName + " " + formula.Client.FirstName,
-                ClientPhoneNumber = formula.Client.PhoneNumber,
-                FormulaNumber = formula.Invoice.Number.ToString("D5"),
-                FormulaDate = formula.Invoice.Date.ToString("dd/MM/yyyy"),
-                FormulaDescription = formula.Description ?? string.Empty,
+                ClientName = invoice.Client.LastName + " " + invoice.Client.FirstName,
+                ClientPhoneNumber = invoice.Client.PhoneNumber,
+                InvoiceNumber = invoice.Number.ToString("D5"),
+                InvoiceDate = invoice.Date.ToString("dd/MM/yyyy"),
                 GenerationDate = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"),
-                Tags = [.. formula.Tags.Select(x => x.Name)],
-                Diagnosis = [.. formula.FormulaDiagnosis.Select(x => new DiagnosisModel
+                Details = invoice.InvoiceDetails.Select(y => new InvoiceDetailModel
                 {
-                    Name = x.Diagnosis.Name,
-                    Value = x.Value
-                })]
+                    Id = y.Id,
+                    IdInvoice = y.IdInvoice,
+                    IdProduct = y.IdProduct,
+                    Description = y.Description,
+                    Price = y.Price,
+                    Quantity = y.Quantity,
+                    ProductName = y.Product?.Name,
+                }).ToList()
             };
 
-            var resArray = reportManager.GenerateReportAsync("Formula", reportData);
-            var name = string.IsNullOrEmpty(request.TemplateName) ? $"formula_{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Second}.xlsx" : $"{request.TemplateName}_{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Second}.xlsx";
+            var resArray = reportManager.GenerateReportAsync("invoice", reportData);
+            var name = string.IsNullOrEmpty(request.TemplateName) ? $"Invoice_{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Second}.xlsx" : $"{request.TemplateName}_{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Second}.xlsx";
 
             return Results.File(resArray, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", name);
         }
     }
 
-    public class GenerateReportFormulaValidator : AbstractValidator<GenerateReportCommand>
+    public class GenerateReportInvoiceValidator : AbstractValidator<GenerateReportCommand>
     {
-        public GenerateReportFormulaValidator()
+        public GenerateReportInvoiceValidator()
         {
             RuleFor(x => x.Id).NotEmpty();
         }

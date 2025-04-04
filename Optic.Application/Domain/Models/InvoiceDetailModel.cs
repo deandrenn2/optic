@@ -10,4 +10,6 @@ public record InvoiceDetailModel
     public int Quantity { get; set; }
     public int IdProduct { get; set; }
     public int IdInvoice { get; set; }
+
+    public decimal TotalCost { get { return Price * Quantity; } }
 }
