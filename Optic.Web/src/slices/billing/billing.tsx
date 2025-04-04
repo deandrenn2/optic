@@ -149,7 +149,7 @@ export const Billing = () => {
                                     <td className="border p-2 text-center">{bill.paymentMethod}</td>
                                     <td className="border p-2 text-center font-bold">${bill.total.toLocaleString()}</td>
                                     <td className="border p-2 text-center">
-                                        <ButtonDetail url={bill.typeDocument === 'Venta' ? `/Sales/${bill.id}` : bill.typeDocument === "Formula" ? `/Formulas/${bill.id}` : ''} />
+                                        <ButtonDetail url={bill.typeDocument === 'Venta' ? `/Sales/${bill.id}` : bill.typeDocument === "Formula" ? `/Formulas/${bill.id}` : `/Purchases/${bill.id}`} />
                                         <button className="text-green-500 mr-2 text-2xl">
                                             <FontAwesomeIcon icon={faFileInvoiceDollar} />
                                         </button>

@@ -1,5 +1,6 @@
 export interface PurchaseDetailModel {
    idProduct: number;
+   productName?: string;
    quantity: number;
    unitPrice: number; // Costo unitario del producto
    totalCost: number; // Costo total por producto (unitCost * quantity)
@@ -25,4 +26,20 @@ export interface CreatePurchaseModel {
    paymentType: string;
    products: PurchaseDetailModel[];
    totalAmount: number;
+}
+
+export interface UpdatePurchaseModel {
+   id: number;
+   idBusiness: number;
+   supplierId?: number | null;
+   date: Date;
+   paymentType: string;
+   products: PurchaseDetailModel[];
+   totalAmount: number;
+   state: string;
+}
+
+export interface UpdateStatePurchase {
+   id: number;
+   state: string;
 }

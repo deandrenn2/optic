@@ -72,7 +72,6 @@ export const SalesCreate = ({ xChange }: { xChange?: () => void }) => {
 
         };
 
-        console.log(formulaData);
         const res = await createSale.mutateAsync(formulaData);
 
         if (res.isSuccess) {
