@@ -45,6 +45,7 @@ public class Product : AggregateRoot
     public DateTime CreateDate { get; private set; }
     public List<Category> Categories { get; private set; } = new();
     public List<InvoiceDetail> InvoiceDetails { get; private set; } = new();
+    public List<PurchaseDetail> PurchaseDetails { get; private set; } = new();
 
     public static Product Create(int id, int idBrand, string name, string codeNumber, int quantity, decimal unitPrice, decimal salePrice, int stock)
     {

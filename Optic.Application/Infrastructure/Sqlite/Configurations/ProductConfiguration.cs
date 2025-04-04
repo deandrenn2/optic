@@ -23,5 +23,11 @@ internal class ProductConfiguration : IEntityTypeConfiguration<Product>
             .WithOne(x => x.Product)
             .HasForeignKey(x => x.IdProduct)
             .OnDelete(DeleteBehavior.Cascade);
+
+        //PurchaseDetails
+        builder.HasMany(x => x.PurchaseDetails)
+            .WithOne(x => x.Product)
+            .HasForeignKey(x => x.IdProduct)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
