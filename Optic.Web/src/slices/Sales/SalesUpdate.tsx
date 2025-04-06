@@ -17,8 +17,6 @@ import { UpdateSaleModel } from "./SalesModel";
 import { useSale, useSalesMutation } from "./useSales";
 import { ListStatus } from "./Common/ListStatus";
 import { FormulaProducts } from "../Formulas/Common/FormulaProducts";
-
-
 export const SalesUpdate = () => {
     const { id } = useParams();
     const [client, setClient] = useState<Option | undefined>();
@@ -158,7 +156,7 @@ export const SalesUpdate = () => {
                 </div>
 
 
-                <FormulaProducts products={products} setProducts={setProducts} />
+                <FormulaProducts products={products} setProducts={setProducts} isCredit={true} saleId={0} />
                 <SumTotal sumTotalProducts={totalProducts} />
                 <div className="flex justify-between gap-0">
                     <div className="flex">

@@ -12,6 +12,7 @@ export interface ProductModel {
    categories: string[];
 }
 export interface ProductsResponseModel {
+   updateDate: any;
    id: number;
    name: string;
    idBrand: number;
@@ -46,4 +47,18 @@ export interface QuantityModel {
    id?: number;
    quantity: number;
    isIncrement: boolean;
+}
+
+export interface ProductSearchResponse {
+   isSuccess: boolean; 
+   currentPage: number;
+   pageCount: number;
+   pageSize: number;
+   firstRowOnPage: number;
+   lastRowOnPage: number;
+   count: number;
+   code: number;
+   message: string | null;
+   error: string | null;
+   data: ProductsResponseModel[];
 }
