@@ -7,8 +7,8 @@ import { useValidateProduct } from "../../Products/useProducts";
 import OffCanvas from "../../../shared/components/OffCanvas/Index";
 import { Direction } from "../../../shared/components/OffCanvas/Models";
 import { SearchProduct } from "../../Products/SearchProduct";
-import {SalesPaymer } from "../../../shared/components/Buttons/SalesPaymer";
-export const FormulaProducts = ({ products, setProducts, isCredit,  }: { products: ProductsResponseModel[], setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>; isCredit: boolean; saleId: number; }) => {
+import {SalesPaymer } from "../../Sales/SalesPaymer";
+export const FormulaProducts = ({ products, setProducts, saleId  }: { products: ProductsResponseModel[], setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>; isCredit: boolean; saleId: number; }) => {
     const [codeProduct, setCodeProduct] = useState<string>("");
     const { mutationValidateProduct } = useValidateProduct();
     const [visible, setVisible] = useState(false);
@@ -71,18 +71,14 @@ export const FormulaProducts = ({ products, setProducts, isCredit,  }: { product
                 <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2" onClick={handleClick}>
                     Producto
                 </button>
-               
-                {isCredit && (
                     <>
                     <OffCanvas titlePrincipal='Abonos' visible={visibleAbono} xClose={handleClose} position={Direction.Right}  >
-                    <SalesPaymer Id={0} />
+                    <SalesPaymer Id={saleId} totalFactura={totalProducts}  />
                 </OffCanvas>
                 <button className="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 mb-2" onClick={handleClickAbono}>
                     Abono
                 </button>
                     </>
-                )}
-                
             </div>
             <div className="flex flex-col gap-2 mb-4">
                 {

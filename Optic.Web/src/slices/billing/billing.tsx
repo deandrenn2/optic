@@ -3,10 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileExcel, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { BillingDocumentModel } from "./BillingModal";
 import { getDocuments } from "./BillingServices";
-import ButtonDelete from "../../shared/components/Buttons/ButtonDelete";
 import ButtonDetail from "../../shared/components/Buttons/ButtonDetail";
 import { useFileDownload } from "../../shared/components/FilesDowload";
-
 export const Billing = () => {
     const [bills, setBills] = useState<BillingDocumentModel[]>([]);
     const { descargarArchivo } = useFileDownload();

@@ -1,3 +1,4 @@
+
 import { InvoiceDetailModel } from '../Formulas/FomulasModel';
 
 export interface SalesResponseModel {
@@ -42,11 +43,12 @@ export interface UpdateStateSale {
 
 export interface SalesPaymerModel{
    id: number,
-   amount: 0,
+   amount: number,
    date: string;
 }
 
 export interface SalesCreatePaymerModel{
-   amount: number;
-   date: string; 
+   invoiceId: number,
+   amount: number,
+   
 }

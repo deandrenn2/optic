@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createSaleService, getSale, getSales, updateSaleService, updateStateSaleService } from './SalesServices';
+import { createSaleService, getSale, getSalePaymentsService, getSales, SalesCreatePaymer, SalesDeletePaymer, updateSaleService, updateStateSaleService } from './SalesServices';
 import { toast } from 'react-toastify';
+import { SalesCreatePaymerModel } from './SalesModel';
 
 const KEY = 'Sales';
 
@@ -83,4 +84,63 @@ export const useSale = (id: string | undefined) => {
       querySale,
       sale: querySale.data?.data,
    };
+};
+
+
+
+
+export const usePayments = (invoiceId: number) => {
+  const query = useQuery({
+    queryKey: [KEY, invoiceId],
+    queryFn: () => getSalePaymentsService(invoiceId),
+    enabled: !!invoiceId,
+  });
+
+  return {
+    query,
+    payments: query.data?.data ?? [],
+  };
+};
+
+export const useCreatePayment = (invoiceId: number) => {
+  const queryClient = useQueryClient();
+
+  const createPayment = useMutation({
+    mutationFn: (model: SalesCreatePaymerModel) =>
+      SalesCreatePaymer(invoiceId, model),
+    onSuccess: (data) => {
+      if (data.isSuccess) {
+        toast.success(data.message || "Abono registrado");
+        queryClient.invalidateQueries({ queryKey: [KEY, invoiceId] });
+      } else {
+        toast.error(data.message || "No se pudo registrar el abono");
+      }
+    },
+    onError: () => {
+      toast.error("Error inesperado al crear el abono");
+    },
+  });
+
+  return { createPayment };
+};
+
+export const useDeletePayment = (invoiceId: number) => {
+  const queryClient = useQueryClient();
+
+  const deletePayment = useMutation({
+    mutationFn: (paymentId: number) => SalesDeletePaymer(paymentId),
+    onSuccess: (data) => {
+      if (data.isSuccess) {
+        toast.success(data.message || "Abono eliminado");
+        queryClient.invalidateQueries({ queryKey: [KEY, invoiceId] });
+      } else {
+        toast.error(data.message || "No se pudo eliminar el abono");
+      }
+    },
+    onError: () => {
+      toast.error("Error inesperado al eliminar el abono");
+    },
+  });
+
+  return { deletePayment };
 };

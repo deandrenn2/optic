@@ -262,7 +262,7 @@ export const FormulasUpdate = () => {
                     <label className="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
                     <textarea name="description" value={formula?.description} onChange={handleChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                 </div>
-                <FormulaProducts products={products} setProducts={setProducts} />
+                <FormulaProducts products={products} setProducts={setProducts} isCredit={true} saleId={formula.idInvoice}  />
                 <SumTotal formula={formula} sumTotalProducts={totalProducts} />
                 <div className="flex justify-between gap-0">
                     <div className="flex">
