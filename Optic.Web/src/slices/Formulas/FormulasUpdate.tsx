@@ -24,12 +24,14 @@ import { useFileDownload } from "../../shared/components/FilesDowload";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { SalesPaymer } from "../Sales/SalesPaymer";
 import { Direction } from "../../shared/components/OffCanvas/Models";
+import { usePayments } from "../Sales/useSales";
 export const FormulasUpdate = () => {
     const { id } = useParams();
     const [client, setClient] = useState<Option | undefined>();
     const [diagnosis, setDiagnosis] = useState<DiagnosisModel[]>([]);
     const [stateFormula, setStateFormula] = useState<string>("Borrador");
     const [products, setProducts] = useState<ProductsResponseModel[]>([]);
+
     const { updateFormula, updateStateFormula } = useFormulaMutation();
     const { formula: formulaData, queryFormula } = useFormula(id);
     const { business } = useUserContext();
@@ -48,6 +50,7 @@ export const FormulasUpdate = () => {
         sumTotal: 0,
         state: "Borrador"
     });
+    const { payments } = usePayments(formula.idInvoice);
     const { descargarArchivo } = useFileDownload();
 
 
@@ -230,6 +233,9 @@ export const FormulasUpdate = () => {
 
 
     const isEnabledPaymmentButton = () => {
+        if (payments.length > 0)
+            return true;
+
         if (formula.state === 'Borrador')
             return false;
         else
@@ -312,7 +318,7 @@ export const FormulasUpdate = () => {
                     <label className={`block ${getStatusColorInvoice(formula.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(formula.state)} icon={faCircle} /> {formula.state}</label>
                 </div>
                 <OffCanvas titlePrincipal='Abonos' visible={isVisiblePaymment} xClose={() => setIsVisiblePaymment(false)} position={Direction.Right}  >
-                    <SalesPaymer Id={formula.idInvoice} totalFactura={getTotalSumaTotal()} />
+                    <SalesPaymer Id={formula.idInvoice} totalFactura={getTotalSumaTotal()} payments={payments} />
                 </OffCanvas>
             </div>
         );

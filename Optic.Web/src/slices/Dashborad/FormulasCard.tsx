@@ -1,6 +1,7 @@
 import { formatDistance, parseISO } from "date-fns";
 import { useFormulasPager } from "../Formulas/useFormulas";
 import { Link, useLocation } from "react-router-dom";
+import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 
 export const FormulasCard = () => {
     const { formulas } = useFormulasPager();
@@ -27,8 +28,8 @@ export const FormulasCard = () => {
                         <div className="flex justify-between items-center relative mb-1">
                             <p>{formula.fullName}</p>
                             <i className="fas fa-play text-gray-500"></i>
-                            <p className="absolute inset-50 right-0 font-bold text-2xl text-purple-500">
-                                {formula.sumTotal}
+                            <p className="absolute inset-50 right-0 font-bold text-1xl text-blue-500">
+                                <MoneyFormatter amount={formula.sumTotal} />
                             </p>
                         </div>
                         <p className="text-gray-500 text-sm">

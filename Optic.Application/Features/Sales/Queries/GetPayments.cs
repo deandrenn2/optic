@@ -35,7 +35,9 @@ public class GetPayments : ICarterModule
         public async Task<IResult> Handle(GetPaymentsRequest request, CancellationToken cancellationToken)
         {
 
-            var payments = await context.InvoicePayments.Where(x => x.IdInvoice == request.InvoiceId).ToListAsync();
+            var payments = await context.InvoicePayments.Where(x => x.IdInvoice == request.InvoiceId)
+            .OrderByDescending(x => x.Date)
+            .ToListAsync();
 
             if (payments.Count == 0)
             {

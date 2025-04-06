@@ -2,10 +2,11 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
-import { useCreatePayment, useDeletePayment, usePayments } from "./useSales";
-export const SalesPaymer = ({ Id, totalFactura, }: { Id: number; totalFactura: number; }) => {
+import { useCreatePayment, useDeletePayment } from "./useSales";
+import { SalesPaymerModel } from "./SalesModel";
+import { format } from "date-fns";
+export const SalesPaymer = ({ Id, totalFactura, payments }: { Id: number; totalFactura: number; payments: SalesPaymerModel[] }) => {
   const [amount, setAmount] = useState<number>(0);
-  const { payments } = usePayments(Id);
   const { createPayment } = useCreatePayment(Id);
   const { deletePayment } = useDeletePayment(Id);
 
@@ -19,11 +20,25 @@ export const SalesPaymer = ({ Id, totalFactura, }: { Id: number; totalFactura: n
     setAmount(0);
   };
 
+  const handleChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const amount = parseFloat(value);
+    const debt = totalFactura - totalPayments;
+    if (isNaN(amount)) return;
+
+    if (amount > debt) {
+      setAmount(debt);
+      return;
+    }
+
+    setAmount(amount);
+  };
+
   const handleDelete = (id: number) => {
     deletePayment.mutate(id);
   };
 
-  const totalAbonos = payments.reduce((total, abono) => total + abono.amount, 0);
+  const totalPayments = payments.reduce((total, abono) => total + abono.amount, 0);
 
   return (
     <div className="grid-cols-2 mb-4 gap-4">
@@ -36,7 +51,7 @@ export const SalesPaymer = ({ Id, totalFactura, }: { Id: number; totalFactura: n
             type="number"
             placeholder="Abono"
             value={amount}
-            onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
+            onChange={handleChangeAmount}
             className="shadow appearance-none border rounded-tl-lg rounded-bl-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -53,10 +68,10 @@ export const SalesPaymer = ({ Id, totalFactura, }: { Id: number; totalFactura: n
           Factura total: <MoneyFormatter amount={totalFactura} />
         </h3>
         <h3 className="text-lg font-semibold text-gray-700">
-          Abonos: <span className="text-green-600"><MoneyFormatter amount={totalAbonos} /></span>
+          Abonos: <span className="text-green-600"><MoneyFormatter amount={totalPayments} /></span>
         </h3>
         <h3 className="text-lg font-semibold text-gray-700">
-          Deuda: <span className="text-red-600"><MoneyFormatter amount={totalFactura - totalAbonos} /></span>
+          Deuda: <span className="text-red-600"><MoneyFormatter amount={totalFactura - totalPayments} /></span>
         </h3>
 
         <div>
@@ -68,7 +83,7 @@ export const SalesPaymer = ({ Id, totalFactura, }: { Id: number; totalFactura: n
                   className="flex justify-between items-center border-b border-gray-300 py-2"
                 >
                   <p className="text-sm text-gray-500">
-                    {new Date(abono.date).toLocaleDateString()}
+                    {format(new Date(abono.date), "d 'de'  MMMM',' uuu")}
                   </p>
                   <p className="flex items-center gap-2 text-gray-600">
                     <MoneyFormatter amount={abono.amount} />
