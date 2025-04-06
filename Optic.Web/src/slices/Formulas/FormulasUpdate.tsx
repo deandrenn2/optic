@@ -3,7 +3,7 @@ import { ClientSelect } from "../Clients/ClientSelect";
 import { LenTypeSelect } from "./LenTypeSelect";
 import { DiagnosisSelect } from "./DiagnosisSelect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faCircle, faFileExcel, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { DiagnosisModel, UpdateFormulasModel } from "./FomulasModel";
 import { MultiValue, SingleValue } from "react-select";
 import { Option } from "../../shared/model";
@@ -20,6 +20,10 @@ import { ListStatus } from "./Common/ListStatus";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { getStatusColorInvoice } from "./FormulasUtils";
+import { useFileDownload } from "../../shared/components/FilesDowload";
+import OffCanvas from "../../shared/components/OffCanvas/Index";
+import { SalesPaymer } from "../Sales/SalesPaymer";
+import { Direction } from "../../shared/components/OffCanvas/Models";
 export const FormulasUpdate = () => {
     const { id } = useParams();
     const [client, setClient] = useState<Option | undefined>();
@@ -29,6 +33,7 @@ export const FormulasUpdate = () => {
     const { updateFormula, updateStateFormula } = useFormulaMutation();
     const { formula: formulaData, queryFormula } = useFormula(id);
     const { business } = useUserContext();
+    const [isVisiblePaymment, setIsVisiblePaymment] = useState(false);
     const [formula, setFormula] = useState<UpdateFormulasModel>({
         idBusiness: 0,
         idInvoice: 0,
@@ -38,11 +43,12 @@ export const FormulasUpdate = () => {
         tags: [],
         diagnosis: [],
         products: [],
-        priceLens: 0,
-        priceConsultation: 0,
+        priceLens: undefined,
+        priceConsultation: undefined,
         sumTotal: 0,
         state: "Borrador"
     });
+    const { descargarArchivo } = useFileDownload();
 
 
     useEffect(() => {
@@ -66,7 +72,8 @@ export const FormulasUpdate = () => {
                             unitPrice: 0,
                             salePrice: x.price,
                             idSupplier: 0,
-                            categories: []
+                            categories: [],
+                            updateDate: new Date()
                         }
                     });
                     setProducts(products);
@@ -84,6 +91,23 @@ export const FormulasUpdate = () => {
         }
     }, []);
 
+    const getTotalSumaTotal = () => {
+        let total = 0;
+        total = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
+
+        if (formula.priceLens)
+            total += formula.priceLens;
+
+        if (formula.priceConsultation)
+            total += formula.priceConsultation;
+
+        return total;
+    }
+
+    const handleDownload = async (id: number) => {
+        const urlBlob = `/api/formulas/${id}/report`;
+        await descargarArchivo(urlBlob, "Formula_" + id + "_" + new Date().toISOString().split('T')[0] + ".xlsx");
+    }
 
 
     const handleChangeClient = (newValue: SingleValue<Option>) => {
@@ -166,7 +190,7 @@ export const FormulasUpdate = () => {
                 }),
             priceLens: formula.priceLens,
             priceConsultation: formula.priceConsultation,
-            sumTotal: formula.sumTotal,
+            sumTotal: getTotalSumaTotal(),
             sumTotalProducts: formula.sumTotalProducts
 
         };
@@ -203,6 +227,14 @@ export const FormulasUpdate = () => {
     }
 
     const diagnosisData = diagnosis.filter((x) => x.stateChange !== 3);
+
+
+    const isEnabledPaymmentButton = () => {
+        if (formula.state === 'Borrador')
+            return false;
+        else
+            return true;
+    }
 
     if (queryFormula.isLoading)
         return <Bar Title="Cargando..." />;
@@ -262,23 +294,26 @@ export const FormulasUpdate = () => {
                     <label className="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
                     <textarea name="description" value={formula?.description} onChange={handleChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                 </div>
-                <FormulaProducts products={products} setProducts={setProducts} isCredit={true} saleId={formula.idInvoice}  />
+                <FormulaProducts products={products} setProducts={setProducts} setVisiblePaymment={setIsVisiblePaymment} isVisiblePaymment={isEnabledPaymmentButton()} />
                 <SumTotal formula={formula} sumTotalProducts={totalProducts} />
                 <div className="flex justify-between gap-0">
                     <div className="flex">
                         <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-4" onClick={handleUpdateFormula}>
                             {updateFormula.isPending ? "Guardando..." : "Guardar Cambios"}
                         </button>
-                        <div className="flex rounded overflow-hidden">
-                            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2" onClick={handleChangeStatus}>
+                        <div className="flex rounded overflow-hidden  mr-4">
+                            <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2" onClick={handleChangeStatus}>
                                 Cambiar estado
                             </button>
                             <ListStatus className="w-auto border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={formula.state} />
                         </div>
+                        <button onClick={() => handleDownload(Number(id))} className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded mr-4"> <FontAwesomeIcon className="text-white text-xl" icon={faFileExcel} /> Decargar </button>
                     </div>
                     <label className={`block ${getStatusColorInvoice(formula.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(formula.state)} icon={faCircle} /> {formula.state}</label>
                 </div>
-
+                <OffCanvas titlePrincipal='Abonos' visible={isVisiblePaymment} xClose={() => setIsVisiblePaymment(false)} position={Direction.Right}  >
+                    <SalesPaymer Id={formula.idInvoice} totalFactura={getTotalSumaTotal()} />
+                </OffCanvas>
             </div>
         );
 };

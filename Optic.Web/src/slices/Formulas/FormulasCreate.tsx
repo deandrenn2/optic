@@ -35,8 +35,8 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
         tags: [],
         diagnosis: [],
         products: [],
-        priceLens: 0,
-        priceConsultation: 0,
+        priceLens: undefined,
+        priceConsultation: undefined,
         sumTotal: 0,
     });
 
@@ -91,9 +91,22 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { value, name } = event.target;
         if (name === 'priceLens' || name === 'priceConsultation')
-            setFormula({ ...formula, [name]: value ? parseFloat(value) : 0 });
+            setFormula({ ...formula, [name]: value ? parseFloat(value) : undefined });
         else
             setFormula({ ...formula, [name]: value });
+    }
+
+    const getTotalSumaTotal = () => {
+        let total = 0;
+        total = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
+
+        if (formula.priceLens)
+            total += formula.priceLens;
+
+        if (formula.priceConsultation)
+            total += formula.priceConsultation;
+
+        return total;
     }
 
 
@@ -121,7 +134,7 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
                 }),
             priceLens: formula.priceLens,
             priceConsultation: formula.priceConsultation,
-            sumTotal: formula.sumTotal,
+            sumTotal: getTotalSumaTotal(),
             sumTotalProducts: formula.sumTotalProducts
 
         };
@@ -195,7 +208,7 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
                     <label className="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
                     <textarea name="description" onChange={handleChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                 </div>
-                <FormulaProducts products={products} setProducts={setProducts} saleId={0} isCredit={false}/>
+                <FormulaProducts products={products} setProducts={setProducts} isVisiblePaymment={false} />
                 <SumTotal formula={formula} sumTotalProducts={totalProducts} />
 
                 <OffCanvas titlePrincipal='Registro de Cliente' visible={visible} xClose={handleClose} position={Direction.Right}  >

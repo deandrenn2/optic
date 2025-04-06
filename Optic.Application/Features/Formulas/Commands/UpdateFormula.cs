@@ -75,6 +75,7 @@ public class UpdateFormulas : ICarterModule
 
 
             formula.Update(request.Description, request.Date, request.PriceLens.Value, request.PriceConsultation);
+            invoice.Update(invoice.Number, invoice.PaymentType, request.Date, request.SumTotal, invoice.ClientId);
 
             //Agregar tags
             formula.RemoveTag(formula.Tags);

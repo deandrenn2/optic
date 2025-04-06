@@ -53,10 +53,10 @@ export const SalesPaymer = ({ Id, totalFactura, }: { Id: number; totalFactura: n
           Factura total: <MoneyFormatter amount={totalFactura} />
         </h3>
         <h3 className="text-lg font-semibold text-gray-700">
-          Abonos: <span className="text-green-600"><MoneyFormatter amount={totalAbonos} /></span> 
+          Abonos: <span className="text-green-600"><MoneyFormatter amount={totalAbonos} /></span>
         </h3>
         <h3 className="text-lg font-semibold text-gray-700">
-          Deuda:<span className="text-red-600"><MoneyFormatter amount={totalFactura - totalAbonos} /></span>
+          Deuda: <span className="text-red-600"><MoneyFormatter amount={totalFactura - totalAbonos} /></span>
         </h3>
 
         <div>
