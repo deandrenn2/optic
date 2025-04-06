@@ -58,21 +58,24 @@ export const PurchaseProducts = ({ products, setProducts }: { products: Products
                         <div key={x.id} className="grid grid-cols-[3fr_3fr_3fr_3fr_1fr] gap-2">
                             <span className="font-bold">{x.name}</span>
                             <label className="text-gray-600 text-sm">Precio de Venta.</label>
+                            
                             <input type="text" className="border border-gray-300 rounded p-1 ml-6"
                                 value={x.salePrice}
                                 onChange={(e) => handleChangeSalePrice(e, x.id)} />
                             <label className="text-gray-600 text-sm">Cantidad</label>
+                           
                             <input type="number" value={x.quantity}
                                 onChange={(e) => handleChangeQuantity(e, x.id)}
                                 min={0} max={999}
                                 className="w-14 border border-gray-300 rounded p-1 ml-2" />
                             <label className="text-gray-600 text-sm">Precio costo</label>
+                            
                             <input type="number" value={x.unitPrice}
                                 onChange={(e) => handleChangeUnitPrice(e, x.id)}
                                 min={0} max={999}
                                 className="w-14 border border-gray-300 rounded p-1 ml-2" />
                             <p className=" right-0"> <MoneyFormatter amount={x.salePrice * x.quantity} /></p>
-                            <div className="flex justify-end ">
+                            <div className="flex justify-end  ">
                                 <button className="w-8 bg-red-500 text-white px-2 py-1 rounded" onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button>
                             </div>
                         </div>

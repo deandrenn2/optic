@@ -17,7 +17,7 @@ export const CardClient = () => {
                     <Link to={`/Clientes/${client.id}`}
                         state={{ fromHome: location.pathname === "/" }}>
                         <div className="  flex justify-betweenp-4 items-center mr-2">
-                            <div className='w-full rounded-lg border border-gray-400 p-4 mb-2 hover:border-blue-700 transition-colors duration-300 '>
+                            <div className='w-full rounded-lg border border-gray-300 p-4 mb-2 hover:border-blue-700 transition-colors duration-300 hover:bg-gray-200'>
                                 <div className="relative">
                                     <p>{client.fullName}</p>
                                     <span title={client.identificationType} className='text-blue-700 font-bold'>{client.identificationAbbreviation}</span> -

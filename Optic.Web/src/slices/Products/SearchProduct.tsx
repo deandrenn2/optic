@@ -9,7 +9,6 @@ export const SearchProduct = ({ setProducts }: { setProducts: React.Dispatch<Rea
     const [searched, setSearched] = useState<boolean>(false); 
     const [pageIndex] = useState<number>(1); 
     const [orderByName ] = useState<boolean>(false); 
-    
     const loadProducts = async () => {
         try {
             const result: ProductSearchResponse = await getPagerProduct(pageIndex, 10, orderByName, search); 
@@ -67,7 +66,7 @@ export const SearchProduct = ({ setProducts }: { setProducts: React.Dispatch<Rea
                 />
                 <button
                     onClick={handleSearch}
-                    className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 font-bold rounded-tr-lg rounded-br-lg"
+                    className="bg-blue-500 hover:bg-blue-700 text-white px-3 py-2 font-bold rounded-tr-lg rounded-br-lg"
                 >
                     Buscar
                 </button>

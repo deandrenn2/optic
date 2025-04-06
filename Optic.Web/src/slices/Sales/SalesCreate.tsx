@@ -123,7 +123,7 @@ export const SalesCreate = ({ xChange }: { xChange?: () => void }) => {
                         <ListPaymentTypes selectedValue={formula?.paymentType} xChange={handleChangePaymentType} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
                     </div>
                 </div>
-                <FormulaProducts products={products} setProducts={setProducts} isCredit={false} saleId={0}/>
+                <FormulaProducts products={products} setProducts={setProducts}  />
                 <SumTotal sumTotalProducts={totalProducts} />
 
                 <OffCanvas titlePrincipal='Registro de Cliente' visible={visible} xClose={handleClose} position={Direction.Right}  >

@@ -19,7 +19,7 @@ export const ProductsStockCard = () => {
                     state={{ fromHome: location.pathname === "/" }}>
                     <div key={product.id}>
                         <div className="space-y-1">
-                            <div className="rounded-lg border border-gray-500 p-4 mb-2 hover:border-blue-700 transition-colors duration-3000 ">
+                            <div className="rounded-lg border border-gray-500 p-4 mb-2 hover:border-blue-700 transition-colors duration-3000 hover:bg-gray-200">
                                 <div className="relative flex justify-between items-center mb-2">
                                     <p className=" font-bold ">#{product.codeNumber.toString().padWithZeros(5)}</p>
                                     <p className=" text-2xl font-bold text-red-500 absolute inset-y-5 right-1">{product.quantity}</p>
