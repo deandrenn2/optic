@@ -10,9 +10,7 @@ import { SearchProduct } from "../../Products/SearchProduct";
 export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isVisiblePaymment = true, }:
     {
         products: ProductsResponseModel[];
-        setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>;
-        setVisiblePaymment?: React.Dispatch<React.SetStateAction<boolean>>;
-        isVisiblePaymment?: boolean;
+        setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>;setVisiblePaymment?: React.Dispatch<React.SetStateAction<boolean>>;isVisiblePaymment?: boolean;
     }) => {
     const [codeProduct, setCodeProduct] = useState<string>("");
     const { mutationValidateProduct } = useValidateProduct();

@@ -22,6 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { PurchasePayments } from "./PurchasePayments";
 
 export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
     const { id } = useParams();
@@ -33,7 +34,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
     const { business } = useUserContext();
     const [visibleModalSupplier, setVisibleModalSupplier] = useState(false);
     const [visibleModalProduct, setVisibleModalProduct] = useState(false);
-
+    const [VisiblePaymmentsPurchase, setVisiblePaymmentsPurchase] = useState(false);
     const [purchase, setPurchase] = useState<UpdatePurchaseModel>({
         id: 0,
         idBusiness: 0,
@@ -170,7 +171,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
                 </div>
             </div>
 
-            <PurchaseProducts products={products} setProducts={setProducts} />
+            <PurchaseProducts products={products} setProducts={setProducts} setVisiblePaymment={setVisiblePaymmentsPurchase} />
             <SumTotal sumTotalProducts={totalProducts} />
 
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleUpdatePurchase}>
@@ -197,6 +198,10 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
             </OffCanvas>
             <OffCanvas titlePrincipal='Registro de Producto' visible={visibleModalProduct} xClose={() => setVisibleModalProduct(false)} position={Direction.Right}>
                 <ProductForm />
+            </OffCanvas>
+            <OffCanvas
+                titlePrincipal=" Abono en Venta" visible={VisiblePaymmentsPurchase} xClose={() => setVisiblePaymmentsPurchase(false)} position={Direction.Right}>
+                <PurchasePayments/>
             </OffCanvas>
         </div>
     );

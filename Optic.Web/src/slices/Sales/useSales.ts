@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createSaleService, getSale, getSalePaymentsService, getSales, SalesCreatePaymer, SalesDeletePaymer, updateSaleService, updateStateSaleService } from './SalesServices';
+import { createSaleService, getSale, getSalePaymentsService, getSales,  SalesCreatePayments,  SalesDeletePaymer, updateSaleService, updateStateSaleService } from './SalesServices';
 import { toast } from 'react-toastify';
-import { SalesCreatePaymerModel } from './SalesModel';
+import { SalesCreatePaymentsModel } from './SalesModel';
+
 
 const KEY = 'Sales';
 
@@ -106,8 +107,8 @@ export const useCreatePayment = (invoiceId: number) => {
   const queryClient = useQueryClient();
 
   const createPayment = useMutation({
-    mutationFn: (model: SalesCreatePaymerModel) =>
-      SalesCreatePaymer(invoiceId, model),
+    mutationFn: (model: SalesCreatePaymentsModel) =>
+      SalesCreatePayments(invoiceId, model),
     onSuccess: (data) => {
       if (data.isSuccess) {
         toast.success(data.message || "Abono registrado");

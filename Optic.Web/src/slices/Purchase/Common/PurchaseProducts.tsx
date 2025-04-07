@@ -4,9 +4,8 @@ import { useState } from "react";
 import { useValidateProduct } from "../../Products/useProducts";
 import { ProductsResponseModel } from "../../Products/ProductModel";
 import { MoneyFormatter } from "../../../shared/components/Numbers/MoneyFormatter";
-
-
-export const PurchaseProducts = ({ products, setProducts }: { products: ProductsResponseModel[], setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>> }) => {
+export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, purVisiblePaymment = true, }:
+    { products: ProductsResponseModel[], setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>;setVisiblePaymment?: React.Dispatch<React.SetStateAction<boolean>>;purVisiblePaymment?: boolean;}) => {
     const [codeProduct, setCodeProduct] = useState<string>("");
     const { mutationValidateProduct } = useValidateProduct();
 
@@ -24,6 +23,12 @@ export const PurchaseProducts = ({ products, setProducts }: { products: Products
             }
             setCodeProduct("");
         }
+    }
+
+
+    const handleClickPayments = () => {
+        if (setVisiblePaymment)
+            setVisiblePaymment(true)
     }
 
     const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
@@ -49,27 +54,32 @@ export const PurchaseProducts = ({ products, setProducts }: { products: Products
     return (
         <div className="bg-gray-100 py-1 px-2 rounded-lg border border-gray-300">
             <div className="flex w-full gap-4 justify-between">
-                <h2 className="font-bold text-center text-gray-500 text-lg mb-2 px-2">Facturación</h2>
+                <h2 className="font-bold text-center text-gray-500 text-lg mb-2 px-2">Facturació</h2>
             </div>
-
+           
+            {purVisiblePaymment &&
+                <div className="flex justify-end justify-items-end">
+                    <button className="bg-teal-500 text-white  py-1 px-1 rounded hover:bg-teal-600 mb-2"onClick={handleClickPayments}>Abono de Venta</button>
+                </div>
+            }
             <div className="flex flex-col gap-2 mb-4">
                 {
                     products.map((x) => (
                         <div key={x.id} className="grid grid-cols-[3fr_3fr_3fr_3fr_1fr] gap-2">
                             <span className="font-bold">{x.name}</span>
                             <label className="text-gray-600 text-sm">Precio de Venta.</label>
-                            
+
                             <input type="text" className="border border-gray-300 rounded p-1 ml-6"
                                 value={x.salePrice}
                                 onChange={(e) => handleChangeSalePrice(e, x.id)} />
                             <label className="text-gray-600 text-sm">Cantidad</label>
-                           
+
                             <input type="number" value={x.quantity}
                                 onChange={(e) => handleChangeQuantity(e, x.id)}
                                 min={0} max={999}
                                 className="w-14 border border-gray-300 rounded p-1 ml-2" />
                             <label className="text-gray-600 text-sm">Precio costo</label>
-                            
+
                             <input type="number" value={x.unitPrice}
                                 onChange={(e) => handleChangeUnitPrice(e, x.id)}
                                 min={0} max={999}
@@ -97,7 +107,6 @@ export const PurchaseProducts = ({ products, setProducts }: { products: Products
                         placeholder="Agregar producto por código"
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </form>
-
             </div>
         </div>
     );

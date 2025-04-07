@@ -43,3 +43,15 @@ export interface UpdateStatePurchase {
    id: number;
    state: string;
 }
+
+
+export interface paymentsPurchaseModel {
+   id: number,
+   amount: number,
+   date: string;
+}
+
+ export interface PaymentsPurchaseCreateModel{
+   purchaseId: number, 
+   amount: number,
+ }
