@@ -1,7 +1,7 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
 import { CreateClientModel } from '../Clients/ClientModel';
-import { CategoriesModel, ProductModel, ProductPagerModel,  ProductSearchResponse,  ProductsResponseModel, QuantityModel } from './ProductModel';
+import { CategoriesModel, ProductModel, ProductPagerModel,   ProductSearchResponse,   ProductsResponseModel, QuantityModel } from './ProductModel';
 
 
 export const getProducts = async (): Promise<MsgResponse<ProductsResponseModel[]>> => {

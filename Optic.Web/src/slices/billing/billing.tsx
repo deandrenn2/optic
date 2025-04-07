@@ -8,8 +8,6 @@ import { useFileDownload } from "../../shared/components/FilesDowload";
 export const Billing = () => {
     const [bills, setBills] = useState<BillingDocumentModel[]>([]);
     const { descargarArchivo } = useFileDownload();
-
-    // Estados para los filtros
     const [filterNumber, setFilterNumber] = useState<number | undefined>();
     const [filterStatus, setFilterStatus] = useState<string | undefined>();
     const [filterClientOrSupplierType, setFilterClientOrSupplierType] = useState<string | undefined>("cliente");

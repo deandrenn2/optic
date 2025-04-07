@@ -19,7 +19,6 @@ export const PurchasePayments = () => {
           Agregar
         </button>
       </div>
-
             <div className="mt-4">
                 <h3 className="text-lg font-bold text-gray-700">
                     Factura Total:
