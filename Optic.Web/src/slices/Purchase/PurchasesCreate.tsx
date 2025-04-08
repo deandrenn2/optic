@@ -71,7 +71,7 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
                 confirmButtonText: 'Ir al detalle',
                 cancelButtonText: 'Cerrar',
                 preConfirm: async () => {
-                    navigate(`/Sales/${res.data}`);
+                    navigate(`/Purchases/${res.data}`);
                 }
             });
 

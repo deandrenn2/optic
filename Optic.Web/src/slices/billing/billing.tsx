@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileExcel, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { BillingDocumentModel } from "./BillingModal";
-import { getDocuments } from "./BillingServices";
+import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
 import ButtonDetail from "../../shared/components/Buttons/ButtonDetail";
 import { useFileDownload } from "../../shared/components/FilesDowload";
+import { useBilling } from "./useBilling";
+import { Bar } from "../../shared/components/Progress/Bar";
 export const Billing = () => {
-    const [bills, setBills] = useState<BillingDocumentModel[]>([]);
     const { descargarArchivo } = useFileDownload();
 
     // Estados para los filtros
@@ -16,24 +15,8 @@ export const Billing = () => {
     const [filterClientOrSupplierID,] = useState<number | undefined>();
     const [filterFrom, setFilterFrom] = useState<string | undefined>();
     const [filterTo, setFilterTo] = useState<string | undefined>();
+    const { queryBilling, billing } = useBilling(filterNumber, filterStatus, filterClientOrSupplierType, filterClientOrSupplierID, undefined, filterFrom, filterTo);
 
-    const fetchBills = async () => {
-        try {
-            const response = await getDocuments(
-                filterNumber,
-                filterStatus,
-                undefined,
-                filterClientOrSupplierID,
-                undefined,
-                filterFrom,
-                filterTo
-            );
-            if (!response.isSuccess) throw new Error(response.message);
-            setBills(response.data ?? []);
-        } catch (err) {
-            console.error("Error al obtener facturas:", err);
-        }
-    };
 
     const handleDownload = async (id: number, typeDocument: string) => {
         let urlBlob = "";
@@ -47,9 +30,8 @@ export const Billing = () => {
         await descargarArchivo(urlBlob, `${typeDocument}_${id}_${new Date().toISOString().split('T')[0]}.xlsx`);
     }
 
-    useEffect(() => {
-        fetchBills();
-    }, []);
+    if (queryBilling.isLoading)
+        return <Bar Title="Cargando..." />;
 
     return (
         <div className="w-full p-4">
@@ -120,13 +102,13 @@ export const Billing = () => {
 
                 {/* Botón de búsqueda */}
                 <div className="flex justify-end">
-                    <button
+                    {/* <button
                         onClick={fetchBills}
                         className="bg-blue-500 text-white px-6 py-2 rounded flex items-center"
                     >
                         <FontAwesomeIcon icon={faSearch} className="mr-2" />
                         Buscar
-                    </button>
+                    </button> */}
                 </div>
             </div>
 
@@ -147,7 +129,8 @@ export const Billing = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {bills.map((bill, i) => (
+                            {queryBilling.isLoading && <Bar Title="Cargando..." />}
+                            {!queryBilling.isLoading && billing && billing.map((bill, i) => (
                                 <tr key={i} className="hover:bg-gray-50">
                                     <td className="border p-2 text-center">#{bill.number.toString().padStart(5, '0')}</td>
                                     <td className="border p-2 text-center">{bill.typeDocument}</td>
