@@ -25,7 +25,6 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
         }
     }
 
-
     const handleClickPayments = () => {
         if (setVisiblePaymment)
             setVisiblePaymment(true)
@@ -47,7 +46,6 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
     const handleDeleteProduct = (id: number) => {
         setProducts(products.filter((x) => x.id !== id));
     }
-
 
     const totalProducts = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
 

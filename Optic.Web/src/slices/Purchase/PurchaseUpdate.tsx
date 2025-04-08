@@ -200,7 +200,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
             </OffCanvas>
             <OffCanvas
                 titlePrincipal=" Abono en Venta" visible={VisiblePaymmentsPurchase} xClose={() => setVisiblePaymmentsPurchase(false)} position={Direction.Right}>
-                <PurchasePayments/>
+                <PurchasePayments setProductscts={setProducts}/>
             </OffCanvas>
         </div>
     );

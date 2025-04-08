@@ -150,5 +150,33 @@ export const getPaymentsPurchaseService = async (
    };
  };
 
+ export const SalesDeletePaymer = async (
+   idPayment: number,
+   purchaseId: number
+ ): Promise<MsgResponse<null>> => {
+   const url = `/api/purchases/payments/${idPayment}?id=${purchaseId}`;
+   const response = await ApiClient.delete<MsgResponse<null>>(url);
+ 
+   if (response.status !== 200 && response.status !== 204) {
+     return {
+       isSuccess: false,
+       isFailure: true,
+       message: "Error al eliminar el abono",
+       error: {
+         code: response.status.toString(),
+         message: response.statusText,
+       },
+     };
+   }
+ 
+   return {
+     isSuccess: true,
+     isFailure: false,
+     message: "Abono eliminado correctamente",
+     data: null,
+   };
+ };
+ 
+
  
  
