@@ -11,6 +11,7 @@ export const SalesPayments = ({ Id, totalFactura, payments }: { Id: number; tota
   const { deletePayment } = useDeletePayment(Id);
 
   const handleAddAbono = async () => {
+    
     if (amount <= 0 || isNaN(amount)) return;
     createPayment.mutate({
       invoiceId: Id,

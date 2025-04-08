@@ -1,9 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { createPurchaseService, getPurchase, getPurchases, updatePurchaseService, updateStatePurchaseService } from './PurchaseServices';
-
+import { createPurchaseService,  getPurchases,    PaymentsPurchaseCreate,    updatePurchaseService, updateStatePurchaseService } from './PurchaseServices';
 const KEY = 'Purchases';
-
 export const usePurchases = () => {
    const queryPurchases = useQuery({
       queryKey: [KEY],
@@ -79,17 +77,34 @@ export const usePurchaseMutation = () => {
    };
 };
 
-export const usePurchase = (id: string | undefined) => {
-   const queryPurchase = useQuery({
-      queryKey: [`${KEY}`, id],
-      queryFn: () => getPurchase(id != undefined ? parseInt(id) : 0),
-      enabled: id !== undefined,
+
+
+
+
+
+export const usePurchasePayments = (purchaseId: number) => {
+   const queryClient = useQueryClient();
+
+   const createPayment = useMutation({
+       mutationFn: (data: { purchaseId: number; amount: number }) =>
+           PaymentsPurchaseCreate(purchaseId, data),
+       onSuccess: (response) => {
+           if (response.isSuccess) {
+               toast.success("Abono agregado correctamente");
+               // Refetch de la lista de abonos
+               queryClient.invalidateQueries({ queryKey: ['PurchasesPayments', purchaseId] });
+           } else {
+               toast.error("Error al agregar abono: " + response.message);
+           }
+       },
+       onError: () => {
+           toast.error("Hubo un error al intentar agregar el abono.");
+       }
    });
 
+  
+
    return {
-      queryPurchase,
-      purchase: queryPurchase.data?.data,
+      createPayment,
    };
 };
-
-

@@ -23,7 +23,6 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { PurchasePayments } from "./PurchasePayments";
-
 export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
     const { id } = useParams();
     const [supplier, setSupplier] = useState<Option | undefined>();
@@ -74,7 +73,6 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
             }
         }
     }, [id, purchaseData]);
-
 
     useEffect(() => {
         const body = document.querySelector("body");
@@ -177,6 +175,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleUpdatePurchase}>
                 {updatePurchase.isPending ? "Guardando..." : "Guardar Cambios"}
             </button>
+            
             <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1" onClick={() => setVisibleModalSupplier(true)}>
                 Crear Proveedor
             </button>

@@ -1,6 +1,6 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
-import { CreateSaleModel,  SalesCreatePaymentsModel,   SalesPaymentsModel,  SalesResponseModel, UpdateSaleModel, UpdateStateSale } from './SalesModel';
+import { CreateSaleModel,  SalesCreatePaymentsModel,   SalesPaymentsModel,   SalesResponseModel,   UpdateSaleModel, UpdateStateSale } from './SalesModel';
 
 export const getSales = async (): Promise<MsgResponse<SalesResponseModel[]>> => {
    const url = 'api/sales';
@@ -131,31 +131,6 @@ export const SalesCreatePayments = async ( id: number, model: SalesCreatePayment
      }
      return response.data;
    };
-
- 
-
-   export const SalesDeletePaymer = async ( idPayment: number): Promise<MsgResponse<null>> => {
-      const url = `/api/sales/payments/${idPayment}`;
-      const response = await ApiClient.delete<MsgResponse<null>>(url);
-      if (response.status !== 200 && response.status !== 204) {
-        return {
-          isSuccess: false,
-          isFailure: true,
-          message: "Error al eliminar el abono",
-          error: {
-            code: response.status.toString(),
-            message: response.statusText,
-          },
-        };
-      }
-    
-      return {
-        isSuccess: true,
-        isFailure: false,
-        message: "Abono eliminado correctamente",
-        data: null,
-      };
-    };
     
  
  

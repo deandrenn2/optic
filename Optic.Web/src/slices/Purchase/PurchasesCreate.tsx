@@ -24,7 +24,6 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
     const [visibleModalSupplier, setVisibleModalSupplier] = useState(false);
     const [visibleModalProduct, setVisibleModalProduct] = useState(false);
     const navigate = useNavigate();
-
     const [purchase, setPurchase] = useState<CreatePurchaseModel>({
         idBusiness: 0,
         supplierId: 0,

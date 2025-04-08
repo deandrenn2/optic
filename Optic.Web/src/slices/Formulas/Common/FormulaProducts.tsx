@@ -7,7 +7,7 @@ import { useValidateProduct } from "../../Products/useProducts";
 import OffCanvas from "../../../shared/components/OffCanvas/Index";
 import { Direction } from "../../../shared/components/OffCanvas/Models";
 import { SearchProduct } from "../../Products/SearchProduct";
-export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isVisiblePaymment = false, }:
+export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isVisiblePaymment = true, }:
     {
         products: ProductsResponseModel[];
         setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>;setVisiblePaymment?: React.Dispatch<React.SetStateAction<boolean>>;isVisiblePaymment?: boolean;

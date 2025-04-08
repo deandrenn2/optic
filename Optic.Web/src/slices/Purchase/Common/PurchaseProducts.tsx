@@ -3,7 +3,7 @@ import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useValidateProduct } from "../../Products/useProducts";
 import { ProductsResponseModel } from "../../Products/ProductModel";
-import { MoneyFormatter } from "../../../shared/components/Numbers/MoneyFormatter";
+import { MoneyFormatter } from "../../../shared/components/Numbers/MoneyFormatter";  
 export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, purVisiblePaymment = true, }:
     { products: ProductsResponseModel[], setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>;setVisiblePaymment?: React.Dispatch<React.SetStateAction<boolean>>;purVisiblePaymment?: boolean;}) => {
     const [codeProduct, setCodeProduct] = useState<string>("");
@@ -58,8 +58,8 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
             </div>
            
             {purVisiblePaymment &&
-                <div className="flex justify-end justify-items-end">
-                    <button className="bg-teal-500 text-white  py-1 px-1 rounded hover:bg-teal-600 mb-2"onClick={handleClickPayments}>Abono de Venta</button>
+                <div className="flex justify-end justify-items-end" onClick={handleClickPayments}>
+                    <button className="bg-teal-500 text-white  py-1 px-1 rounded hover:bg-teal-600 mb-2">Abono de Venta</button>
                 </div>
             }
             <div className="flex flex-col gap-2 mb-4">
