@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { createPurchaseService,  getPurchases,    PaymentsPurchaseCreate,    updatePurchaseService, updateStatePurchaseService } from './PurchaseServices';
+import { createPurchaseService, getPurchase, getPurchases, PaymentsPurchaseCreate, updatePurchaseService, updateStatePurchaseService } from './PurchaseServices';
+
 const KEY = 'Purchases';
+
 export const usePurchases = () => {
    const queryPurchases = useQuery({
       queryKey: [KEY],
@@ -77,7 +79,18 @@ export const usePurchaseMutation = () => {
    };
 };
 
+export const usePurchase = (id: string | undefined) => {
+   const queryPurchase = useQuery({
+      queryKey: [`${KEY}`, id],
+      queryFn: () => getPurchase(id != undefined ? parseInt(id) : 0),
+      enabled: id !== undefined,
+   });
 
+   return {
+      queryPurchase,
+      purchase: queryPurchase.data?.data,
+   };
+};
 
 
 

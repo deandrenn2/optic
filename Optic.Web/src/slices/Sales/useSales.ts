@@ -1,17 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createSaleService, getSale, getSalePaymentsService, getSales,  SalesCreatePayments,  SalesDeletePaymer, updateSaleService, updateStateSaleService } from './SalesServices';
+import { createSaleService, getSale, getSalePaymentsService, getSales,  SalesCreatePayments,   SalesDeletePaymer,   updateSaleService, updateStateSaleService } from './SalesServices';
 import { toast } from 'react-toastify';
 import { SalesCreatePaymentsModel } from './SalesModel';
 
 
 const KEY = 'Sales';
-
 export const useSales = () => {
    const querySales = useQuery({
       queryKey: [`${KEY}`],
       queryFn: getSales,
    });
-
    return {
       querySales,
       sales: querySales.data?.data,
@@ -145,3 +143,5 @@ export const useDeletePayment = (invoiceId: number) => {
 
   return { deletePayment };
 };
+
+

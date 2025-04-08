@@ -150,10 +150,5 @@ export const getPaymentsPurchaseService = async (
    };
  };
 
- export const deleteSalesPaymentService = async (paymentId: number): Promise<MsgResponse<null>> => {
-   const url = `/api/sales/payments/${paymentId}`;
-   const response = await ApiClient.delete<MsgResponse<null>>(url);
-   return response.data;
-};
  
  

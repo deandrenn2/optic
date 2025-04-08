@@ -45,10 +45,6 @@ export const PurchasePayments = () => {
         setAmount(0);
     };
 
-    const handleDeletePayment = (paymentId: number) => {
-      
-    };
-
     return (
         <div className="grid-cols-2 mb-4 gap-4">
             <label className="block text-gray-700 font-bold mb-2">
@@ -99,7 +95,7 @@ export const PurchasePayments = () => {
                                     <MoneyFormatter amount={abono.amount} />
                                     <button
                                         className="text-red-500 text-2xl hover:text-red-700"
-                                        onClick={() => handleDeletePayment(abono.id)}
+                                        onClick={() => (abono.id)}
                                     >
                                         <FontAwesomeIcon icon={faCircleMinus} />
                                     </button>

@@ -131,8 +131,6 @@ export const SalesUpdate = () => {
 
         })
     }
-
-
     if (querySale.isLoading)
         return <Bar Title="Cargando..." />;
 

@@ -31,7 +31,6 @@ export const FormulasUpdate = () => {
     const [diagnosis, setDiagnosis] = useState<DiagnosisModel[]>([]);
     const [stateFormula, setStateFormula] = useState<string>("Borrador");
     const [products, setProducts] = useState<ProductsResponseModel[]>([]);
-
     const { updateFormula, updateStateFormula } = useFormulaMutation();
     const { formula: formulaData, queryFormula } = useFormula(id);
     const { business } = useUserContext();
@@ -111,7 +110,6 @@ export const FormulasUpdate = () => {
         const urlBlob = `/api/formulas/${id}/report`;
         await descargarArchivo(urlBlob, "Formula_" + id + "_" + new Date().toISOString().split('T')[0] + ".xlsx");
     }
-
 
     const handleChangeClient = (newValue: SingleValue<Option>) => {
         setClient({
@@ -230,8 +228,6 @@ export const FormulasUpdate = () => {
     }
 
     const diagnosisData = diagnosis.filter((x) => x.stateChange !== 3);
-
-
     const isEnabledPaymmentButton = () => {
         if (payments.length > 0)
             return true;
