@@ -1,6 +1,6 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
-import { CreateSaleModel,  SalesCreatePaymerModel,  SalesPaymerModel, SalesResponseModel, UpdateSaleModel, UpdateStateSale } from './SalesModel';
+import { CreateSaleModel,  SalesCreatePaymentsModel,   SalesPaymentsModel,  SalesResponseModel, UpdateSaleModel, UpdateStateSale } from './SalesModel';
 
 export const getSales = async (): Promise<MsgResponse<SalesResponseModel[]>> => {
    const url = 'api/sales';
@@ -95,12 +95,9 @@ export const updateStateSaleService = async (model: UpdateStateSale): Promise<Ms
    return response.data;
 };
 
-
-
-
-export const getSalePaymentsService = async ( id: number): Promise<MsgResponse<SalesPaymerModel[]>> => {
+export const getSalePaymentsService = async ( id: number): Promise<MsgResponse<SalesPaymentsModel[]>> => {
    const url = `api/sales/${id}/payments`; {
-     const response = await ApiClient.get<MsgResponse<{ payments: SalesPaymerModel[] }>>(url);
+     const response = await ApiClient.get<MsgResponse<{ payments: SalesPaymentsModel[] }>>(url);
  
      if (response.status === 200 && response.data?.isSuccess) {
        return {
@@ -118,7 +115,7 @@ export const getSalePaymentsService = async ( id: number): Promise<MsgResponse<S
    }
  };
  
-export const SalesCreatePaymer = async ( id: number, model: SalesCreatePaymerModel): Promise<MsgResponse<number>> => {
+export const SalesCreatePayments = async ( id: number, model: SalesCreatePaymentsModel): Promise<MsgResponse<number>> => {
    const url = `/api/sales/${id}/payments`;
    const response = await ApiClient.post<MsgResponse<number>>(url, model);
      if (response.status !== 201 && response.status !== 200) {

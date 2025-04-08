@@ -1,19 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MoneyFormatter } from "../../../shared/components/Numbers/MoneyFormatter";
 import { ProductsResponseModel } from "../../Products/ProductModel";
-import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useValidateProduct } from "../../Products/useProducts";
 import OffCanvas from "../../../shared/components/OffCanvas/Index";
 import { Direction } from "../../../shared/components/OffCanvas/Models";
 import { SearchProduct } from "../../Products/SearchProduct";
-import { SalesPaymer } from "../../Sales/SalesPaymer";
-export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isVisiblePaymment = true, }:
+export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isVisiblePaymment = false, }:
     {
         products: ProductsResponseModel[];
-        setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>;
-        setVisiblePaymment?: React.Dispatch<React.SetStateAction<boolean>>;
-        isVisiblePaymment?: boolean;
+        setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>;setVisiblePaymment?: React.Dispatch<React.SetStateAction<boolean>>;isVisiblePaymment?: boolean;
     }) => {
     const [codeProduct, setCodeProduct] = useState<string>("");
     const { mutationValidateProduct } = useValidateProduct();
@@ -66,20 +63,21 @@ export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isV
     const totalProducts = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
 
     return (
-        <div className="bg-gray-100 py-1 px-2 rounded-lg border border-gray-300">
-            <div className="flex w-full gap-4  justify-center">
-                <h2 className="font-bold text-center text-gray-500 text-lg mb-2 px-2">Facturación</h2>
+        <div className="bg-gray-100  rounded-lg border border-gray-300">
+            <div className="flex w-full gap-4">
+                <h2 className="font-bold text-center text-gray-500 text-lg">Facturación</h2>
             </div>
-            <div className="mr-4">
+            <div className="flex justify-end justify-items-end">
                 <OffCanvas titlePrincipal='Productos' visible={visible} xClose={handleClose} position={Direction.Right}  >
                     <SearchProduct setProducts={setProducts} />
                 </OffCanvas>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2" onClick={handleClick}>
+                <button className="bg-blue-500 text-white  rounded hover:bg-blue-600 mb-2 mr-2" onClick={handleClick}>
+                     <FontAwesomeIcon icon={faSearch} className="mr-1" />
                     Producto
                 </button>
 
                 {isVisiblePaymment &&
-                    <button className="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 mb-2" onClick={handleClickAbono}>
+                    <button className="bg-teal-500 text-white  py-1 px-1 rounded hover:bg-teal-600 mb-2" onClick={handleClickAbono}>
                         Abono
                     </button>}
 

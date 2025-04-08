@@ -3,19 +3,18 @@ import { getPagerProduct } from "./ProductsServices";
 import { ProductSearchResponse, ProductsResponseModel } from "./ProductModel";
 import {  faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 export const SearchProduct = ({ setProducts }: { setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>> }) => {
-    const [search, setSearch] = useState<string>(""); // Texto de búsqueda
+    const [search, setSearch] = useState<string>("");
     const [localProducts, setLocalProducts] = useState<ProductsResponseModel[]>([]);
     const [searched, setSearched] = useState<boolean>(false); 
     const [pageIndex] = useState<number>(1); 
     const [orderByName ] = useState<boolean>(false); 
-    
     const loadProducts = async () => {
         try {
             const result: ProductSearchResponse = await getPagerProduct(pageIndex, 10, orderByName, search); 
             const products = Array.isArray(result.data) ? result.data : [];
             if (products.length > 0) {
-                console.log("📋 Productos recibidos:", products);
                 setLocalProducts(products);
             } else {
                 setLocalProducts([]);
@@ -46,12 +45,13 @@ export const SearchProduct = ({ setProducts }: { setProducts: React.Dispatch<Rea
 
     const addProduct = (product: ProductsResponseModel) => {
         setProducts((prev) => {
-            if (prev.some((p) => p.id === product.id)) return prev; 
-
-            if (prev.length >= 5) {
-                return [product, ...prev.slice(0, 4)];
-            }
-            return [product, ...prev]; 
+            const existngProduct = prev.find(p => p.id === product.id);
+            if (existngProduct){
+                return prev.map(p =>
+                    p.id === product.id ? {...p, quantity: p.quantity + 1} :p 
+                );
+                }
+            return [...prev,{...product,quantity: 1}];
         });
     };
 
@@ -67,7 +67,7 @@ export const SearchProduct = ({ setProducts }: { setProducts: React.Dispatch<Rea
                 />
                 <button
                     onClick={handleSearch}
-                    className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 font-bold rounded-tr-lg rounded-br-lg"
+                    className="bg-blue-500 hover:bg-blue-700 text-white px-3 py-2 font-bold rounded-tr-lg rounded-br-lg"
                 >
                     Buscar
                 </button>

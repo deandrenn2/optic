@@ -16,7 +16,6 @@ import { PurchaseProducts } from "./Common/PurchaseProducts";
 import { ProductForm } from "../Products/ProductsForm";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-
 export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
     const [supplier, setSupplier] = useState<Option | undefined>();
     const [products, setProducts] = useState<ProductsResponseModel[]>([]);

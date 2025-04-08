@@ -7,8 +7,6 @@ import { useBilling } from "./useBilling";
 import { Bar } from "../../shared/components/Progress/Bar";
 export const Billing = () => {
     const { descargarArchivo } = useFileDownload();
-
-    // Estados para los filtros
     const [filterNumber, setFilterNumber] = useState<number | undefined>();
     const [filterStatus, setFilterStatus] = useState<string | undefined>();
     const [filterClientOrSupplierType, setFilterClientOrSupplierType] = useState<string | undefined>("cliente");

@@ -156,7 +156,7 @@ export const SalesUpdate = () => {
                 </div>
 
 
-                <FormulaProducts products={products} setProducts={setProducts} isCredit={true} saleId={0} />
+                <FormulaProducts products={products} setProducts={setProducts} />
                 <SumTotal sumTotalProducts={totalProducts} />
                 <div className="flex justify-between gap-0">
                     <div className="flex">

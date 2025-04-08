@@ -22,9 +22,9 @@ import { toast } from "react-toastify";
 import { getStatusColorInvoice } from "./FormulasUtils";
 import { useFileDownload } from "../../shared/components/FilesDowload";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
-import { SalesPaymer } from "../Sales/SalesPaymer";
 import { Direction } from "../../shared/components/OffCanvas/Models";
 import { usePayments } from "../Sales/useSales";
+import { SalesPayments } from "../Sales/SalesPayments";
 export const FormulasUpdate = () => {
     const { id } = useParams();
     const [client, setClient] = useState<Option | undefined>();
@@ -318,7 +318,7 @@ export const FormulasUpdate = () => {
                     <label className={`block ${getStatusColorInvoice(formula.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(formula.state)} icon={faCircle} /> {formula.state}</label>
                 </div>
                 <OffCanvas titlePrincipal='Abonos' visible={isVisiblePaymment} xClose={() => setIsVisiblePaymment(false)} position={Direction.Right}  >
-                    <SalesPaymer Id={formula.idInvoice} totalFactura={getTotalSumaTotal()} payments={payments} />
+                    <SalesPayments Id={formula.idInvoice} totalFactura={getTotalSumaTotal()} payments={payments} />
                 </OffCanvas>
             </div>
         );

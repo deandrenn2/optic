@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 import { useCreatePayment, useDeletePayment } from "./useSales";
-import { SalesPaymerModel } from "./SalesModel";
 import { format } from "date-fns";
-export const SalesPaymer = ({ Id, totalFactura, payments }: { Id: number; totalFactura: number; payments: SalesPaymerModel[] }) => {
+import { SalesPaymentsModel } from "./SalesModel";
+export const SalesPayments = ({ Id, totalFactura, payments }: { Id: number; totalFactura: number; payments: SalesPaymentsModel[] }) => {
   const [amount, setAmount] = useState<number>(0);
   const { createPayment } = useCreatePayment(Id);
   const { deletePayment } = useDeletePayment(Id);
@@ -52,12 +52,12 @@ export const SalesPaymer = ({ Id, totalFactura, payments }: { Id: number; totalF
             placeholder="Abono"
             value={amount}
             onChange={handleChangeAmount}
-            className="shadow appearance-none border rounded-tl-lg rounded-bl-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="shadow appearance-none border rounded-tl-lg rounded-bl-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
         <button
           onClick={handleAddAbono}
-          className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2 font-bold rounded-tr-lg rounded-br-lg w-full"
+          className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-1 font-bold rounded-tr-lg rounded-br-lg w-full"
         >
           Agregar
         </button>
