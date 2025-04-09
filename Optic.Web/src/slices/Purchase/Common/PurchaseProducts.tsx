@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faDollar, faMinus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useValidateProduct } from "../../Products/useProducts";
 import { ProductsResponseModel } from "../../Products/ProductModel";
@@ -29,7 +29,7 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
         }
     }
 
-    const handleClose = () =>{
+    const handleClose = () => {
         setVisiblePro(false);
     }
 
@@ -38,7 +38,7 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
             setVisiblePaymment(true);
     }
 
-    const handleClick = () =>{
+    const handleClick = () => {
         setVisiblePro(true);
     }
 
@@ -63,25 +63,28 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
 
     return (
         <div className="bg-gray-100 py-1 px-2 rounded-lg border border-gray-300">
+
             <div className="flex w-full gap-4 justify-between">
                 <h2 className="font-bold text-center text-gray-500 text-lg mb-2 px-2">Facturació</h2>
-            </div>
 
-            <div className="flex justify-end justify-itmes-end">
-                
-                <OffCanvas titlePrincipal='Productos' visible={visiblePro} xClose={handleClose} position={Direction.Right}>
-                    <SearchProduct setProducts={setProducts} />
-                </OffCanvas>
-                <button className="bg-blue-500 text-white rounded hover:bg-blue-600 mb-2 mr-2" onClick={handleClick}>                    
-                 Producto <FontAwesomeIcon icon={faSearch} className="mr-1"/>
-                </button>
-
-                {purVisiblePaymment &&
-                    <div className="flex justify-end justify-items-end" onClick={handleClickPayments}>
-                        <button className="bg-teal-500 text-white  py-1 px-1 rounded hover:bg-teal-600 mb-2">Abono</button>
+                <div className="flex justify-end justify-items-end">
+                    <OffCanvas titlePrincipal='Productos' visible={visiblePro} xClose={handleClose} position={Direction.Right}>
+                        <SearchProduct setProducts={setProducts} />
+                    </OffCanvas>
+                    <div>
+                        <button className="bg-blue-500 text-white rounded hover:bg-blue-600 mr-2 py1 px-3 mb-2" onClick={handleClick}>
+                            <FontAwesomeIcon icon={faSearch} className="mr-1" /> Producto
+                        </button>
                     </div>
-                }
+
+                    {purVisiblePaymment &&
+                        <div className=" " onClick={handleClickPayments}>
+                            <button className="bg-teal-500 text-white mr-2 py1 px-3 rounded hover:bg-teal-600 mb-2" ><FontAwesomeIcon icon={faDollar} className="mr-1" />Abono</button>
+                        </div>
+                    }
+                </div>
             </div>
+
             <div className="flex flex-col gap-2 mb-4">
                 {
                     products.map((x) => (
@@ -89,23 +92,28 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
                             <span className="font-bold">{x.name}</span>
                             <label className="text-gray-600 text-sm">Precio de Venta.</label>
 
-                            <input type="text" className="border border-gray-300 rounded p-1 ml-6"
+                            <input type="text" className="border border-gray-300 rounded p-1 ml-1"
                                 value={x.salePrice}
                                 onChange={(e) => handleChangeSalePrice(e, x.id)} />
-                            <label className="text-gray-600 text-sm">Cantidad</label>
 
+                            <div className="flex justify-center">
+                                <label className="text-gray-600 text-sm">Cantidad</label>
+                            </div>
                             <input type="number" value={x.quantity}
                                 onChange={(e) => handleChangeQuantity(e, x.id)}
                                 min={0} max={999}
                                 className="w-14 border border-gray-300 rounded p-1 ml-2" />
-                            <label className="text-gray-600 text-sm">Precio costo</label>
 
+                            <label className="text-gray-600 text-sm">Precio costo</label>
                             <input type="number" value={x.unitPrice}
                                 onChange={(e) => handleChangeUnitPrice(e, x.id)}
                                 min={0} max={999}
-                                className="w-14 border border-gray-300 rounded p-1 ml-2" />
-                            <p className=" right-0"> <MoneyFormatter amount={x.salePrice * x.quantity} /></p>
-                            <div className="flex justify-end  ">
+                                className="w-32 border border-gray-300 rounded p-1 ml-1"/>
+                                
+                            <p className=" right-0"><MoneyFormatter amount={x.salePrice * x.quantity} /></p>
+                            <br/>
+
+                            <div className=" flex justify-end ">
                                 <button className="w-8 bg-red-500 text-white px-2 py-1 rounded" onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button>
                             </div>
                         </div>
