@@ -106,7 +106,7 @@ export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isV
                                 onChange={(e) => handleChangeQuantity(e, x.id)}
                                 min={0} max={999}
                                 disabled={disabled}
-                                className="w-14 border border-gray-300 rounded p-1 ml-2" />
+                                className="w-14 border border-gray-300 rounded p-1 ml-2"/>
                             <p className="text-right"> <MoneyFormatter amount={x.salePrice * x.quantity} /></p>
                             {
                                 !disabled &&
