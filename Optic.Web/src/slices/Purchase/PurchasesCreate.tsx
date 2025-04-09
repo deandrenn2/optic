@@ -69,7 +69,7 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
                 confirmButtonText: 'Ir al detalle',
                 cancelButtonText: 'Cerrar',
                 preConfirm: async () => {
-                    navigate(`/Sales/${res.data}`);
+                    navigate(`/Purchases/${res.data}`);
                 }
             });
 
@@ -81,7 +81,7 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
 
     return (
         <div className="mb-1">
-            <div className="grid grid-cols-2 gap-2 mb-2">
+            <div className="grid grid-cols-3 gap-2 mb-2">
                 <div>
                     <label className="block text-gray-700 text-sm font-bold mb-2">Proveedor</label>
                     <SupplierSelect

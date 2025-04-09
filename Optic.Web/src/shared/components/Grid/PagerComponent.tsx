@@ -14,8 +14,8 @@ export const PagerComponent = ({
 	pageCurrent: number;
 	totalPages: number;
 	pageSize?: number;
-	xChange?: (value: string | number | null) => void;
-	xChangePageSize?: (value: string | null) => void;
+	xChange?: (value: number) => void;
+	xChangePageSize?: (value: number) => void;
 	itemsCount?: number;
 	pageInit?: number;
 	isVisibleChangePageSize?: boolean;
@@ -32,7 +32,7 @@ export const PagerComponent = ({
 			target.value = totalPages.toString();
 		}
 
-		if (xChange) xChange(target.value);
+		if (xChange) xChange(parseInt(target.value));
 	};
 
 	const handleUpPage = () => {
@@ -63,7 +63,7 @@ export const PagerComponent = ({
 
 	const handleChangePageSize = (e: React.FormEvent<HTMLSelectElement>) => {
 		if (xChangePageSize) {
-			xChangePageSize(e.currentTarget.value);
+			xChangePageSize(parseInt(e.currentTarget.value));
 		}
 	};
 

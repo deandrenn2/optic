@@ -105,7 +105,7 @@ export const SalesCreate = ({ xChange }: { xChange?: () => void }) => {
     if (formula)
         return (
             <div className="mb-1">
-                <div className="grid grid-cols-2 gap-2 mb-2">
+                <div className="grid grid-cols-3 gap-2 mb-2">
                     <div>
                         <label className="block text-gray-700 text-sm font-bold mb-2">Cliente</label>
                         <ClientSelect selectedValue={client} xChange={handleChangeClient} className="shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -123,7 +123,7 @@ export const SalesCreate = ({ xChange }: { xChange?: () => void }) => {
                         <ListPaymentTypes selectedValue={formula?.paymentType} xChange={handleChangePaymentType} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
                     </div>
                 </div>
-                <FormulaProducts products={products} setProducts={setProducts}  />
+                <FormulaProducts products={products} setProducts={setProducts} />
                 <SumTotal sumTotalProducts={totalProducts} />
 
                 <OffCanvas titlePrincipal='Registro de Cliente' visible={visible} xClose={handleClose} position={Direction.Right}  >

@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 export const ProductsStockCard = () => {
     const { products, count, pager } = useProductsStockPager();
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
+    const [pageSize, setPageSize] = useState(pager?.pageSize ?? 5);
     const location = useLocation();
     return (
         <div className="bg-white rounded-lg shadow p-4 ">
@@ -34,7 +34,7 @@ export const ProductsStockCard = () => {
                     </div>
                 </Link>
             ))}
-            <PagerComponent pageCurrent={page} totalPages={pager?.pageCount ?? 0} pageSize={pager?.pageSize} xChange={(value) => setPage(parseInt(value))} xChangePageSize={(value) => setPageSize(parseInt(value))} itemsCount={count} />
+            <PagerComponent pageCurrent={page} totalPages={pager?.pageCount ?? 0} pageSize={pageSize} xChange={(value) => setPage(value)} xChangePageSize={(value) => setPageSize(value)} itemsCount={count} />
         </div>
     )
 }

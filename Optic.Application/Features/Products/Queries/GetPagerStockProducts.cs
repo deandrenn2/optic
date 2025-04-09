@@ -60,36 +60,30 @@ public class GetPagerStockProducts : ICarterModule
             productsCount = await context.Products.Where(x => x.Quantity <= x.Stock).CountAsync();
 
 
-            var products = await context.Products.Include(x => x.Categories)
+            var products = context.Products.Include(x => x.Categories)
                 .Where(x => x.Quantity <= x.Stock)
                 .OrderBy(x => x.UpdateDate)
                 .Skip((request.Page - 1) * request.PageSize)
-                .Take(request.PageSize).ToListAsync();
+                .Take(request.PageSize);
 
 
 
-            var productsResponse = new List<GetProductResponse>();
-            foreach (var product in products)
+            var productsQueryModel = products.Select(x => new GetProductResponse
             {
-                var productResponse = new GetProductResponse
-                {
-                    Id = product.Id,
-                    Name = product.Name,
-                    CodeNumber = product.CodeNumber,
-                    Quantity = product.Quantity,
-                    UnitPrice = product.UnitPrice,
-                    SalePrice = product.SalePrice,
-                    Stock = product.Stock,
-                    UpdateDate = product.UpdateDate,
-                };
-                productsResponse.Add(productResponse);
-            }
-
-            var pager = PagedResult<List<GetProductResponse>>.Success(productsResponse, "Lista Productos", productsCount);
+                Id = x.Id,
+                Name = x.Name,
+                CodeNumber = x.CodeNumber,
+                Quantity = x.Quantity,
+                UnitPrice = x.UnitPrice,
+                SalePrice = x.SalePrice,
+                Stock = x.Stock,
+                UpdateDate = x.UpdateDate,
+            });
 
 
+            var productsResult = await productsQueryModel.GetPagedAsync(request.Page, request.PageSize);
 
-            return Results.Ok(pager);
+            return Results.Ok(productsResult);
         }
     }
 
