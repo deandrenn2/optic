@@ -85,28 +85,30 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
             </div>
 
             <div className="flex flex-col gap-2 mb-4">
+                <div className="grid grid-cols-[3fr_3fr_3fr_3fr_1fr] gap-2">
+                    <span className="font-bold">Producto</span>
+                    <label className="text-gray-600 text-sm">Precio de Venta.</label>
+                    <label className="text-gray-600 text-sm">Cantidad</label>
+                    <label className="text-gray-600 text-sm">Precio costo</label>
+                </div>
                 {
                     products.map((x) => (
-                        <div key={x.id} className="grid grid-cols-[3fr_3fr_3fr_3fr_1fr] gap-2">
+                        <div key={x.id} className="grid grid-cols-[3fr_3fr_3fr_3fr_3fr] gap-2 justify-center align-middle ">
                             <span className="font-bold">{x.name}</span>
-                            <label className="text-gray-600 text-sm">Precio de Venta.</label>
-
                             <input type="text" className="border border-gray-300 rounded p-1 ml-1"
                                 value={x.salePrice}
                                 onChange={(e) => handleChangeSalePrice(e, x.id)} />
-
                             <div className="flex justify-center">
-                                <label className="text-gray-600 text-sm">Cantidad</label>
+                                <input type="number" value={x.quantity}
+                                    onChange={(e) => handleChangeQuantity(e, x.id)}
+                                    min={0} max={999}
+                                    className="w-14 border border-gray-300 rounded p-1 ml-2" />
                             </div>
-                            <input type="number" value={x.quantity}
-                                onChange={(e) => handleChangeQuantity(e, x.id)}
-                                min={0} max={999}
-                                className="w-14 border border-gray-300 rounded p-1 ml-2" />
 
-                            <label className="text-gray-600 text-sm">Precio costo</label>
                             <input type="number" value={x.unitPrice}
                                 onChange={(e) => handleChangeUnitPrice(e, x.id)}
                                 min={0} max={999}
+<<<<<<< HEAD
                                 className="w-32 border border-gray-300 rounded p-1 ml-1"/>
                                 
                             <p className=" right-0"><MoneyFormatter amount={x.salePrice * x.quantity} /></p>
@@ -114,6 +116,13 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
                             <div className=" flex justify-end ">
                                 <button className="w-8 bg-red-500 text-white px-2 py-1 rounded" onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button>
                             </div>
+=======
+                                className="w-32 border border-gray-300 rounded p-1 ml-1" />
+
+                            <p className="text-right"><MoneyFormatter amount={x.salePrice * x.quantity} />    <button className="w-8 bg-red-500 text-white px-2 py-1 rounded" onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button></p>
+
+
+>>>>>>> 53c7f0f1a0756a41d3153096fbb7995ef7953c81
                         </div>
                     ))
                 }
