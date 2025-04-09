@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
@@ -46,10 +47,29 @@ public class UpdateStateFormula : ICarterModule
             var formula = context.Formulas.Find(request.Id);
 
             if (formula == null)
-                return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "No se pudo actualizar la formula")));
+                return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "No se pudo actualizar el estado de la formula")));
 
-            if (request.State != "Borrador" && request.State == "Borrador")
-                return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "La formula no puede ser actualizada al eatado: " + formula.State)));
+            if (formula.State != "Borrador" && request.State == "Borrador")
+                return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "La formula no puede ser actualizada al estado: " + formula.State)));
+
+
+            if (formula.State == "Borrador" && (request.State == "Crédito" || request.State == "Pagada"))
+            {
+                var invoice = context.Invoices.Find(formula.IdInvoice);
+                if (invoice != null)
+                {
+                    //Agregar detalles de la factura
+                    var productsInvoice = await context.InvoiceDetails.Where(x => x.IdInvoice == invoice.Id).ToListAsync();
+                    foreach (var productDetail in productsInvoice)
+                    {
+                        var product = context.Products.Find(productDetail.IdProduct);
+                        if (product != null)
+                        {
+                            product.UpdateQuantity(product.Quantity - productDetail.Quantity);
+                        }
+                    }
+                }
+            }
 
             formula.UpdateState(request.State);
 
@@ -57,11 +77,11 @@ public class UpdateStateFormula : ICarterModule
 
             if (resCount > 0)
             {
-                return Results.Ok(Result<int>.Success(formula.Id, "Formula creada correctamente"));
+                return Results.Ok(Result<int>.Success(formula.Id, $"Estado de la fomula actualizado a {formula.State}"));
             }
             else
             {
-                return Results.Ok(Result.Failure(new Error("Formula.ErrorCreateFormula", "Error al crear la formula")));
+                return Results.Ok(Result.Failure(new Error("Formula.ErrorCreateFormula", $"Error al actualizar el estado de la formula a ${request.State}")));
             }
 
         }

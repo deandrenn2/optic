@@ -5,18 +5,31 @@ import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 import { useCreatePayment, useDeletePayment } from "./useSales";
 import { format } from "date-fns";
 import { SalesPaymentsModel } from "./SalesModel";
-export const SalesPayments = ({ Id, totalFactura, payments }: { Id: number; totalFactura: number; payments: SalesPaymentsModel[] }) => {
+export const SalesPayments = ({ Id, totalFactura, payments,
+  xChangeStateFormula }: {
+    Id: number;
+    totalFactura: number;
+    payments: SalesPaymentsModel[];
+    xChangeStateFormula: (state: string) => void;
+  }) => {
   const [amount, setAmount] = useState<number>(0);
   const { createPayment } = useCreatePayment(Id);
   const { deletePayment } = useDeletePayment(Id);
 
   const handleAddAbono = async () => {
-    
+
     if (amount <= 0 || isNaN(amount)) return;
-    createPayment.mutate({
+
+    const res = await createPayment.mutateAsync({
       invoiceId: Id,
       amount: amount,
     });
+
+    if (res.isSuccess) {
+      const totalPayments = payments.reduce((total, abono) => total + abono.amount, 0) + amount;
+      if (xChangeStateFormula && totalPayments >= totalFactura)
+        xChangeStateFormula("Pagada");
+    }
 
     setAmount(0);
   };
@@ -41,28 +54,36 @@ export const SalesPayments = ({ Id, totalFactura, payments }: { Id: number; tota
 
   const totalPayments = payments.reduce((total, abono) => total + abono.amount, 0);
 
+  const isEnableAddPayment = totalPayments < totalFactura;
+
   return (
     <div className="grid-cols-2 mb-4 gap-4">
-      <label className="block text-gray-700 font-bold mb-2">
-        <MoneyFormatter amount={amount} />
-      </label>
-      <div className="flex rounded-lg w-full">
-        <div className="relative">
-          <input
-            type="number"
-            placeholder="Abono"
-            value={amount}
-            onChange={handleChangeAmount}
-            className="shadow appearance-none border rounded-tl-lg rounded-bl-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500"
-          />
-        </div>
-        <button
-          onClick={handleAddAbono}
-          className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-1 font-bold rounded-tr-lg rounded-br-lg w-full"
-        >
-          Agregar
-        </button>
-      </div>
+      {
+        isEnableAddPayment && <>
+          <label className="block text-gray-700 font-bold mb-2">
+            <MoneyFormatter amount={amount} />
+          </label>
+
+          <div className="flex rounded-lg w-full">
+            <div className="relative">
+              <input
+                type="number"
+                placeholder="Abono"
+                value={amount}
+                onChange={handleChangeAmount}
+                className="shadow appearance-none border rounded-tl-lg rounded-bl-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+            <button
+              onClick={handleAddAbono}
+              className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-1 font-bold rounded-tr-lg rounded-br-lg w-full"
+            >
+              Agregar
+            </button>
+          </div>
+        </>
+      }
+
 
       <div className="mt-4">
         <h3 className="text-lg font-semibold text-gray-700">

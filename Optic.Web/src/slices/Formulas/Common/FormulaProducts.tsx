@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MoneyFormatter } from "../../../shared/components/Numbers/MoneyFormatter";
 import { ProductsResponseModel } from "../../Products/ProductModel";
-import { faMinus, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faDollar, faMinus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useValidateProduct } from "../../Products/useProducts";
 import OffCanvas from "../../../shared/components/OffCanvas/Index";
@@ -26,9 +26,11 @@ export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isV
             if (response.data) {
                 const existProduct = products.find(x => x.id === response?.data?.id);
                 if (existProduct) {
-                    setProducts([...products.filter(x => x.id !== existProduct.id), { ...response.data, quantity: existProduct.quantity + 1 }]);
+                    const productQuantity = existProduct?.originalQuantity ?? 0;
+                    const newQuantity = productQuantity < existProduct.quantity + 1 ? productQuantity : existProduct.quantity + 1;
+                    setProducts([...products.filter(x => x.id !== existProduct.id), { ...response.data, quantity: newQuantity, originalQuantity: productQuantity }]);
                 } else {
-                    setProducts([...products, { ...response.data, quantity: 1 }]);
+                    setProducts([...products, { ...response.data, quantity: 1, originalQuantity: response.data.quantity }]);
                 }
             }
             setCodeProduct("");
@@ -50,7 +52,9 @@ export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isV
 
     const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
         const { value } = e.target;
-        setProducts(products.map((x) => (x.id === id ? { ...x, quantity: parseInt(value) } : x)));
+        const productQuantity = products.find(x => x.id === id)?.originalQuantity ?? 0;
+        const newQuantity = productQuantity < parseInt(value) ? productQuantity : parseInt(value);
+        setProducts(products.map((x) => (x.id === id ? { ...x, quantity: newQuantity } : x)));
     }
 
     const handleChangeSalePrice = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
@@ -82,8 +86,8 @@ export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isV
                         </>
                     }
                     {isVisiblePaymment &&
-                        <button className="bg-teal-500 text-white  p-2 rounded hover:bg-teal-600" onClick={handleClickAbono}>
-                            Abono
+                        <button className="bg-teal-500 text-white  rounded hover:bg-teal-600 mr-2 py1 px-3" onClick={handleClickAbono}>
+                            <FontAwesomeIcon icon={faDollar} className="mr-1" /> Abono
                         </button>}
 
                 </div>

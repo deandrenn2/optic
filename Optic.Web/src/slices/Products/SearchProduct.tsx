@@ -42,8 +42,7 @@ export const SearchProduct = ({ setProducts }: { setProducts: React.Dispatch<Rea
             idBrand: 0,
             idSupplier: 0,
             name: product.name,
-            updateDate: product.updateDate,
-            quantity: 1,
+            quantity: product.quantity,
             salePrice: product.salePrice,
             unitPrice: product.unitPrice,
         };
@@ -51,11 +50,13 @@ export const SearchProduct = ({ setProducts }: { setProducts: React.Dispatch<Rea
         setProducts((prev) => {
             const existngProduct = prev.find(p => p.id === product.id);
             if (existngProduct) {
+                const productQuantity = existngProduct?.originalQuantity ?? 0;
+                const newQuantity = productQuantity < existngProduct.quantity + 1 ? productQuantity : existngProduct.quantity + 1;
                 return prev.map(p =>
-                    p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
+                    p.id === product.id ? { ...p, quantity: newQuantity } : p
                 );
             }
-            return [...prev, { ...productAdd, quantity: 1 }];
+            return [...prev, { ...productAdd, quantity: 1, originalQuantity: productAdd.quantity }];
         });
     };
 

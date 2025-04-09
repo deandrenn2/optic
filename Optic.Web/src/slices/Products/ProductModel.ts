@@ -12,12 +12,13 @@ export interface ProductModel {
    categories: string[];
 }
 export interface ProductsResponseModel {
-   updateDate: any;
+   // updateDate: any;
    id: number;
    name: string;
    idBrand: number;
    codeNumber: string;
    quantity: number;
+   originalQuantity?: number;
    unitPrice: number;
    salePrice: number;
    idSupplier: number;
@@ -59,5 +60,5 @@ export interface ProductSearchResponse {
    code: number;
    message: string | null;
    error: string | null;
-   data: ProductsResponseModel[];  
+   data: ProductsResponseModel[];
 }

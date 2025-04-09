@@ -215,7 +215,7 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
                     <ClientForm />
                 </OffCanvas>
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleCreateFormula}>
-                    Crear formula
+                    {createFormula.isPending ? "Creando..." : "Crear formula"}
                 </button>
                 <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1" onClick={handleClick}>
                     Crear Cliente

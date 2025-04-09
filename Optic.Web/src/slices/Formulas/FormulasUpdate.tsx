@@ -199,14 +199,14 @@ export const FormulasUpdate = () => {
         setStateFormula(e.target.value);
     }
 
-    const handleChangeStatus = () => {
-        if (stateFormula === '') {
+    const handleChangeStatus = (state: string) => {
+        if (state === '') {
             toast.info('Debes seleccionar un estado antes de cambiar el estado');
             return;
         }
         Swal.fire({
             title: "Cambiar estado",
-            text: `¿Estás seguro de que quieres cambiar el estado a ${stateFormula}?`,
+            text: `¿Estás seguro de que quieres cambiar el estado a ${state}?`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -215,13 +215,21 @@ export const FormulasUpdate = () => {
             cancelButtonText: "No",
             showLoaderOnConfirm: true,
             preConfirm: async () => {
-                const res = await updateStateFormula.mutateAsync({ id: Number(id), state: stateFormula });
-                if (res.isSuccess)
-                    setFormula({ ...formula, state: stateFormula });
+                await handleChangeStatusMutation(state);
             }
 
         })
     }
+
+    const handleChangeStatusMutation = async (state: string) => {
+        const res = await updateStateFormula.mutateAsync({ id: Number(id), state: state });
+        if (res.isSuccess) {
+            setFormula({ ...formula, state: state });
+            queryFormula.refetch();
+        }
+    }
+
+
 
 
     if (queryFormula.isLoading)
@@ -233,10 +241,10 @@ export const FormulasUpdate = () => {
         if (payments.length > 0)
             return true;
 
-        if (formula.state === 'Borrador')
-            return false;
-        else
+        if (formula.state === 'Borrador' || formula.state === 'Crédito')
             return true;
+        else
+            return false;
     }
 
     const isEditable = formula.state === 'Borrador';
@@ -293,11 +301,11 @@ export const FormulasUpdate = () => {
                 <div className="grid grid-cols-2 mb-4 gap-4">
                     <div className="">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Valor de la consulta {<MoneyFormatter amount={formula?.priceConsultation} />}</label>
-                        <input name="priceConsultation" disabled={!isEditable} onChange={handleChange} onFocus={(e) => e.target.select()} type="number" className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" value={formula?.priceConsultation} />
+                        <input name="priceConsultation" disabled={!isEditable} onChange={handleChange} onFocus={(e) => e.target.select()} type="number" className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" value={formula?.priceConsultation ?? ''} />
                     </div>
                     <div className="">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Valor del lente {<MoneyFormatter amount={formula?.priceLens} />}</label>
-                        <input name="priceLens" disabled={!isEditable} onChange={handleChange} onFocus={(e) => e.target.select()} type="number" className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" value={formula?.priceLens} />
+                        <input name="priceLens" disabled={!isEditable} onChange={handleChange} onFocus={(e) => e.target.select()} type="number" className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" value={formula?.priceLens ?? ''} />
                     </div>
                 </div>
                 <div className="mb-0 py-0">
@@ -308,11 +316,14 @@ export const FormulasUpdate = () => {
 
                 <div className="flex justify-between gap-0 mt-4">
                     <div className="inline-block">
-                        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-4" onClick={handleUpdateFormula}>
-                            {updateFormula.isPending ? "Guardando..." : "Guardar Cambios"}
-                        </button>
+                        {
+                            isEditable && <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-4" onClick={handleUpdateFormula}>
+                                {updateFormula.isPending ? "Guardando..." : "Guardar Cambios"}
+                            </button>
+                        }
+
                         <div className="inline-flex rounded overflow-hidden  mr-4">
-                            <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2" onClick={handleChangeStatus}>
+                            <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2" onClick={() => handleChangeStatus(stateFormula)}>
                                 Cambiar estado
                             </button>
                             <ListStatus className="w-auto border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={formula.state} />
@@ -323,7 +334,7 @@ export const FormulasUpdate = () => {
                     <SumTotal formula={formula} sumTotalProducts={totalProducts} />
                 </div>
                 <OffCanvas titlePrincipal='Abonos' visible={isVisiblePaymment} xClose={() => setIsVisiblePaymment(false)} position={Direction.Right}  >
-                    <SalesPayments Id={formula.idInvoice} totalFactura={getTotalSumaTotal()} payments={payments} />
+                    <SalesPayments Id={formula.idInvoice} totalFactura={getTotalSumaTotal()} xChangeStateFormula={handleChangeStatusMutation} payments={payments} />
                 </OffCanvas>
             </div>
         );
