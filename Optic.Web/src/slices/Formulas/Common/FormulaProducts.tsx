@@ -71,9 +71,8 @@ export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isV
                 <OffCanvas titlePrincipal='Productos' visible={visible} xClose={handleClose} position={Direction.Right}  >
                     <SearchProduct setProducts={setProducts} />
                 </OffCanvas>
-                <button className="bg-blue-500 text-white  rounded hover:bg-blue-600 mb-2 mr-2" onClick={handleClick}>
-                     <FontAwesomeIcon icon={faSearch} className="mr-1" />
-                    Producto
+                <button className="bg-blue-500 text-white rounded hover:bg-blue-600 mb-2 mr-2" onClick={handleClick}>                    
+                 Producto <FontAwesomeIcon icon={faSearch} className="mr-1"/>
                 </button>
 
                 {isVisiblePaymment &&
