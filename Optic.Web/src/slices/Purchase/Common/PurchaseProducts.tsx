@@ -12,7 +12,6 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
     const [codeProduct, setCodeProduct] = useState<string>("");
     const { mutationValidateProduct } = useValidateProduct();
     const [visiblePro, setVisiblePro] = useState(false);
-
     const handleAggregateProduct = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const response = await mutationValidateProduct.mutateAsync(codeProduct);
@@ -112,7 +111,6 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
                                 
                             <p className=" right-0"><MoneyFormatter amount={x.salePrice * x.quantity} /></p>
                             <br/>
-
                             <div className=" flex justify-end ">
                                 <button className="w-8 bg-red-500 text-white px-2 py-1 rounded" onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button>
                             </div>

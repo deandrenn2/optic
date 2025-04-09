@@ -65,7 +65,6 @@ export const Clients = () => {
                         className="p-2 pl-10 rounded-tl-lg rounded-bl-lg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                          <FontAwesomeIcon icon={faMagnifyingGlass}
                         className="fa-search absolute left-3 top-3 text-gray-400"/>
-                     <button className="text-white font-bold border hover:bg-blue-700 bg-blue-500 px-6 py-1 rounded-tr-lg rounded-br-lg ">Buscar</button>
                   </div>
                </div>
          
