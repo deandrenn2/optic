@@ -1,9 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { createPurchaseService, getPurchase, getPurchases, updatePurchaseService, updateStatePurchaseService } from './PurchaseServices';
+import { createPurchaseService, getPurchase, getPurchases, PaymentsPurchaseCreate, SalesDeletePaymer, updatePurchaseService, updateStatePurchaseService } from './PurchaseServices';
 
 const KEY = 'Purchases';
-
 export const usePurchases = () => {
    const queryPurchases = useQuery({
       queryKey: [KEY],
@@ -92,4 +91,36 @@ export const usePurchase = (id: string | undefined) => {
    };
 };
 
+export const usePurchasePayments = (purchaseId: number) => {
+   const queryClient = useQueryClient();
 
+   const createPayment = useMutation({
+       mutationFn: (data: { purchaseId: number; amount: number }) =>
+           PaymentsPurchaseCreate(purchaseId, data),
+       onSuccess: (response) => {
+           if (response.isSuccess) {
+               queryClient.invalidateQueries({ queryKey: ['PurchasesPayments', purchaseId] });
+           } else {
+               toast.error("Error al agregar abono: " + response.message);
+           }
+       },
+   });
+
+   return {
+      createPayment,
+   };
+};
+
+export const useDeletePurchasePayment = () => {
+   return useMutation({
+     mutationFn: async ({
+       idPayment,
+       purchaseId,
+     }: {
+       idPayment: number;
+       purchaseId: number;
+     }) => {
+       return await SalesDeletePaymer(idPayment, purchaseId);
+     },
+   });
+ };

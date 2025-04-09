@@ -94,43 +94,89 @@ export const updateStatePurchaseService = async (model: UpdateStatePurchase): Pr
    return response.data;
 };
 
-export const getPaymentsPurchaseService = async (id: number): Promise<MsgResponse<paymentsPurchaseModel[]>> => {
+
+export const getPaymentsPurchaseService = async (
+   id: number
+ ): Promise<MsgResponse<paymentsPurchaseModel[]>> => {
    const url = `api/purchases/${id}/payments`;
+ 
    const response = await ApiClient.get<MsgResponse<{ payments: paymentsPurchaseModel[] }>>(url);
+ 
    if (response.status === 200 && response.data?.isSuccess) {
-      return {
-         isSuccess: true,
-         isFailure: false,
-         message: response.data.message,
-         data: response.data?.data?.payments ?? [],
-      };
+     return {
+       isSuccess: true,
+       isFailure: false,
+       message: response.data.message,
+       data: response.data.data?.payments ?? [],
+     };
    }
-
+ 
    return {
-      isSuccess: true,
-      isFailure: false,
-      message: 'Agregar abono',
-      data: [],
+     isSuccess: false,
+     isFailure: true,
+     message: 'Error al obtener los abonos de la compra',
+     data: [],
    };
-};
+ };
+ 
+ 
+ 
 
-export const PaymentsPurchaseCreate = async (id: number, model: PaymentsPurchaseCreateModel): Promise<MsgResponse<number>> => {
+ export const PaymentsPurchaseCreate = async (
+   id: number,
+   model: PaymentsPurchaseCreateModel
+ ): Promise<MsgResponse<number>> => {
    const url = `/api/purchases/${id}/payments`;
-   const response = await ApiClient.post<MsgResponse<Number>>(url, model);
-   if (response.status !== 201 && response.status !== 200) {
-      return {
-         isSuccess: false,
-         message: 'Error al Crear el abono de venta',
-         error: {
-            code: response.status.toString(),
-            message: response.statusText,
-         }
-      }
+   const response = await ApiClient.post<MsgResponse<number>>(url, model);
+   const result = response.data;
+
+   if (!result.isSuccess) {
+     return {
+       isSuccess: false,
+       isFailure: true,
+       message: result.message || "Error al crear el abono de compra",
+       error: {
+         code: "VALIDATION",
+         message: result.message,
+       },
+     };
    }
+ 
    return {
-      isSuccess: true,
-      isFailure: false,
-      message: response.data.message,
-      data: response.data?.data?.payments ?? [],
+     isSuccess: true,
+     isFailure: false,
+     message: result.message,
+     data: result.data,
+   };
+ };
+
+ export const SalesDeletePaymer = async (
+   idPayment: number,
+   purchaseId: number
+ ): Promise<MsgResponse<null>> => {
+   const url = `/api/purchases/payments/${idPayment}?id=${purchaseId}`;
+   const response = await ApiClient.delete<MsgResponse<null>>(url);
+ 
+   if (response.status !== 200 && response.status !== 204) {
+     return {
+       isSuccess: false,
+       isFailure: true,
+       message: "Error al eliminar el abono",
+       error: {
+         code: response.status.toString(),
+         message: response.statusText,
+       },
+     };
    }
-}
+ 
+   return {
+     isSuccess: true,
+     isFailure: false,
+     message: "Abono eliminado correctamente",
+     data: null,
+   };
+ };
+ 
+
+ 
+ 

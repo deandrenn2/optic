@@ -7,6 +7,8 @@ export interface PurchaseDetailModel {
 }
 
 export interface PurchaseResponseModel {
+   total: any;
+   payments: any;
    id: number;
    idBusiness: number;
    idSupplier?: number;

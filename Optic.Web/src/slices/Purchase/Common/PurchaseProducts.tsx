@@ -1,13 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useValidateProduct } from "../../Products/useProducts";
 import { ProductsResponseModel } from "../../Products/ProductModel";
 import { MoneyFormatter } from "../../../shared/components/Numbers/MoneyFormatter";
+import { SearchProduct } from "../../Products/SearchProduct";
+import OffCanvas from "../../../shared/components/OffCanvas/Index";
+import { Direction } from "../../../shared/components/OffCanvas/Models";
 export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, purVisiblePaymment = true, }:
-    { products: ProductsResponseModel[], setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>;setVisiblePaymment?: React.Dispatch<React.SetStateAction<boolean>>;purVisiblePaymment?: boolean;}) => {
+    { products: ProductsResponseModel[], setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>; setVisiblePaymment?: React.Dispatch<React.SetStateAction<boolean>>; purVisiblePaymment?: boolean; }) => {
     const [codeProduct, setCodeProduct] = useState<string>("");
     const { mutationValidateProduct } = useValidateProduct();
+    const [visiblePro, setVisiblePro] = useState(false);
 
     const handleAggregateProduct = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -25,10 +29,17 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
         }
     }
 
+    const handleClose = () =>{
+        setVisiblePro(false);
+    }
 
     const handleClickPayments = () => {
         if (setVisiblePaymment)
-            setVisiblePaymment(true)
+            setVisiblePaymment(true);
+    }
+
+    const handleClick = () =>{
+        setVisiblePro(true);
     }
 
     const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
@@ -48,7 +59,6 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
         setProducts(products.filter((x) => x.id !== id));
     }
 
-
     const totalProducts = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
 
     return (
@@ -56,12 +66,22 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
             <div className="flex w-full gap-4 justify-between">
                 <h2 className="font-bold text-center text-gray-500 text-lg mb-2 px-2">Facturació</h2>
             </div>
-           
-            {purVisiblePaymment &&
-                <div className="flex justify-end justify-items-end">
-                    <button className="bg-teal-500 text-white  py-1 px-1 rounded hover:bg-teal-600 mb-2"onClick={handleClickPayments}>Abono de Venta</button>
-                </div>
-            }
+
+            <div className="flex justify-end justify-itmes-end">
+                
+                <OffCanvas titlePrincipal='Productos' visible={visiblePro} xClose={handleClose} position={Direction.Right}>
+                    <SearchProduct setProducts={setProducts} />
+                </OffCanvas>
+                <button className="bg-blue-500 text-white rounded hover:bg-blue-600 mb-2 mr-2" onClick={handleClick}>                    
+                 Producto <FontAwesomeIcon icon={faSearch} className="mr-1"/>
+                </button>
+
+                {purVisiblePaymment &&
+                    <div className="flex justify-end justify-items-end" onClick={handleClickPayments}>
+                        <button className="bg-teal-500 text-white  py-1 px-1 rounded hover:bg-teal-600 mb-2">Abono</button>
+                    </div>
+                }
+            </div>
             <div className="flex flex-col gap-2 mb-4">
                 {
                     products.map((x) => (

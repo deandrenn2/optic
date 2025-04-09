@@ -82,8 +82,6 @@ export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isV
                         </button>
                     </>
                 }
-
-
                 {isVisiblePaymment &&
                     <button className="bg-teal-500 text-white  py-1 px-1 rounded hover:bg-teal-600 mb-2" onClick={handleClickAbono}>
                         Abono

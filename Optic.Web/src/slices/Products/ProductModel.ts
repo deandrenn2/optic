@@ -50,7 +50,6 @@ export interface QuantityModel {
 }
 
 export interface ProductSearchResponse {
-   isSuccess: boolean; 
    currentPage: number;
    pageCount: number;
    pageSize: number;
@@ -60,5 +59,5 @@ export interface ProductSearchResponse {
    code: number;
    message: string | null;
    error: string | null;
-   data: ProductsResponseModel[];
+   data: ProductsResponseModel[];  
 }

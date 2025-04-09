@@ -30,7 +30,6 @@ export const FormulasUpdate = () => {
     const [diagnosis, setDiagnosis] = useState<DiagnosisModel[]>([]);
     const [stateFormula, setStateFormula] = useState<string>("Borrador");
     const [products, setProducts] = useState<ProductsResponseModel[]>([]);
-
     const { updateFormula, updateStateFormula } = useFormulaMutation();
     const { formula: formulaData, queryFormula } = useFormula(id);
     const { business } = useUserContext();
@@ -105,7 +104,6 @@ export const FormulasUpdate = () => {
 
         return total;
     }
-
 
 
 
@@ -231,8 +229,6 @@ export const FormulasUpdate = () => {
 
 
     const diagnosisData = diagnosis.filter((x) => x.stateChange !== 3);
-
-
     const isEnabledPaymmentButton = () => {
         if (payments.length > 0)
             return true;
