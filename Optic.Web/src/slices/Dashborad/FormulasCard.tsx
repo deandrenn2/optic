@@ -19,7 +19,7 @@ export const FormulasCard = () => {
                     state={{ fromHome: location.pathname === "/" }}
                     className="block"
                 >
-                    <div className="rounded-lg border border-gray-300 p-4 mb-2 hover:border-blue-700 transition-colors duration-300 hover:bg-gray-200">
+                    <div className="rounded-lg border border-gray-300 p-4 mb-2 hover:border-blue-700 transition-colors duration-300 hover:bg-yellow-50">
                         <div className="flex justify-between items-center mb-1">
                             <p className=" font-bold text-gray-500">
                                 #{formula.codeNumber.toString().padStart(5, "0")}

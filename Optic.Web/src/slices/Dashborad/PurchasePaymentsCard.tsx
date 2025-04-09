@@ -19,10 +19,10 @@ export const PurchasePaymentsCard = () => {
             </div>
             {billing?.map((bill) => (
                 <Link to={`/Purchases/${bill.id}`}
-                    state={{ fromHome: location.pathname === "/" }}>
-                    <div key={bill.id}>
+                    state={{ fromHome: location.pathname === "/" }} key={bill.id}>
+                    <div >
                         <div className="space-y-1">
-                            <div className="rounded-lg border border-gray-500 p-4 mb-2 hover:border-blue-700 transition-colors duration-3000 ">
+                            <div className="rounded-lg border border-gray-500 p-4 mb-2 hover:border-blue-700  hover:bg-yellow-50 transition-colors duration-3000 ">
                                 <div className="relative flex justify-between items-center mb-2">
                                     <p className=" font-bold ">#{bill.number.toString().padWithZeros(5)}</p>
                                     <p className={` text-1xl font-bold ${getDifferenceDays(bill.date) > 30 ? 'text-red-500' : 'text-blue-500'} absolute inset-y-5 right-1`}><MoneyFormatter amount={bill.total} /></p>

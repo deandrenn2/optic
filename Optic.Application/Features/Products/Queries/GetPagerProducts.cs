@@ -73,7 +73,7 @@ public class GetPagerProducts : ICarterModule
 
             if (request.Search != null)
             {
-                productsQuery = productsQuery.Where(x => x.Name.Contains(request.Search) || x.CodeNumber.Contains(request.Search));
+                productsQuery = productsQuery.Where(x => x.Name.ToUpper().Contains(request.Search.ToUpper()) || x.CodeNumber.Contains(request.Search));
             }
             var productsQueryModel = productsQuery.Select(x => new GetProductResponse
             {

@@ -65,29 +65,30 @@ export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isV
     const totalProducts = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
 
     return (
-        <div className="bg-gray-100  py-1 px-2 rounded-lg border border-gray-300">
-            <div className="flex w-full gap-4">
+        <div className="bg-gray-100 pt-2 p-4 rounded-lg border border-gray-300">
+            <div className="flex w-full gap-4 justify-between mb-3">
                 <h2 className="font-bold text-center text-gray-500 text-lg">Facturación</h2>
-            </div>
-            <div className="flex justify-end justify-items-end">
-                {
-                    !disabled &&
-                    <>
-                        <OffCanvas titlePrincipal='Productos' visible={visible} xClose={handleClose} position={Direction.Right}  >
-                            <SearchProduct setProducts={setProducts} />
-                        </OffCanvas>
-                        <button className="bg-blue-500 text-white  rounded hover:bg-blue-600 mb-2 mr-2" onClick={handleClick}>
-                            <FontAwesomeIcon icon={faSearch} className="mr-1" />
-                            Producto
-                        </button>
-                    </>
-                }
-                {isVisiblePaymment &&
-                    <button className="bg-teal-500 text-white  py-1 px-1 rounded hover:bg-teal-600 mb-2" onClick={handleClickAbono}>
-                        Abono
-                    </button>}
+                <div className="flex justify-end justify-items-end">
+                    {
+                        !disabled &&
+                        <>
+                            <OffCanvas titlePrincipal='Productos' visible={visible} xClose={handleClose} position={Direction.Right}  >
+                                <SearchProduct setProducts={setProducts} />
+                            </OffCanvas>
+                            <button className="bg-blue-500 text-white  rounded hover:bg-blue-600 mr-2 py1 px-3" onClick={handleClick}>
+                                <FontAwesomeIcon icon={faSearch} className="mr-1" />
+                                Producto
+                            </button>
+                        </>
+                    }
+                    {isVisiblePaymment &&
+                        <button className="bg-teal-500 text-white  p-2 rounded hover:bg-teal-600" onClick={handleClickAbono}>
+                            Abono
+                        </button>}
 
+                </div>
             </div>
+
             <div className="flex flex-col gap-2 mb-4">
                 {
                     products.map((x) => (

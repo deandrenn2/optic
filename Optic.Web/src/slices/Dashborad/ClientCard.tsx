@@ -7,17 +7,17 @@ export const CardClient = () => {
     const { clients } = useClientPager();
     const location = useLocation();
     return (
-        <div className="bg-white rounded-lg shadow p-4 ">
+        <div className="bg-white rounded-lg shadow p-4">
             <div className="flex items-center mb-4">
                 <div className="w-4 h-4 bg-gray-400 rounded-full mr-2"></div>
                 <h2 className="text-gray-500 font-bold">Clientes</h2>
             </div>
             {clients?.map((client) => (
-                <div className="space-y-1 ">
+                <div className="space-y-1 " key={client.id}>
                     <Link to={`/Clientes/${client.id}`}
-                        state={{ fromHome: location.pathname === "/" }}>
+                        state={{ fromHome: location.pathname === "/" }} >
                         <div className="  flex justify-betweenp-4 items-center mr-2">
-                            <div className='w-full rounded-lg border border-gray-300 p-4 mb-2 hover:border-blue-700 transition-colors duration-300 hover:bg-gray-200'>
+                            <div className='w-full rounded-lg border border-gray-300 p-4 mb-2 hover:border-blue-700 transition-colors duration-300 hover:bg-yellow-50'>
                                 <div className="relative">
                                     <p>{client.fullName}</p>
                                     <span title={client.identificationType} className='text-blue-700 font-bold'>{client.identificationAbbreviation}</span> -

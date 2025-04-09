@@ -4,7 +4,6 @@ import {
    createProductService,
    deleteProductService,
    getCategories,
-   getPagerProduct,
    getPagerProducts,
    getPagerProductsStock,
    getProducts,
@@ -14,8 +13,6 @@ import {
    updateQuantityService,
 } from './ProductsServices';
 import { toast } from 'react-toastify';
-import { ProductSearchResponse } from './ProductModel';
-import { MsgResponse } from '../../shared/model';
 const KEY = 'Products';
 export const useProducts = () => {
    const queryProducts = useQuery({
@@ -74,16 +71,18 @@ export const useProducts = () => {
    };
 };
 
-export const useProductsPager = (page: number = 1, pageSize: number = 5) => {
+export const useProductsPager = (page: number = 1, pageSize: number = 5, orderByName: boolean = false, search: string = '') => {
    const queryProducts = useQuery({
-      queryKey: [`${KEY}_pager`, page, pageSize],
-      queryFn: () => getPagerProducts(page, pageSize),
+      queryKey: [`${KEY}_pager`, page, pageSize, orderByName, search],
+      queryFn: () => getPagerProducts(page, pageSize, orderByName, search),
       refetchOnWindowFocus: false,
    });
 
    return {
       queryProducts,
       products: queryProducts?.data?.data,
+      count: queryProducts?.data?.count,
+      pager: queryProducts?.data,
    };
 };
 
@@ -188,37 +187,5 @@ export const useQuantity = () => {
    });
    return {
       updateQuantity,
-   };
-};
-
-
-export const useProductsService = () => {
-   const queryPagerProducts = useMutation({
-      mutationFn: ({
-         page,
-         pageSize,
-         orderByName,
-         search,
-      }: {
-         page: number;
-         pageSize: number;
-         orderByName: boolean;
-         search: string;
-      }) => getPagerProduct(page, pageSize, orderByName, search),
-      onSuccess: (data: MsgResponse<ProductSearchResponse[]>) => {
-         if (!data.isSuccess) {
-            toast.info(data.message);
-         }
-      },
-      onError: (error) => {
-         toast.error("Error al obtener productos");
-         console.error(error);
-      },
-   });
-
-   return {
-      queryPagerProducts,
-      products: queryPagerProducts.data?.data ?? [],
-      
    };
 };
