@@ -17,6 +17,7 @@ export interface FormulaModel {
    idClient?: number;
    clientName?: string;
    idInvoice: number;
+   number?: number;
    description: string;
    date: Date;
    tags: string[];
@@ -92,8 +93,8 @@ export interface UpdateFormulasModel {
 
    priceLens?: number;
    priceConsultation?: number;
-   sumTotal?: number; 
-   sumTotalProducts?: number; 
+   sumTotal?: number;
+   sumTotalProducts?: number;
 }
 
 export interface UpdateStateFormula {

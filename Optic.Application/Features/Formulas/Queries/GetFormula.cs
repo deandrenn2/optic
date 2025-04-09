@@ -28,6 +28,7 @@ public class GetFormula : ICarterModule
 
     public record FormulaResponse
     {
+        public int Number { get; init; }
         public int IdBusiness { get; init; }
         public int? IdClient { get; init; }
         public string ClientName { get; init; } = string.Empty;
@@ -78,6 +79,7 @@ public class GetFormula : ICarterModule
             var formulaResponse = new FormulaResponse
             {
                 IdBusiness = formula.BusinessId,
+                Number = formula.Invoice.Number,
                 IdClient = formula.ClientId,
                 ClientName = formula.Client.LastName + " " + formula.Client.FirstName,
                 Description = formula.Description,

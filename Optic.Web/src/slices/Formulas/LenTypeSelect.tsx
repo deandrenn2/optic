@@ -8,7 +8,7 @@ export interface Option {
 }
 
 
-export const LenTypeSelect = ({ selectedValue, name, className, xChange, required, isSearchable }: { selectedValue?: Option[], name?: string, className?: string, xChange: (newValue: MultiValue<Option>) => void, required?: boolean, isSearchable?: boolean }) => {
+export const LenTypeSelect = ({ selectedValue, name, className, xChange, required, isSearchable, isDisabled }: { selectedValue?: Option[], name?: string, className?: string, xChange: (newValue: MultiValue<Option>) => void, required?: boolean, isSearchable?: boolean, isDisabled?: boolean }) => {
     const { tags, queryTags } = useTags();
 
     const options: readonly Option[] | undefined = tags?.map((item) => ({
@@ -24,7 +24,7 @@ export const LenTypeSelect = ({ selectedValue, name, className, xChange, require
             onChange={xChange}
             required={required}
             loadingMessage={() => 'Cargando...'}
-            isDisabled={queryTags?.isLoading}
+            isDisabled={queryTags?.isLoading || isDisabled}
             isLoading={queryTags?.isLoading}
             isClearable
             isMulti={true}
