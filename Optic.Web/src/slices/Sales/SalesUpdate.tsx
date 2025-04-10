@@ -181,6 +181,7 @@ export const SalesUpdate = () => {
                         {isEditable && <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-4" onClick={handleUpdateFormula}>
                             {updateSale.isPending ? "Guardando..." : "Guardar Cambios"}
                         </button>}
+                        
                         <div className="inline-flex rounded overflow-hidden  mr-4">
                             <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2" onClick={handleChangeStatus}>
                                 Cambiar estado
