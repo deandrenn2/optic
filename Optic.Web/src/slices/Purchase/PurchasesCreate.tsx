@@ -29,7 +29,7 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
         supplierId: 0,
         date: new Date(new Date().setHours(0, 0, 0, 0)),
         products: [],
-        totalAmount: 0,
+        sumTotal: 0,
         paymentType: "Contado",
     });
 
@@ -44,6 +44,9 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
         setPurchase({ ...purchase, date: new Date(`${e.target.value}T00:00:00`) });
     };
 
+
+    const totalProducts = products.reduce((acc, x) => acc + x.unitPrice * x.quantity, 0);
+
     const handleCreatePurchase = async () => {
         const purchaseData: CreatePurchaseModel = {
             idBusiness: business?.id ? business.id : 0,
@@ -52,10 +55,11 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
             products: products.map((x) => ({
                 idProduct: x.id,
                 quantity: x.quantity,
-                unitPrice: x.unitPrice,
+                price: x.unitPrice,
+                priceSale: x.salePrice,
                 totalCost: x.unitPrice * x.quantity,
             })),
-            totalAmount: products.reduce((acc, x) => acc + x.unitPrice * x.quantity, 0),
+            sumTotal: totalProducts,
             paymentType: purchase.paymentType,
         };
 
@@ -78,6 +82,7 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
 
         }
     };
+
 
     return (
         <div className="mb-1">
@@ -111,10 +116,10 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
             </div>
 
             <PurchaseProducts products={products} setProducts={setProducts} />
-            <SumTotal sumTotalProducts={products.reduce((acc, x) => acc + x.unitPrice * x.quantity, 0)} />
+            <SumTotal sumTotalProducts={totalProducts} />
 
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleCreatePurchase}>
-                {createPurchase.isPending ? "Guardando..." : "Guardar Compra"}
+                {createPurchase.isPending ? "Comprando..." : "Comprar"}
             </button>
             <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1" onClick={() => setVisibleModalSupplier(true)}>
                 Crear Proveedor

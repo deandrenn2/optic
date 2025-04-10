@@ -9,6 +9,7 @@ public record PurchaseDetailModel
     public string? ProductName { get; set; }
 
     public int Quantity { get; set; }
+    public decimal PriceSale { get; set; }
     public int IdProduct { get; set; }
     public int IdPurchase { get; set; }
 

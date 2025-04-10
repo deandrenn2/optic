@@ -10,7 +10,8 @@ import { SearchProduct } from "../../Products/SearchProduct";
 export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isVisiblePaymment = false, disabled = false }:
     {
         products: ProductsResponseModel[];
-        setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>; setVisiblePaymment?: React.Dispatch<React.SetStateAction<boolean>>;
+        setProducts: React.Dispatch<React.SetStateAction<ProductsResponseModel[]>>;
+        setVisiblePaymment?: React.Dispatch<React.SetStateAction<boolean>>;
         isVisiblePaymment?: boolean;
         disabled?: boolean;
     }) => {
@@ -106,7 +107,7 @@ export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isV
                                 onChange={(e) => handleChangeQuantity(e, x.id)}
                                 min={0} max={999}
                                 disabled={disabled}
-                                className="w-14 border border-gray-300 rounded p-1 ml-2"/>
+                                className="w-14 border border-gray-300 rounded p-1 ml-2" />
                             <p className="text-right"> <MoneyFormatter amount={x.salePrice * x.quantity} /></p>
                             {
                                 !disabled &&

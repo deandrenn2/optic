@@ -2,13 +2,12 @@ export interface PurchaseDetailModel {
    idProduct: number;
    productName?: string;
    quantity: number;
-   unitPrice: number; // Costo unitario del producto
-   totalCost: number; // Costo total por producto (unitCost * quantity)
+   price: number;
+   priceSale: number;
+   totalCost: number;
 }
 
 export interface PurchaseResponseModel {
-   total: any;
-   payments: any;
    id: number;
    idBusiness: number;
    idSupplier?: number;
@@ -27,7 +26,7 @@ export interface CreatePurchaseModel {
    date: Date;
    paymentType: string;
    products: PurchaseDetailModel[];
-   totalAmount: number;
+   sumTotal: number;
 }
 
 export interface UpdatePurchaseModel {
@@ -46,14 +45,13 @@ export interface UpdateStatePurchase {
    state: string;
 }
 
-
 export interface paymentsPurchaseModel {
-   id: number,
-   amount: number,
+   id: number;
+   amount: number;
    date: string;
 }
 
- export interface PaymentsPurchaseCreateModel{
-   purchaseId: number, 
-   amount: number,
- }
+export interface PaymentsPurchaseCreateModel {
+   purchaseId: number;
+   amount: number;
+}

@@ -63,6 +63,13 @@ public class Product : AggregateRoot
         UpdateDate = DateTime.Now;
     }
 
+    public void UpdatePrice(decimal unitPrice, decimal salePrice)
+    {
+        UnitPrice = unitPrice;
+        SalePrice = salePrice;
+        UpdateDate = DateTime.Now;
+    }
+
     public void UpdateImage(string image)
     {
         Image = image;

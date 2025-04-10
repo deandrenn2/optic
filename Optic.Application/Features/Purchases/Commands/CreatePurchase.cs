@@ -65,9 +65,16 @@ public class CreatePurchase : ICarterModule
 
 
             //Agregar detalles de la factura
-            foreach (var product in request.Products)
+            foreach (var productDetail in request.Products)
             {
-                var newDetail = PurchaseDetail.Create(0, purchase.Id, product.IdProduct, product.Description, product.Price, product.Quantity);
+                var newDetail = PurchaseDetail.Create(0, purchase.Id, productDetail.IdProduct, productDetail.Description, productDetail.Price, productDetail.Quantity, productDetail.PriceSale);
+
+                var product = context.Products.Find(productDetail.IdProduct);
+                if (product != null)
+                {
+                    product.UpdateQuantity(product.Quantity + productDetail.Quantity);
+                    product.UpdatePrice(productDetail.Price, productDetail.PriceSale);
+                }
 
                 purchase.AddDetail(newDetail);
             }

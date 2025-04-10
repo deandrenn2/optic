@@ -73,7 +73,7 @@ public class UpdatePurchase : ICarterModule
                 var detailFind = products.FirstOrDefault(x => x.IdProduct == product.IdProduct);
                 if (detailFind == null)
                 {
-                    var newDetail = PurchaseDetail.Create(0, purchase.Id, product.IdProduct, product.Description, product.Price, product.Quantity);
+                    var newDetail = PurchaseDetail.Create(0, purchase.Id, product.IdProduct, product.Description, product.Price, product.Quantity, product.PriceSale);
                     purchase.AddDetail(newDetail);
                 }
                 else
