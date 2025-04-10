@@ -47,4 +47,5 @@ export interface ClientStoryResponseModel {
    state: string;
    tags: string[];
    diagnosis: { name: string }[];
+   formulaId?: number;
 }

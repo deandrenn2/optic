@@ -108,21 +108,11 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
                             <input type="number" value={x.unitPrice}
                                 onChange={(e) => handleChangeUnitPrice(e, x.id)}
                                 min={0} max={999}
-<<<<<<< HEAD
-                                className="w-32 border border-gray-300 rounded p-1 ml-1"/>
-                                
-                            <p className=" right-0"><MoneyFormatter amount={x.salePrice * x.quantity} /></p>
-                            <br/>
-                            <div className=" flex justify-end ">
-                                <button className="w-8 bg-red-500 text-white px-2 py-1 rounded" onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button>
-                            </div>
-=======
                                 className="w-32 border border-gray-300 rounded p-1 ml-1" />
 
                             <p className="text-right"><MoneyFormatter amount={x.salePrice * x.quantity} />    <button className="w-8 bg-red-500 text-white px-2 py-1 rounded" onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button></p>
 
 
->>>>>>> 53c7f0f1a0756a41d3153096fbb7995ef7953c81
                         </div>
                     ))
                 }

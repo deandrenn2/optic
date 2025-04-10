@@ -62,7 +62,7 @@ export const Clients = () => {
                         value={searchClients}
                         onChange={(e) => setSearchClient(e.target.value)}
                         placeholder="Buscar Cliente"
-                        className="p-2 pl-10 rounded-tl-lg rounded-bl-lg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                        className="p-2 pl-10 rounded-tg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                          <FontAwesomeIcon icon={faMagnifyingGlass}
                         className="fa-search absolute left-3 top-3 text-gray-400"/>
                   </div>
