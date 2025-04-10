@@ -59,7 +59,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
                             codeNumber: '',
                             quantity: x.quantity,
                             unitPrice: 0,
-                            salePrice: x.unitPrice,
+                            salePrice: x.price,
                             idSupplier: 0,
                             categories: []
                         }
@@ -133,10 +133,6 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
 
     if (queryPurchase.isLoading)
         return <Bar Title="Cargando..." />;
-
-
-
-
 
     return (
         <div className="mb-1">

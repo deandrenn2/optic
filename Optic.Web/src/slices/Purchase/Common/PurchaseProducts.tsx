@@ -116,7 +116,7 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, is
                         <div key={x.id} className="grid grid-cols-[3fr_3fr_3fr_3fr_3fr] gap-2 justify-center align-middle ">
                             <span className="font-bold">{x.name}</span>
 
-                            <input type="number" value={x.unitPrice}
+                            <input type="number" value={x.salePrice}
                                 onChange={(e) => handleChangeUnitPrice(e, x.id)}
                                 min={0} max={999}
                                 disabled={disabled}
@@ -130,14 +130,16 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, is
                                     className="w-14 border border-gray-300 rounded p-1 " />
                             </div>
 
-                            <p className="text-right"><MoneyFormatter amount={x.unitPrice * x.quantity} />
-                                <button className="w-8 bg-red-500 text-white px-2 py-1 rounded ml-4 " onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button>
-                            </p>
+
 
                             <input type="text" className=" w-full border border-gray-300 rounded p-1 mx-2 "
                                 value={x.salePrice}
                                 disabled={disabled}
                                 onChange={(e) => handleChangeSalePrice(e, x.id)} />
+
+                            <p className="text-right"><MoneyFormatter amount={x.salePrice * x.quantity} />
+                                <button className="w-8 bg-red-500 text-white px-2 py-1 rounded ml-4 " onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button>
+                            </p>
                         </div>
                     ))
                 }
