@@ -13,7 +13,10 @@ import Swal from "sweetalert2";
 import { getStatusColorInvoice } from "./FormulasUtils";
 import { useFileDownload } from "../../shared/components/FilesDowload";
 export const Formulas = () => {
+    const [searchFormula, setSearchFormula] = useState('');
     const [visible, setVisible] = useState(false);
+    
+    
     const handleClose = (): void => {
         setVisible(false);
     }
@@ -42,6 +45,11 @@ export const Formulas = () => {
 
     if (queryFormulas.isLoading)
         return <Bar Title="Cargando formulas..." />;
+    const filteredFormula = formulas?.filter( formula =>
+       ` ${formula.number} ${formula.clientName}`.toLowerCase().includes(searchFormula.toLowerCase())
+
+    )
+
 
     return (
         <div> <div className="w-full">
@@ -60,11 +68,11 @@ export const Formulas = () => {
                     <div className="relative">
                         <div className=" inline-flex">
                             <input type="text"
+                            value={searchFormula}
+                            onChange={(e) => setSearchFormula(e.target.value)}
                                 placeholder="Buscar formula"
-                                className="p-2 pl-10 border-blue-400 rounded-tl-lg rounded-bl-lg" />
+                                className="p-2 pl-10 rounded-tg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
-                            <button
-                                className="text-white font-bold border hover:bg-blue-700 bg-blue-500 px-4 py-2 rounded-tr-lg rounded-br-lg ">Buscar</button>
                         </div>
                     </div>
                 </div>
@@ -81,7 +89,7 @@ export const Formulas = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {formulas?.map((formula) => (
+                    {filteredFormula?.map((formula) => (
                         <tr key={formula.id}>
                             <td className="border border-gray-300 p-2 text-center">#{formula.number.toString().padWithZeros(5)}</td>
                             <td className="border border-gray-300 p-2">{formula.clientName}</td>

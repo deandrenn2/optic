@@ -3,7 +3,6 @@ import { ClientForm } from "./ClientForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { ClientStory } from "./ClientStory";
-
 export const ClientDetail = () => {
     const { id } = useParams();
     const  location = useLocation();

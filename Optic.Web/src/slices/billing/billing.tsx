@@ -14,8 +14,6 @@ export const Billing = () => {
     const [filterFrom, setFilterFrom] = useState<string | undefined>();
     const [filterTo, setFilterTo] = useState<string | undefined>();
     const { queryBilling, billing } = useBilling(filterNumber, filterStatus, filterClientOrSupplierType, filterClientOrSupplierID, undefined, filterFrom, filterTo);
-
-
     const handleDownload = async (id: number, typeDocument: string) => {
         let urlBlob = "";
         if (typeDocument === 'Venta')
@@ -45,7 +43,7 @@ export const Billing = () => {
                             placeholder="Número de factura"
                             value={filterNumber || ""}
                             onChange={(e) => setFilterNumber(e.target.value ? parseInt(e.target.value) : undefined)}
-                            className="border p-2 w-full rounded"
+                            className="border p-2 w-full rounded leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                     <div>
@@ -53,7 +51,7 @@ export const Billing = () => {
                         <select
                             value={filterStatus || ""}
                             onChange={(e) => setFilterStatus(e.target.value || undefined)}
-                            className="border p-2 w-full rounded"
+                            className="border p-2 w-full rounded leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="">Todas las transacciones</option>
                             <option value="Pagada">Pagada</option>
@@ -69,9 +67,9 @@ export const Billing = () => {
                         <select
                             value={filterClientOrSupplierType || ""}
                             onChange={(e) => setFilterClientOrSupplierType(e.target.value || undefined)}
-                            className="border p-2 w-full rounded"
+                            className="border p-2 w-full rounded leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            <option value="">Todos los Clientes</option>
+                            <option value="">Todo el listado</option>
                             <option value="cliente">Cliente</option>
                             <option value="proveedor">Proveedor</option>
                         </select>
@@ -85,14 +83,14 @@ export const Billing = () => {
                                 type="date"
                                 value={filterFrom || ""}
                                 onChange={(e) => setFilterFrom(e.target.value || undefined)}
-                                className="w-full"
+                                className="w-full leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                             <span className="mx-2">-</span>
                             <input
                                 type="date"
                                 value={filterTo || ""}
                                 onChange={(e) => setFilterTo(e.target.value || undefined)}
-                                className="w-full"
+                                className="w-full leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
                     </div>
