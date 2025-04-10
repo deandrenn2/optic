@@ -32,11 +32,11 @@ public class GetSale : ICarterModule
     {
         public int Id { get; init; }
         public int IdBusiness { get; init; }
+        public int Number { get; init; }
         public int? IdClient { get; init; }
         public string ClientName { get; init; } = string.Empty;
         public string State { get; init; } = string.Empty;
         public DateTime Date { get; init; } = DateTime.Now;
-        public int IdInvoice { get; init; }
         public string PaymentType { get; init; } = string.Empty;
         public List<InvoiceDetailModel> Products { get; init; } = new();
     }
@@ -65,7 +65,8 @@ public class GetSale : ICarterModule
                 IdBusiness = sale.BusinessId,
                 IdClient = sale.ClientId,
                 ClientName = sale.Client.LastName + " " + sale.Client.FirstName,
-                IdInvoice = sale.Id,
+                Id = sale.Id,
+                Number = sale.Number,
                 State = sale.State,
                 Date = sale.Date,
                 Products = sale.InvoiceDetails.Select(y => new InvoiceDetailModel

@@ -230,8 +230,6 @@ export const FormulasUpdate = () => {
     }
 
 
-
-
     if (queryFormula.isLoading)
         return <Bar Title="Cargando..." />;
 

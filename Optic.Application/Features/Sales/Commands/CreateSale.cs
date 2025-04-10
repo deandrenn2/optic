@@ -66,9 +66,15 @@ public class CreateSale : ICarterModule
             var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.SumTotal, status, request.PaymentType, request.IdBusiness, request.IdClient, "Venta");
 
             //Agregar detalles de la factura
-            foreach (var product in request.Products)
+            foreach (var productDetail in request.Products)
             {
-                var newDetail = InvoiceDetail.Create(0, invoice.Id, product.IdProduct, product.Description, product.Price, product.Quantity);
+                var newDetail = InvoiceDetail.Create(0, invoice.Id, productDetail.IdProduct, productDetail.Description, productDetail.Price, productDetail.Quantity);
+
+                var product = context.Products.Find(productDetail.IdProduct);
+                if (product != null)
+                {
+                    product.UpdateQuantity(product.Quantity - productDetail.Quantity);
+                }
 
                 invoice.AddDetail(newDetail);
             }

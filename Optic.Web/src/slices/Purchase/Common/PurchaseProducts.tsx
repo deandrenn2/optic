@@ -61,10 +61,10 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
     const totalProducts = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
 
     return (
-        <div className="bg-gray-100 py-1 px-2 rounded-lg border border-gray-300">
+        <div className="bg-gray-100 pt-2 p-4 rounded-lg border border-gray-300">
 
             <div className="flex w-full gap-4 justify-between">
-                <h2 className="font-bold text-center text-gray-500 text-lg mb-2 px-2">Facturació</h2>
+                <h2 className="font-bold text-center text-gray-500 text-lg">Facturación</h2>
 
                 <div className="flex justify-end justify-items-end">
                     <OffCanvas titlePrincipal='Productos' visible={visiblePro} xClose={handleClose} position={Direction.Right}>

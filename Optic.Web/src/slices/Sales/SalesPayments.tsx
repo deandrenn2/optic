@@ -12,11 +12,13 @@ export const SalesPayments = ({ Id, totalFactura, payments,
     payments: SalesPaymentsModel[];
     xChangeStateFormula: (state: string) => void;
   }) => {
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number | undefined>(undefined);
   const { createPayment } = useCreatePayment(Id);
   const { deletePayment } = useDeletePayment(Id);
 
   const handleAddAbono = async () => {
+
+    if (amount === undefined) return;
 
     if (amount <= 0 || isNaN(amount)) return;
 
@@ -36,6 +38,10 @@ export const SalesPayments = ({ Id, totalFactura, payments,
 
   const handleChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
+    if (value === "") {
+      setAmount(undefined);
+      return;
+    }
     const amount = parseFloat(value);
     const debt = totalFactura - totalPayments;
     if (isNaN(amount)) return;
@@ -109,12 +115,7 @@ export const SalesPayments = ({ Id, totalFactura, payments,
                   </p>
                   <p className="flex items-center gap-2 text-gray-600">
                     <MoneyFormatter amount={abono.amount} />
-                    <button
-                      className="text-red-500 text-2xl hover:text-red-700 "
-                      onClick={() => handleDelete(abono.id)}
-                    >
-                      <FontAwesomeIcon icon={faCircleMinus} />
-                    </button>
+                    {isEnableAddPayment && <button className="text-red-500 text-2xl hover:text-red-700 " onClick={() => handleDelete(abono.id)}><FontAwesomeIcon icon={faCircleMinus} /></button>}
                   </p>
                 </li>
               ))

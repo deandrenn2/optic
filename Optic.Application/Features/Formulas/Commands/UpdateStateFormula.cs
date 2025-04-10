@@ -68,6 +68,8 @@ public class UpdateStateFormula : ICarterModule
                             product.UpdateQuantity(product.Quantity - productDetail.Quantity);
                         }
                     }
+
+                    invoice.UpdateState(request.State);
                 }
             }
 
@@ -81,7 +83,7 @@ public class UpdateStateFormula : ICarterModule
             }
             else
             {
-                return Results.Ok(Result.Failure(new Error("Formula.ErrorCreateFormula", $"Error al actualizar el estado de la formula a ${request.State}")));
+                return Results.Ok(Result.Failure(new Error("Formula.ErrorCreateFormula", $"Error al actualizar el estado de la formula a {request.State}")));
             }
 
         }

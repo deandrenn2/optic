@@ -14,9 +14,12 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { getStatusColorInvoice } from "./SalesUtils";
 import { UpdateSaleModel } from "./SalesModel";
-import { useSale, useSalesMutation } from "./useSales";
+import { usePayments, useSale, useSalesMutation } from "./useSales";
 import { ListStatus } from "./Common/ListStatus";
 import { FormulaProducts } from "../Formulas/Common/FormulaProducts";
+import OffCanvas from "../../shared/components/OffCanvas/Index";
+import { SalesPayments } from "./SalesPayments";
+import { Direction } from "../../shared/components/OffCanvas/Models";
 export const SalesUpdate = () => {
     const { id } = useParams();
     const [client, setClient] = useState<Option | undefined>();
@@ -25,6 +28,7 @@ export const SalesUpdate = () => {
     const { updateSale, updateStateSale } = useSalesMutation();
     const { sale: saleData, querySale } = useSale(id);
     const { business } = useUserContext();
+    const [isVisiblePaymment, setIsVisiblePaymment] = useState(false);
     const [formula, setFormula] = useState<UpdateSaleModel>({
         id: 0,
         number: 0,
@@ -37,6 +41,7 @@ export const SalesUpdate = () => {
         state: "Borrador"
     });
 
+    const { payments } = usePayments(formula.id);
 
     useEffect(() => {
         if (id) {
@@ -63,8 +68,6 @@ export const SalesUpdate = () => {
                     });
                     setProducts(products);
                 }
-
-
             }
         }
     }, [id, saleData]);
@@ -124,15 +127,34 @@ export const SalesUpdate = () => {
             cancelButtonText: "No",
             showLoaderOnConfirm: true,
             preConfirm: async () => {
-                const res = await updateStateSale.mutateAsync({ id: Number(id), state: stateFormula });
-                if (res.isSuccess)
-                    setFormula({ ...formula, state: stateFormula });
+                await handleChangeStatusMutation(stateFormula);
             }
-
         })
     }
+
+    const handleChangeStatusMutation = async (state: string) => {
+        const res = await updateStateSale.mutateAsync({ id: Number(id), state });
+        if (res.isSuccess) {
+            setFormula({ ...formula, state });
+            querySale.refetch();
+        }
+    }
+
+
     if (querySale.isLoading)
         return <Bar Title="Cargando..." />;
+
+    const isEnabledPaymmentButton = () => {
+        if (payments.length > 0)
+            return true;
+
+        if (formula.state === 'Borrador' || formula.state === 'Crédito')
+            return true;
+        else
+            return false;
+    }
+
+    const isEditable = formula.state === 'Borrador';
 
     if (formula)
         return (
@@ -146,32 +168,34 @@ export const SalesUpdate = () => {
                         <label className="block text-gray-700 text-sm font-bold mb-2">Fecha</label>
                         <div className="relative">
                             <input type="date" onChange={handleChangeDate}
-
+                                disabled={!isEditable}
                                 value={format(formula?.date, 'yyyy-LL-dd')} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <i className="fas fa-calendar-alt absolute right-1 top-2 text-gray-400"></i>
                         </div>
                     </div>
                 </div>
+                <FormulaProducts products={products} disabled={!isEditable} setProducts={setProducts} setVisiblePaymment={setIsVisiblePaymment} isVisiblePaymment={isEnabledPaymmentButton()} />
 
-
-                <FormulaProducts products={products} setProducts={setProducts} />
-                <SumTotal sumTotalProducts={totalProducts} />
-                <div className="flex justify-between gap-0">
-                    <div className="flex">
-                        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-4" onClick={handleUpdateFormula}>
+                <div className="flex justify-between gap-0 mt-4">
+                    <div className="inline-block">
+                        {isEditable && <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-4" onClick={handleUpdateFormula}>
                             {updateSale.isPending ? "Guardando..." : "Guardar Cambios"}
-                        </button>
-                        <div className="flex rounded overflow-hidden">
-                            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2" onClick={handleChangeStatus}>
+                        </button>}
+                        <div className="inline-flex rounded overflow-hidden  mr-4">
+                            <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2" onClick={handleChangeStatus}>
                                 Cambiar estado
                             </button>
                             <ListStatus className="w-auto border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={formula.state} />
                         </div>
+                        <label className={`${getStatusColorInvoice(formula.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(formula.state)} icon={faCircle} /> {formula.state}</label>
                     </div>
 
-                    <label className={`block ${getStatusColorInvoice(formula.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(formula.state)} icon={faCircle} /> {formula.state}</label>
-                </div>
 
+                    <SumTotal sumTotalProducts={totalProducts} />
+                </div>
+                <OffCanvas titlePrincipal='Abonos' visible={isVisiblePaymment} xClose={() => setIsVisiblePaymment(false)} position={Direction.Right}  >
+                    <SalesPayments Id={formula.id} totalFactura={totalProducts} xChangeStateFormula={handleChangeStatusMutation} payments={payments} />
+                </OffCanvas>
             </div>
         );
 };

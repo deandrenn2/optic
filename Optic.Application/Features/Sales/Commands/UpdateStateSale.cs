@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
@@ -47,8 +48,9 @@ public class UpdateStateSale : ICarterModule
             if (invoice == null)
                 return Results.Ok(Result.Failure(new Error("Sale.ErrorUpdateFormula", "No se pudo actualizar la factura")));
 
-            if (request.State != "Borrador" && request.State == "Borrador")
-                return Results.Ok(Result.Failure(new Error("Sale.ErrorUpdateFormula", "La factura no puede ser actualizada al eatado: " + invoice.State)));
+            if (invoice.State != "Borrador" && request.State == "Borrador")
+                return Results.Ok(Result.Failure(new Error("Sale.ErrorUpdateFormula", "La factura no puede ser actualizada al estado: " + invoice.State)));
+
 
             invoice.UpdateState(request.State);
 
