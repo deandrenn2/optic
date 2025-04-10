@@ -113,7 +113,7 @@ const StoryCard = ({ story }: { story: ClientStoryResponseModel }) => {
 
         <div>
           <Link to={`/formulas/${story.id}`}>
-            <p className="text-sm font-bold text-blue-600 cursor-pointer hover:underline">
+            <p className="text-sm font-bold cursor-pointer hover:underline">
               {expanded ? story.description : shortText}
             </p>
           </Link>
