@@ -73,6 +73,26 @@ public class UpdateStateFormula : ICarterModule
                 }
             }
 
+            if ((formula.State == "Pagada" || formula.State == "Crédito") && (request.State == "Anulada" || request.State == "Devolución"))
+            {
+                var invoice = context.Invoices.Find(formula.IdInvoice);
+                if (invoice != null)
+                {
+                    //Agregar detalles de la factura
+                    var productsInvoice = await context.InvoiceDetails.Where(x => x.IdInvoice == invoice.Id).ToListAsync();
+                    foreach (var productDetail in productsInvoice)
+                    {
+                        var product = context.Products.Find(productDetail.IdProduct);
+                        if (product != null)
+                        {
+                            product.UpdateQuantity(product.Quantity + productDetail.Quantity);
+                        }
+                    }
+
+                    invoice.UpdateState(request.State);
+                }
+            }
+
             formula.UpdateState(request.State);
 
             var resCount = await context.SaveChangesAsync();

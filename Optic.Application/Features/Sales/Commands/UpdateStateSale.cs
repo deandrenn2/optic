@@ -51,6 +51,24 @@ public class UpdateStateSale : ICarterModule
             if (invoice.State != "Borrador" && request.State == "Borrador")
                 return Results.Ok(Result.Failure(new Error("Sale.ErrorUpdateFormula", "La factura no puede ser actualizada al estado: " + invoice.State)));
 
+            if ((invoice.State == "Pagada" || invoice.State == "Crédito") && (request.State == "Anulada" || request.State == "Devolución"))
+            {
+
+                //Agregar detalles de la factura
+                var productsInvoice = await context.InvoiceDetails.Where(x => x.IdInvoice == invoice.Id).ToListAsync();
+                foreach (var productDetail in productsInvoice)
+                {
+                    var product = context.Products.Find(productDetail.IdProduct);
+                    if (product != null)
+                    {
+                        product.UpdateQuantity(product.Quantity + productDetail.Quantity);
+                    }
+                }
+
+                invoice.UpdateState(request.State);
+
+            }
+
 
             invoice.UpdateState(request.State);
 
