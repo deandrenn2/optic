@@ -12,7 +12,6 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, pu
     const [codeProduct, setCodeProduct] = useState<string>("");
     const { mutationValidateProduct } = useValidateProduct();
     const [visiblePro, setVisiblePro] = useState(false);
-
     const handleAggregateProduct = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const response = await mutationValidateProduct.mutateAsync(codeProduct);

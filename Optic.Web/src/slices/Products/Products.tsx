@@ -1,4 +1,4 @@
-import { faMagnifyingGlass, faPlus, } from "@fortawesome/free-solid-svg-icons"
+import { faBoxesPacking, faMagnifyingGlass, faPlus, } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react";
 import { MouseEvent } from "react";
@@ -18,10 +18,12 @@ import { QuantitykModelRemove } from "./QuantitykModelRemove";
 import { useProducts, } from "./useProducts";
 import { QuantityModelAdd } from "./QuantityModelAdd";
 import { ButtonStockAdd } from "../../shared/components/Buttons/ButtonStockAdd";
+import { PurchasesCreate } from "../Purchase/PurchasesCreate";
 export const Products = () => {
     const [visibleAdd, setVisibleAdd] = useState(false);
     const [visible, setVisible] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [visiblePurchase, setVisiblePurchase] = useState(false);
     const [visibleCategories, setVisibleCategories] = useState(false);
     const { settings } = useListSettings();
     const { products, queryProducts, deleteProduct } = useProducts();
@@ -32,6 +34,11 @@ export const Products = () => {
     useEffect(() => {
         queryProducts.refetch();
     }, [refresh]);
+
+   
+    function handleOpenVisiblePurchase(): void {
+        setVisiblePurchase(true)
+    }
 
     const handleClickDecrease = (product: ProductsResponseModel) => {
         setProduct(product);
@@ -65,6 +72,12 @@ export const Products = () => {
     const handleCloseCategories = (): void => {
         setVisibleCategories(false);
     }
+
+    function handleCloseVisiblePurchase(): void {
+        setVisiblePurchase(false);
+    }
+
+
     const getNameBrand = (id: number): string => {
         const brand = settings?.brands?.find(x => x.id === id);
         return brand?.name ?? '';
@@ -87,24 +100,24 @@ export const Products = () => {
                             className="fa-search top-3 pr-2 font-bold" />Nuevo</button>
                 </div>
                 <div className="mb-2">
+                    <button type="button" onClick={handleOpenVisiblePurchase} className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"><FontAwesomeIcon icon={faBoxesPacking} className="fa-search top-3 pr-2 font-bold"/>Pedidos</button>
+                </div>
+                
+                <div className="mb-2">
                     <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
                         onClick={() => setVisibleCategories(true)}>
-                        <FontAwesomeIcon
-                            icon={faPlus}
-                            className="fa-search top-3 pr-2 font-bold" />Categorias</button>
+                        <FontAwesomeIcon icon={faPlus} className="fa-search top-3 pr-2 font-bold" />Categorias</button>
                 </div>
+
                 <div className="mb-2">
                     <div className="relative">
                         <div className=" inline-flex">
                             <input type="text"
-                                placeholder="Buscar Proveedor"
+                                placeholder="Buscar Producto"
                                 value={searchProduct}
                                 onChange={(e) => setSearchProduct(e.target.value)}
-                                className="p-2 pl-10 rounded-tl-lg rounded-bl-lg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                            <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
-
-                            <button
-                                className="text-white font-bold border hover:bg-blue-700 bg-blue-500 px-4 py-2 rounded-tr-lg rounded-br-lg ">Buscar</button>
+                                className="p-2 pl-10 rounded-tg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400"/>
                         </div>
                     </div>
                 </div>
@@ -145,6 +158,10 @@ export const Products = () => {
                     ))}
                 </tbody>
             </table>
+            <OffCanvas titlePrincipal='Registro de Compra' visible={visiblePurchase} xClose={handleCloseVisiblePurchase} position={Direction.Right}size="lg" >
+                <PurchasesCreate />
+            </OffCanvas>
+
             <OffCanvas titlePrincipal='Registro de Producto' visible={visible} xClose={handleClose} position={Direction.Right} >
                 <ProductForm />
             </OffCanvas>

@@ -8,7 +8,6 @@ import { ClientDetail } from '../slices/Clients/ClientDetail.tsx';
 import { Products } from '../slices/Products/Products.tsx';
 import { Suppliers } from '../slices/Suppliers/Suppliers.tsx';
 import { Formulas } from '../slices/Formulas/Formulas.tsx';
-import { Billing } from '../slices/Billing/Billing.tsx';
 import { SettingsDetail } from '../slices/Users/UsersDetail.tsx';
 import { SupplierDetail } from '../slices/Suppliers/SupplierDetail.tsx';
 import { ProductsDetail } from '../slices/Products/ProductsDetail.tsx';
@@ -24,7 +23,7 @@ import { FormulasDetail } from '../slices/Formulas/FormulasDetail.tsx';
 import PasswordRecoverPage from './Login/PasswordRecover.tsx';
 import { SalesDetail } from '../slices/Sales/SalesDetail.tsx';
 import { PurchaseDetail } from '../slices/Purchase/PurchaseDetail.tsx';
-
+import { Billing } from '../slices/Billing/billing.tsx';
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -61,6 +60,7 @@ export const router = createBrowserRouter([
                 path: 'Products/:id',
                 element: <ProductsDetail />,
             },
+
             {
                 path: 'Formulas',
                 element: <Formulas />,
@@ -70,11 +70,13 @@ export const router = createBrowserRouter([
                 element: <FormulasDetail />,
             },
             { path: 'Sales/:id', element: <SalesDetail /> },
+
             { path: 'Purchases/:id', element: <PurchaseDetail /> },
             {
                 path: 'Billing',
                 element: <Billing />,
             },
+            
             {
                 path: 'Settings',
                 element: <SettingsMenu />,

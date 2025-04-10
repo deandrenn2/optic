@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ClientStoryResponseModel } from "./ClientModel";
 import { getClientStories } from "./ClientServices";
 import { getStatusColorInvoice } from "../Formulas/FormulasUtils";
@@ -67,7 +67,6 @@ export const ClientStory = () => {
     </div>
   );
 };
-
 const StoryCard = ({ story }: { story: ClientStoryResponseModel }) => {
   const [expanded, setExpanded] = useState(false);
   const maxLength = 100;
@@ -113,7 +112,12 @@ const StoryCard = ({ story }: { story: ClientStoryResponseModel }) => {
         </div>
 
         <div>
-          <p className="text-sm font-bold">{expanded ? story.description : shortText}</p>
+          <Link to={`/formulas/${story.id}`}>
+            <p className="text-sm font-bold cursor-pointer hover:underline">
+              {expanded ? story.description : shortText}
+            </p>
+          </Link>
+
           {isLongText && (
             <button
               className="text-blue-500 text-sm font-semibold mt-1"
