@@ -9,11 +9,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import { useDeletePurchasePayment, usePurchasePayments } from "./usePurchases";
 import { toast } from "react-toastify";
-export const PurchasePayments = ({ }: {}) => {
+export const PurchasePayments = ({totalAmount }: {totalAmount: number}) => {
     const { id } = useParams();
     const purchaseId = Number(id);
     const [amount, setAmount] = useState<number>(0);
-    const totalFactura = 500000;
+    const totalFactura = totalAmount;
     const queryClient = useQueryClient();
 
     const { data: paymentsData, isLoading } = useQuery({
@@ -21,7 +21,7 @@ export const PurchasePayments = ({ }: {}) => {
         queryFn: () => getPaymentsPurchaseService(purchaseId),
         enabled: !!id,
     });
-
+    
     const payments: paymentsPurchaseModel[] = paymentsData?.data ?? [];
     const totalPayments = payments.reduce((sum, p) => sum + p.amount, 0);
     const deuda = totalFactura - totalPayments;

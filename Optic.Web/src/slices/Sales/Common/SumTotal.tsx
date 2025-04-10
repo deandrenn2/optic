@@ -1,7 +1,6 @@
 import { MoneyFormatter } from "../../../shared/components/Numbers/MoneyFormatter";
 
 export const SumTotal = ({ sumTotalProducts }: { sumTotalProducts: number }) => {
-
     const getTotalSumaTotal = () => {
         let total = 0;
         total = sumTotalProducts;

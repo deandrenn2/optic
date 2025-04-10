@@ -10,9 +10,6 @@ import { Direction } from "../../shared/components/OffCanvas/Models";
 import { ListPaymentTypes } from "../Sales/Common/ListPaymentTypes";
 import { SumTotal } from "../Sales/Common/SumTotal";
 import { ProductsResponseModel } from "../Products/ProductModel";
-import { SuppliersForm } from "../Suppliers/SuppliersForm";
-import { PurchaseProducts } from "./Common/PurchaseProducts";
-import { ProductForm } from "../Products/ProductsForm";
 import { usePurchase, usePurchaseMutation } from "./usePurchases";
 import { useParams } from "react-router-dom";
 import { Bar } from "../../shared/components/Progress/Bar";
@@ -23,6 +20,7 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { PurchasePayments } from "./PurchasePayments";
+import { PurchaseProducts } from "./Common/PurchaseProducts";
 export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
     const { id } = useParams();
     const [supplier, setSupplier] = useState<Option | undefined>();
@@ -31,8 +29,6 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
     const { updatePurchase, updateStatePurchase } = usePurchaseMutation();
     const { purchase: purchaseData, queryPurchase } = usePurchase(id);
     const { business } = useUserContext();
-    const [visibleModalSupplier, setVisibleModalSupplier] = useState(false);
-    const [visibleModalProduct, setVisibleModalProduct] = useState(false);
     const [VisiblePaymmentsPurchase, setVisiblePaymmentsPurchase] = useState(false);
     const [purchase, setPurchase] = useState<UpdatePurchaseModel>({
         id: 0,
@@ -138,6 +134,10 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
     if (queryPurchase.isLoading)
         return <Bar Title="Cargando..." />;
 
+
+
+
+
     return (
         <div className="mb-1">
             <div className="grid grid-cols-2 gap-2 mb-2">
@@ -171,36 +171,25 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
 
             <PurchaseProducts products={products} setProducts={setProducts} setVisiblePaymment={setVisiblePaymmentsPurchase} />
             <SumTotal sumTotalProducts={totalProducts} />
-
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleUpdatePurchase}>
-                {updatePurchase.isPending ? "Guardando..." : "Guardar Cambios"}
-            </button>
             
-            <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1" onClick={() => setVisibleModalSupplier(true)}>
-                Crear Proveedor
-            </button>
-            <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1" onClick={() => setVisibleModalProduct(true)}>
-                Crear Producto
-            </button>
+            <div>
+                <div className="flex rounded overflow-hidden">
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleUpdatePurchase}>
+                        {updatePurchase.isPending ? "Guardando..." : "Guardar Cambios"}
+                    </button>
 
-            <div className="flex rounded overflow-hidden">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2" onClick={handleChangeStatus}>
-                    Cambiar estado
-                </button>
-                <ListStatus className="w-auto border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={purchase.state} />
+                    <div className="inline-flex rounded overflow-hidden mr-4">
+                        <button className=" bg-blue-600 hover:bg-blue-700 text-white px-4 py-2" onClick={handleChangeStatus}>
+                            Cambiar estado
+                        </button>
+                        <ListStatus className=" border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={purchase.state}/>
+                    </div>
+                    <label className={`block ${getStatusColorInvoice(purchase.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(purchase.state)} icon={faCircle} /> {purchase.state}</label>
+                </div>
             </div>
-
-            <label className={`block ${getStatusColorInvoice(purchase.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(purchase.state)} icon={faCircle} /> {purchase.state}</label>
-
-            <OffCanvas titlePrincipal='Registro de Proveedor' visible={visibleModalSupplier} xClose={() => setVisibleModalSupplier(false)} position={Direction.Right}>
-                <SuppliersForm />
-            </OffCanvas>
-            <OffCanvas titlePrincipal='Registro de Producto' visible={visibleModalProduct} xClose={() => setVisibleModalProduct(false)} position={Direction.Right}>
-                <ProductForm />
-            </OffCanvas>
             <OffCanvas
                 titlePrincipal=" Abono en Venta" visible={VisiblePaymmentsPurchase} xClose={() => setVisiblePaymmentsPurchase(false)} position={Direction.Right}>
-                <PurchasePayments/>
+                <PurchasePayments totalAmount={totalProducts} />
             </OffCanvas>
         </div>
     );
