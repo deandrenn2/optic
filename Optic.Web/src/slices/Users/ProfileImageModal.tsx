@@ -5,7 +5,7 @@ export const ProfileImageModal = ({ onClose }: { onClose: () => void }) => {
     const { setAvatar } = useUserAvatar();
     const { user } = useUserContext();
     const items = [];
-    for (let i = 1; i < 15; i++) {
+    for (let i = 1; i < 21; i++) {
         items.push(i);
     }
 
