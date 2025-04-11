@@ -97,26 +97,31 @@ export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isV
             <div className="flex flex-col gap-2 mb-4">
                 {
                     products.map((x) => (
-                        <div key={x.id} className={`grid grid-cols-${disabled ? '4' : '[3fr_3fr_3fr_3fr_1fr]'} gap-2`}>
+                        <div key={x.id} className={`grid grid-cols-4 gap-2 mb-1`}>
                             <span className="font-bold">{x.name}</span>
-                            <input type="text" className="border border-gray-300 rounded p-1 ml-6"
-                                value={x.salePrice}
-                                disabled={disabled}
-                                onChange={(e) => handleChangeSalePrice(e, x.id)} />
+                            <div className="flex justify-end items-center">
+                                <input type="text" className="border border-gray-300 rounded p-1 ml-6"
+                                    value={x.salePrice}
+                                    disabled={disabled}
+                                    onChange={(e) => handleChangeSalePrice(e, x.id)} />
+                            </div>
+                            <div className="flex justify-end items-center">
+                                <input type="number" value={x.quantity}
+                                    onChange={(e) => handleChangeQuantity(e, x.id)}
+                                    min={0} max={999}
+                                    disabled={disabled}
+                                    className="w-14 border border-gray-300 rounded p-1 ml-2" />
+                            </div>
+                            <div className="flex justify-end items-center">
+                                <MoneyFormatter amount={x.salePrice * x.quantity} />
+                                {
+                                    !disabled &&
+                                    <div className="flex justify-end ml-2">
+                                        <button className="w-8 bg-red-500 text-white px-2 py-1 rounded" onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button>
+                                    </div>
+                                }
+                            </div>
 
-                            <input type="number" value={x.quantity}
-                                onChange={(e) => handleChangeQuantity(e, x.id)}
-                                min={0} max={999}
-                                disabled={disabled}
-                                className="w-14 border border-gray-300 rounded p-1 ml-2" />
-                                
-                            <p className="text-right"> <MoneyFormatter amount={x.salePrice * x.quantity} /></p>
-                            {
-                                !disabled &&
-                                <div className="flex justify-end ">
-                                    <button className="w-8 bg-red-500 text-white px-2 py-1 rounded" onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button>
-                                </div>
-                            }
                         </div>
                     ))
                 }
