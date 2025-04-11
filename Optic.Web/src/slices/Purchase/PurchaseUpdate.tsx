@@ -134,6 +134,8 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
     if (queryPurchase.isLoading)
         return <Bar Title="Cargando..." />;
 
+        
+
     return (
         <div className="mb-1">
             <div className="grid grid-cols-2 gap-2 mb-2">

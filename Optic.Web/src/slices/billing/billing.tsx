@@ -14,6 +14,7 @@ export const Billing = () => {
     const [filterFrom, setFilterFrom] = useState<string | undefined>();
     const [filterTo, setFilterTo] = useState<string | undefined>();
     const { queryBilling, billing } = useBilling(filterNumber, filterStatus, filterClientOrSupplierType, filterClientOrSupplierID, undefined, filterFrom, filterTo);
+    
     const handleDownload = async (id: number, typeDocument: string) => {
         let urlBlob = "";
         if (typeDocument === 'Venta')
