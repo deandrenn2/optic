@@ -49,50 +49,51 @@ public class UpdateStateFormula : ICarterModule
             if (formula == null)
                 return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "No se pudo actualizar el estado de la formula")));
 
+            var invoice = context.Invoices.Find(formula.IdInvoice);
+
+            if (invoice == null)
+                return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "No se pudo actualizar el estado de la formula")));
+
             if (formula.State != "Borrador" && request.State == "Borrador")
                 return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "La formula no puede ser actualizada al estado: " + formula.State)));
 
 
             if (formula.State == "Borrador" && (request.State == "Crédito" || request.State == "Pagada"))
             {
-                var invoice = context.Invoices.Find(formula.IdInvoice);
-                if (invoice != null)
-                {
-                    //Agregar detalles de la factura
-                    var productsInvoice = await context.InvoiceDetails.Where(x => x.IdInvoice == invoice.Id).ToListAsync();
-                    foreach (var productDetail in productsInvoice)
-                    {
-                        var product = context.Products.Find(productDetail.IdProduct);
-                        if (product != null)
-                        {
-                            product.UpdateQuantity(product.Quantity - productDetail.Quantity);
-                        }
-                    }
 
-                    invoice.UpdateState(request.State);
+                //Agregar detalles de la factura
+                var productsInvoice = await context.InvoiceDetails.Where(x => x.IdInvoice == invoice.Id).ToListAsync();
+                foreach (var productDetail in productsInvoice)
+                {
+                    var product = context.Products.Find(productDetail.IdProduct);
+                    if (product != null)
+                    {
+                        product.UpdateQuantity(product.Quantity - productDetail.Quantity);
+                    }
                 }
+
+                invoice.UpdateState(request.State);
+
             }
 
             if ((formula.State == "Pagada" || formula.State == "Crédito") && (request.State == "Anulada" || request.State == "Devolución"))
             {
-                var invoice = context.Invoices.Find(formula.IdInvoice);
-                if (invoice != null)
+
+                //Agregar detalles de la factura
+                var productsInvoice = await context.InvoiceDetails.Where(x => x.IdInvoice == invoice.Id).ToListAsync();
+                foreach (var productDetail in productsInvoice)
                 {
-                    //Agregar detalles de la factura
-                    var productsInvoice = await context.InvoiceDetails.Where(x => x.IdInvoice == invoice.Id).ToListAsync();
-                    foreach (var productDetail in productsInvoice)
+                    var product = context.Products.Find(productDetail.IdProduct);
+                    if (product != null)
                     {
-                        var product = context.Products.Find(productDetail.IdProduct);
-                        if (product != null)
-                        {
-                            product.UpdateQuantity(product.Quantity + productDetail.Quantity);
-                        }
+                        product.UpdateQuantity(product.Quantity + productDetail.Quantity);
                     }
-
-                    invoice.UpdateState(request.State);
                 }
-            }
 
+                invoice.UpdateState(request.State);
+
+            }
+            invoice.UpdateState(request.State);
             formula.UpdateState(request.State);
 
             var resCount = await context.SaveChangesAsync();

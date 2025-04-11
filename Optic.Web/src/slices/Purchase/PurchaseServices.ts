@@ -1,6 +1,13 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
-import { CreatePurchaseModel, PaymentsPurchaseCreateModel, paymentsPurchaseModel, PurchaseResponseModel, UpdatePurchaseModel, UpdateStatePurchase } from './PurchaseModel';
+import {
+   CreatePurchaseModel,
+   PaymentsPurchaseCreateModel,
+   paymentsPurchaseModel,
+   PurchaseResponseModel,
+   UpdatePurchaseModel,
+   UpdateStatePurchase,
+} from './PurchaseModel';
 export const getPurchases = async (): Promise<MsgResponse<PurchaseResponseModel[]>> => {
    const url = 'api/purchases';
    const response = await ApiClient.get<MsgResponse<PurchaseResponseModel[]>>(url);
@@ -76,7 +83,7 @@ export const updatePurchaseService = async (model: UpdatePurchaseModel): Promise
 };
 
 export const updateStatePurchaseService = async (model: UpdateStatePurchase): Promise<MsgResponse<number>> => {
-   const url = 'api/purchases';
+   const url = `api/purchases/${model.id}/state`;
    const response = await ApiClient.put<MsgResponse<number>>(url, model);
 
    if (response.status !== 201 && response.status !== 200) {
@@ -94,89 +101,73 @@ export const updateStatePurchaseService = async (model: UpdateStatePurchase): Pr
    return response.data;
 };
 
-
-export const getPaymentsPurchaseService = async (
-   id: number
- ): Promise<MsgResponse<paymentsPurchaseModel[]>> => {
+export const getPaymentsPurchaseService = async (id: number): Promise<MsgResponse<paymentsPurchaseModel[]>> => {
    const url = `api/purchases/${id}/payments`;
- 
-   const response = await ApiClient.get<MsgResponse<{ payments: paymentsPurchaseModel[] }>>(url);
- 
-   if (response.status === 200 && response.data?.isSuccess) {
-     return {
-       isSuccess: true,
-       isFailure: false,
-       message: response.data.message,
-       data: response.data.data?.payments ?? [],
-     };
-   }
- 
-   return {
-     isSuccess: false,
-     isFailure: true,
-     message: 'Error al obtener los abonos de la compra',
-     data: [],
-   };
- };
- 
- 
- 
 
- export const PaymentsPurchaseCreate = async (
-   id: number,
-   model: PaymentsPurchaseCreateModel
- ): Promise<MsgResponse<number>> => {
+   const response = await ApiClient.get<MsgResponse<{ payments: paymentsPurchaseModel[] }>>(url);
+
+   if (response.status === 200 && response.data?.isSuccess) {
+      return {
+         isSuccess: true,
+         isFailure: false,
+         message: response.data.message,
+         data: response.data.data?.payments ?? [],
+      };
+   }
+
+   return {
+      isSuccess: false,
+      isFailure: true,
+      message: 'Error al obtener los abonos de la compra',
+      data: [],
+   };
+};
+
+export const PaymentsPurchaseCreate = async (id: number, model: PaymentsPurchaseCreateModel): Promise<MsgResponse<number>> => {
    const url = `/api/purchases/${id}/payments`;
    const response = await ApiClient.post<MsgResponse<number>>(url, model);
    const result = response.data;
 
    if (!result.isSuccess) {
-     return {
-       isSuccess: false,
-       isFailure: true,
-       message: result.message || "Error al crear el abono de compra",
-       error: {
-         code: "VALIDATION",
-         message: result.message,
-       },
-     };
+      return {
+         isSuccess: false,
+         isFailure: true,
+         message: result.message || 'Error al crear el abono de compra',
+         error: {
+            code: 'VALIDATION',
+            message: result.message,
+         },
+      };
    }
- 
-   return {
-     isSuccess: true,
-     isFailure: false,
-     message: result.message,
-     data: result.data,
-   };
- };
 
- export const SalesDeletePaymer = async (
-   idPayment: number,
-   purchaseId: number
- ): Promise<MsgResponse<null>> => {
+   return {
+      isSuccess: true,
+      isFailure: false,
+      message: result.message,
+      data: result.data,
+   };
+};
+
+export const SalesDeletePaymer = async (idPayment: number, purchaseId: number): Promise<MsgResponse<null>> => {
    const url = `/api/purchases/payments/${idPayment}?id=${purchaseId}`;
    const response = await ApiClient.delete<MsgResponse<null>>(url);
- 
-   if (response.status !== 200 && response.status !== 204) {
-     return {
-       isSuccess: false,
-       isFailure: true,
-       message: "Error al eliminar el abono",
-       error: {
-         code: response.status.toString(),
-         message: response.statusText,
-       },
-     };
-   }
- 
-   return {
-     isSuccess: true,
-     isFailure: false,
-     message: "Abono eliminado correctamente",
-     data: null,
-   };
- };
- 
 
- 
- 
+   if (response.status !== 200 && response.status !== 204) {
+      return {
+         isSuccess: false,
+         isFailure: true,
+         message: 'Error al eliminar el abono',
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return {
+      isSuccess: true,
+      isFailure: false,
+      message: 'Abono eliminado correctamente',
+      data: null,
+   };
+};

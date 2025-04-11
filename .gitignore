@@ -424,3 +424,9 @@ TODOs.md
 /Optic.Api/App_Data/opticDb.sqlite-shm
 /Optic.Api/App_Data/opticDb.sqlite-wal
 /Optic.Api/wwwroot/static/logos
+/Optic.Api/wwwroot/assets
+/Optic.Api/wwwroot/images
+/Optic.Api/wwwroot/index.html
+/Optic.Api/wwwroot/initials-logo.svg
+/Optic.Api/wwwroot/vite.svg
+/Optic.Api/public

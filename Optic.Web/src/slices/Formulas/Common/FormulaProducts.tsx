@@ -45,7 +45,7 @@ export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isV
         setVisible(true);
     }
 
-    const handleClickAbono = () => {
+    const handleClickPayments = () => {
         if (setVisiblePaymment)
             setVisiblePaymment(true);
     }
@@ -87,7 +87,7 @@ export const FormulaProducts = ({ products, setProducts, setVisiblePaymment, isV
                         </>
                     }
                     {isVisiblePaymment &&
-                        <button className="bg-teal-500 text-white  rounded hover:bg-teal-600 mr-2 py1 px-3" onClick={handleClickAbono}>
+                        <button className="bg-teal-500 text-white  rounded hover:bg-teal-600 mr-2 py1 px-3" onClick={handleClickPayments}>
                             <FontAwesomeIcon icon={faDollar} className="mr-1" /> Abono
                         </button>}
 

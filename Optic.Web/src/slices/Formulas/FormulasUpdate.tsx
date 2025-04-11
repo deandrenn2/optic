@@ -239,7 +239,7 @@ export const FormulasUpdate = () => {
         if (payments.length > 0)
             return true;
 
-        if (formula.state === 'Borrador' || formula.state === 'Crédito')
+        if (formula.state === 'Crédito')
             return true;
         else
             return false;

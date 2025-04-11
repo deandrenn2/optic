@@ -30,6 +30,8 @@ public class GetPurchase : ICarterModule
     public record PurchaseResponse
     {
         public int IdBusiness { get; init; }
+
+        public int Number { get; init; }
         public int? SupplierId { get; init; }
         public string SupplierName { get; init; } = string.Empty;
         public string Description { get; init; } = string.Empty;
@@ -72,6 +74,7 @@ public class GetPurchase : ICarterModule
             var purchaseResponse = new PurchaseResponse
             {
                 IdBusiness = purchase.BusinessId,
+                Number = purchase.Number,
                 SupplierId = purchase.SupplierId,
                 SupplierName = purchase.Supplier.Name,
                 State = purchase.State,
@@ -83,6 +86,7 @@ public class GetPurchase : ICarterModule
                     IdProduct = y.IdProduct,
                     Description = y.Description,
                     Price = y.Price,
+                    PriceSale = y.PriceSale,
                     Quantity = y.Quantity,
                     ProductName = y.Product.Name,
                 }).ToList(),

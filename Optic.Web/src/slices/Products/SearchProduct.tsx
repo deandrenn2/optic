@@ -48,10 +48,10 @@ export const SearchProduct = ({ setProducts }: { setProducts: React.Dispatch<Rea
         };
 
         setProducts((prev) => {
-            const existngProduct = prev.find(p => p.id === product.id);
-            if (existngProduct) {
-                const productQuantity = existngProduct?.originalQuantity ?? 0;
-                const newQuantity = productQuantity < existngProduct.quantity + 1 ? productQuantity : existngProduct.quantity + 1;
+            const existingProduct = prev.find(p => p.id === product.id);
+            if (existingProduct) {
+                const productQuantity = existingProduct?.originalQuantity ?? 0;
+                const newQuantity = productQuantity < existingProduct.quantity + 1 ? productQuantity : existingProduct.quantity + 1;
                 return prev.map(p =>
                     p.id === product.id ? { ...p, quantity: newQuantity } : p
                 );

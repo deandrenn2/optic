@@ -8,7 +8,6 @@ import { useFileDownload } from "../../shared/components/FilesDowload";
 export const SalesDetail = () => {
     const { id } = useParams();
     const { sale } = useSale(id);
-    console.log(sale, "datos de la compra");
     const { descargarArchivo } = useFileDownload();
 
     const handleDownload = async (id: number) => {

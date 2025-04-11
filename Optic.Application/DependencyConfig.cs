@@ -73,7 +73,25 @@ public static class DependencyConfig
 
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration config)
     {
-        var connectionString = config.GetConnectionString("SqliteConn");
+        var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        var connectionString = string.Empty;
+
+        if (enviroment == "Development")
+        {
+            connectionString = config.GetConnectionString("SqliteConn");
+        }
+        else
+        {
+            var basePath = AppContext.BaseDirectory;
+            var relativePath = config.GetConnectionString("SqliteConn");
+            if (relativePath == null)
+            {
+                return services;
+            }
+
+            var fullPath = Path.Combine(basePath, relativePath.Replace("Data Source=", string.Empty));
+            connectionString = $"Data Source={fullPath}";
+        }
 
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlite(connectionString));

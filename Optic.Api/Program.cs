@@ -39,6 +39,7 @@ app.UseCors("AllowSpecificOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseStaticFiles();
+app.MapFallbackToFile("index.html");
 app.MapCarter();
 app.Run();
 
