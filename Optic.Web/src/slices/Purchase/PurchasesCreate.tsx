@@ -58,6 +58,7 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
                 price: x.unitPrice,
                 priceSale: x.salePrice,
                 totalCost: x.unitPrice * x.quantity,
+
             })),
             sumTotal: totalProducts,
             paymentType: purchase.paymentType,

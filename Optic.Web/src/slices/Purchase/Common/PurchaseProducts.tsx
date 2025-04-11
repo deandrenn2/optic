@@ -27,7 +27,7 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, is
                 if (existProduct) {
                     setProducts([...products.filter(x => x.id !== existProduct.id), { ...response.data, quantity: existProduct.quantity + 1 }]);
                 } else {
-                    setProducts([...products, { ...response.data, quantity: 1 }]);
+                    setProducts([...products, { ...response.data, quantity: 1, originalQuantity: response.data.quantity }]);
                 }
             }
             setCodeProduct("");

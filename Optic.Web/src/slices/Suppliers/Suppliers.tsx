@@ -14,7 +14,7 @@ export const Suppliers = () => {
     const [visible, setVisible] = useState(false);
     const [visiblePurchase, setVisiblePurchase] = useState(false);
     const { suppliers, querySuppliers, deleteSupplier } = useSupplier();
-    const [searchSuppliers, setSearchSuppliers] = useState ('')
+    const [searchSuppliers, setSearchSuppliers] = useState('')
     function handleClose(): void {
         setVisible(false);
     }
@@ -22,11 +22,11 @@ export const Suppliers = () => {
     function handleClosePurchase(): void {
         setVisiblePurchase(false);
     }
-    
+
     function handleOpenPurchase(): void {
         setVisiblePurchase(true);
     }
-    
+
 
     function handleDelete(e: MouseEvent<HTMLButtonElement>, id: number): void {
         e.preventDefault();
@@ -48,7 +48,7 @@ export const Suppliers = () => {
         return <Bar Title="Cargando..." />;
 
     const filteredSuppliers = suppliers?.filter(supplier =>
-     `${supplier.name}`.toLowerCase().includes(searchSuppliers.toLowerCase())
+        `${supplier.name}`.toLowerCase().includes(searchSuppliers.toLowerCase())
     )
 
     return (
@@ -69,7 +69,7 @@ export const Suppliers = () => {
                                 value={searchSuppliers}
                                 onChange={(e) => setSearchSuppliers(e.target.value)}
                                 placeholder="Buscar Proveedor"
-                                className=" p-2 pl-10 rounded-tg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                                className=" p-2 pl-10 rounded-tg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
                         </div>
                     </div>
@@ -97,8 +97,8 @@ export const Suppliers = () => {
                             <td className="border border-gray-300 p-2 text-center">{supplier.address}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.email}</td>
                             <td className="border border-gray-300 p-2 text-center">
-                                <DetailButton url={`/suppliers/${supplier.id}`}/>
-                               
+                                <DetailButton url={`/suppliers/${supplier.id}`} />
+
                                 <DeleteButton id={supplier.id} onDelete={handleDelete} />
                             </td>
                         </tr>
@@ -106,8 +106,8 @@ export const Suppliers = () => {
                 </tbody>
                 <tbody id="listaProveedores"></tbody>
             </table>
-            <OffCanvas titlePrincipal='Registro de Compra' visible={visiblePurchase} xClose={handleClosePurchase} position={Direction.Right}size="lg"  >
-                <PurchasesCreate xChange={handleClosePurchase} />
+            <OffCanvas titlePrincipal='Registro de Compra' visible={visiblePurchase} xClose={handleClosePurchase} position={Direction.Right} size="lg"  >
+                <PurchasesCreate xChange={() => setVisiblePurchase(false)} />
             </OffCanvas>
             <OffCanvas titlePrincipal='Registro de Proveedor' visible={visible} xClose={handleClose} position={Direction.Right} >
                 <SuppliersForm />

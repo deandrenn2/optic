@@ -35,7 +35,7 @@ export const Products = () => {
         queryProducts.refetch();
     }, [refresh]);
 
-   
+
     function handleOpenVisiblePurchase(): void {
         setVisiblePurchase(true)
     }
@@ -100,9 +100,9 @@ export const Products = () => {
                             className="fa-search top-3 pr-2 font-bold" />Nuevo</button>
                 </div>
                 <div className="mb-2">
-                    <button type="button" onClick={handleOpenVisiblePurchase} className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"><FontAwesomeIcon icon={faBoxesPacking} className="fa-search top-3 pr-2 font-bold"/>Pedidos</button>
+                    <button type="button" onClick={handleOpenVisiblePurchase} className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"><FontAwesomeIcon icon={faBoxesPacking} className="fa-search top-3 pr-2 font-bold" />Pedidos</button>
                 </div>
-                
+
                 <div className="mb-2">
                     <button type='button' className=" bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold"
                         onClick={() => setVisibleCategories(true)}>
@@ -117,7 +117,7 @@ export const Products = () => {
                                 value={searchProduct}
                                 onChange={(e) => setSearchProduct(e.target.value)}
                                 className="p-2 pl-10 rounded-tg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                            <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400"/>
+                            <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
                         </div>
                     </div>
                 </div>
@@ -158,8 +158,8 @@ export const Products = () => {
                     ))}
                 </tbody>
             </table>
-            <OffCanvas titlePrincipal='Registro de Compra' visible={visiblePurchase} xClose={handleCloseVisiblePurchase} position={Direction.Right}size="lg" >
-                <PurchasesCreate />
+            <OffCanvas titlePrincipal='Registro de Compra' visible={visiblePurchase} xClose={handleCloseVisiblePurchase} position={Direction.Right} size="lg" >
+                <PurchasesCreate xChange={() => setVisiblePurchase(false)} />
             </OffCanvas>
 
             <OffCanvas titlePrincipal='Registro de Producto' visible={visible} xClose={handleClose} position={Direction.Right} >
