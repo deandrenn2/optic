@@ -108,8 +108,7 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
 
         return total;
     }
-
-
+    
     const handleCreateFormula = async () => {
         const formulaData: CreateFormulasModel = {
             ...formula,
@@ -199,29 +198,31 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
                         <label className="block text-gray-700 text-sm font-bold mb-2">Valor de la consulta {<MoneyFormatter amount={formula?.priceConsultation} />}</label>
                         <input name="priceConsultation" onChange={handleChange} onFocus={(e) => e.target.select()} type="number" className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" value={formula?.priceConsultation} />
                     </div>
+
                     <div className="">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Valor del lente {<MoneyFormatter amount={formula?.priceLens} />}</label>
                         <input name="priceLens" onChange={handleChange} onFocus={(e) => e.target.select()} type="number" className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" value={formula?.priceLens} />
                     </div>
+
                 </div>
                 <div className="mb-0 py-0">
                     <label className="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
                     <textarea name="description" onChange={handleChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                 </div>
+
                 <FormulaProducts products={products} setProducts={setProducts} isVisiblePaymment={false} />
                 <SumTotal formula={formula} sumTotalProducts={totalProducts} />
 
                 <OffCanvas titlePrincipal='Registro de Cliente' visible={visible} xClose={handleClose} position={Direction.Right}  >
                     <ClientForm />
                 </OffCanvas>
+
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleCreateFormula}>
                     {createFormula.isPending ? "Creando..." : "Crear formula"}
                 </button>
                 <button className="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded mr-1" onClick={handleClick}>
                     Crear Cliente
                 </button>
-
-
             </div>
         );
 };

@@ -84,7 +84,6 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
         }
     };
 
-
     return (
         <div className="mb-1">
             <div className="grid grid-cols-3 gap-2 mb-2">

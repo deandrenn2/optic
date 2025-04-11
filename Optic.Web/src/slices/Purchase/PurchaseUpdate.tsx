@@ -134,9 +134,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
     if (queryPurchase.isLoading)
         return <Bar Title="Cargando..." />;
 
-
-
-
+        
 
     return (
         <div className="mb-1">

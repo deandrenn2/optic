@@ -166,16 +166,19 @@ export const SalesUpdate = () => {
                     </div>
                     <div>
                         <label className="block text-gray-700 text-sm font-bold mb-2">Fecha</label>
+                       
                         <div className="relative">
                             <input type="date" onChange={handleChangeDate}
                                 disabled={!isEditable}
                                 value={format(formula?.date, 'yyyy-LL-dd')} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <i className="fas fa-calendar-alt absolute right-1 top-2 text-gray-400"></i>
                         </div>
+
                     </div>
                 </div>
-                <FormulaProducts products={products} disabled={!isEditable} setProducts={setProducts} setVisiblePaymment={setIsVisiblePaymment} isVisiblePaymment={isEnabledPaymmentButton()} />
 
+                <FormulaProducts products={products} disabled={!isEditable} setProducts={setProducts} setVisiblePaymment={setIsVisiblePaymment} isVisiblePaymment={isEnabledPaymmentButton()} />
+                
                 <div className="flex justify-between gap-0 mt-4">
                     <div className="inline-block">
                         {isEditable && <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-4" onClick={handleUpdateFormula}>
@@ -190,10 +193,10 @@ export const SalesUpdate = () => {
                         </div>
                         <label className={`${getStatusColorInvoice(formula.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(formula.state)} icon={faCircle} /> {formula.state}</label>
                     </div>
-
-
+                    
                     <SumTotal sumTotalProducts={totalProducts} />
                 </div>
+
                 <OffCanvas titlePrincipal='Abonos' visible={isVisiblePaymment} xClose={() => setIsVisiblePaymment(false)} position={Direction.Right}  >
                     <SalesPayments Id={formula.id} totalFactura={totalProducts} xChangeStateFormula={handleChangeStatusMutation} payments={payments} />
                 </OffCanvas>
