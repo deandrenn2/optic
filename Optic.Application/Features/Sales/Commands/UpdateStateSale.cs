@@ -64,9 +64,6 @@ public class UpdateStateSale : ICarterModule
                         product.UpdateQuantity(product.Quantity + productDetail.Quantity);
                     }
                 }
-
-                invoice.UpdateState(request.State);
-
             }
 
 

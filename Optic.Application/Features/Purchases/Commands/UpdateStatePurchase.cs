@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
@@ -50,6 +51,21 @@ public class UpdateStatePurchase : ICarterModule
 
             if (request.State != "Borrador" && request.State == "Borrador")
                 return Results.Ok(Result.Failure(new Error("Purchase.ErrorUpdateFormula", "La compra no puede ser actualizada al eatado: " + purchase.State)));
+
+            if ((purchase.State == "Pagada" || purchase.State == "Crédito") && (request.State == "Anulada" || request.State == "Devolución"))
+            {
+
+                //Actualizar los productos de la factura
+                var productsInvoice = await context.InvoiceDetails.Where(x => x.IdInvoice == purchase.Id).ToListAsync();
+                foreach (var productDetail in productsInvoice)
+                {
+                    var product = context.Products.Find(productDetail.IdProduct);
+                    if (product != null)
+                    {
+                        product.UpdateQuantity(product.Quantity - productDetail.Quantity);
+                    }
+                }
+            }
 
             purchase.UpdateState(request.State);
 

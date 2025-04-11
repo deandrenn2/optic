@@ -16,7 +16,7 @@ export const SalesPayments = ({ Id, totalFactura, payments,
   const { createPayment } = useCreatePayment(Id);
   const { deletePayment } = useDeletePayment(Id);
 
-  const handleAddAbono = async () => {
+  const handleAddPayment = async () => {
 
     if (amount === undefined) return;
 
@@ -81,7 +81,7 @@ export const SalesPayments = ({ Id, totalFactura, payments,
               />
             </div>
             <button
-              onClick={handleAddAbono}
+              onClick={handleAddPayment}
               className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-1 font-bold rounded-tr-lg rounded-br-lg w-full"
             >
               Agregar

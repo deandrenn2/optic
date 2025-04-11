@@ -1,6 +1,7 @@
 import { useSupplier } from "./useSupplier"
 
-export const SupplierSelect = ({ selectedValue, name, className, xChange, required }: { selectedValue: string, name?: string, className?: string, xChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void, required?: boolean }) => {
+export const SupplierSelect = ({ selectedValue, name, className, xChange, required, disabled }:
+    { selectedValue: string, name?: string, className?: string, xChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void, required?: boolean, disabled?: boolean }) => {
     const { suppliers, querySuppliers } = useSupplier();
     return (
 
@@ -10,6 +11,7 @@ export const SupplierSelect = ({ selectedValue, name, className, xChange, requir
             value={selectedValue}
             onChange={xChange}
             required={required}
+            disabled={disabled}
         >
             <option value="">Seleccione</option>
             {querySuppliers?.isLoading && <option>Cargando...</option>}

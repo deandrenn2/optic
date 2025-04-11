@@ -7,7 +7,6 @@ import { format } from "date-fns";
 import useUserContext from "../../shared/context/useUserContext";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { Direction } from "../../shared/components/OffCanvas/Models";
-import { ListPaymentTypes } from "../Sales/Common/ListPaymentTypes";
 import { SumTotal } from "../Sales/Common/SumTotal";
 import { ProductsResponseModel } from "../Products/ProductModel";
 import { usePurchase, usePurchaseMutation } from "./usePurchases";
@@ -29,7 +28,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
     const { updatePurchase, updateStatePurchase } = usePurchaseMutation();
     const { purchase: purchaseData, queryPurchase } = usePurchase(id);
     const { business } = useUserContext();
-    const [VisiblePaymmentsPurchase, setVisiblePaymmentsPurchase] = useState(false);
+    const [isVisiblePaymmentsPurchase, setVisiblePaymmentsPurchase] = useState(false);
     const [purchase, setPurchase] = useState<UpdatePurchaseModel>({
         id: 0,
         idBusiness: 0,
@@ -46,7 +45,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
             if (purchaseData) {
                 setPurchase(purchaseData);
                 setSupplier({
-                    value: purchaseData.idSupplier?.toString(),
+                    value: purchaseData.supplierId?.toString(),
                     label: purchaseData.supplierName,
                 });
 
@@ -58,8 +57,8 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
                             idBrand: 0,
                             codeNumber: '',
                             quantity: x.quantity,
-                            unitPrice: 0,
-                            salePrice: x.price,
+                            unitPrice: x.price,
+                            salePrice: x.priceSale,
                             idSupplier: 0,
                             categories: []
                         }
@@ -107,6 +106,8 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
         setStatePurchase(e.target.value);
     }
 
+
+
     const handleChangeStatus = () => {
         if (statePurchase === '') {
             toast.info('Debes seleccionar un estado antes de cambiar el estado');
@@ -123,25 +124,41 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
             cancelButtonText: "No",
             showLoaderOnConfirm: true,
             preConfirm: async () => {
-                const res = await updateStatePurchase.mutateAsync({ id: Number(id), state: statePurchase });
-                if (res.isSuccess)
-                    setPurchase({ ...purchase, state: statePurchase });
+                await handleChangeStatusMutation(statePurchase);
             }
 
         })
     }
 
+
+    const handleChangeStatusMutation = async (state: string) => {
+        const res = await updateStatePurchase.mutateAsync({ id: Number(id), state });
+        if (res.isSuccess) {
+            setPurchase({ ...purchase, state });
+            queryPurchase.refetch();
+        }
+    }
+
+    const isEnabledPaymmentButton = () => {
+
+        if (purchase.state === 'Crédito')
+            return true;
+        else
+            return false;
+    }
+
     if (queryPurchase.isLoading)
         return <Bar Title="Cargando..." />;
 
-        
+    const isEditable = purchase.state === 'Borrador';
 
     return (
         <div className="mb-1">
-            <div className="grid grid-cols-2 gap-2 mb-2">
+            <div className="grid grid-cols-3 gap-2 mb-2">
                 <div>
                     <label className="block text-gray-700 text-sm font-bold mb-2">Proveedor</label>
                     <SupplierSelect
+                        disabled={!isEditable}
                         selectedValue={supplier?.value || ""}
                         xChange={(e) => {
                             const selectElement = e.target as HTMLSelectElement;
@@ -155,39 +172,38 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
                 <div>
                     <label className="block text-gray-700 text-sm font-bold mb-2">Fecha</label>
                     <input
+                        disabled={!isEditable}
                         type="date"
                         onChange={handleChangeDate}
                         value={format(purchase?.date, "yyyy-LL-dd")}
                         className="shadow border rounded w-full py-2 px-3 text-gray-700"
                     />
                 </div>
-                <div>
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Tipo de pago</label>
-                    <ListPaymentTypes selectedValue={purchase?.paymentType} xChange={(e) => setPurchase({ ...purchase, paymentType: e.target.value })} />
-                </div>
             </div>
 
-            <PurchaseProducts products={products} setProducts={setProducts} setVisiblePaymment={setVisiblePaymmentsPurchase} />
-            <SumTotal sumTotalProducts={totalProducts} />
+            <PurchaseProducts disabled={!isEditable} products={products} setProducts={setProducts} isVisiblePaymment={isEnabledPaymmentButton()} setVisiblePaymment={setVisiblePaymmentsPurchase} />
 
-            <div>
-                <div className="flex rounded overflow-hidden">
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleUpdatePurchase}>
+
+            <div className="flex justify-between gap-0 mt-4">
+                <div className="inline-block ">
+                    {isEditable && <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-4" onClick={handleUpdatePurchase}>
                         {updatePurchase.isPending ? "Guardando..." : "Guardar Cambios"}
-                    </button>
-
+                    </button>}
                     <div className="inline-flex rounded overflow-hidden mr-4">
-                        <button className=" bg-blue-600 hover:bg-blue-700 text-white px-4 py-2" onClick={handleChangeStatus}>
+                        <button className=" bg-teal-500 hover:bg-teal-700 text-white px-4 py-2" onClick={handleChangeStatus}>
                             Cambiar estado
                         </button>
                         <ListStatus className=" border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={purchase.state} />
                     </div>
-                    <label className={`block ${getStatusColorInvoice(purchase.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(purchase.state)} icon={faCircle} /> {purchase.state}</label>
+                    <label className={`${getStatusColorInvoice(purchase.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(purchase.state)} icon={faCircle} /> {purchase.state}</label>
+
                 </div>
+
+                <SumTotal sumTotalProducts={totalProducts} />
             </div>
             <OffCanvas
-                titlePrincipal=" Abono en Venta" visible={VisiblePaymmentsPurchase} xClose={() => setVisiblePaymmentsPurchase(false)} position={Direction.Right}>
-                <PurchasePayments totalAmount={totalProducts} />
+                titlePrincipal=" Abono en Venta" visible={isVisiblePaymmentsPurchase} xClose={() => setVisiblePaymmentsPurchase(false)} position={Direction.Right}>
+                <PurchasePayments totalAmount={totalProducts} xChangeStatePurchase={handleChangeStatusMutation} />
             </OffCanvas>
         </div>
     );

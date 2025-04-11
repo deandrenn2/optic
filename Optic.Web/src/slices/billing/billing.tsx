@@ -14,7 +14,7 @@ export const Billing = () => {
     const [filterFrom, setFilterFrom] = useState<string | undefined>();
     const [filterTo, setFilterTo] = useState<string | undefined>();
     const { queryBilling, billing } = useBilling(filterNumber, filterStatus, filterClientOrSupplierType, filterClientOrSupplierID, undefined, filterFrom, filterTo);
-    
+
     const handleDownload = async (id: number, typeDocument: string) => {
         let urlBlob = "";
         if (typeDocument === 'Venta')
@@ -56,14 +56,15 @@ export const Billing = () => {
                         >
                             <option value="">Todas las transacciones</option>
                             <option value="Pagada">Pagada</option>
-                            <option value="Pendiente">Pendiente</option>
                             <option value="Crédito">Crédito</option>
+                            <option value="Devolución">Devolución</option>
+                            <option value="Anulada">Anulada</option>
                             <option value="Borrador">Borrador</option>
                         </select>
                     </div>
 
                     {/* Clientes */}
-                    <div>
+                    {/* <div>
                         <label className="block text-gray-700 text-sm mb-1">Clientes</label>
                         <select
                             value={filterClientOrSupplierType || ""}
@@ -74,10 +75,10 @@ export const Billing = () => {
                             <option value="cliente">Cliente</option>
                             <option value="proveedor">Proveedor</option>
                         </select>
-                    </div>
+                    </div> */}
 
                     {/* Período */}
-                    <div>
+                    {/* <div>
                         <label className="block text-gray-700 text-sm mb-1">Período</label>
                         <div className="flex items-center border rounded p-2">
                             <input
@@ -94,7 +95,7 @@ export const Billing = () => {
                                 className="w-full leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Botón de búsqueda */}

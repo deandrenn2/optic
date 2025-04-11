@@ -9,8 +9,9 @@ export interface PurchaseDetailModel {
 
 export interface PurchaseResponseModel {
    id: number;
+   number: number;
    idBusiness: number;
-   idSupplier?: number;
+   supplierId?: number;
    supplierName: string;
    state: string;
    date: Date;

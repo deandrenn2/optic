@@ -116,7 +116,7 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, is
                         <div key={x.id} className="grid grid-cols-[3fr_3fr_3fr_3fr_3fr] gap-2 justify-center align-middle ">
                             <span className="font-bold">{x.name}</span>
 
-                            <input type="number" value={x.salePrice}
+                            <input type="number" value={x.unitPrice}
                                 onChange={(e) => handleChangeUnitPrice(e, x.id)}
                                 min={0} max={999}
                                 disabled={disabled}
@@ -130,23 +130,25 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, is
                                     className="w-14 border border-gray-300 rounded p-1 " />
                             </div>
 
-
-
-                            <input type="text" className=" w-full border border-gray-300 rounded p-1 mx-2 "
-                                value={x.salePrice}
-                                disabled={disabled}
-                                onChange={(e) => handleChangeSalePrice(e, x.id)} />
-
-                            <p className="text-right"><MoneyFormatter amount={x.salePrice * x.quantity} />
-                                <button className="w-8 bg-red-500 text-white px-2 py-1 rounded ml-4 " onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} /></button>
+                            <p className="flex justify-center items-center">
+                                <MoneyFormatter amount={x.unitPrice * x.quantity} />
+                                {!disabled && <button className="w-8 bg-red-500 text-white px-2 py-1 rounded ml-4 " onClick={() => handleDeleteProduct(x.id)} ><FontAwesomeIcon icon={faMinus} />
+                                </button>}
                             </p>
+                            {<div className="flex justify-center">
+                                <input type="text" className=" w-full border border-gray-300 rounded p-1 mx-2"
+                                    value={x.salePrice}
+                                    disabled={disabled}
+                                    onChange={(e) => handleChangeSalePrice(e, x.id)} />
+
+                            </div>}
                         </div>
                     ))
                 }
 
             </div>
 
-            <div>
+            {!disabled && <div>
                 <form onSubmit={handleAggregateProduct} onClick={(e) => e.preventDefault()}>
                     <input
                         required
@@ -157,7 +159,7 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, is
                         placeholder="Agregar producto por código"
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </form>
-            </div>
+            </div>}
         </div>
     );
 
