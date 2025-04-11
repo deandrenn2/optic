@@ -1,7 +1,7 @@
 # build
 
 Build the project
-dotnet publish -c Release -r win-x64 --self-contained true --urls "http://0.0.0.0:5000" -o ./public
+dotnet publish -c Release -r win-x64 --self-contained true --urls "http://0.0.0.0:5000;https://0.0.0.0:7045" -o ./public
 
 # certification
 

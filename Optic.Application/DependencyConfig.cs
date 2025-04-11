@@ -107,7 +107,7 @@ public static class DependencyConfig
         {
             options.AddPolicy("AllowSpecificOrigin", builder =>
             {
-                builder.WithOrigins("http://localhost:5173", "https://localhost:5173")  // Permite cualquier origen
+                builder.WithOrigins("http://localhost:5173", "https://localhost:5173", "http://localhost:5000", "http://localhost:7045")  // Permite cualquier origen
                        .AllowAnyMethod()  // Permite cualquier método HTTP (GET, POST, PUT, DELETE, etc.)
                        .AllowAnyHeader(); // Permite cualquier cabecera
             });
