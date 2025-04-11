@@ -22,7 +22,7 @@ export interface UsersAvatarModel {
 }
 
 export interface UsersProfileModel {
-   id: number;
+   id?: number;
    firstName: string;
    lastName: string;
    email: string;
