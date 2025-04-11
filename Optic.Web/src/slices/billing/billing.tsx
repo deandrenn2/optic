@@ -9,11 +9,11 @@ export const Billing = () => {
     const { descargarArchivo } = useFileDownload();
     const [filterNumber, setFilterNumber] = useState<number | undefined>();
     const [filterStatus, setFilterStatus] = useState<string | undefined>();
-    const [filterClientOrSupplierType, setFilterClientOrSupplierType] = useState<string | undefined>("cliente");
+    // const [filterClientOrSupplierType, setFilterClientOrSupplierType] = useState<string | undefined>("cliente");
     const [filterClientOrSupplierID,] = useState<number | undefined>();
-    const [filterFrom, setFilterFrom] = useState<string | undefined>();
-    const [filterTo, setFilterTo] = useState<string | undefined>();
-    const { queryBilling, billing } = useBilling(filterNumber, filterStatus, filterClientOrSupplierType, filterClientOrSupplierID, undefined, filterFrom, filterTo);
+    // const [filterFrom, setFilterFrom] = useState<string | undefined>();
+    // const [filterTo, setFilterTo] = useState<string | undefined>();
+    const { queryBilling, billing } = useBilling(filterNumber, filterStatus, "", filterClientOrSupplierID, undefined, "", "");
 
     const handleDownload = async (id: number, typeDocument: string) => {
         let urlBlob = "";
