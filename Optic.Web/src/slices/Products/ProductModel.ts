@@ -2,13 +2,13 @@ export interface ProductModel {
    name: string;
    idBrand: number;
    codeNumber: string;
-   barCode: string;
+   barCode?: string;
    quantity: number;
    unitPrice: number;
    salePrice: number;
-   stock: number;
+   stock?: number;
    idSupplier: number;
-   image: string;
+   image?: string;
    categories: string[];
 }
 export interface ProductsResponseModel {

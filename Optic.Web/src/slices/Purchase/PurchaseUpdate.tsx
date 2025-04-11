@@ -59,7 +59,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
                             codeNumber: '',
                             quantity: x.quantity,
                             unitPrice: 0,
-                            salePrice: x.unitPrice,
+                            salePrice: x.price,
                             idSupplier: 0,
                             categories: []
                         }
@@ -171,7 +171,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
 
             <PurchaseProducts products={products} setProducts={setProducts} setVisiblePaymment={setVisiblePaymmentsPurchase} />
             <SumTotal sumTotalProducts={totalProducts} />
-            
+
             <div>
                 <div className="flex rounded overflow-hidden">
                     <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-1" onClick={handleUpdatePurchase}>
@@ -182,7 +182,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
                         <button className=" bg-blue-600 hover:bg-blue-700 text-white px-4 py-2" onClick={handleChangeStatus}>
                             Cambiar estado
                         </button>
-                        <ListStatus className=" border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={purchase.state}/>
+                        <ListStatus className=" border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={purchase.state} />
                     </div>
                     <label className={`block ${getStatusColorInvoice(purchase.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(purchase.state)} icon={faCircle} /> {purchase.state}</label>
                 </div>
