@@ -33,7 +33,7 @@ export const IdentificationTypes = () => {
                     </thead>
                     <tbody>
                         {identificationTypes?.map((identification) => (
-                            <tr key={identification.id}>
+                            <tr key={identification.id} className="hover:bg-pink-200">
                                 <td className="border border-gray-300 p-2 text-center">{identification.orden}</td>
                                 <td className="border border-gray-300 p-2 text-center">{identification.name}</td>
                                 <td className="border border-gray-300 p-2 text-center">

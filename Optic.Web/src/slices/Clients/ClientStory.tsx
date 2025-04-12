@@ -117,7 +117,6 @@ const StoryCard = ({ story }: { story: ClientStoryResponseModel }) => {
               {expanded ? story.description : shortText}
             </p>
           </Link>
-
           {isLongText && (
             <button
               className="text-blue-500 text-sm font-semibold mt-1"

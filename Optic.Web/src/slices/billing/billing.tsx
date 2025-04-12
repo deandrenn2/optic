@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
+import { faCircle, faFileExcel } from "@fortawesome/free-solid-svg-icons";
 import ButtonDetail from "../../shared/components/Buttons/ButtonDetail";
 import { useFileDownload } from "../../shared/components/FilesDowload";
 import { useBilling } from "./useBilling";
 import { Bar } from "../../shared/components/Progress/Bar";
+import { getStatusColorInvoice } from "../Formulas/FormulasUtils";
 export const Billing = () => {
     const { descargarArchivo } = useFileDownload();
     const [filterNumber, setFilterNumber] = useState<number | undefined>();
@@ -129,17 +130,22 @@ export const Billing = () => {
                         <tbody>
                             {queryBilling.isLoading && <Bar Title="Cargando..." />}
                             {!queryBilling.isLoading && billing && billing.map((bill, i) => (
-                                <tr key={i} className="hover:bg-gray-50">
+                                <tr key={i} className="hover:bg-pink-200">
                                     <td className="border p-2 text-center">#{bill.number.toString().padStart(5, '0')}</td>
                                     <td className="border p-2 text-center">{bill.typeDocument}</td>
                                     <td className="border p-2 text-center">
-                                        <span className={`px-2 py-1 rounded text-white ${bill.state?.trim().toLowerCase() === "pagada" ? "bg-green-500"
-                                            : bill.state?.trim().toLowerCase() === "crédito" ? "bg-blue-500" : bill.state?.trim().toLowerCase() === "borrador" ? "bg-gray-500" : "bg-red-500"}`}>{bill.state || "Desconocido"}
+                                        <span className={` ${bill.state?.trim().toLowerCase() === "pagada" ? "font-bold text-green-500 mr-2"
+                                            : bill.state?.trim().toLowerCase() === "crédito" ?
+                                                "font-bold text-blue-500 mr-2" : bill.state?.trim().toLowerCase() === "borrador" ?
+                                                    "font-bold text-gray-500 mr-2" : "font-bold text-yellow-500 mr-2"}`}>{bill.state || "Desconocido"}
+                                        </span>
+                                        <span className="text-xs">
+                                            <FontAwesomeIcon className={getStatusColorInvoice(bill.state)} icon={faCircle} />
                                         </span>
                                     </td>
                                     <td className="border p-2 text-center">{bill.clientOrSupplier}</td>
                                     <td className="border p-2 text-center">{new Date(bill.date).toLocaleDateString()}</td>
-                                    <td className="border p-2 text-center">{bill.paymentMethod}</td>
+                                    <td className={`border p-2 text-center ${bill.paymentMethod === 'Contado' ? 'text-green-500 font-bold' : bill.paymentMethod === 'Crédito' ? 'text-blue-500 font-bold' : ''}`}>{bill.paymentMethod}</td>
                                     <td className="border p-2 text-center font-bold">${bill.total.toLocaleString()}</td>
                                     <td className="border p-2 text-center">
                                         <ButtonDetail url={bill.typeDocument === 'Venta' ? `/Sales/${bill.id}` : bill.typeDocument === "Formula" ? `/Formulas/${bill.id}` : `/Purchases/${bill.id}`} />

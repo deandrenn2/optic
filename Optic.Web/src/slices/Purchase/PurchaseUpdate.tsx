@@ -180,10 +180,8 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
                     />
                 </div>
             </div>
-
             <PurchaseProducts disabled={!isEditable} products={products} setProducts={setProducts} isVisiblePaymment={isEnabledPaymmentButton()} setVisiblePaymment={setVisiblePaymmentsPurchase} />
-
-
+    
             <div className="flex justify-between gap-0 mt-4">
                 <div className="inline-block ">
                     {isEditable && <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-4" onClick={handleUpdatePurchase}>
@@ -196,9 +194,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
                         <ListStatus className=" border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={purchase.state} />
                     </div>
                     <label className={`${getStatusColorInvoice(purchase.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(purchase.state)} icon={faCircle} /> {purchase.state}</label>
-
                 </div>
-
                 <SumTotal sumTotalProducts={totalProducts} />
             </div>
             <OffCanvas
