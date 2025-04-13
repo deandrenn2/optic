@@ -6,9 +6,9 @@ import { useBillingPurchase } from "../Billing/useBilling";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 import { getDifferenceDays } from "./Util";
 export const PurchasePaymentsCard = () => {
-    const { billing, count, pager } = useBillingPurchase(1, 5);
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(pager?.pageSize ?? 5);
+    const [pageSize, setPageSize] = useState(5);
+    const { billing, count, pager } = useBillingPurchase(page, pageSize);
     const location = useLocation();
     return (
         <div className="bg-white rounded-lg shadow p-4 ">
