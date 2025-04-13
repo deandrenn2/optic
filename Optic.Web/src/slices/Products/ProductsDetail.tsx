@@ -12,10 +12,10 @@ export const ProductsDetail = () => {
                 <Link
                     to={fromHome ? "/" : "/Products"}
                     title="Volver al listado de productos"
-                    className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold flex items-center"
+                    className="bg-gray-300 hover:bg-gray-300 text-gray-700 hover:text-gray-800 border border-gray-400 hover:border-gray-600 px-4 py-2 rounded font-bold flex items-center transition-all"
                 >
                     <FontAwesomeIcon icon={faArrowCircleLeft} className="mr-2" />
-                    {fromHome ? "Volver a Inicio" : "Volver al listado de productos"}
+                    {fromHome ? "Volver" : "Volver"}
                 </Link>
             </div>
             <div className="w-full flex flex-col lg:flex-row items-start gap-4">
