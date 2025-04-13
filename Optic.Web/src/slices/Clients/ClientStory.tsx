@@ -130,7 +130,6 @@ const StoryCard = ({ story }: { story: ClientStoryResponseModel }) => {
             </div>
           </Link>
         </div>
-        
       </div>
     </div>
   );
