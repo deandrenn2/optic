@@ -15,8 +15,8 @@ import { useFileDownload } from "../../shared/components/FilesDowload";
 export const Formulas = () => {
     const [searchFormula, setSearchFormula] = useState('');
     const [visible, setVisible] = useState(false);
-    
-    
+
+
     const handleClose = (): void => {
         setVisible(false);
     }
@@ -45,15 +45,15 @@ export const Formulas = () => {
 
     if (queryFormulas.isLoading)
         return <Bar Title="Cargando formulas..." />;
-    const filteredFormula = formulas?.filter( formula =>
-       ` ${formula.number} ${formula.clientName}`.toLowerCase().includes(searchFormula.toLowerCase())
+    const filteredFormula = formulas?.filter(formula =>
+        ` ${formula.number} ${formula.clientName}`.toLowerCase().includes(searchFormula.toLowerCase())
 
     )
 
 
     return (
         <div> <div className="w-full">
-            <div className="flex space-x-4 mb-2">
+            <div className="flex space-x-4 mb-2 ">
                 <div className="mb-2">
                     <button type='button'
                         onClick={() => setVisible(true)}
@@ -68,8 +68,8 @@ export const Formulas = () => {
                     <div className="relative">
                         <div className=" inline-flex">
                             <input type="text"
-                            value={searchFormula}
-                            onChange={(e) => setSearchFormula(e.target.value)}
+                                value={searchFormula}
+                                onChange={(e) => setSearchFormula(e.target.value)}
                                 placeholder="Buscar formula"
                                 className="p-2 pl-10 rounded-tg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="fas fa-search absolute left-3 top-3 text-gray-400" />
@@ -77,37 +77,40 @@ export const Formulas = () => {
                     </div>
                 </div>
             </div>
-            <table className="min-w-full bg-white border border-gray-300">
-                <thead>
-                    <tr>
-                        <th className="border border-gray-300 p-2">Nº Formula</th>
-                        <th className="border border-gray-300 p-2">Cliente</th>
-                        <th className="border border-gray-300 p-2">Valor Consulta</th>
-                        <th className="border border-gray-300 p-2">Fecha</th>
-                        <th className="border border-gray-300 p-2">Estado</th>
-                        <th className="border border-gray-300 p-2">Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredFormula?.map((formula) => (
-                        <tr key={formula.id}>
-                            <td className="border border-gray-300 p-2 text-center">#{formula.number.toString().padWithZeros(5)}</td>
-                            <td className="border border-gray-300 p-2">{formula.clientName}</td>
-                            <td className="border border-gray-300 p-2 text-center"><MoneyFormatter amount={formula?.priceConsultation} /></td>
-                            <td className="border border-gray-300 p-2 text-center">{format(formula?.date, ' dd/LL/yyyy')}</td>
-                            <td className={`border border-gray-300 p-2 text-center font-semibold ${getStatusColorInvoice(formula?.state)}`}>{formula?.state}</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <DetailButton url={`/formulas/${formula.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />
-                                <button onClick={() => handleDownload(formula.id)} className="text-green-500 mr-3  text-2xl"><FontAwesomeIcon icon={faFileExcel} /></button>
-                                {
-                                    formula.state === 'Borrador' &&
-                                    <button onClick={() => handleDelete(formula.id)} className="text-red-500 text-2xl hover:text-red-700 mr-2"><FontAwesomeIcon icon={faTrashAlt} /></button>
-                                }
-                            </td>
+
+            <div className="">
+                <table className="min-w-full bg-white border border-gray-300  ">
+                    <thead>
+                        <tr>
+                            <th className="border border-gray-300 p-2">Nº Formula</th>
+                            <th className="border border-gray-300 p-2">Cliente</th>
+                            <th className="border border-gray-300 p-2">Valor Consulta</th>
+                            <th className="border border-gray-300 p-2">Fecha</th>
+                            <th className="border border-gray-300 p-2">Estado</th>
+                            <th className="border border-gray-300 p-2">Opciones</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {filteredFormula?.map((formula) => (
+                            <tr key={formula.id} className="hover:bg-pink-200">
+                                <td className="border border-gray-300 p-2 text-center">#{formula.number.toString().padWithZeros(5)}</td>
+                                <td className="border border-gray-300 p-2">{formula.clientName}</td>
+                                <td className="border border-gray-300 p-2 text-center"><MoneyFormatter amount={formula?.priceConsultation} /></td>
+                                <td className="border border-gray-300 p-2 text-center">{format(formula?.date, ' dd/LL/yyyy')}</td>
+                                <td className={`border border-gray-300 p-2 text-center font-semibold ${getStatusColorInvoice(formula?.state)}`}>{formula?.state}</td>
+                                <td className="border border-gray-300 p-2 text-center">
+                                    <DetailButton url={`/formulas/${formula.id}`} className="text-blue-500 text-2xl hover:text-blue-700 mr-2" />
+                                    <button onClick={() => handleDownload(formula.id)} className="text-green-500 mr-3  text-2xl"><FontAwesomeIcon icon={faFileExcel} /></button>
+                                    {
+                                        formula.state === 'Borrador' &&
+                                        <button onClick={() => handleDelete(formula.id)} className="text-red-500 text-2xl hover:text-red-700 mr-2"><FontAwesomeIcon icon={faTrashAlt} /></button>
+                                    }
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
             <OffCanvas titlePrincipal='Nueva formula' visible={visible} xClose={handleClose} position={Direction.Right} size="lg" >
                 <FormulasCreate />

@@ -83,7 +83,7 @@ export const Clients = () => {
                </thead>
                <tbody>
                   {filteredClients?.map((client) => (
-                     <tr key={client.id}>
+                     <tr key={client.id} className='hover:bg-pink-200'>
                         <td className=" p-2 border-b border-gray-200">
                            {' '}
                            <FontAwesomeIcon

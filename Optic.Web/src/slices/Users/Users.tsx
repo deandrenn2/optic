@@ -57,7 +57,7 @@ export const Users = () => {
                     </thead>
                     <tbody>
                         {users?.map((user) => (
-                            <tr key={user.id}>
+                            <tr key={user.id} className="hover:bg-pink-200">
                                 <td className="border border-gray-300 p-2 text-center">
                                     {user.firstName + " " + user.lastName}
                                 </td>

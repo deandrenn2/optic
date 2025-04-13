@@ -164,7 +164,7 @@ export const FormulasCreate = ({ xChange }: { xChange?: () => void }) => {
                     <div>
                         <label className="block text-gray-700 text-sm font-bold mb-2">Fecha</label>
                         <div className="relative">
-                            <input type="date" onChange={handleChangeDate}
+                            <input required type="date" onChange={handleChangeDate}
                                 value={format(formula?.date, 'yyyy-LL-dd')} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <i className="fas fa-calendar-alt absolute right-1 top-2 text-gray-400"></i>
                         </div>

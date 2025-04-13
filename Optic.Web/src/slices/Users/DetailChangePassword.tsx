@@ -1,4 +1,4 @@
-import { faEye, faEyeSlash, faKey, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faKey,} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useUsers from "./useUsers";
 import { useState } from "react";
@@ -109,20 +109,19 @@ const DetailPasswordModel = ({ user, onClose }: { user: any, onClose: () => void
                         <p className="text-red-500 text-sm font-medium text-center">{errorMessage}</p>
                     )}
 
-                    <div className="flex justify-between">
+                    <div className="flex">
                     <button
                             type="submit"
-                            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 flex items-center"
+                            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 flex items-center mr-2"
                         >
                             <FontAwesomeIcon icon={faKey} className="mr-2" />
                             Cambiar contraseña
                         </button>
+
                         <button
                             type="button"
                             onClick={handleClose}
-                            className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-400 flex items-center"
-                        >
-                            <FontAwesomeIcon icon={faTimes} className="mr-2" />
+                            className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-400 flex items-center mr-2">
                             Cancelar
                         </button>
                     </div>

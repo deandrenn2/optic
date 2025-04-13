@@ -10,6 +10,7 @@ export const PurchasePaymentsCard = () => {
     const [pageSize, setPageSize] = useState(5);
     const { billing, count, pager } = useBillingPurchase(page, pageSize);
     const location = useLocation();
+    
     return (
         <div className="bg-white rounded-lg shadow p-4 ">
             <div className="flex items-center mb-4">
@@ -18,8 +19,7 @@ export const PurchasePaymentsCard = () => {
                     Cuentas Por Pagar</h2>
             </div>
             {billing?.map((bill) => (
-                <Link to={`/Purchases/${bill.id}`}
-                    state={{ fromHome: location.pathname === "/" }} key={bill.id}>
+                <Link to={`/Purchases/${bill.id}`} state={{ fromHome: location.pathname === "/" }} key={bill.id}>
                     <div >
                         <div className="space-y-1">
                             <div className="rounded-lg border border-gray-500 p-4 mb-2 hover:border-blue-700  hover:bg-yellow-50 transition-colors duration-3000 ">

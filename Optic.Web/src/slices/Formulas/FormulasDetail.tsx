@@ -20,12 +20,12 @@ export const FormulasDetail = () => {
         <div className="w-full">
             <div className="flex space-x-4 mb-4">
                 <Link
-                    to={fromHome ? "/" : "/Formulas"}
+                    to={fromHome ? '/' : location.state?.from === '' ? '/clientsStory' : location.state?.from ?? "/Formulas"}
                     title="Volver"
                     className="bg-gray-300 hover:bg-gray-300 text-gray-700 hover:text-gray-800 border border-gray-400 hover:border-gray-600 px-4 py-2 rounded font-bold flex items-center transition-all"
                 >
                     <FontAwesomeIcon icon={faArrowCircleLeft} className="mr-2" />
-                    {fromHome ? "Volver" : "Volver"}
+                     Volver{}
                 </Link>
                 <h2 className="text-2xl font-semibold p-2">Formula #{formula?.number?.toString().padWithZeros(5)}</h2>
                 <button onClick={() => handleDownload(Number(id))} className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded mr-4 transition-all"> <FontAwesomeIcon className="text-white text-xl" icon={faFileExcel} /> Decargar </button>

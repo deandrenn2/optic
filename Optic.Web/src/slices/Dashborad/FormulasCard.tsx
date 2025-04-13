@@ -15,7 +15,7 @@ export const FormulasCard = () => {
             {formulas?.map((formula) => (
                 <Link
                     key={formula.id}
-                    to={`/Formulas/${formula.id}`}
+                    to={ `/Formulas/${formula.id}`}
                     state={{ fromHome: location.pathname === "/" }}
                     className="block"
                 >

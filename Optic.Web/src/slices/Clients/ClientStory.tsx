@@ -112,12 +112,11 @@ const StoryCard = ({ story }: { story: ClientStoryResponseModel }) => {
         </div>
 
         <div>
-          <Link to={`/formulas/${story.id}`}>
+          <Link to={`/formulas/${story.id}`} state={{ from: location.pathname }}>
             <p className="text-sm font-bold cursor-pointer hover:underline">
               {expanded ? story.description : shortText}
             </p>
           </Link>
-
           {isLongText && (
             <button
               className="text-blue-500 text-sm font-semibold mt-1"
