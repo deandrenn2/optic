@@ -125,11 +125,9 @@ const StoryCard = ({ story }: { story: ClientStoryResponseModel }) => {
             </button>
           )}
            <Link to={`/formulas/${story.id}`} state={{ from: location.pathname }}>
-          
           <div className="flex justify-end">
           <button className=" bg-blue-500 hover:bg-blue-700 text-white text-sm px-1.5 py-0.5 rounded font-bold">Ver formula</button>
             </div>
-          
           </Link>
         </div>
         
