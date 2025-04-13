@@ -83,7 +83,7 @@ export const Clients = () => {
                </thead>
                <tbody>
                   {filteredClients?.map((client) => (
-                     <tr key={client.id} className='hover:bg-pink-200'>
+                     <tr key={client.id} className='hover:bg-pink-50'>
                         <td className=" p-2 border-b border-gray-200">
                            {' '}
                            <FontAwesomeIcon
@@ -101,7 +101,6 @@ export const Clients = () => {
                         <td className="border border-gray-300 p-2 text-center">{client.email}</td>
                         <td className="border border-gray-300 p-2 text-center">
                            <DetailButton url={`/Clientes/${client.id}`} className='text-blue-500 text-2xl hover:text-blue-700 mr-2' {...<ClientStory/>}/>
-                           
                            <DeleteButton id={client.id} onDelete={handleDelete} />
                         </td>
                      </tr>

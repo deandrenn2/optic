@@ -92,7 +92,7 @@ export const Formulas = () => {
                     </thead>
                     <tbody>
                         {filteredFormula?.map((formula) => (
-                            <tr key={formula.id} className="hover:bg-pink-200">
+                            <tr key={formula.id} className="hover:bg-pink-50">
                                 <td className="border border-gray-300 p-2 text-center">#{formula.number.toString().padWithZeros(5)}</td>
                                 <td className="border border-gray-300 p-2">{formula.clientName}</td>
                                 <td className="border border-gray-300 p-2 text-center"><MoneyFormatter amount={formula?.priceConsultation} /></td>

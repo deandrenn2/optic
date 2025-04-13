@@ -56,7 +56,6 @@ export const ClientStory = () => {
       </div>
     );
   }
-
   return (
     <div className="flex flex-col items-center w-full max-w-2xl xl">
       <div className="relative border-l-4 border-gray-300">
@@ -85,8 +84,9 @@ const StoryCard = ({ story }: { story: ClientStoryResponseModel }) => {
           ? new Date(story.date).toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric" })
           : "Fecha no disponible"}
       </p>
-
+     
       <div className="bg-white p-4 rounded-lg shadow-md border border-gray-200 w-80">
+     
         <div className="grid grid-cols-2 gap-4 text-lg">
           <p className="text-gray-600 font-bold"># {story.number.toString().padStart(5, "0") ?? "N/A"}</p>
           <label className={`block ${getStatusColorInvoice(story.state)} text-lg font-bold mb-2`}>
@@ -110,22 +110,29 @@ const StoryCard = ({ story }: { story: ClientStoryResponseModel }) => {
             </div>
           </div>
         </div>
-
-        <div>
-          <Link to={`/formulas/${story.id}`} state={{ from: location.pathname }}>
-            <p className="text-sm font-bold cursor-pointer hover:underline">
+       
+        <div className="">
+            <p className="text-sm  ">
               {expanded ? story.description : shortText}
             </p>
-          </Link>
+
           {isLongText && (
             <button
-              className="text-blue-500 text-sm font-semibold mt-1"
+              className="text-blue-500 text-sm font-semibold mt-1 mr-2"
               onClick={() => setExpanded(!expanded)}
             >
               {expanded ? "Ver menos" : "Ver más"}
             </button>
           )}
+           <Link to={`/formulas/${story.id}`} state={{ from: location.pathname }}>
+          
+          <div className="flex justify-end">
+          <button className=" bg-blue-500 hover:bg-blue-700 text-white text-sm px-1.5 py-0.5 rounded font-bold">Ver formula</button>
+            </div>
+          
+          </Link>
         </div>
+        
       </div>
     </div>
   );

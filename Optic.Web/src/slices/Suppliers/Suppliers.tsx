@@ -89,7 +89,7 @@ export const Suppliers = () => {
                 </thead>
                 <tbody>
                     {filteredSuppliers?.map((supplier) => (
-                        <tr key={supplier.id} className="hover:bg-pink-200">
+                        <tr key={supplier.id} className="hover:bg-pink-50">
 
                             <td className="border border-gray-300 p-2 ">{supplier.name}</td>
                             <td className="border border-gray-300 p-2 text-center">{supplier.nit}</td>
