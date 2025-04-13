@@ -1,4 +1,5 @@
 ﻿using Carter;
+using Carter.ModelBinding;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -17,16 +18,7 @@ public class LoginUser : ICarterModule
     {
         app.MapPost("api/login", async (LoginUserCommand command, IMediator mediator) =>
         {
-            var res = await mediator.Send(command);
-
-            if (res.IsSuccess)
-            {
-                return Results.Ok(res);
-            }
-            else
-            {
-                return Results.BadRequest(res);
-            }
+            return await mediator.Send(command);
         })
      .WithName("Autentication")
      .WithTags("Login")
@@ -35,13 +27,13 @@ public class LoginUser : ICarterModule
     }
 
 
-    public record LoginUserCommand : IRequest<Result>
+    public record LoginUserCommand : IRequest<IResult>
     {
         public string Email { get; init; } = string.Empty;
         public string Password { get; init; } = string.Empty;
     }
 
-    public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Result>
+    public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, IResult>
     {
         private readonly IMediator _mediator;
         private readonly IManagerToken _managerToken;
@@ -59,19 +51,23 @@ public class LoginUser : ICarterModule
             this._managerToken = managerToken;
         }
 
-        public async Task<Result> Handle(LoginUserCommand request, CancellationToken cancellationToken)
+        public async Task<IResult> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
             var result = _validator.Validate(request);
             if (!result.IsValid)
             {
-                return Result.Failure(new Error("Autentication.ValidationError", "Datos no válidos"));
+                return Results.Ok(Result<Dictionary<string, string[]>>.Failure(
+                    result.GetValidationProblems(),
+                    new Error("Formula.ErrorValidation", "Se presentaron errores de validación")
+                ));
             }
+
 
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
 
             if (user == null)
             {
-                return Result.Failure(new Error("Autentication.NotUserMatch", "Credenciales de acceso no validas"));
+                return Results.Ok(Result.Failure(new Error("Autentication.NotUserMatch", "Credenciales de acceso no validas")));
             }
 
             var resLogin = user.Login(request.Password);
@@ -79,11 +75,11 @@ public class LoginUser : ICarterModule
             if (resLogin.IsSuccess)
             {
                 var token = _managerToken.GenerateToken(user);
-                return Result<TokenModel>.Success(token, "Autenticado correctamente");
+                return Results.Ok(Result<TokenModel>.Success(token, "Autenticado correctamente"));
             }
             else
             {
-                return resLogin;
+                return Results.Ok(resLogin);
             }
 
         }

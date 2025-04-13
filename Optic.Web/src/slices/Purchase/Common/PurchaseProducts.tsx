@@ -20,7 +20,7 @@ export const PurchaseProducts = ({ products, setProducts, setVisiblePaymment, is
     const [visiblePro, setVisiblePro] = useState(false);
     const handleAggregateProduct = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const response = await mutationValidateProduct.mutateAsync(codeProduct);
+        const response = await mutationValidateProduct.mutateAsync({ code: codeProduct, validateQuantity: false });
         if (response.isSuccess) {
             if (response.data) {
                 const existProduct = products.find(x => x.id === response?.data?.id);

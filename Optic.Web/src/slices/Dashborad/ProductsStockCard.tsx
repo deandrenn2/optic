@@ -4,9 +4,9 @@ import PagerComponent from "../../shared/components/Grid/PagerComponent";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 export const ProductsStockCard = () => {
-    const { products, count, pager } = useProductsStockPager();
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(pager?.pageSize ?? 5);
+    const [pageSize, setPageSize] = useState(5);
+    const { products, count, pager } = useProductsStockPager(page, pageSize);
     const location = useLocation();
     return (
         <div className="bg-white rounded-lg shadow p-4 ">

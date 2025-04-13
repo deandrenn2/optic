@@ -8,7 +8,7 @@ import { ComponentBrands } from "../../shared/components/List/ComponentBrands";
 import { CategoriesSelect, Option } from "./CategoriesSelect";
 import { MultiValue } from "react-select";
 import "../../shared/helpers/Utils";
-export const ProductForm = ({ id }: { id?: number }) => {
+export const ProductForm = ({ id, isVisibleQuantity = true }: { id?: number, isVisibleQuantity?: boolean }) => {
    const { settings } = useListSettings();
    const isModeEdit = (id !== undefined && id !== null);
    const [form, setForm] = useState<ProductModel | ProductsResponseModel>({
@@ -147,20 +147,20 @@ export const ProductForm = ({ id }: { id?: number }) => {
             </label>
             <CategoriesSelect xChange={handleChangeCategories} selectedValue={form?.categories?.map((x) => ({ value: x, label: x }))} />
          </div>
-
-         <div className="mb-2">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-               Cantidad
-            </label>
-            <input
-               type="number"
-               name="quantity"
-               value={form?.quantity}
-               onChange={(e) => handleChange(e)}
-               placeholder="Cantidad"
-               required
-               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
-         </div>
+         {isVisibleQuantity &&
+            <div className="mb-2">
+               <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Cantidad
+               </label>
+               <input
+                  type="number"
+                  name="quantity"
+                  value={form?.quantity}
+                  onChange={(e) => handleChange(e)}
+                  placeholder="Cantidad"
+                  required
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>}
 
          <div className="mb-2">
             <label className="block text-gray-700 text-sm font-bold mb-2">

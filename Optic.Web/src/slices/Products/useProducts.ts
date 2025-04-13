@@ -24,7 +24,12 @@ export const useProducts = () => {
       mutationFn: createProductService,
       onSuccess: (data) => {
          if (!data.isSuccess) {
-            toast.info(data.message);
+            if (data?.message) {
+               toast.info(data.message);
+            }
+            if (data?.error) {
+               toast.info(data.error.message);
+            }
          } else {
             if (data.isSuccess) {
                toast.success(data.message);
@@ -38,7 +43,12 @@ export const useProducts = () => {
       mutationFn: deleteProductService,
       onSuccess: (data) => {
          if (!data.isSuccess) {
-            toast.info(data.message);
+            if (data?.message) {
+               toast.info(data.message);
+            }
+            if (data?.error) {
+               toast.info(data.error.message);
+            }
          } else {
             if (data.isSuccess) {
                toast.success(data.message);
@@ -52,7 +62,12 @@ export const useProducts = () => {
       mutationFn: updateProductService,
       onSuccess: (data) => {
          if (!data.isSuccess) {
-            toast.info(data.message);
+            if (data?.message) {
+               toast.info(data.message);
+            }
+            if (data?.error) {
+               toast.info(data.error.message);
+            }
          } else {
             if (data.isSuccess) {
                toast.success(data.message);
@@ -101,31 +116,36 @@ export const useProductsStockPager = (page: number = 1, pageSize: number = 5) =>
    };
 };
 
-export const useValidateProduct = (code?: string | null) => {
-   const queryValidateProduct = useQuery({
-      queryKey: [`${KEY}_Validate_${code}`],
-      queryFn: () => getValidateProduct(code),
-      enabled: !!code && code.length > 0,
-   });
+export const useValidateProduct = () => {
+   // const queryValidateProduct = useQuery({
+   //    queryKey: [`${KEY}_Validate`, code, validateQuantity],
+   //    queryFn: () => getValidateProduct(code, validateQuantity),
+   //    enabled: !!code && code.length > 0,
+   // });
 
    const mutationValidateProduct = useMutation({
       mutationFn: getValidateProduct,
       onSuccess: (data) => {
          if (!data.isSuccess) {
-            toast.info(data.error?.message);
+            if (data?.message) {
+               toast.info(data.message);
+            }
+            if (data?.error) {
+               toast.info(data.error.message);
+            }
          } else {
             if (data.isSuccess) {
                toast.success(data.message);
-               queryValidateProduct.refetch();
+               // queryValidateProduct.refetch();
             }
          }
       },
    });
 
    return {
-      queryValidateProduct,
+      // queryValidateProduct,
       mutationValidateProduct,
-      validateProduct: queryValidateProduct?.data?.data,
+      // validateProduct: queryValidateProduct?.data?.data,
    };
 };
 

@@ -96,10 +96,8 @@ public class CreateProduct : ICarterModule
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.IdBrand).NotEmpty();
             RuleFor(x => x.CodeNumber).NotEmpty();
-            RuleFor(x => x.Quantity).NotEmpty();
             RuleFor(x => x.UnitPrice).NotEmpty();
             RuleFor(x => x.SalePrice).NotEmpty();
-            RuleFor(x => x.Stock).NotEmpty();
         }
     }
 }

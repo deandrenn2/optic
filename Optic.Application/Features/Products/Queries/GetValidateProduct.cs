@@ -15,9 +15,9 @@ public class GetValidateProduct : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/products/validate/{code}", async (IMediator mediator, string code) =>
+        app.MapGet("api/products/validate/{code}", async (IMediator mediator, string code, bool validateQuantity = true) =>
         {
-            return await mediator.Send(new GetValidateProductQuery(code));
+            return await mediator.Send(new GetValidateProductQuery(code, validateQuantity));
         })
              .WithName(nameof(GetValidateProduct))
              .WithTags(nameof(Product))
@@ -41,20 +41,20 @@ public class GetValidateProduct : ICarterModule
         public List<string> Categories { get; set; } = new();
     }
 
-    public record GetValidateProductQuery(string code) : IRequest<Result>;
+    public record GetValidateProductQuery(string Code, bool ValidateQuantity) : IRequest<Result>;
 
     public class GetValidateProductHandler(AppDbContext contex) : IRequestHandler<GetValidateProductQuery, Result>
     {
         public async Task<Result> Handle(GetValidateProductQuery request, CancellationToken cancellationToken)
         {
-            var product = await contex.Products.FirstOrDefaultAsync(x => x.CodeNumber == request.code);
+            var product = await contex.Products.FirstOrDefaultAsync(x => x.CodeNumber == request.Code);
 
             if (product == null)
             {
                 return Result.Failure(new Error("Product.NotFound", "Producto no encontrado"));
             }
 
-            if (product.Quantity == 0)
+            if (request.ValidateQuantity && product.Quantity == 0)
             {
                 return Result.Failure(new Error("Product.NoQuantity", "Producto no tiene cantidad"));
             }

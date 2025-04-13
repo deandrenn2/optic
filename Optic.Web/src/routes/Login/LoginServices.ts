@@ -132,3 +132,57 @@ export const updatePassword = async (model: UsersUpdatePasswordModel): Promise<M
 
    return response.data;
 };
+
+export const getFirstData = async (): Promise<MsgResponse<boolean>> => {
+   const url = 'api/users/first/data';
+   const response = await ApiClient.get<MsgResponse<boolean>>(url);
+   if (response.status !== 200) {
+      return {
+         isSuccess: false,
+         message: 'Error al obtener datos de usuario',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};
+
+export const getFirstUser = async (): Promise<MsgResponse<boolean>> => {
+   const url = 'api/users/first';
+   const response = await ApiClient.get<MsgResponse<boolean>>(url);
+   if (response.status !== 200) {
+      return {
+         isSuccess: false,
+         message: 'Error al obtener datos de usuario',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};
+
+export const getFirstBusiness = async (): Promise<MsgResponse<boolean>> => {
+   const url = 'api/businesses/first';
+   const response = await ApiClient.get<MsgResponse<boolean>>(url);
+   if (response.status !== 200) {
+      return {
+         isSuccess: false,
+         message: 'Error al obtener datos de empresa',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+
+   return response.data;
+};

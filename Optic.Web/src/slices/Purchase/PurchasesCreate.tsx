@@ -132,7 +132,7 @@ export const PurchasesCreate = ({ xChange }: { xChange?: () => void }) => {
                 <SuppliersForm />
             </OffCanvas>
             <OffCanvas titlePrincipal='Registro de Producto' visible={visibleModalProduct} xClose={() => setVisibleModalProduct(false)} position={Direction.Right}>
-                <ProductForm />
+                <ProductForm isVisibleQuantity={false} />
             </OffCanvas>
         </div>
     );
