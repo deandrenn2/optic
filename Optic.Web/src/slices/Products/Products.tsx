@@ -139,7 +139,7 @@ export const Products = () => {
                 </thead >
                 <tbody>
                     {filteredProducts?.map((product) => (
-                        <tr key={product.id} className="hover:bg-pink-200">
+                        <tr key={product.id} className="hover:bg-pink-50">
                             <td className="border border-gray-300 p-2 text-center">#{product.codeNumber.padWithZeros(5)}</td>
                             {settings?.isEnabledBarcode && <td className="border border-gray-300 p-2 text-center">{product.barCode}</td>}
                             <td className="border border-gray-300 p-2 text-center">{product.name}</td>

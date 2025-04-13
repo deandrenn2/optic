@@ -130,7 +130,7 @@ export const Billing = () => {
                         <tbody>
                             {queryBilling.isLoading && <Bar Title="Cargando..." />}
                             {!queryBilling.isLoading && billing && billing.map((bill, i) => (
-                                <tr key={i} className="hover:bg-pink-200">
+                                <tr key={i} className="hover:bg-pink-50">
                                     <td className="border p-2 text-center">#{bill.number.toString().padStart(5, '0')}</td>
                                     <td className="border p-2 text-center">{bill.typeDocument}</td>
                                     <td className="border p-2 text-center">

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { IdentificationTypeModel } from "../../shared/components/List/ListModels"
 import { useListSettings } from "../../shared/components/List/useListSettings";

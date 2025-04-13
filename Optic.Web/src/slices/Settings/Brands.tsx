@@ -37,7 +37,7 @@ export const Brands = () => {
                 </thead>
                 <tbody>
                     {settings?.brands?.map((brand) => (
-                        <tr key={brand.id} className="hover:bg-pink-200">
+                        <tr key={brand.id} className="hover:bg-pink-50">
                             <td className="border border-gray-300 p-2 text-center m-9">
                                 <span className="m-2">
                                     {brand.name}
