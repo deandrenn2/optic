@@ -21,13 +21,21 @@ export const useBusiness = () => {
             }
          }
       },
-   })
-   
+   });
+
+   const getBusinessMutation = useMutation({
+      mutationFn: getBusiness,
+      onSuccess: (data) => {
+         if (!data.isSuccess) {
+            toast.info(data.message);
+         }
+      },
+   });
+
    return {
       business: queryBusiness?.data?.data,
       queryBusiness,
-      updateBusiness
+      updateBusiness,
+      getBusinessMutation,
    };
 };
-
-

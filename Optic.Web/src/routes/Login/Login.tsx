@@ -2,11 +2,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelopeOpen, faEye, faEyeSlash, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
-import { loginUser } from './LoginServices';
 import { useNavigate } from 'react-router-dom';
-import { useLogin } from './useLogin';
+import { useFirstData, useLogin } from './useLogin';
 import useUserContext from '../../shared/context/useUserContext';
-import { toast } from 'react-toastify';
 import { useBusiness } from '../Businesses/useBusiness';
 
 export const Login = () => {
@@ -16,9 +14,9 @@ export const Login = () => {
 
    const navigate = useNavigate();
    const { setToken, setBusiness, setUser, isAuthenticated, setIsAuthenticated } = useUserContext();
-   const { business, queryBusiness } = useBusiness();
-   const { queryUser, setIdUser, idUser } = useLogin();
-
+   const { hasFirstUser, hasFirstBusiness } = useFirstData();
+   const { getUserMutation, logginn } = useLogin();
+   const { getBusinessMutation } = useBusiness();
    const [isFetching, setIsFetching] = useState(false);
 
    useEffect(() => {
@@ -30,62 +28,47 @@ export const Login = () => {
    const handleLogin = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
       setIsFetching(true);
       event.preventDefault();
-      loginUser({ email, password })
-         .then((response) => {
-            if (!response.isSuccess) {
-               if (response.error) {
-                  toast.error(response.error.message, {
-                     position: "bottom-center",
-                  });
-               }
-            }
+      const resLogin = await logginn.mutateAsync({ email, password });
 
-            if (response.data) {
-               setToken(response?.data);
-
-               const iduserCode = response?.data?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
-                  != undefined && !!response?.data ?
-                  response?.data?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
-                  : "";
-
-               setIdUser(Number(iduserCode));
-
-
-            }
-
-         })
-         .catch((error) => {
-            toast.error(error.response.data.error.message, {
-               position: "bottom-center",
-            });
-            setIsFetching(false);
-         });
-   }
-
-   useEffect(() => {
-      if (idUser != 0) {
-         queryUser.refetch().then((response) => {
-            if (response.data) {
-               const user = response.data?.data;
-               if (user) {
-                  setUser(user);
-                  setIsFetching(false);
-                  setIsAuthenticated(true);
-               }
-            }
-         });
+      if (!resLogin.isSuccess) {
+         setIsFetching(false);
+         return;
       }
-   }, [idUser]);
+      if (resLogin.data) {
+         setToken(resLogin?.data);
 
-   useEffect(() => {
-      if (queryBusiness?.data) {
-         if (!business) {
-            navigate('/Create/User');
-         } else {
-            setBusiness(business);
+         const iduserCode = resLogin?.data?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+            != undefined && !!resLogin?.data ?
+            resLogin?.data?.claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+            : "";
+
+         const resUser = await getUserMutation.mutateAsync(Number(iduserCode));
+         if (resUser.isSuccess) {
+            setIsAuthenticated(true);
+            if (resUser.data) {
+               setUser(resUser.data);
+            }
+         }
+         const resBusiness = await getBusinessMutation.mutateAsync();
+         if (resBusiness.isSuccess) {
+            if (resBusiness.data)
+               setBusiness(resBusiness.data);
          }
       }
-   }, [queryBusiness?.data, business, navigate, setBusiness]);
+      setIsFetching(false);
+   }
+
+
+
+   useEffect(() => {
+      if (hasFirstUser) {
+         navigate('/Create/User');
+      }
+
+      if (hasFirstBusiness) {
+         navigate('/Create/Business');
+      }
+   }, [hasFirstUser, navigate, hasFirstBusiness]);
 
    return (
       <div className="flex justify-center items-center h-screen bg-gray-200">

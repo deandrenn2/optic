@@ -1,4 +1,3 @@
-import { useLogin } from "../../routes/Login/useLogin";
 import OffCanvas from "../../shared/components/OffCanvas/Index";
 import { useState } from "react";
 import { Direction } from "../../shared/components/OffCanvas/Models";
@@ -11,10 +10,11 @@ import { UsersResponseModel } from "./UsersModel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { UserResponseModel } from "../../routes/Login/LoginModel";
+import useUsers from "./useUsers";
 export const Users = () => {
     const [visible, setVisible,] = useState(false);
     const [selectedUser, setSelectedUser] = useState<UsersResponseModel | UserResponseModel | null>(null);
-    const { users, queryUsers } = useLogin();
+    const { users, queryUsers } = useUsers();
     const [seleCreating, setSeleCreating] = useState(false);
     const [showPasswordModel, setShowPasswordModel] = useState(false);
     function handleClose(): void {

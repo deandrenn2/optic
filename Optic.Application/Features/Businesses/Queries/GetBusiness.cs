@@ -1,4 +1,4 @@
-﻿using Carter;
+using Carter;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -11,45 +11,36 @@ using Optic.Domain.Shared;
 namespace Optic.Application.Features.Businesses;
 public class GetBusiness : ICarterModule
 {
-    public record GetBusinessResponse(int Id, string CompanyName, string Abbreviation, string UrlLogo, string Nit, string Address, string CellPhoneNumber, string PhoneNumber);
-
-    public record GetBuniessQuery() : IRequest<Result>;
-
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/businesses", async (IMediator mediator) =>
+        app.MapGet("api/businesses/{id:int}", async (IMediator mediator, int id) =>
         {
-            return await mediator.Send(new GetBuniessQuery());
+            return await mediator.Send(new GetBusinessesQuery(id));
         })
         .WithName(nameof(GetBusiness))
         .WithTags(nameof(Business))
-        .Produces(StatusCodes.Status200OK);
+        .Produces<GetBusinessResponse>(StatusCodes.Status200OK);
     }
 
-    public class GetBusinessHandler(AppDbContext context) : IRequestHandler<GetBuniessQuery, Result>
-    {
-        public async Task<Result> Handle(GetBuniessQuery request, CancellationToken cancellationToken)
-        {
-            var busines = await context.Businesses.FirstOrDefaultAsync();
+    public record GetBusinessResponse(int Id, string CompanyName, string Abbreviation, string UrlLogo, string Nit, string Address, string CellPhoneNumber, string PhoneNumber);
 
-            if (busines == null)
+    public record GetBusinessesQuery(int Id) : IRequest<IResult>;
+    public class GetBusinessHandler(AppDbContext context) : IRequestHandler<GetBusinessesQuery, IResult>
+    {
+        public async Task<IResult> Handle(GetBusinessesQuery request, CancellationToken cancellationToken)
+        {
+            var business = await context.Businesses.FirstOrDefaultAsync(x => x.Id == request.Id);
+
+            if (business == null)
             {
-                return Result.Failure(new Error("User.ErrorData", "No existe una empreas creada"));
+                return Results.Ok(Result.Failure(new Error("Business.ErrorData", "No existe una empresa con ese id")));
             }
 
-            return Result<GetBusinessResponse>.Success(
-                new GetBusinessResponse(
-                    busines.Id,
-                    busines.CompanyName,
-                    busines.Abbreviation,
-                    busines.UrlLogo,
-                    busines.Nit,
-                    busines.PhoneNumber,
-                    busines.CellPhoneNumber,
-                    busines.Address), "Datos de la empresa");
+            var businessModel = new GetBusinessResponse(business.Id, business.CompanyName, business.Abbreviation, business.UrlLogo, business.Nit, business.PhoneNumber, business.CellPhoneNumber, business.Address);
+
+            return Results.Ok(Result<GetBusinessResponse>.Success(businessModel, "Listado de empresas"));
         }
-
-
     }
-}
 
+
+}
