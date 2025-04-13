@@ -1,7 +1,7 @@
 import { ApiClient } from '../../shared/helpers/ApiClient';
 import { MsgResponse } from '../../shared/model';
 import { CreateClientModel } from '../Clients/ClientModel';
-import { CategoriesModel, ProductModel, ProductPagerModel, ProductsResponseModel, QuantityModel } from './ProductModel';
+import { CategoriesModel, ProductModel, ProductPagerModel, ProductsResponseModel, QuantityModel, ValidateQuantityModel } from './ProductModel';
 
 export const getProducts = async (): Promise<MsgResponse<ProductsResponseModel[]>> => {
    const url = 'api/Products';
@@ -178,8 +178,8 @@ export const updateCategoryService = async (model: CategoriesModel): Promise<Msg
    return response.data;
 };
 
-export const getValidateProduct = async (code?: string | null): Promise<MsgResponse<ProductsResponseModel>> => {
-   const url = `api/products/validate/${code}`;
+export const getValidateProduct = async (model: ValidateQuantityModel): Promise<MsgResponse<ProductsResponseModel>> => {
+   const url = `api/products/validate/${model.code}?validateQuantity=${model.validateQuantity}`;
    const response = await ApiClient.get<MsgResponse<ProductsResponseModel>>(url);
 
    if (response.status !== 200 && response.status !== 201) {

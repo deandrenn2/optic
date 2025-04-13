@@ -50,6 +50,11 @@ export interface QuantityModel {
    isIncrement: boolean;
 }
 
+export interface ValidateQuantityModel {
+   code?: string | null;
+   validateQuantity: boolean;
+}
+
 export interface ProductSearchResponse {
    currentPage: number;
    pageCount: number;

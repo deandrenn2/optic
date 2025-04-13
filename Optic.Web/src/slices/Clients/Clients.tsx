@@ -43,9 +43,9 @@ export const Clients = () => {
 
    if (queryClients.isLoading)
       return <Bar Title="Cargando..." />;
-   
+
    const filteredClients = clients?.filter(client =>
-       `${client.firstName} ${client.lastName} ${client.identificationNumber}`.toLowerCase().includes(searchClients.toLowerCase())
+      `${client.firstName} ${client.lastName} ${client.identificationNumber}`.toLowerCase().includes(searchClients.toLowerCase())
    );
 
    return (
@@ -56,18 +56,18 @@ export const Clients = () => {
                   onClick={handleClick}> <FontAwesomeIcon icon={faPlus} className="fa-search top-3 pr-2 font-bold"
                   />Nuevo</button>
             </div>
-               <div className="relative inline-flex mb-2">   
-                     <input
-                        type="text"
-                        value={searchClients}
-                        onChange={(e) => setSearchClient(e.target.value)}
-                        placeholder="Buscar Cliente"
-                        className="p-2 pl-10 rounded-tg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-                         <FontAwesomeIcon icon={faMagnifyingGlass}
-                        className="fa-search absolute left-3 top-3 text-gray-400"/>
-                  </div>
-               </div>
-         
+            <div className="relative inline-flex mb-2">
+               <input
+                  type="text"
+                  value={searchClients}
+                  onChange={(e) => setSearchClient(e.target.value)}
+                  placeholder="Buscar Cliente"
+                  className="p-2 pl-10 rounded-tg shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" />
+               <FontAwesomeIcon icon={faMagnifyingGlass}
+                  className="fa-search absolute left-3 top-3 text-gray-400" />
+            </div>
+         </div>
+
          {/* <!-- TABLA DE CLIENTES --> */}
          <div className="rounded-lg border border-grey-500 mb-4 w-full ">
             <table className=" bg-white rounded shadow w-full">
@@ -83,7 +83,7 @@ export const Clients = () => {
                </thead>
                <tbody>
                   {filteredClients?.map((client) => (
-                     <tr key={client.id} className='hover:bg-pink-200'>
+                     <tr key={client.id} className='hover:bg-red-50'>
                         <td className=" p-2 border-b border-gray-200">
                            {' '}
                            <FontAwesomeIcon
@@ -100,8 +100,8 @@ export const Clients = () => {
                         <td className="border border-gray-300 p-2 text-center">{client.address}</td>
                         <td className="border border-gray-300 p-2 text-center">{client.email}</td>
                         <td className="border border-gray-300 p-2 text-center">
-                           <DetailButton url={`/Clientes/${client.id}`} className='text-blue-500 text-2xl hover:text-blue-700 mr-2' {...<ClientStory/>}/>
-                           
+                           <DetailButton url={`/Clientes/${client.id}`} className='text-blue-500 text-2xl hover:text-blue-700 mr-2' {...<ClientStory />} />
+
                            <DeleteButton id={client.id} onDelete={handleDelete} />
                         </td>
                      </tr>
@@ -112,7 +112,7 @@ export const Clients = () => {
          <OffCanvas titlePrincipal='Registro de Cliente' visible={visible} xClose={handleClose} position={Direction.Right}  >
             <ClientForm />
          </OffCanvas>
-         
+
       </div>
    );
 };
