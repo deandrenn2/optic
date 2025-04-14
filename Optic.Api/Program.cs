@@ -33,7 +33,7 @@ if (!app.Environment.IsDevelopment())
 {
     await app.MigrateDatabaseAsync(); // <- Esta línea es clave
 }
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseOpenApi();
 app.UseSwaggerUi(settings => { settings.Path = "/docs"; });
 app.UseReDoc(settings =>
