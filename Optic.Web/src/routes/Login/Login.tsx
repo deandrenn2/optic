@@ -61,6 +61,10 @@ export const Login = () => {
 
 
    useEffect(() => {
+      if (hasFirstBusiness === undefined && hasFirstUser === undefined) {
+         return;
+      }
+
       if (!hasFirstUser) {
          navigate('/Create/User');
          return;

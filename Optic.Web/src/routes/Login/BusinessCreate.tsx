@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { CreateBusinessModel } from './LoginModel';
-import { useLogin } from './useLogin';
+import { useFirstData, useLogin } from './useLogin';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 export const BusinessCreate = () => {
    const navigate = useNavigate();
+   const { queryFirstBusiness } = useFirstData();
    const [hasError, setHasError] = useState<string>('');
    const [business, setBusiness] = useState<CreateBusinessModel>({
       companyName: '',
@@ -38,6 +39,7 @@ export const BusinessCreate = () => {
             confirmButtonText: "Ingresar",
             confirmButtonColor: "#3085d6",
             preConfirm: async () => {
+               await queryFirstBusiness.refetch();
                navigate("/Login");
             },
          });

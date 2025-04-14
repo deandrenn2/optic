@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
+using Optic.Domain.Shared;
 
 public class GetValidateFirstBusiness : ICarterModule
 {
@@ -31,10 +32,10 @@ public class GetValidateFirstBusiness : ICarterModule
 
             if (hasBusiness == null)
             {
-                return Results.Ok(false);
+                return Results.Ok(Result<bool>.Success(false, "No hay empresas en la base de datos"));
             }
 
-            return Results.Ok(true);
+            return Results.Ok(Result<bool>.Success(true, "Datos de empresas cargados"));
         }
     }
 }

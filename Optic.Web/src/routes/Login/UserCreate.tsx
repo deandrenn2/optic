@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { CreateUserModel } from './LoginModel';
-import { useLogin } from './useLogin';
+import { useFirstData, useLogin } from './useLogin';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 export const UserCreate = () => {
    const navigate = useNavigate();
+   const { queryFirstUser } = useFirstData();
    const [user, setUser] = useState<CreateUserModel>({
       firstName: '',
       lastName: '',
@@ -31,6 +32,7 @@ export const UserCreate = () => {
          toast.error(res.message);
          return;
       } else {
+         queryFirstUser.refetch();
          navigate('/Create/Business');
       }
    };

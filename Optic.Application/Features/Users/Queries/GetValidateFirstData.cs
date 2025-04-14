@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
+using Optic.Domain.Shared;
 
 namespace Optic.Application.Features.Users;
 public class GetValidateFirstData : ICarterModule
@@ -32,17 +33,17 @@ public class GetValidateFirstData : ICarterModule
 
             if (hasUsers == null)
             {
-                return Results.Ok(false);
+                return Results.Ok(Result<bool>.Success(false, "No existe usuarios en la base de datos"));
             }
 
             var hasBusiness = await contex.Businesses.FirstOrDefaultAsync();
 
             if (hasBusiness == null)
             {
-                return Results.Ok(false);
+                return Results.Ok(Result<bool>.Success(false, "No existe empresas en la base de datos"));
             }
 
-            return Results.Ok(true);
+            return Results.Ok(Result<bool>.Success(true, "Datos de usuarios y empresas cargados"));
         }
     }
 }
