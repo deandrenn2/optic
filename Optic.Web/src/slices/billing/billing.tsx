@@ -148,7 +148,7 @@ export const Billing = () => {
                                     <td className={`border p-2 text-center ${bill.paymentMethod === 'Contado' ? 'text-green-500 font-bold' : bill.paymentMethod === 'Crédito' ? 'text-blue-500 font-bold' : ''}`}>{bill.paymentMethod}</td>
                                     <td className="border p-2 text-center font-bold">${bill.total.toLocaleString()}</td>
                                     <td className="border p-2 text-center">
-                                        <ButtonDetail url={bill.typeDocument === 'Venta' ? `/Sales/${bill.id}` : bill.typeDocument === "Formula" ? `/Formulas/${bill.id}` : `/Purchases/${bill.id}`} />
+                                    <ButtonDetail url={ bill.typeDocument === 'Venta' ? `/Sales/${bill.id}` : bill.typeDocument === 'Formula' ? `/Formulas/${bill.id}` : `/Purchases/${bill.id}`} state={{ from: 'facturacion' }}/>
                                         <button onClick={() => handleDownload(bill.id, bill.typeDocument)} className="text-green-500 mr-3  text-2xl"><FontAwesomeIcon icon={faFileExcel} /></button>
                                     </td>
                                 </tr>

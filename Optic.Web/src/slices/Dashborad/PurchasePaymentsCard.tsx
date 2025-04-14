@@ -19,7 +19,10 @@ export const PurchasePaymentsCard = () => {
                     Cuentas Por Pagar</h2>
             </div>
             {billing?.map((bill) => (
-                <Link to={`/Purchases/${bill.id}`} state={{ fromHome: location.pathname === "/" }} key={bill.id}>
+                <Link 
+                key={bill.id}
+                to={`/Purchases/${bill.id}`} 
+                state={{ fromHome: location.pathname === "/" }}>
                     <div >
                         <div className="space-y-1">
                             <div className="rounded-lg border border-gray-500 p-4 mb-2 hover:border-blue-700  hover:bg-yellow-50 transition-colors duration-3000 ">
