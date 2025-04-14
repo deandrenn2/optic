@@ -87,6 +87,7 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new FormulaDiagnosisConfiguration());
         modelBuilder.ApplyConfiguration(new DiagnosisConfiguration());
         modelBuilder.ApplyConfiguration(new PurchaseConfiguration());
+        modelBuilder.ApplyConfiguration(new TagsConfiguration());
     }
 
 }

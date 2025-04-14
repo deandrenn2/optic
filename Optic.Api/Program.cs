@@ -29,10 +29,10 @@ builder.AddInfraestructure();
 var app = builder.Build();
 
 // 🔄 Aplica las migraciones automáticamente si no estás en desarrollo
-// if (!app.Environment.IsDevelopment())
-// {
-await app.MigrateDatabaseAsync(); // <- Esta línea es clave
-// }
+if (!app.Environment.IsDevelopment())
+{
+    await app.MigrateDatabaseAsync(); // <- Esta línea es clave
+}
 app.UseHttpsRedirection();
 app.UseOpenApi();
 app.UseSwaggerUi(settings => { settings.Path = "/docs"; });
@@ -48,8 +48,3 @@ app.UseStaticFiles();
 app.MapFallbackToFile("index.html");
 app.MapCarter();
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
