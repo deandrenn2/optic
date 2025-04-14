@@ -1,5 +1,6 @@
 using Carter;
 using Optic.Application;
+using Optic.Application.Infrastructure.Sqlite;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,7 @@ builder.Services.AddApplicationCore();
 // Configurar DbContext con SQLite
 builder.Services.AddPersistence(builder.Configuration);
 
-// Autorizaci�n y autenticaci�n
+// Autorizacion y autenticacion
 builder.AddAutenticationServices();
 builder.Services.ConfigureServices();
 
@@ -27,6 +28,11 @@ builder.AddInfraestructure();
 
 var app = builder.Build();
 
+// 🔄 Aplica las migraciones automáticamente si no estás en desarrollo
+// if (!app.Environment.IsDevelopment())
+// {
+await app.MigrateDatabaseAsync(); // <- Esta línea es clave
+// }
 app.UseHttpsRedirection();
 app.UseOpenApi();
 app.UseSwaggerUi(settings => { settings.Path = "/docs"; });

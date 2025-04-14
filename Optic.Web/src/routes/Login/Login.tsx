@@ -61,12 +61,14 @@ export const Login = () => {
 
 
    useEffect(() => {
-      if (hasFirstUser) {
+      if (!hasFirstUser) {
          navigate('/Create/User');
+         return;
       }
 
-      if (hasFirstBusiness) {
+      if (!hasFirstBusiness) {
          navigate('/Create/Business');
+         return;
       }
    }, [hasFirstUser, navigate, hasFirstBusiness]);
 
