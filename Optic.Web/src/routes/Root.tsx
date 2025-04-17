@@ -5,14 +5,14 @@ import useUserContext from '../shared/context/useUserContext';
 import { useEffect } from 'react';
 
 export default function Root() {
-   const { isAuthenticated } = useUserContext();
+   const { isAuthenticated, token } = useUserContext();
    const navigate = useNavigate();
 
    useEffect(() => {
-      if (!isAuthenticated) {
+      if (!isAuthenticated || !token) {
          navigate('/login');
       }
-   }, [isAuthenticated, navigate]);
+   }, [isAuthenticated, navigate, token]);
 
    return (
       <div id="container" className='pt-[80px]'>
@@ -25,7 +25,7 @@ export default function Root() {
             <div
                id="detail"
                className="w-full p-4">
-   
+
                <Outlet />
             </div>
          </div>

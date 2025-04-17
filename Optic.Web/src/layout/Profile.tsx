@@ -1,16 +1,25 @@
 import { faEdit, faSignOutAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import useUserContext from "../shared/context/useUserContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Profile = ({ setIsOpen }: { setIsOpen: (value: boolean) => void }) => {
-    const { user, setToken, setIsAuthenticated } = useUserContext();
+    const { user, setToken, setIsAuthenticated, token, isAuthenticated } = useUserContext();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         setToken(null);
         setIsAuthenticated(false);
-        window.location.reload();
     }
+
+    useEffect(() => {
+
+        if (!isAuthenticated && !token)
+            navigate("/login");
+
+    }, [token, isAuthenticated, navigate]);
+
     return (
         <div className="absolute top-20 right-2 text-black-500 bg-opacity-50">
             <div className="max-w-sm w-72 bg-gray-800 rounded-b-lg overflow-hidden shadow-lg">
