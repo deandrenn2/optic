@@ -14,7 +14,7 @@ export const Login = () => {
 
    const navigate = useNavigate();
    const { setToken, setBusiness, setUser, isAuthenticated, setIsAuthenticated } = useUserContext();
-   const { hasFirstUser, hasFirstBusiness } = useFirstData();
+   const { hasFirstUser, hasFirstBusiness, queryFirstBusiness, queryFirstUser } = useFirstData();
    const { getUserMutation, logginn } = useLogin();
    const { getBusinessMutation } = useBusiness();
    const [isFetching, setIsFetching] = useState(false);
@@ -61,7 +61,7 @@ export const Login = () => {
 
 
    useEffect(() => {
-      if (hasFirstBusiness === undefined && hasFirstUser === undefined) {
+      if (queryFirstBusiness.isPending || queryFirstUser.isPending) {
          return;
       }
 
@@ -74,10 +74,10 @@ export const Login = () => {
          navigate('/Create/Business');
          return;
       }
-   }, [hasFirstUser, navigate, hasFirstBusiness]);
+   }, [hasFirstUser, navigate, hasFirstBusiness, queryFirstBusiness, queryFirstUser]);
 
    return (
-      <div className="flex justify-center items-center h-screen bg-gray-200">
+      <div className="flex justify-center items-center min-h-screen bg-gray-200">
          <form
             onSubmit={handleLogin}
             className="bg-white p-9 rounded-lg shadow-md w-full max-w-md mx-4 grid gap-6"

@@ -54,7 +54,7 @@ export const BusinessCreate = () => {
    };
 
    return (
-      <div className="flex justify-center items-center h-screen bg-gray-200">
+      <div className="flex justify-center items-center min-h-screen bg-gray-200">
          <form
             onSubmit={handleCreate}
             className="bg-white p-9 rounded-lg shadow-md w-full max-w-md mx-4 grid gap-6"

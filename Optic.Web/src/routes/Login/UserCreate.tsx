@@ -44,7 +44,7 @@ export const UserCreate = () => {
    };
 
    return (
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center min-h-screen items-center">
          <form
             onSubmit={handleCreate}
             className="bg-white p-9 rounded-lg shadow-md w-full max-w-md mx-4 grid gap-6  my-5"
