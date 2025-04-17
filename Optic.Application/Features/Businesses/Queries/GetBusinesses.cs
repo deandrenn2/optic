@@ -11,7 +11,7 @@ using Optic.Domain.Shared;
 namespace Optic.Application.Features.Businesses;
 public class GetBusinesses : ICarterModule
 {
-    public record GetBusinessResponse(int Id, string CompanyName, string Abbreviation, string UrlLogo, string Nit, string Address, string CellPhoneNumber, string PhoneNumber);
+    public record GetBusinessResponse(int Id, string CompanyName, string Abbreviation, string UrlLogo, string Nit, string Address, string CellPhoneNumber, string PhoneNumber, string City);
 
     public record GetBuniessQuery() : IRequest<Result>;
 
@@ -44,9 +44,11 @@ public class GetBusinesses : ICarterModule
                     busines.Abbreviation,
                     busines.UrlLogo,
                     busines.Nit,
-                    busines.PhoneNumber,
+                    busines.Address,
                     busines.CellPhoneNumber,
-                    busines.Address), "Datos de la empresa");
+                    busines.PhoneNumber,
+                    busines.City)
+                    , "Datos de la empresa");
         }
 
 

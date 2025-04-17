@@ -53,7 +53,20 @@ export const ClientForm = ({ id }: { id?: number }) => {
       } else {
          const res = await createClient.mutateAsync(client);
          if (res.isSuccess) {
-            form.current?.reset();
+            setClient(
+               {
+                  id: id,
+                  firstName: '',
+                  lastName: '',
+                  sex: 0,
+                  identificationTypeId: 0,
+                  identificationNumber: '',
+                  email: '',
+                  address: '',
+                  cellPhoneNumber: '',
+                  phoneNumber: '',
+               }
+            )
          }
       }
    };

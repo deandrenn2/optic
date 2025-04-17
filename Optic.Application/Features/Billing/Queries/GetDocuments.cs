@@ -100,6 +100,10 @@ public class GetDocuments : ICarterModule
                 purchasesQuery = purchasesQuery.Where(x => x.SupplierId == request.SupplierId);
             }
 
+            //order
+            purchasesQuery = purchasesQuery.OrderByDescending(x => x.Date);
+            invoicesQuery = invoicesQuery.OrderByDescending(x => x.Date);
+
             var documents = new List<GetDocumentsResponse>();
 
             var dataInvoices = await invoicesQuery.ToListAsync();

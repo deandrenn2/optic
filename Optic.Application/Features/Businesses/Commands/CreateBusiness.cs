@@ -48,13 +48,13 @@ public class CreateBusiness : ICarterModule
             }
 
             var newBusiness = Business
-                .Create(0, 
-                request.CompanyName, 
+                .Create(0,
+                request.CompanyName,
                 request.Abbreviation,
-                request.Nit, 
+                request.Nit,
                 request.Address,
-                request.City,   
-                request.CellPhoneNumber, 
+                request.City,
+                request.CellPhoneNumber,
                 request.PhoneNumber
                 );
 

@@ -51,7 +51,7 @@ public class GetFormulas : ICarterModule
     {
         public async Task<IResult> Handle(GetFormulasQuery request, CancellationToken cancellationToken)
         {
-            var formulas = await context.Formulas.Include(x => x.Client).Include(x => x.Invoice).ToListAsync();
+            var formulas = await context.Formulas.Include(x => x.Client).Include(x => x.Invoice).OrderByDescending(x => x.Invoice.Number).ToListAsync();
 
             var formulasList = formulas.Select(x => new FormulasResponse
             {

@@ -166,7 +166,7 @@ export const SalesUpdate = () => {
                     </div>
                     <div>
                         <label className="block text-gray-700 text-sm font-bold mb-2">Fecha</label>
-                       
+
                         <div className="relative">
                             <input type="date" onChange={handleChangeDate}
                                 disabled={!isEditable}
@@ -178,22 +178,25 @@ export const SalesUpdate = () => {
                 </div>
 
                 <FormulaProducts products={products} disabled={!isEditable} setProducts={setProducts} setVisiblePaymment={setIsVisiblePaymment} isVisiblePaymment={isEnabledPaymmentButton()} />
-                
+
                 <div className="flex justify-between gap-0 mt-4">
                     <div className="inline-block">
                         {isEditable && <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-4" onClick={handleUpdateFormula}>
                             {updateSale.isPending ? "Guardando..." : "Guardar Cambios"}
                         </button>}
-                        
-                        <div className="inline-flex rounded overflow-hidden  mr-4">
-                            <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2" onClick={handleChangeStatus}>
-                                Cambiar estado
-                            </button>
-                            <ListStatus className="w-auto border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={formula.state} />
-                        </div>
+                        {
+                            formula.state !== 'Devoluación' &&
+                            <div className="inline-flex rounded overflow-hidden  mr-4">
+                                <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2" onClick={handleChangeStatus}>
+                                    Cambiar estado
+                                </button>
+                                <ListStatus className="w-auto border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={formula.state} />
+                            </div>
+                        }
+
                         <label className={`${getStatusColorInvoice(formula.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(formula.state)} icon={faCircle} /> {formula.state}</label>
                     </div>
-                    
+
                     <SumTotal sumTotalProducts={totalProducts} />
                 </div>
 

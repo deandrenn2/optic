@@ -139,7 +139,6 @@ public class CreateFormulas : ICarterModule
         public CreateFormulasValidator()
         {
             RuleFor(x => x.Date).NotEmpty();
-            RuleFor(x => x.PriceConsultation).NotEmpty();
             RuleFor(x => x.IdClient).NotEmpty().GreaterThan(0);
         }
     }

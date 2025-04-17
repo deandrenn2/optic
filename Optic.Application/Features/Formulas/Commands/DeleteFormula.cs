@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Optic.Application.Domain.Entities;
 using Optic.Application.Infrastructure.Sqlite;
 using Optic.Domain.Shared;
@@ -42,17 +43,36 @@ public class DeleteFormula : ICarterModule
 
             var formula = await context.Formulas.FindAsync(request.Id);
 
+
             if (formula == null)
             {
                 return Results.Ok(Result.Failure(new Error("Formula.ErrorDelete", "No se encontró la formula")));
             }
 
+            var invoice = context.Invoices.Find(formula.IdInvoice);
+
+            if (invoice == null)
+            {
+                return Results.Ok(Result.Failure(new Error("Formula.ErrorDelete", "No se encontró la factura asociada a la formula")));
+            }
+
+
             if (formula.State != "Borrador")
             {
-                return Results.Ok(Result.Failure(new Error("Formula.ErrorDelete", "La formula solo se puede eliminar si está en estado borrador")));
+                //Agregar detalles de la factura
+                var productsInvoice = await context.InvoiceDetails.Where(x => x.IdInvoice == invoice.Id).ToListAsync();
+                foreach (var productDetail in productsInvoice)
+                {
+                    var product = context.Products.Find(productDetail.IdProduct);
+                    if (product != null)
+                    {
+                        product.UpdateQuantity(product.Quantity + productDetail.Quantity);
+                    }
+                }
             }
 
             context.Formulas.Remove(formula);
+            context.Invoices.Remove(invoice);
 
             var resCount = await context.SaveChangesAsync();
 

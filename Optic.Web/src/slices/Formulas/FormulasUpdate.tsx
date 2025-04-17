@@ -319,13 +319,15 @@ export const FormulasUpdate = () => {
                                 {updateFormula.isPending ? "Guardando..." : "Guardar Cambios"}
                             </button>
                         }
-
-                        <div className="inline-flex rounded overflow-hidden  mr-4">
-                            <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2" onClick={() => handleChangeStatus(stateFormula)}>
-                                Cambiar estado
-                            </button>
-                            <ListStatus className="w-auto border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={formula.state} />
-                        </div>
+                        {
+                            formula.state !== 'Devolución' &&
+                            <div className="inline-flex rounded overflow-hidden  mr-4">
+                                <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2" onClick={() => handleChangeStatus(stateFormula)}>
+                                    Cambiar estado
+                                </button>
+                                <ListStatus className="w-auto border border-gray-300 shadow-sm px-4 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" name="state" xChange={handleSelectStatus} status={formula.state} />
+                            </div>
+                        }
 
                         <label className={`${getStatusColorInvoice(formula.state)} text-lg font-bold mb-2`}><FontAwesomeIcon className={getStatusColorInvoice(formula.state)} icon={faCircle} /> {formula.state}</label>
                     </div>

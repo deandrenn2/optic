@@ -22,7 +22,7 @@ public class GetBusiness : ICarterModule
         .Produces<GetBusinessResponse>(StatusCodes.Status200OK);
     }
 
-    public record GetBusinessResponse(int Id, string CompanyName, string Abbreviation, string UrlLogo, string Nit, string Address, string CellPhoneNumber, string PhoneNumber);
+    public record GetBusinessResponse(int Id, string CompanyName, string Abbreviation, string UrlLogo, string Nit, string Address, string CellPhoneNumber, string PhoneNumber, string City);
 
     public record GetBusinessesQuery(int Id) : IRequest<IResult>;
     public class GetBusinessHandler(AppDbContext context) : IRequestHandler<GetBusinessesQuery, IResult>
@@ -36,7 +36,7 @@ public class GetBusiness : ICarterModule
                 return Results.Ok(Result.Failure(new Error("Business.ErrorData", "No existe una empresa con ese id")));
             }
 
-            var businessModel = new GetBusinessResponse(business.Id, business.CompanyName, business.Abbreviation, business.UrlLogo, business.Nit, business.PhoneNumber, business.CellPhoneNumber, business.Address);
+            var businessModel = new GetBusinessResponse(business.Id, business.CompanyName, business.Abbreviation, business.UrlLogo, business.Nit, business.Address, business.CellPhoneNumber, business.PhoneNumber, business.City);
 
             return Results.Ok(Result<GetBusinessResponse>.Success(businessModel, "Listado de empresas"));
         }

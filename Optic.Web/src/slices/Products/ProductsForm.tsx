@@ -40,6 +40,13 @@ export const ProductForm = ({ id, isVisibleQuantity = true }: { id?: number, isV
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
+      if (name === "quantity" || name === "stock") {
+         setForm({
+            ...form,
+            [name]: parseInt(value) < 0 ? 0 : parseInt(value),
+         });
+         return;
+      }
       setForm({
          ...form,
          [name]: value
@@ -155,6 +162,8 @@ export const ProductForm = ({ id, isVisibleQuantity = true }: { id?: number, isV
                <input
                   type="number"
                   name="quantity"
+                  min="0"
+                  max="999"
                   value={form?.quantity}
                   onChange={(e) => handleChange(e)}
                   placeholder="Cantidad"
@@ -198,7 +207,8 @@ export const ProductForm = ({ id, isVisibleQuantity = true }: { id?: number, isV
             </label>
             <input
                type="number"
-               step="0.01"
+               min="0"
+               max="999"
                name="stock"
                value={form?.stock}
                onChange={(e) => handleChange(e)}

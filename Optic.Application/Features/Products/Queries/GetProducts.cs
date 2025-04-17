@@ -1,4 +1,5 @@
-﻿using Carter;
+﻿using System.Linq.Dynamic.Core;
+using Carter;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -46,7 +47,7 @@ public class GetProducts : ICarterModule
     {
         public async Task<Result> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            var products = await contex.Products.Include(x => x.Categories).ToListAsync();
+            var products = await contex.Products.Include(x => x.Categories).OrderByDescending(x => x.Id).ToListAsync();
 
             var productsList = products.Select(x => new GetProductsResponse
             {

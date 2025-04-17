@@ -156,7 +156,7 @@ export const UserCreate = () => {
                   htmlFor="securePharseTxt"
                   className="block text-gray-600 text-sm font-bold mb-2"
                >
-                  Frase de segura
+                  Frase segura
                </label>
                <div className="relative">
                   <input
@@ -167,7 +167,7 @@ export const UserCreate = () => {
                      maxLength={150}
                      required
                      className="w-full px-5 py-2 border border-gray-700 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                     placeholder="Frase de segura"
+                     placeholder="Frase egura"
                   />
                </div>
             </div>

@@ -7,7 +7,7 @@ import { updatedBusinessLogo } from "../../routes/Businesses/BusinessServices";
 
 export const ImageBusiness = ({ business }: { business: BusinessResponseModel | null }) => {
     const defaultLogo = `${import.meta.env.BASE_URL}initials-logo.svg`;
-    const {  setBusiness } = useUserContext();
+    const { setBusiness } = useUserContext();
     const [imagePreview, setImagePreview] = useState<string>(
         business?.urlLogo
             ? `${import.meta.env.VITE_API_URL}static/logos/${business.urlLogo}`
@@ -33,10 +33,10 @@ export const ImageBusiness = ({ business }: { business: BusinessResponseModel | 
 
         try {
             const response = await updatedBusinessLogo(business.id, file);
-            
+
             if (response.isSuccess && response.data) {
                 setImagePreview(`${import.meta.env.VITE_API_URL}static/logos/${response.data}`);
-                setBusiness({...business,urlLogo: response.data })
+                setBusiness({ ...business, urlLogo: response.data })
             }
         } catch (error) {
             console.error("Error al subir la imagen:", error);
@@ -68,7 +68,7 @@ export const ImageBusiness = ({ business }: { business: BusinessResponseModel | 
                     id="file-upload"
                     type="file"
                     className="hidden"
-                    accept="image/*"
+                    accept=".png, .jpg, .jpeg"
                     onChange={handleImageChange}
                     disabled={isUploading}
                 />

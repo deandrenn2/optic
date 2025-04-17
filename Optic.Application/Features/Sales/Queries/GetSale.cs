@@ -63,8 +63,8 @@ public class GetSale : ICarterModule
             var saleResponse = new SaleResponse
             {
                 IdBusiness = sale.BusinessId,
-                IdClient = sale.ClientId,
-                ClientName = sale.Client.LastName + " " + sale.Client.FirstName,
+                IdClient = sale?.ClientId,
+                ClientName = sale?.Client?.LastName + " " + sale?.Client?.FirstName,
                 Id = sale.Id,
                 Number = sale.Number,
                 State = sale.State,
