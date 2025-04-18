@@ -58,8 +58,18 @@ export const Users = () => {
                     <tbody>
                         {users?.map((user) => (
                             <tr key={user.id} className="hover:bg-pink-50">
-                                <td className="border border-gray-300 p-2 text-center">
-                                    {user.firstName + " " + user.lastName}
+                                <td className="border border-gray-300 p-2">
+                                    <div className="flex items-center  gap-4">
+                                        <img
+                                            src={`${import.meta.env.BASE_URL}images/avatars/bigSmile-${user?.idAvatar}.svg`}
+                                            alt="logo"
+                                            className="max-w-16 rounded-lg"
+                                        />
+                                        <span>
+
+                                            {user.firstName + " " + user.lastName}
+                                        </span>
+                                    </div>
                                 </td>
                                 <td className="border border-gray-300 p-2 text-center">
                                     {user.email}

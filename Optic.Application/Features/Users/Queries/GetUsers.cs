@@ -11,7 +11,7 @@ using Optic.Domain.Shared;
 namespace Optic.Application.Features.Users.Queries;
 public class GetUsers : ICarterModule
 {
-    public record GetUsersResponse(int Id, string? FirstName, string? LastName, string? Email);
+    public record GetUsersResponse(int Id, string? FirstName, string? LastName, string? Email, int? IdAvatar = null);
 
     public record GetUsersQuery() : IRequest<Result>;
 
@@ -36,7 +36,8 @@ public class GetUsers : ICarterModule
                 x.Id,
                 x.FirstName,
                 x.LastName,
-                x.Email
+                x.Email,
+                x.IdAvatar
                 )).ToList();
 
             return Result<List<GetUsersResponse>>.Success(userList, "Listado de usuarios");

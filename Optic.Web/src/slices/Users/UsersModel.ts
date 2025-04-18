@@ -14,6 +14,7 @@ export interface UsersResponseModel {
    email: string;
    password?: string;
    securePharse?: string;
+   idAvatar?: number;
 }
 
 export interface UsersAvatarModel {
