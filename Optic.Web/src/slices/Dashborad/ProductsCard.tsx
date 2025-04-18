@@ -16,12 +16,12 @@ export const ProductoCard = () => {
             </div>
             {products?.map((product) => (
                 <div key={product.id}>
-                    <Link to={`/products/${product.id}`} 
-                    state={{ fromHome: location.pathname === "/" }}>
+                    <Link to={`/products/${product.id}`}
+                        state={{ fromHome: location.pathname === "/" }}>
                         <div className="space-y-1">
                             <div className="rounded-lg border border-gray-300 p-4 mb-2 hover:border-blue-700  duration-300 hover:bg-yellow-50">
                                 <div className="flex justify-between items-center mb-1 cursor-pointer relative  ">
-                                    <p className=" font-bold text-gray-500">#{product.codeNumber.toString().padWithZeros(5)}</p>
+                                    <p className=" font-bold text-gray-500">#{product.codeNumber}</p>
                                     <p className=" font-bold text-purple-500 text-2xl absolute inset-y-5 right-1">{product.quantity}</p>
                                 </div>
                                 <div className="flex justify-between ">

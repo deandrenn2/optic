@@ -12,6 +12,8 @@ public class Product : AggregateRoot
         UnitPrice = unitPrice;
         SalePrice = salePrice;
         Stock = stock;
+        CreateDate = DateTime.Now;
+        UpdateDate = DateTime.Now;
     }
 
     public Product(int id, int idBrand, string name, string codeNumber, int quantity, decimal unitPrice, decimal salePrice, int stock, string barCode) : base(id)
@@ -50,6 +52,11 @@ public class Product : AggregateRoot
     public static Product Create(int id, int idBrand, string name, string codeNumber, int quantity, decimal unitPrice, decimal salePrice, int stock)
     {
         return new Product(id, idBrand, name, codeNumber, quantity, unitPrice, salePrice, stock);
+    }
+
+    public static Product Create(int id, int idBrand, string name, string codeNumber, int quantity, decimal unitPrice, decimal salePrice, int stock, string barCode)
+    {
+        return new Product(id, idBrand, name, codeNumber, quantity, unitPrice, salePrice, stock, barCode);
     }
 
     public void AddCategory(Category category)

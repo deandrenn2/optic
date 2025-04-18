@@ -140,7 +140,7 @@ export const Products = () => {
                 <tbody>
                     {filteredProducts?.map((product) => (
                         <tr key={product.id} className="hover:bg-pink-50">
-                            <td className="border border-gray-300 p-2 text-center">#{product.codeNumber.padWithZeros(5)}</td>
+                            <td className="border border-gray-300 p-2 text-center">#{product.codeNumber}</td>
                             {settings?.isEnabledBarcode && <td className="border border-gray-300 p-2 text-center">{product.barCode}</td>}
                             <td className="border border-gray-300 p-2 text-center">{product.name}</td>
                             <td className="border border-gray-300 p-2 text-center">{getNameBrand(product.idBrand)}</td>

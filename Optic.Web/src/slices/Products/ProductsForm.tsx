@@ -8,6 +8,7 @@ import { ComponentBrands } from "../../shared/components/List/ComponentBrands";
 import { CategoriesSelect, Option } from "./CategoriesSelect";
 import { MultiValue } from "react-select";
 import "../../shared/helpers/Utils";
+import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 export const ProductForm = ({ id, isVisibleQuantity = true }: { id?: number, isVisibleQuantity?: boolean }) => {
    const { settings } = useListSettings();
    const isModeEdit = (id !== undefined && id !== null);
@@ -92,16 +93,12 @@ export const ProductForm = ({ id, isVisibleQuantity = true }: { id?: number, isV
                N° Producto
             </label>
             <input
-               type="number"
                autoComplete="off"
                required
                name="codeNumber"
                value={form?.codeNumber}
                disabled={isModeEdit}
-               min={1}
-               max={99999}
                onChange={(e) => handleChange(e)}
-               placeholder="#####"
                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
          </div>
@@ -173,11 +170,10 @@ export const ProductForm = ({ id, isVisibleQuantity = true }: { id?: number, isV
 
          <div className="mb-2">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-               Precio de Costo
+               Precio de Costo <MoneyFormatter amount={form?.unitPrice} />
             </label>
             <input
                type="number"
-               step="0.01"
                name="unitPrice"
                value={form?.unitPrice}
                onChange={(e) => handleChange(e)}
@@ -188,7 +184,7 @@ export const ProductForm = ({ id, isVisibleQuantity = true }: { id?: number, isV
 
          <div className="mb-2">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-               Precio de Venta
+               Precio de Venta <MoneyFormatter amount={form?.salePrice} />
             </label>
             <input
                type="number"

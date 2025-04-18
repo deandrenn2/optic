@@ -79,7 +79,7 @@ export const SearchProduct = ({ setProducts }: { setProducts: React.Dispatch<Rea
                 {products && products.length > 0 ? (
                     products.map((product) => (
                         <div key={product.id} className="rounded-lg border border-gray-400 p-4 mb-2 hover:border-blue-700 transition-colors duration-300 flex justify-between items-center">
-                            <p className="font-bold text-gray-500">#{String(product.codeNumber).padStart(5, '0')}</p>
+                            <p className="font-bold text-gray-500">#{product.codeNumber}</p>
                             <p>{product.name}</p>
                             <p className=" font-bold text-purple-500 ">{product.quantity}</p>
                             <button

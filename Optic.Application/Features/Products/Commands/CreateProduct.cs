@@ -1,4 +1,5 @@
-﻿using Carter;
+﻿using System.Security.Permissions;
+using Carter;
 using Carter.ModelBinding;
 using FluentValidation;
 using MediatR;
@@ -52,6 +53,7 @@ public class CreateProduct : ICarterModule
             {
                 return Result<IResult>.Failure(Results.ValidationProblem(result.GetValidationProblems()), new Error("Product.ErrorValidation", "Se presentaron errores de validación"));
             }
+
 
             var product = Product.Create(0, request.IdBrand, request.Name, request.CodeNumber, request.Quantity, request.UnitPrice, request.SalePrice, request.Stock);
             product.AddSupplier(request.IdSupplier);
