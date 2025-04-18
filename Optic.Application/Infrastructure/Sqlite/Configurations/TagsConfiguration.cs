@@ -20,7 +20,8 @@ public class TagsConfiguration : IEntityTypeConfiguration<Tags>
             new Tags(10, "Policarbonato"),
             new Tags(11, "Alto Índice"),
             new Tags(12, "Transitions"),
-            new Tags(13, "Antirreflejo")
+            new Tags(13, "Antirreflejo"),
+            new Tags(14, "Protección UV")
     );
     }
 }
