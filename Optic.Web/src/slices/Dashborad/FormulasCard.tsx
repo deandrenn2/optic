@@ -1,4 +1,4 @@
-import { formatDistance, parseISO } from "date-fns";
+import { formatDistanceStrict, parseISO } from "date-fns";
 import { useFormulasPager } from "../Formulas/useFormulas";
 import { Link, useLocation } from "react-router-dom";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
@@ -15,7 +15,7 @@ export const FormulasCard = () => {
             {formulas?.map((formula) => (
                 <Link
                     key={formula.id}
-                    to={ `/Formulas/${formula.id}`}
+                    to={`/Formulas/${formula.id}`}
                     state={{ fromHome: location.pathname === "/" }}
                     className="block"
                 >
@@ -34,9 +34,11 @@ export const FormulasCard = () => {
                         </div>
                         <p className="text-gray-500 text-sm">
                             Hace{" "}
-                            {formatDistance(
+                            {formatDistanceStrict(
                                 new Date(),
-                                parseISO(formula.updateDate ? formula.updateDate.toString() : new Date().toString())
+                                parseISO(formula.updateDate ? formula.updateDate.toString() : new Date().toString()), {
+                                unit: "day",
+                            }
                             )}
                         </p>
                     </div>

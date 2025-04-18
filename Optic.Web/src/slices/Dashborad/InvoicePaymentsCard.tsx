@@ -1,4 +1,4 @@
-import { formatDistance, parseISO } from "date-fns";
+import { formatDistanceStrict, parseISO } from "date-fns";
 import PagerComponent from "../../shared/components/Grid/PagerComponent";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -31,7 +31,7 @@ export const InvoicePaymentsCard = () => {
                                     <p className="">{bill.clientOrSupplier}</p>
                                     <i className="fas fa-play text-gray-500"></i>
                                 </div>
-                                <p className=" text-gray-500 text-sm">Hace, {formatDistance(new Date(), parseISO(bill.date ? bill.date.toString() : new Date().toString()))}</p>
+                                <p className=" text-gray-500 text-sm">Hace {formatDistanceStrict(new Date(), parseISO(bill.date ? bill.date.toString() : new Date().toString()), { unit: "day" })}</p>
                             </div>
                         </div>
                     </div>
