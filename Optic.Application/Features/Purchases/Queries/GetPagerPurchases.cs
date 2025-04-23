@@ -51,12 +51,14 @@ public class GetPagerPurchases : ICarterModule
                 return Results.Ok(resultError);
             }
 
-            var countPurchase = await context.Purchases.CountAsync();
+            var countPurchase = await context.Purchases.CountAsync(x => x.State == "Crédito", cancellationToken);
 
             var purchases = await context.Purchases
+                .Where(x => x.State == "Crédito")
                 .OrderBy(x => x.UpdateDate)
                 .Skip((request.Page - 1) * request.PageSize)
-                .Take(request.PageSize).ToListAsync();
+                .Take(request.PageSize)
+                .ToListAsync(cancellationToken);
 
             var purchasesResponse = new List<GetPurchaseResponse>();
             foreach (var purchase in purchases)

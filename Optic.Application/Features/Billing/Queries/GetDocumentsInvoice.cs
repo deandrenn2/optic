@@ -76,7 +76,7 @@ public class GetDocumentsInvoice : ICarterModule
                 invoicesQuery = invoicesQuery.Where(x => x.ClientId == request.ClientId);
             }
 
-            invoicesQuery = invoicesQuery.Where(x => x.PaymentType == "Crédito" && x.State != "Borrador" && x.State != "Pagada");
+            invoicesQuery = invoicesQuery.Where(x => x.State == "Crédito");
 
             invoicesQuery = invoicesQuery.OrderByDescending(x => (double)x.Total);
 

@@ -80,7 +80,7 @@ public class GetDocumentsPurchase : ICarterModule
                 purchasesQuery = purchasesQuery.Where(x => x.SupplierId == request.SupplierId);
             }
 
-            purchasesQuery = purchasesQuery.Where(x => x.PaymentType == "Crédito" && x.State != "Pagada");
+            purchasesQuery = purchasesQuery.Where(x => x.State == "Crédito");
 
             purchasesQuery = purchasesQuery.OrderByDescending(x => (double)x.Total);
 
