@@ -47,7 +47,7 @@ public class UpdateFormulas : ICarterModule
         public List<InvoiceDetailModel> Products { get; init; } = new();
 
         public decimal? PriceLens { get; init; }
-        public decimal PriceConsultation { get; init; }
+        public decimal? PriceConsultation { get; init; }
 
         public decimal SumTotal { get; init; }
     }
@@ -74,7 +74,7 @@ public class UpdateFormulas : ICarterModule
                 return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "La formula no puede ser actualizada porque está en estado " + formula.State)));
 
 
-            formula.Update(request.Description, request.Date, request.PriceLens.Value, request.PriceConsultation);
+            formula.Update(request.Description, request.Date, request.PriceLens.Value, request?.PriceConsultation ?? 0);
             invoice.Update(invoice.Number, invoice.PaymentType, request.Date, request.SumTotal, invoice.ClientId);
 
             //Agregar tags
@@ -154,7 +154,6 @@ public class UpdateFormulas : ICarterModule
             RuleFor(x => x.IdBusiness).NotEmpty().GreaterThan(0);
             RuleFor(x => x.IdInvoice).NotEmpty().GreaterThan(0);
             RuleFor(x => x.Date).NotEmpty();
-            RuleFor(x => x.PriceConsultation).NotEmpty();
             RuleFor(x => x.IdClient).NotEmpty().GreaterThan(0);
         }
     }

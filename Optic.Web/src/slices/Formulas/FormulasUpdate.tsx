@@ -152,7 +152,7 @@ export const FormulasUpdate = () => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { value, name } = event.target;
         if (name === 'priceLens' || name === 'priceConsultation')
-            setFormula({ ...formula, [name]: value ? parseFloat(value) : 0 });
+            setFormula({ ...formula, [name]: value ? parseFloat(value) : undefined });
         else
             setFormula({ ...formula, [name]: value });
     }

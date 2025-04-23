@@ -11,8 +11,8 @@ using Optic.Application.Infrastructure.Sqlite;
 namespace Optic.Application.Infrastructure.Sqlite.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250414222018_tagsInitFormula")]
-    partial class tagsInitFormula
+    [Migration("20250422173822_EntityTagsId")]
+    partial class EntityTagsId
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -283,38 +283,20 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                         new
                         {
                             Id = 8,
-                            Description = "Podría referirse al color del lente, si tiene un tinte específico para reducir el brillo o mejorar el contraste.",
-                            Name = "COLOR"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Description = "Indica si las lentes tienen protección contra los rayos ultravioleta (UV)",
-                            Name = "UV"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Description = "Indica si las lentes tienen protección contra los rayos visibles infrarrojos (VDT)",
-                            Name = "VDT"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Description = "Indica si las lentes tienen algún tipo de relajación visual o filtro especial para reducir la fatiga ocular",
-                            Name = "RLX"
-                        },
-                        new
-                        {
-                            Id = 12,
                             Description = "Distancia Pupilar, Es la distancia entre la entrada del ojo y la salida del mismo, en milímetros",
                             Name = "DP"
                         },
                         new
                         {
-                            Id = 13,
+                            Id = 9,
                             Description = "Este campo podría hacer referencia a la altura bifocal o algún otro ajuste específico de las lentes",
                             Name = "AB"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Altura de montaje de la lente. La distancia vertical desde la parte inferior del armazón hasta el centro óptico o punto de enfoque de la lente, especialmente relevante en lentes progresivos o bifocales",
+                            Name = "ALT"
                         });
                 });
 
@@ -849,73 +831,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Visión Sencilla"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Bif. Flat top"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Bif. Invisible"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Bif. Ultex"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Bif. Ejecutivo"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Progresivo"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Plástico"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Vidrio Blanco"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Photogray"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Policarbonato"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Alto Índice"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Transitions"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Antirreflejo"
-                        });
                 });
 
             modelBuilder.Entity("Optic.Application.Domain.Entities.User", b =>

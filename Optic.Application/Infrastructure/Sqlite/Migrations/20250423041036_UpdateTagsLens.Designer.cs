@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Optic.Application.Infrastructure.Sqlite;
 
@@ -10,9 +11,11 @@ using Optic.Application.Infrastructure.Sqlite;
 namespace Optic.Application.Infrastructure.Sqlite.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250423041036_UpdateTagsLens")]
+    partial class UpdateTagsLens
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -830,63 +833,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                         .IsUnique();
 
                     b.ToTable("Tags", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Visión Sencilla"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Bif. Flat top"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Bif. Invisible"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Progresivo"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Policarbonato"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Alto Índice"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Transitions"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Antirreflejo"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Protección UV"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Color"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Fotocromático"
-                        });
                 });
 
             modelBuilder.Entity("Optic.Application.Domain.Entities.User", b =>

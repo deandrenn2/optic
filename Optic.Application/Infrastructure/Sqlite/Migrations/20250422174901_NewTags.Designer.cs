@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Optic.Application.Infrastructure.Sqlite;
 
@@ -10,9 +11,11 @@ using Optic.Application.Infrastructure.Sqlite;
 namespace Optic.Application.Infrastructure.Sqlite.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250422174901_NewTags")]
+    partial class NewTags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -850,42 +853,57 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                         new
                         {
                             Id = 4,
-                            Name = "Progresivo"
+                            Name = "Bif. Ultex"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Policarbonato"
+                            Name = "Bif. Ejecutivo"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "Alto Índice"
+                            Name = "Progresivo"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "Transitions"
+                            Name = "Plástico"
                         },
                         new
                         {
                             Id = 8,
-                            Name = "Antirreflejo"
+                            Name = "Vidrio Blanco"
                         },
                         new
                         {
                             Id = 9,
-                            Name = "Protección UV"
+                            Name = "Photogray"
                         },
                         new
                         {
                             Id = 10,
-                            Name = "Color"
+                            Name = "Policarbonato"
                         },
                         new
                         {
                             Id = 11,
-                            Name = "Fotocromático"
+                            Name = "Alto Índice"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Transitions"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "Antirreflejo"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "Protección UV"
                         });
                 });
 

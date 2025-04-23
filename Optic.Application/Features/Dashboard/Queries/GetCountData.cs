@@ -32,11 +32,17 @@ public class GetCountData : ICarterModule
             var dailyRevenue = 0M;
             var clientCount = await context.Clients.CountAsync();
             var productCount = await context.Products.CountAsync();
+            var paymentAmount = await context.InvoicePayments.Where(x => x.Date >= DateTime.Today && x.Date < DateTime.Today.AddDays(1)).ToArrayAsync();
             var invoiceLst = await context.Invoices.Where(x => x.PaymentType == "Contado" && x.Date >= DateTime.Today && x.Date < DateTime.Today.AddDays(1)).ToArrayAsync();
 
             if (invoiceLst.Length > 0)
             {
                 dailyRevenue = invoiceLst.Sum(x => x.Total);
+            }
+
+            if (paymentAmount.Length > 0)
+            {
+                dailyRevenue += paymentAmount.Sum(x => x.Amount);
             }
 
             return Results.Ok(Result<GetCountDataResponse>.Success(new GetCountDataResponse(clientCount, productCount, dailyRevenue), "OK"));

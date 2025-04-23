@@ -7,7 +7,7 @@
 namespace Optic.Application.Infrastructure.Sqlite.Migrations
 {
     /// <inheritdoc />
-    public partial class tagsInitFormula : Migration
+    public partial class UpdateTagsLens2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,16 +20,14 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                     { 1, "Visión Sencilla" },
                     { 2, "Bif. Flat top" },
                     { 3, "Bif. Invisible" },
-                    { 4, "Bif. Ultex" },
-                    { 5, "Bif. Ejecutivo" },
-                    { 6, "Progresivo" },
-                    { 7, "Plástico" },
-                    { 8, "Vidrio Blanco" },
-                    { 9, "Photogray" },
-                    { 10, "Policarbonato" },
-                    { 11, "Alto Índice" },
-                    { 12, "Transitions" },
-                    { 13, "Antirreflejo" }
+                    { 4, "Progresivo" },
+                    { 5, "Policarbonato" },
+                    { 6, "Alto Índice" },
+                    { 7, "Transitions" },
+                    { 8, "Antirreflejo" },
+                    { 9, "Protección UV" },
+                    { 10, "Color" },
+                    { 11, "Fotocromático" }
                 });
         }
 
@@ -90,16 +88,6 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
                 table: "Tags",
                 keyColumn: "Id",
                 keyValue: 11);
-
-            migrationBuilder.DeleteData(
-                table: "Tags",
-                keyColumn: "Id",
-                keyValue: 12);
-
-            migrationBuilder.DeleteData(
-                table: "Tags",
-                keyColumn: "Id",
-                keyValue: 13);
         }
     }
 }
