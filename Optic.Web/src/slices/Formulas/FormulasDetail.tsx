@@ -18,8 +18,8 @@ export const FormulasDetail = () => {
     }
 
     const handleDownloadInVoice = async (id: number) => {
-        const urlBlob = `/api/Invoices/${id}/report`;
-        await descargarArchivo(urlBlob, "Venta_" + id + "_" + new Date().toISOString().split('T')[0] + ".xlsx");
+        const urlBlob = `/api/formulas/${id}/report/invoice`;
+        await descargarArchivo(urlBlob, "Formula_" + id + "_" + new Date().toISOString().split('T')[0] + ".xlsx");
     }
 
 
@@ -42,7 +42,7 @@ export const FormulasDetail = () => {
                 </Link>
                 <h2 className="text-2xl font-semibold p-2">Formula #{formula?.number?.toString().padWithZeros(5)}</h2>
                 <button onClick={() => handleDownload(Number(id))} className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded mr-4 transition-all"> <FontAwesomeIcon className="text-white text-xl" icon={faFileExcel} /> Decargar </button>
-                <button onClick={() => handleDownloadInVoice(Number(formula?.idInvoice))} className="border-green-600 border-2 text-green-600 hover:border-green-700 hover:bg-green-100 px-4 py-2 rounded mr-4 transition-all"> <FontAwesomeIcon className="text-green-700 text-xl" icon={faFileExcel} /> Decargar Factura </button>
+                <button onClick={() => handleDownloadInVoice(Number(id))} className="border-green-600 border-2 text-green-600 hover:border-green-700 hover:bg-green-100 px-4 py-2 rounded mr-4 transition-all"> <FontAwesomeIcon className="text-green-700 text-xl" icon={faFileExcel} /> Decargar Factura </button>
             </div>
             <div className="w-2/3 bg-white p-4 rounded-lg">
                 <FormulasUpdate />

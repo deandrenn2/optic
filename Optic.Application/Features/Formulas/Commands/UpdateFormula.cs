@@ -74,13 +74,18 @@ public class UpdateFormulas : ICarterModule
                 return Results.Ok(Result.Failure(new Error("Formula.ErrorUpdateFormula", "La formula no puede ser actualizada porque está en estado " + formula.State)));
 
 
-            formula.Update(request.Description, request.Date, request.PriceLens.Value, request?.PriceConsultation ?? 0);
+            formula.Update(request.Description, request.Date, request.PriceLens ?? 0, request?.PriceConsultation ?? 0);
             invoice.Update(invoice.Number, invoice.PaymentType, request.Date, request.SumTotal, invoice.ClientId);
 
             //Agregar tags
-            formula.RemoveTag(formula.Tags);
+            // formula.RemoveTag(formula.Tags);
             foreach (var tag in request.Tags)
             {
+                var tagFormulaFind = formula.Tags.FirstOrDefault(x => x.Name == tag);
+                if (tagFormulaFind != null)
+                {
+                    continue;
+                }
                 var tagFind = await context.Tags.FirstOrDefaultAsync(x => x.Name == tag);
                 if (tagFind == null)
                 {

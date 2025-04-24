@@ -43,7 +43,7 @@ public class CreateFormulas : ICarterModule
         public List<InvoiceDetailModel> Products { get; init; } = new();
 
         public decimal? PriceLens { get; init; }
-        public decimal PriceConsultation { get; init; }
+        public decimal? PriceConsultation { get; init; }
 
         public decimal SumTotal { get; init; }
     }
@@ -70,7 +70,7 @@ public class CreateFormulas : ICarterModule
 
             var invoice = Invoice.Create(0, invoiceMaxNumber + 1, request.Date, request.SumTotal, "Borrador", "Contado", request.IdBusiness, request.IdClient);
 
-            var formula = Formula.Create(0, request.Description, request.Date, "Borrador", request.PriceConsultation, request?.PriceLens ?? 0);
+            var formula = Formula.Create(0, request.Description, request.Date, "Borrador", request.PriceConsultation ?? 0, request?.PriceLens ?? 0);
 
 
 

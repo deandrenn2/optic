@@ -9,7 +9,6 @@ public class TagsConfiguration : IEntityTypeConfiguration<Tags>
     {
         builder.ToTable("Tags");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).ValueGeneratedNever();
         builder.HasIndex(x => x.Name).IsUnique();
         builder.HasData(
             new Tags(1, "Visión Sencilla"),
