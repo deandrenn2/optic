@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getIdentificationTypes, getSettings,  updateIdentificationTypeService, updateSettingService } from './ListServices';
+import { getIdentificationTypes, getSettings, updateIdentificationTypeService, updateSettingService } from './ListServices';
 import { toast } from 'react-toastify';
 const KEY = 'LIST_SETTINGS';
 export const useListSettings = () => {
@@ -33,7 +33,8 @@ export const useListSettings = () => {
       mutationFn: updateSettingService,
       onSuccess: (data) => {
          if (!data.isSuccess) {
-            toast.info(data.message);
+            if (data.message) toast.info(data.message);
+            if (data.error) toast.info(data.error.message);
          } else {
             if (data.isSuccess) {
                toast.success(data.message);
@@ -52,4 +53,3 @@ export const useListSettings = () => {
       updateSettings,
    };
 };
-

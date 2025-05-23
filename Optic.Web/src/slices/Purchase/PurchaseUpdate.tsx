@@ -87,7 +87,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
         setPurchase({ ...purchase, date: new Date(`${e.target.value}T00:00:00`) });
     };
 
-    const totalProducts = products.reduce((acc, x) => acc + x.salePrice * x.quantity, 0);
+    const totalProducts = products.reduce((acc, x) => acc + x.unitPrice * x.quantity, 0);
 
     const handleUpdatePurchase = async () => {
         const purchaseData: UpdatePurchaseModel = {
@@ -181,7 +181,7 @@ export const PurchaseUpdate = ({ xChange }: { xChange?: () => void }) => {
                 </div>
             </div>
             <PurchaseProducts disabled={!isEditable} products={products} setProducts={setProducts} isVisiblePaymment={isEnabledPaymmentButton()} setVisiblePaymment={setVisiblePaymmentsPurchase} />
-    
+
             <div className="flex justify-between gap-0 mt-4">
                 <div className="inline-block ">
                     {isEditable && <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mr-4" onClick={handleUpdatePurchase}>

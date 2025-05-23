@@ -581,6 +581,9 @@ namespace Optic.Application.Infrastructure.Sqlite.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CodeNumber")
+                        .IsUnique();
+
                     b.HasIndex("IdSupplier");
 
                     b.ToTable("Products", (string)null);

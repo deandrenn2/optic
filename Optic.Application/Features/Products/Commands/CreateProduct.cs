@@ -77,7 +77,16 @@ public class CreateProduct : ICarterModule
 
             context.Add(product);
 
-            var resCount = await context.SaveChangesAsync();
+            int resCount = 0;
+
+            try
+            {
+                resCount = await context.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception)
+            {
+                return Result.Failure(new Error("Product.ErrorCreateProduct", "Error al crear el producto, es posible que el código ya exista"));
+            }
 
             if (resCount > 0)
             {
