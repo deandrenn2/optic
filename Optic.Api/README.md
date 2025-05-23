@@ -2,7 +2,9 @@
 
 Build the project
 dotnet publish -c Release -r win-x64 --self-contained true -p:OutputType=WinExe -o ./public
-Con errores
+
+## or multiple files recommended
+
 dotnet publish -c Release -r win-x64 --self-contained true -o ./public
 
 Run
