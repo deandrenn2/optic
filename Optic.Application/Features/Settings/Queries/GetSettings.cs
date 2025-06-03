@@ -31,7 +31,6 @@ public class GetSettings : ICarterModule
         public bool IsEnabledBarcode { get; set; } = false;
         public List<GetSettingsModel> Settings { get; set; } = new List<GetSettingsModel>();
         public List<SexModel> Sexes { get; set; } = new List<SexModel>();
-        public List<BrandModel> Brands { get; set; } = new List<BrandModel>();
     };
 
     public record GetSettingsModel(int Id, string Name, string Description, string Value);
@@ -45,10 +44,8 @@ public class GetSettings : ICarterModule
             var sexSettings = await context.Settings.Where(x => x.Name == "LIST_SEXES").FirstOrDefaultAsync();
             var ThemeSettings = await context.Settings.Where(x => x.Name == "THEME").FirstOrDefaultAsync();
             var barcodeSettings = await context.Settings.Where(x => x.Name == "ENABLED_BARCODE").FirstOrDefaultAsync();
-            var brandsSettings = await context.Settings.Where(x => x.Name == "LIST_BRAND").FirstOrDefaultAsync();
 
             var sexList = JsonSerializer.Deserialize<List<SexModel>>(sexSettings?.Value);
-            var brandsList = JsonSerializer.Deserialize<List<BrandModel>>(brandsSettings?.Value);
             var settingList = settings.Select(x => new GetSettingsModel(
                 x.Id,
                 x.Name,
@@ -63,8 +60,6 @@ public class GetSettings : ICarterModule
 
             if (sexList != null)
                 modelConfig.Sexes.AddRange(sexList);
-            if (brandsList != null)
-                modelConfig.Brands.AddRange(brandsList);
 
 
             return Result<GetSettingsResponse>.Success(modelConfig, "Listado de configuraciones");

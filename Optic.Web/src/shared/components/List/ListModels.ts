@@ -20,7 +20,6 @@ export interface SettingsSystemModel {
    isEnabledBarcode: boolean;
    settings: SettingModel[];
    sexes: SexModel[];
-   brands: BrandModel[];
 }
 
 export interface IdentificationTypeModel {

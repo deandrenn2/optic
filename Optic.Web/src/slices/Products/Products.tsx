@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import DeleteButton from "../../shared/components/Buttons/ButtonDelete";
 import DetailButton from "../../shared/components/Buttons/ButtonDetail";
 import { Bar } from "../../shared/components/Progress/Bar";
-import { useListSettings } from "../../shared/components/List/useListSettings";
+import { useListBrands, useListSettings } from "../../shared/components/List/useListSettings";
 import { CategoriesForm } from "./CategoriesForm";
 import { MoneyFormatter } from "../../shared/components/Numbers/MoneyFormatter";
 import { ButtonStockRemove } from "../../shared/components/Buttons/ButtonStockRemove";
@@ -26,6 +26,7 @@ export const Products = () => {
     const [visiblePurchase, setVisiblePurchase] = useState(false);
     const [visibleCategories, setVisibleCategories] = useState(false);
     const { settings } = useListSettings();
+    const { brands } = useListBrands();
     const { products, queryProducts, deleteProduct } = useProducts();
     const [product, setProduct] = useState<ProductsResponseModel | undefined>();
     const [refresh, setRefresh] = useState(false);
@@ -79,7 +80,7 @@ export const Products = () => {
 
 
     const getNameBrand = (id: number): string => {
-        const brand = settings?.brands?.find(x => x.id === id);
+        const brand = brands?.find(x => x.id === id);
         return brand?.name ?? '';
     }
     if (queryProducts.isLoading)

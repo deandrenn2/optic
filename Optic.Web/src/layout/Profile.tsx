@@ -14,7 +14,6 @@ export const Profile = ({ setIsOpen }: { setIsOpen: (value: boolean) => void }) 
     }
 
     useEffect(() => {
-
         if (!isAuthenticated && !token)
             navigate("/login");
 

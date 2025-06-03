@@ -1,6 +1,6 @@
 import { ApiClient } from '../../helpers/ApiClient';
 import { MsgResponse } from '../../model';
-import { IdentificationTypeModel, SettingsSystemModel } from './ListModels';
+import { BrandModel, IdentificationTypeModel, SettingsSystemModel } from './ListModels';
 
 export const getIdentificationTypes = async (): Promise<MsgResponse<IdentificationTypeModel[]>> => {
    const url = 'api/settings/identificationTypes';
@@ -65,6 +65,40 @@ export const updateSettingService = async (settings: SettingsSystemModel): Promi
       return {
          isSuccess: false,
          message: 'Error al actualizar Marca',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+   return response.data;
+};
+
+export const updateBrandsService = async (brands: BrandModel[]): Promise<MsgResponse<BrandModel[]>> => {
+   const url = 'api/settings/brands';
+   const response = await ApiClient.put<MsgResponse<BrandModel[]>>(url, brands);
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al actualizar Marca',
+         isFailure: true,
+         error: {
+            code: response.status.toString(),
+            message: response.statusText,
+         },
+      };
+   }
+   return response.data;
+};
+
+export const getListBrands = async (): Promise<MsgResponse<BrandModel[]>> => {
+   const url = 'api/settings/brands';
+   const response = await ApiClient.get<MsgResponse<BrandModel[]>>(url);
+   if (response.status !== 200 && response.status !== 201) {
+      return {
+         isSuccess: false,
+         message: 'Error al obtener lista de marcas',
          isFailure: true,
          error: {
             code: response.status.toString(),

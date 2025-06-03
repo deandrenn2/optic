@@ -1,7 +1,7 @@
-import { useListSettings } from "./useListSettings"
+import { useListBrands } from "./useListSettings"
 
 export const ComponentBrands = ({ selectedValue, name, className, xChange, required }: { selectedValue: string, name?: string, className?: string, xChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void, required?: boolean }) => {
-    const { settings, querySettings } = useListSettings();
+    const { brands, queryBrands } = useListBrands();
 
     return (
         <select
@@ -12,10 +12,10 @@ export const ComponentBrands = ({ selectedValue, name, className, xChange, requi
             required={required}
         >
             <option value="">Seleccione</option>
-            {querySettings?.isLoading && <option>Cargando...</option>}
+            {queryBrands?.isLoading && <option>Cargando...</option>}
 
-            {querySettings?.isError && <option>Error</option>}
-            {settings?.brands?.map((x) => (
+            {queryBrands?.isError && <option>Error</option>}
+            {brands?.map((x) => (
                 <option value={x.id} key={x.id}>{x.name}</option>
             ))}
         </select>

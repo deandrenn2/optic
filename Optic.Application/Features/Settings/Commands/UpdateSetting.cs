@@ -32,7 +32,6 @@ public class UpdateSetting : ICarterModule
         public List<GetSettingsModel> Settings { get; set; } = new List<GetSettingsModel>();
         public List<SexModel> Sexes { get; set; } = new List<SexModel>();
 
-        public List<BrandModel> Brands { get; set; } = new List<BrandModel>();
     };
 
     public record GetSettingsResponse()
@@ -41,7 +40,6 @@ public class UpdateSetting : ICarterModule
         public List<GetSettingsModel> Settings { get; set; } = new List<GetSettingsModel>();
         public List<SexModel> Sexes { get; set; } = new List<SexModel>();
 
-        public List<BrandModel> Brands { get; set; } = new List<BrandModel>();
     };
 
     public record GetSettingsModel(int Id, string Name, string Description, string Value);
@@ -60,13 +58,6 @@ public class UpdateSetting : ICarterModule
 
             var sexSettings = await context.Settings.Where(x => x.Name == "LIST_SEXES").FirstOrDefaultAsync();
             var ThemeSettings = await context.Settings.Where(x => x.Name == "THEME").FirstOrDefaultAsync();
-            var brandsSettings = await context.Settings.Where(x => x.Name == "LIST_BRAND").FirstOrDefaultAsync();
-
-            if (brandsSettings != null)
-            {
-                var brandsList = JsonSerializer.Serialize(request.Brands);
-                brandsSettings.Update(brandsList);
-            }
 
             if (sexSettings != null)
             {

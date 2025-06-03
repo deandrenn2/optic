@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useListSettings } from "../../shared/components/List/useListSettings";
+import { useListBrands } from "../../shared/components/List/useListSettings";
 import { useQueryClient } from "@tanstack/react-query";
 import { BrandModel } from "../../shared/components/List/ListModels";
 export const BrandsForm = ({ model, set }: { model: BrandModel | undefined, set: React.Dispatch<React.SetStateAction<boolean>> }) => {
-    const { settings, updateSettings } = useListSettings();
+    const { brands, updateBrands } = useListBrands();
     const [brand, setBrand] = useState("");
     const queryClient = useQueryClient();
 
@@ -24,26 +24,25 @@ export const BrandsForm = ({ model, set }: { model: BrandModel | undefined, set:
         event.preventDefault();
         if (model) {
             //Actualizar
-            if (settings) {
+            if (brands) {
                 const KEY = 'LIST_SETTINGS';
-                const brands = settings.brands;
-                const updateBrans = brands.map(x =>
-                    x.id === model.id ? {id: model.id, name: brand} : x
+                const updateBrans = brands?.map(x =>
+                    x.id === model.id ? { id: model.id, name: brand } : x
                 );
-                const newSettings = { ...settings, brands: updateBrans };
-                const res = await updateSettings.mutateAsync(newSettings);
+                const newSettings = { ...brands, brands: updateBrans };
+                const res = await updateBrands.mutateAsync(newSettings);
                 if (res.isSuccess)
                     queryClient.setQueryData([KEY], newSettings);
             }
         } else {
             //Crear
-            if (settings) {
+            if (brands) {
                 const KEY = 'LIST_SETTINGS';
-                const brands = settings.brands;
-                const count = brands.length + 1;
-                const updateBrans = [...brands, { id: count, name: brand }]
-                const newSettings = { ...settings, brands: updateBrans };
-                const res = await updateSettings.mutateAsync(newSettings);
+                const count = brands ? brands.length + 1 : 1;
+                const brandsData = brands ?? [];
+                const updateBrans = [...brandsData, { id: count, name: brand }]
+                const newSettings = { ...brandsData, brands: updateBrans };
+                const res = await updateBrands.mutateAsync(newSettings);
                 if (res.isSuccess) {
                     queryClient.setQueryData([KEY], newSettings);
                     set(false);
@@ -66,7 +65,7 @@ export const BrandsForm = ({ model, set }: { model: BrandModel | undefined, set:
                 />
                 <div>
                     <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded font-bold mt-2">
-                        {updateSettings.isPending ? "Guardando..." : model ? "Actualizar Marca" : "Crear Marca"}
+                        {updateBrands.isPending ? "Guardando..." : model ? "Actualizar Marca" : "Crear Marca"}
                     </button>
                 </div>
             </form>

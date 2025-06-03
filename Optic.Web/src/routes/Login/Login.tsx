@@ -13,17 +13,17 @@ export const Login = () => {
    const [showPassword, setShowPassword] = useState(false);
 
    const navigate = useNavigate();
-   const { setToken, setBusiness, setUser, isAuthenticated, setIsAuthenticated } = useUserContext();
+   const { setToken, setBusiness, setUser, isAuthenticated, token, setIsAuthenticated } = useUserContext();
    const { hasFirstUser, hasFirstBusiness, queryFirstBusiness, queryFirstUser } = useFirstData();
    const { getUserMutation, logginn } = useLogin();
    const { getBusinessMutation } = useBusiness();
    const [isFetching, setIsFetching] = useState(false);
 
    useEffect(() => {
-      if (isAuthenticated) {
+      if (isAuthenticated && token) {
          navigate('/');
       }
-   }, [isAuthenticated, navigate]);
+   }, [isAuthenticated, navigate, token]);
 
    const handleLogin = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
       setIsFetching(true);
